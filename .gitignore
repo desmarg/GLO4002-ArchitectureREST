@@ -6,6 +6,9 @@
 .settings/
 *.ipr
 *.iml
+application/.gitignore
+stocks-api/bin/
+.recommenders/
 
 # misc
 *.log
@@ -25,5 +28,3 @@ dependency-reduced-pom.xml
 # node
 node_modules
 /.metadata/
-application/.gitignore
-stocks-api/bin/
