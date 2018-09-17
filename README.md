@@ -1,3 +1,7 @@
+# Contributing
+
+[See here](CONTRIBUTING.md)
+
 # ReadMe à supprimer avant la remise
 
 Ce readme sert à vous expliquer la structure de base de votre projet. Vous devez le remplacer par le vôtre **avant** la remise!
