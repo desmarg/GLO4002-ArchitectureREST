@@ -12,7 +12,7 @@ via a PR.
 ### feature branches
 Feature branches are named according to the user story they are corresponding.
 For instance, [this user story](http://projet2018.qualitelogicielle.ca/carnet/COOU_ouvrir_compte)
-whould be named `feature-coou`. The branch can be created via `git checkout -b feature-coou`.
+whould be named `feature/COOU`. The branch can be created via `git checkout -b feature/COOU.
 
 ## <a name="commit"></a> Commit Guidelines
 
