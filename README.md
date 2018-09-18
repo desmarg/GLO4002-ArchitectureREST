@@ -2,6 +2,20 @@
 
 [See here](CONTRIBUTING.md)
 
+# Linting
+
+## Cmd
+```bash
+# While in project root
+mvn checkstyle:check -pl application
+```
+
+## IDE Integration
+[Here](https://plugins.jetbrains.com/plugin/1065-checkstyle-idea)
+is a jetbrains plugin for checkstyle, and
+[here](https://checkstyle.org/eclipse-cs/#!/)
+the eclipse one.
+
 # ReadMe à supprimer avant la remise
 
 Ce readme sert à vous expliquer la structure de base de votre projet. Vous devez le remplacer par le vôtre **avant** la remise!

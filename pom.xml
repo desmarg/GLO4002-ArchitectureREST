@@ -22,7 +22,10 @@
 
         <junit.version>4.12</junit.version>
         <java.version>1.8</java.version>
+
+        <checkstyle.latest.version>8.12</checkstyle.latest.version>
     </properties>
+
 
     <dependencyManagement>
         <dependencies>
@@ -68,7 +71,29 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <consoleOutput>true</consoleOutput>
+                        <logViolationsToConsole>true</logViolationsToConsole>
+                        <configLocation>checkstyle.xml</configLocation>
+                        <encoding>UTF-8</encoding>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                    <!-- Manually specify the checkstyle dep version to that
+                         the google checkstyle file is properly supported-->
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.latest.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
 </project>
