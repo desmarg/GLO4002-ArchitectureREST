@@ -1,4 +1,4 @@
-package endpoints;
+package rest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,8 +11,8 @@ public class Accounts {
    @GET
    @Path("/accounts")
    @Produces(MediaType.APPLICATION_JSON)
-   public String available() {
-      return "TO DO";
+   public AccountsResponse available() {
+	  return new AccountsResponse();
    }
 
 }
