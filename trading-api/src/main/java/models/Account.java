@@ -6,7 +6,7 @@ public class Account {
 	private ArrayList<Share> shares;
 	private ArrayList<Transaction> transactions;
 	private int type;
-	private long accountNumber;
+	private Long accountNumber;
 	private ArrayList<Integer> sectors;
 	private int balance;
 	private String name;
@@ -14,9 +14,14 @@ public class Account {
 	
 	//TODO: doublecheck those params.
 	
-	Account(){
-		
+	public Account(Long accountNumber) {
+		this.accountNumber = accountNumber;
 	}
+
+	public Long getAccountNumber() {
+		return this.accountNumber;
+	}
+
 
 }
 
