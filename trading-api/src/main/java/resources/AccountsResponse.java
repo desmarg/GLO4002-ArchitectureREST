@@ -1,4 +1,4 @@
-package rest;
+package resources;
 
 import java.time.OffsetDateTime;
 

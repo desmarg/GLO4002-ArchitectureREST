@@ -1,12 +1,11 @@
-package repositories;
+package persistence;
 
 import models.Account;
 
 import java.util.HashMap;
 
-public class AccountRepository implements Repository<Account, Long> {
+public class AccountRepository implements Repository<Long, Account> {
     private static AccountRepository ourInstance = new AccountRepository();
-
     public static AccountRepository getInstance() {
         return ourInstance;
     }
@@ -14,7 +13,7 @@ public class AccountRepository implements Repository<Account, Long> {
     private HashMap<Long, Account> accountMap;
 
     private AccountRepository() {
-        this.accountMap = new HashMap<Long, Account>();
+        this.accountMap = new HashMap<>();
     }
 
     public void save(Account account) {

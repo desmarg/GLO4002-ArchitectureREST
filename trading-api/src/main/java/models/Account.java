@@ -22,7 +22,9 @@ public class Account {
 		return this.accountNumber;
 	}
 
-
+	public void setName(String newName) {
+		this.name = newName;
+	}
 }
 
 // TODO:
