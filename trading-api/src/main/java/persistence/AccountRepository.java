@@ -1,11 +1,12 @@
 package persistence;
 
-import models.Account;
-
 import java.util.HashMap;
+
+import models.Account;
 
 public class AccountRepository implements Repository<Long, Account> {
     private static AccountRepository ourInstance = new AccountRepository();
+
     public static AccountRepository getInstance() {
         return ourInstance;
     }

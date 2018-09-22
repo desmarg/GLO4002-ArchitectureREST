@@ -1,6 +1,5 @@
 package system;
 
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -13,9 +12,10 @@ public class TradingServer implements Runnable {
         this.run();
     }
 
-	@Override
-	public void run() {
-		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+    @Override
+    public void run() {
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler
+                .NO_SESSIONS);
         context.setContextPath("/");
         Server server = new Server(PORT);
         server.setHandler(context);
@@ -31,6 +31,5 @@ public class TradingServer implements Runnable {
         } finally {
             server.destroy();
         }
-	}
-    
+    }
 }

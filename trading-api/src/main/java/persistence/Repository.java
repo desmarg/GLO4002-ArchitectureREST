@@ -1,9 +1,9 @@
 package persistence;
 
-public interface Repository<Key, Entity> {
-    public void save(Entity entityToSave);
+public interface Repository<KeyT, EntityT> {
+    public void save(EntityT entityToSave);
 
-    public void delete(Key key);
+    public void delete(KeyT key);
 
-    public Object fetchOne(Key key);
+    public Object fetchOne(KeyT key);
 }

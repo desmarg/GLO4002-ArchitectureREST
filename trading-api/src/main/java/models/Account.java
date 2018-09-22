@@ -10,15 +10,15 @@ public class Account {
     private InvestorProfile investorProfile;
     private static Long accountNumber = 1L;
 
-	public Account() {
-		this.accountNumber++;
-	}
+    public Account() {
+        this.accountNumber++;
+    }
 
-	public Long getAccountNumber() {
-		return this.accountNumber;
-	}
+    public Long getAccountNumber() {
+        return this.accountNumber;
+    }
 
-	public void setInvestorName(String newName) {
-		this.investorName = newName;
-	}
+    public void setInvestorName(String newName) {
+        this.investorName = newName;
+    }
 }
