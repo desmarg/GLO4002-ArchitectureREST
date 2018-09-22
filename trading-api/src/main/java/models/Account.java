@@ -1,33 +1,24 @@
 package models;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 
 public class Account {
-	private ArrayList<Share> shares;
-	private ArrayList<Transaction> transactions;
-	private int type;
-	private Long accountNumber;
-	private ArrayList<Integer> sectors;
-	private int balance;
-	private String name;
-	private String email;
-	
-	//TODO: doublecheck those params.
-	
-	public Account(Long accountNumber) {
-		this.accountNumber = accountNumber;
+    private Long investorId;
+    private String investorName;
+    private String email;
+    private BigDecimal credits;
+    private InvestorProfile investorProfile;
+    private static Long accountNumber = 1L;
+
+	public Account() {
+		this.accountNumber++;
 	}
 
 	public Long getAccountNumber() {
 		return this.accountNumber;
 	}
 
-	public void setName(String newName) {
-		this.name = newName;
+	public void setInvestorName(String newName) {
+		this.investorName = newName;
 	}
 }
-
-// TODO:
-// Build enum for sector
-//TODO:
-//Build enum for type
