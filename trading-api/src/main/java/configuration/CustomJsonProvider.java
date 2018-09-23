@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.trading.interfaces.configuration;
+package configuration;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

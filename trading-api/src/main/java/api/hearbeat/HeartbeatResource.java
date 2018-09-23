@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.trading.interfaces.rest;
+package api.hearbeat;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
