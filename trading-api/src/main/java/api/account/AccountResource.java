@@ -3,7 +3,7 @@ package api.account;
 import application.AccountService;
 import domain.Account;
 import persistence.AccountAlreadyExistsException;
-import persistence.AccountNotFoundException;
+import persistence.AccountNotFoundByAccountNumberException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,7 +31,7 @@ public class AccountResource {
 
          return Response.status(Response.Status.CREATED).entity(accountDTO).build();
       }
-      catch(AccountNotFoundException e){
+      catch(AccountNotFoundByAccountNumberException e){
          String errorName = "ACCOUNT_NOT_FOUND";
          String errorDescription = MessageFormat.format("account with number {0} not found", accountNumber);
          return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName, errorDescription)).build();
@@ -43,8 +43,8 @@ public class AccountResource {
    @Produces(MediaType.APPLICATION_JSON)
    public Response createAccount(AccountDTO accountDTO) {
       try {
-         accountService.create(accountAssembler.toEntity(accountDTO));
-         return Response.status(Response.Status.CREATED).build();
+         long accountNumber = accountService.create(accountAssembler.toEntity(accountDTO));
+         return Response.status(Response.Status.CREATED).header("Location", "accounts/" + accountNumber).build();
       } catch (AccountAlreadyExistsException e) {
          String errorName = "ACCOUNT_ALREADY_OPEN";
          String errorDescription = MessageFormat.format("account already open for investor {0}", accountDTO.getInvestorId());

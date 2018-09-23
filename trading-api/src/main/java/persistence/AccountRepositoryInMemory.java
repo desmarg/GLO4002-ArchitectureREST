@@ -10,11 +10,12 @@ public class AccountRepositoryInMemory implements AccountRepository {
 
     private Map<Long, Account> accountMap = new HashMap<>();
 
-    public void add(Account account) {
+    public long add(Account account) {
         if (accountMap.containsKey(account.getInvestorId())){
             throw new AccountAlreadyExistsException(MessageFormat.format("Cannot create account, an account with investorId {0} already exists.",account.getInvestorId()));
         }
         accountMap.put(account.getInvestorId(), account);
+        return account.getAccountNumber();
     }
 
     public Account findByAccountNumber(long accountNumber){
@@ -23,6 +24,6 @@ public class AccountRepositoryInMemory implements AccountRepository {
                 return account;
             }
         }
-        throw new AccountNotFoundException("Account not found");
+        throw new AccountNotFoundByAccountNumberException("Account not found by account number");
     }
 }

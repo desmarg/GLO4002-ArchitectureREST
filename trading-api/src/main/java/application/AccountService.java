@@ -11,8 +11,8 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public void create(Account account){
-        accountRepository.add(account);
+    public long create(Account account){
+        return accountRepository.add(account);
     }
 
     public Account findByAccountNumber(long accountNumber){

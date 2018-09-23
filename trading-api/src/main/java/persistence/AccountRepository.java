@@ -3,6 +3,6 @@ package persistence;
 import domain.Account;
 
 public interface AccountRepository {
-    void add(Account account);
-    Account findByAccountNumber(long investorId);
+    long add(Account account);
+    Account findByAccountNumber(long accountNumber);
 }

@@ -5,12 +5,14 @@ import domain.investorprofile.InvestorProfile;
 import java.math.BigDecimal;
 
 public class Account {
-    private Long investorId;
+    private long investorId;
     private String investorName;
     private String email;
     private BigDecimal credits;
     private InvestorProfile investorProfile;
-    private static Long accountNumber = 0L;
+    private long accountNumber;
+
+    private static long accountNumberCounter = 0L;
 
     public Account(Long investorId, String investorName, String email, BigDecimal credits) {
         this.investorId = investorId;
@@ -18,7 +20,8 @@ public class Account {
         this.email = email;
         this.credits = validateCreditsAmount(credits);
         this.investorProfile = new InvestorProfile();
-        this.accountNumber++;
+        this.accountNumber = accountNumberCounter;
+        this.accountNumberCounter++;
     }
 
     private BigDecimal validateCreditsAmount(BigDecimal credits){
@@ -27,7 +30,7 @@ public class Account {
         }
         return credits;
     }
-    public Long getAccountNumber(){
+    public long getAccountNumber(){
         return this.accountNumber;
     }
 

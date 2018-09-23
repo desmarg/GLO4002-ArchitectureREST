@@ -2,7 +2,6 @@ package domain;
 
 import api.account.InvalidCreditsAmountException;
 import org.junit.Test;
-import persistence.AccountNotFoundException;
 
 import java.math.BigDecimal;
 
