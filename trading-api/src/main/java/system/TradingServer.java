@@ -1,6 +1,5 @@
 package system;
 
-import api.account.AccountAssembler;
 import api.account.AccountResource;
 import application.AccountService;
 import org.eclipse.jetty.server.Handler;
@@ -27,7 +26,7 @@ public class TradingServer implements Runnable {
     public void run() {
 
         // Setup resources (API)
-        AccountResource accountResource = new AccountResource(new AccountService(new AccountRepositoryInMemory()), new AccountAssembler());
+        AccountResource accountResource = new AccountResource(new AccountService(new AccountRepositoryInMemory()));
 
         // Setup API context (JERSEY + JETTY)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);

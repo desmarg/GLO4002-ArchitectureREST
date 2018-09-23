@@ -18,11 +18,14 @@ public class AccountTest {
     private static final BigDecimal INVALID_CREDITS_AMOUNT = new BigDecimal(0.00);
 
     @Test
-    public void givenExistingCreatedAccount_whenCreatingANewAccount_thenItsAccountNumberIsOneMoreThanTheLatestCreated() {
-        Account firstAccount = new Account(AN_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL, A_CREDITS_AMOUNT);
+    public void
+    givenExistingCreatedAccount_whenCreatingANewAccount_thenItsAccountNumberIsOneMoreThanTheLatestCreated() {
+        Account firstAccount = new Account(AN_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL,
+                A_CREDITS_AMOUNT);
         long firstAccountNumber = firstAccount.getAccountNumber();
 
-        Account nextAccount = new Account(ANOTHER_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL, A_CREDITS_AMOUNT);
+        Account nextAccount = new Account(ANOTHER_INVESTOR_ID, AN_INVESTOR_NAME,
+                AN_INVESTOR_EMAIL, A_CREDITS_AMOUNT);
         long nextAccountNumber = nextAccount.getAccountNumber();
 
         assertEquals(firstAccountNumber + 1, nextAccountNumber);
@@ -30,13 +33,16 @@ public class AccountTest {
 
     @Test
     public void whenCreatingANewAccount_thenItsProfileIsAlsoCreated() {
-        Account newAccount = new Account(AN_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL, A_CREDITS_AMOUNT);
+        Account newAccount = new Account(AN_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL,
+                A_CREDITS_AMOUNT);
 
         assertNotNull(newAccount.getInvestorProfile());
     }
 
     @Test(expected = InvalidCreditsAmountException.class)
-    public void whenCreatingAccountWithInvalidCreditsAmount_thenThrowInvalidCreditsAmountException(){
-        Account newAccount = new Account(AN_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL, INVALID_CREDITS_AMOUNT);
+    public void
+    whenCreatingAccountWithInvalidCreditsAmount_thenThrowInvalidCreditsAmountException() {
+        Account newAccount = new Account(AN_INVESTOR_ID, AN_INVESTOR_NAME, AN_INVESTOR_EMAIL,
+                INVALID_CREDITS_AMOUNT);
     }
 }
