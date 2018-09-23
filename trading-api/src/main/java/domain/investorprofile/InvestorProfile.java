@@ -1,12 +1,11 @@
 package domain.investorprofile;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InvestorProfile {
 
     private ProfileType profileType;
-    private List<String> focusAreas;
+    private ArrayList<String> focusAreas;
 
     public InvestorProfile(){
         this.profileType = ProfileType.CONSERVATIVE;
@@ -15,5 +14,9 @@ public class InvestorProfile {
 
     public ProfileType getProfileType() {
         return profileType;
+    }
+
+    public ArrayList<String> getFocusAreas() {
+        return focusAreas;
     }
 }
