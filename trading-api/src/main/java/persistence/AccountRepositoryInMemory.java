@@ -10,7 +10,6 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private Map<Long, Account> accountMap = new HashMap<>();
 
     public long add(Account account) {
-        checkIfAccountExists(account.getInvestorId());
         accountMap.put(account.getInvestorId(), account);
         return account.getAccountNumber();
     }

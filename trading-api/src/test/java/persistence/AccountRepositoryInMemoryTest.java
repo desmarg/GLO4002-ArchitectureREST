@@ -50,10 +50,4 @@ public class AccountRepositoryInMemoryTest {
         accountRepositoryInMemory.findByAccountNumber(NON_EXISTING_ACCOUNT_NUMBER);
     }
 
-    @Test(expected = AccountAlreadyExistsException.class)
-    public void givenExistingAccount_whenCreatingTheSameAccount_thenThrowAccountAlreadyExistsException(){
-        accountRepositoryInMemory.add(account);
-        accountRepositoryInMemory.add(account);
-    }
-
 }
