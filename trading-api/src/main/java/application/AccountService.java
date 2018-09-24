@@ -20,8 +20,8 @@ public class AccountService {
         return accountRepository.findByAccountNumber(accountNumber);
     }
 
-    public void checkIfAccountExists(long investorId){
-        if(accountRepository.checkIfAccountExists(investorId)) {
+    public void checkIfAccountExists(long investorId) {
+        if (accountRepository.checkIfAccountExists(investorId)) {
             throw new AccountAlreadyExistsException("Account already exists");
         }
     }

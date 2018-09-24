@@ -24,11 +24,6 @@ public class AccountRepositoryInMemory implements AccountRepository {
     }
 
     public boolean checkIfAccountExists(long investorId) {
-        if (accountMap.containsKey(investorId)) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return accountMap.containsKey(investorId);
     }
 }
