@@ -16,7 +16,7 @@ public interface AccountMapper {
             @Mapping(source = "email", target = "email"),
             @Mapping(source = "credits", target = "credits")
     })
-    Account accountCreatorDTOToAccount(AccountCreatorDTO accountCreatorDTO);
+    Account accountCreatorDtoToAccount(AccountCreatorDto accountCreatorDto);
 
     @Mappings({
             @Mapping(source = "accountNumber", target = "accountNumber"),
@@ -24,5 +24,5 @@ public interface AccountMapper {
             @Mapping(source = "investorProfile", target = "investorProfile"),
             @Mapping(source = "credits", target = "credits")
     })
-    AccountInformationDTO accountToAccountInformationDTO(Account account);
+    AccountInformationDto accountToAccountInformationDto(Account account);
 }

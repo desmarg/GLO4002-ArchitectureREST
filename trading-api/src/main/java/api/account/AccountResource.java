@@ -2,13 +2,12 @@ package api.account;
 
 import application.AccountService;
 import domain.Account;
-import persistence.AccountAlreadyExistsException;
-import persistence.AccountNotFoundByAccountNumberException;
-
+import java.text.MessageFormat;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.MessageFormat;
+import persistence.AccountAlreadyExistsException;
+import persistence.AccountNotFoundByAccountNumberException;
 
 @Path("/")
 public class AccountResource {
@@ -22,14 +21,13 @@ public class AccountResource {
    @Path("/accounts/{accountNumber}")
    @Produces(MediaType.APPLICATION_JSON)
    public Response getAccountByAccountNumber(@PathParam("accountNumber")Long accountNumber) {
-      try{
+      try {
          Account account = accountService.findByAccountNumber(accountNumber);
-         AccountInformationDTO accountInformationDTO = AccountMapper.INSTANCE
-                 .accountToAccountInformationDTO(account);
+         AccountInformationDto accountInformationDto = AccountMapper.INSTANCE
+                 .accountToAccountInformationDto(account);
 
-         return Response.status(Response.Status.CREATED).entity(accountInformationDTO).build();
-      }
-      catch(AccountNotFoundByAccountNumberException e){
+         return Response.status(Response.Status.CREATED).entity(accountInformationDto).build();
+      } catch (AccountNotFoundByAccountNumberException e) {
          String errorName = "ACCOUNT_NOT_FOUND";
          String errorDescription = MessageFormat.format("account with number {0} not found",
                  accountNumber);
@@ -41,20 +39,19 @@ public class AccountResource {
    @POST
    @Path("/accounts")
    @Produces(MediaType.APPLICATION_JSON)
-   public Response createAccount(AccountCreatorDTO accountCreatorDTO) {
+   public Response createAccount(AccountCreatorDto accountCreatorDto) {
       try {
          Long accountNumber = accountService.create(AccountMapper.INSTANCE
-                 .accountCreatorDTOToAccount(accountCreatorDTO));
-         return Response.status(Response.Status.CREATED).header("Location", "accounts/" +
-                 accountNumber).build();
+                 .accountCreatorDtoToAccount(accountCreatorDto));
+         return Response.status(Response.Status.CREATED).header("Location", "accounts/"
+                 + accountNumber).build();
       } catch (AccountAlreadyExistsException e) {
          String errorName = "ACCOUNT_ALREADY_OPEN";
          String errorDescription = MessageFormat.format("account already open for investor {0}",
-                 accountCreatorDTO.getInvestorId());
+                 accountCreatorDto.getInvestorId());
          return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName,
                  errorDescription)).build();
-      }
-      catch (InvalidCreditsAmountException e) {
+      } catch (InvalidCreditsAmountException e) {
          String errorName = "INVALID_AMOUNT";
          String errorDescription = "credit amount cannot be lower than or equal to zero";
          return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName,

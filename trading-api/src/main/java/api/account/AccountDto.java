@@ -2,7 +2,7 @@ package api.account;
 
 import java.math.BigDecimal;
 
-public abstract class AccountDTO {
+public abstract class AccountDto {
     private Long investorId;
     private BigDecimal credits;
 

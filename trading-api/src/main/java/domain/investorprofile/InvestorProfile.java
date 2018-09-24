@@ -7,7 +7,7 @@ public class InvestorProfile {
     private ProfileType profileType;
     private ArrayList<String> focusAreas;
 
-    public InvestorProfile(){
+    public InvestorProfile() {
         this.profileType = ProfileType.CONSERVATIVE;
         this.focusAreas = new ArrayList<>();
     }

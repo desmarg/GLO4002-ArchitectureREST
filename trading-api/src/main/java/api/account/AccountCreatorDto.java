@@ -1,9 +1,8 @@
 package api.account;
 
-
 import java.math.BigDecimal;
 
-public class AccountCreatorDTO extends AccountDTO {
+public class AccountCreatorDto extends AccountDto {
     private String investorName;
     private String email;
 
