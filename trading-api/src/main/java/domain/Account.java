@@ -23,12 +23,6 @@ public class Account {
         this.accountNumberCounter++;
     }
 
-    public Account() {
-        this.accountNumber = accountNumberCounter;
-        this.accountNumberCounter++;
-        this.investorProfile = new InvestorProfile();
-    }
-
     private BigDecimal validateCreditsAmount(BigDecimal credits) {
         if (credits.compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidCreditsAmountException("Number of credits has to be greater than 0.");

@@ -6,17 +6,20 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import java.math.BigDecimal;
+
 @Mapper
 public interface AccountMapper {
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-    @Mappings({
-            @Mapping(source = "investorId", target = "investorId"),
-            @Mapping(source = "investorName", target = "investorName"),
-            @Mapping(source = "email", target = "email"),
-            @Mapping(source = "credits", target = "credits")
-    })
-    Account accountCreatorDtoToAccount(AccountCreatorDto accountCreatorDto);
+    default Account accountCreatorDtoToAccount(AccountCreatorDto accountCreatorDto) {
+        Long investorId = accountCreatorDto.getInvestorId();
+        String investorName = accountCreatorDto.getInvestorName();
+        String email = accountCreatorDto.getEmail();
+        BigDecimal credits = accountCreatorDto.getCredits();
+
+        return new Account(investorId, investorName, email, credits);
+    }
 
     @Mappings({
             @Mapping(source = "accountNumber", target = "accountNumber"),
