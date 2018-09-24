@@ -27,13 +27,13 @@ public class AccountRepositoryInMemoryTest {
     }
 
     @Test
-    public void whenAddingValidAccount_thenAccountIsAdded(){
+    public void whenAddingValidAccount_thenAccountIsAdded() throws AccountNotFoundByAccountNumberException{
         accountRepositoryInMemory.add(account);
         assertEquals(account, accountRepositoryInMemory.findByAccountNumber(AN_ACCOUNT_NUMBER));
     }
 
     @Test
-    public void givenCreatedAccount_whenFindingAccountByAccountNumber_thenReturnAccount(){
+    public void givenCreatedAccount_whenFindingAccountByAccountNumber_thenReturnAccount() throws AccountNotFoundByAccountNumberException{
         accountRepositoryInMemory.add(account);
         assertEquals(account, accountRepositoryInMemory.findByAccountNumber(AN_ACCOUNT_NUMBER));
     }
@@ -46,7 +46,7 @@ public class AccountRepositoryInMemoryTest {
     }
 
     @Test(expected = AccountNotFoundByAccountNumberException.class)
-    public void givenNonexistentAccount_whenFindingAccountByAccountNumber_thenThrowAccountNotFoundException(){
+    public void givenNonexistentAccount_whenFindingAccountByAccountNumber_thenThrowAccountNotFoundException() throws AccountNotFoundByAccountNumberException{
         accountRepositoryInMemory.findByAccountNumber(NON_EXISTING_ACCOUNT_NUMBER);
     }
 

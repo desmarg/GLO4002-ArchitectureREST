@@ -1,9 +1,7 @@
 package api.account;
 
-import api.ApiErrors;
 import application.AccountService;
 import domain.Account;
-import java.text.MessageFormat;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,11 +27,7 @@ public class AccountResource {
 
          return Response.status(Response.Status.CREATED).entity(accountInformationDto).build();
       } catch (AccountNotFoundByAccountNumberException e) {
-         String errorName = ApiErrors.ACCOUNT_NOT_FOUND;
-         String errorDescription = MessageFormat.format("account with number {0} not found",
-                 accountNumber);
-         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName,
-                 errorDescription)).build();
+         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(e)).build();
       }
    }
 
@@ -48,21 +42,12 @@ public class AccountResource {
          return Response.status(Response.Status.CREATED).header("Location", "accounts/"
                  + accountNumber).build();
       } catch (AccountAlreadyExistsException e) {
-         String errorName = ApiErrors.ACCOUNT_ALREADY_OPEN;
-         String errorDescription = MessageFormat.format("account already open for investor {0}",
-                 accountCreatorDto.getInvestorId());
-         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName,
-                 errorDescription)).build();
+         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(e)).build();
+
       } catch (InvalidCreditsAmountException e) {
-         String errorName = ApiErrors.INVALID_AMOUNT;
-         String errorDescription = "credit amount cannot be lower than or equal to zero";
-         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName,
-                 errorDescription)).build();
+         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(e)).build();
       } catch (Exception e) {
-          String errorName = ApiErrors.REQUEST_ERROR;
-          String errorDescription = "there was an error with the request";
-          return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(errorName,
-                  errorDescription)).build();
+          return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(e)).build();
       }
    }
 }

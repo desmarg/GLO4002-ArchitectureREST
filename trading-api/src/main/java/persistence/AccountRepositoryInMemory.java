@@ -14,13 +14,13 @@ public class AccountRepositoryInMemory implements AccountRepository {
         return account.getAccountNumber();
     }
 
-    public Account findByAccountNumber(long accountNumber) {
+    public Account findByAccountNumber(long accountNumber) throws AccountNotFoundByAccountNumberException{
         for (Account account : accountMap.values()) {
             if (accountNumber == account.getAccountNumber()) {
                 return account;
             }
         }
-        throw new AccountNotFoundByAccountNumberException("Account not found by account number");
+        throw new AccountNotFoundByAccountNumberException("Account not found by account number", accountNumber);
     }
 
     public boolean checkIfAccountExists(long investorId) {
