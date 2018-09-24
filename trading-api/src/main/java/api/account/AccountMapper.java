@@ -1,12 +1,11 @@
 package api.account;
 
 import domain.Account;
+import java.math.BigDecimal;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
-
-import java.math.BigDecimal;
 
 @Mapper
 public interface AccountMapper {

@@ -11,7 +11,8 @@ public class AccountRepositoryInMemory implements AccountRepository {
 
     public long add(Account account) {
         if (accountMap.containsKey(account.getInvestorId())) {
-            throw new AccountAlreadyExistsException(MessageFormat.format("Cannot create account, an account with investorId {0} already exists.",account.getInvestorId()));
+            throw new AccountAlreadyExistsException(MessageFormat.format("Cannot create account,"
+                    + " an account with investorId {0} already exists.", account.getInvestorId()));
         }
         accountMap.put(account.getInvestorId(), account);
         return account.getAccountNumber();
