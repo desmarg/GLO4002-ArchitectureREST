@@ -41,6 +41,7 @@ public class AccountResource {
    @Produces(MediaType.APPLICATION_JSON)
    public Response createAccount(AccountCreatorDto accountCreatorDto) {
       try {
+         accountService.checkIfAccountExists(accountCreatorDto.getInvestorId());
          Long accountNumber = accountService.create(AccountMapper.INSTANCE
                  .accountCreatorDtoToAccount(accountCreatorDto));
          return Response.status(Response.Status.CREATED).header("Location", "accounts/"

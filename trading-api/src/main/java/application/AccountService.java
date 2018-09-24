@@ -18,4 +18,8 @@ public class AccountService {
     public Account findByAccountNumber(long accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber);
     }
+
+    public void checkIfAccountExists(long investorId){
+        accountRepository.checkIfAccountExists(investorId);
+    }
 }

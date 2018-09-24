@@ -6,4 +6,6 @@ public interface AccountRepository {
     long add(Account account);
 
     Account findByAccountNumber(long accountNumber);
+
+    void checkIfAccountExists(long investorId);
 }

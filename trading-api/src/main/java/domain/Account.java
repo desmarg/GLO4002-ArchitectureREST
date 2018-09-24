@@ -11,7 +11,7 @@ public class Account {
     private String investorName;
     private String email;
     private BigDecimal credits;
-    private static long accountNumberCounter = 0L;
+    private static long accountNumberCounter = 1L;
 
     public Account(Long investorId, String investorName, String email, BigDecimal credits) {
         this.investorId = investorId;
