@@ -7,5 +7,5 @@ public interface AccountRepository {
 
     Account findByAccountNumber(long accountNumber);
 
-    void checkIfAccountExists(long investorId);
+    boolean checkIfAccountExists(long investorId);
 }

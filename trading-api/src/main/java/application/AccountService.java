@@ -1,6 +1,7 @@
 package application;
 
 import domain.Account;
+import persistence.AccountAlreadyExistsException;
 import persistence.AccountRepository;
 
 public class AccountService {
@@ -20,6 +21,8 @@ public class AccountService {
     }
 
     public void checkIfAccountExists(long investorId){
-        accountRepository.checkIfAccountExists(investorId);
+        if(accountRepository.checkIfAccountExists(investorId)) {
+            throw new AccountAlreadyExistsException("Account already exists");
+        }
     }
 }

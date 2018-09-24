@@ -23,9 +23,12 @@ public class AccountRepositoryInMemory implements AccountRepository {
         throw new AccountNotFoundByAccountNumberException("Account not found by account number");
     }
 
-    public void checkIfAccountExists(long investorId) {
+    public boolean checkIfAccountExists(long investorId) {
         if (accountMap.containsKey(investorId)) {
-            throw new AccountAlreadyExistsException(MessageFormat.format("Cannot create account, an account with investorId {0} already exists.",investorId));
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }
