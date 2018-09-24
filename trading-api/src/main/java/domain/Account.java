@@ -34,10 +34,6 @@ public class Account {
         return this.accountNumber;
     }
 
-    public void setInvestorName(String newName) {
-        this.investorName = newName;
-    }
-
     public InvestorProfile getInvestorProfile() {
         return investorProfile;
     }
@@ -46,27 +42,7 @@ public class Account {
         return investorId;
     }
 
-    public void setInvestorId(Long investorId) {
-        this.investorId = investorId;
-    }
-
-    public String getInvestorName() {
-        return investorName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public BigDecimal getCredits() {
         return credits;
-    }
-
-    public void setCredits(BigDecimal credits) {
-        this.credits = validateCreditsAmount(credits);
     }
 }
