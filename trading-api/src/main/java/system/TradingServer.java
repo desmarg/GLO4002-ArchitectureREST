@@ -1,6 +1,7 @@
 package system;
 
 import api.account.AccountResource;
+import api.hearbeat.HeartbeatResource;
 import application.AccountService;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class TradingServer implements Runnable {
         // Setup resources (API)
         AccountResource accountResource = new AccountResource(new AccountService(new
                 AccountRepositoryInMemory()));
+        HeartbeatResource heartBeatResource = new HeartbeatResource();
 
         // Setup API context (JERSEY + JETTY)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -36,6 +38,7 @@ public class TradingServer implements Runnable {
             public Set<Object> getSingletons() {
                 HashSet<Object> resourcesContext = new HashSet<>();
                 resourcesContext.add(accountResource);
+                resourcesContext.add(heartBeatResource);
                 return resourcesContext;
             }
         });
