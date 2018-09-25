@@ -46,6 +46,7 @@ public class AccountResource {
 
       } catch (InvalidCreditsAmountException e) {
          return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(e)).build();
+
       } catch (Exception e) {
           return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorResponse(e)).build();
       }
