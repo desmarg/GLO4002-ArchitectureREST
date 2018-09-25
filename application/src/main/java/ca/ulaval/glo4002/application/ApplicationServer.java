@@ -8,10 +8,10 @@ public class ApplicationServer {
         Thread stocks = new Thread(new StocksServer(args));
         Thread trading = new Thread(new TradingServer());
 
-        trading.start();
         stocks.start();
-
-        trading.join();
         stocks.join();
+
+        trading.start();
+        trading.join();
     }
 }

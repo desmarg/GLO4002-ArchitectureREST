@@ -1,6 +1,7 @@
 package system;
 
 import api.account.AccountResource;
+import api.hearbeat.HeartbeatResource;
 import application.AccountService;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,42 +15,50 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import persistence.AccountRepositoryInMemory;
 
+
 public class TradingServer implements Runnable {
     private static final int PORT = 8181;
 
-    public TradingServer() {
-        this.run();
+    public static void main(String[] args) {
+        new TradingServer().run();
     }
 
-    @Override
     public void run() {
 
         // Setup resources (API)
         AccountResource accountResource = new AccountResource(new AccountService(new
                 AccountRepositoryInMemory()));
+        HeartbeatResource heartBeatResource = new HeartbeatResource();
 
         // Setup API context (JERSEY + JETTY)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
         ResourceConfig resourceConfig = ResourceConfig.forApplication(new Application() {
 
             @Override
             public Set<Object> getSingletons() {
                 HashSet<Object> resourcesContext = new HashSet<>();
                 resourcesContext.add(accountResource);
+                resourcesContext.add(heartBeatResource);
                 return resourcesContext;
             }
         });
 
+        Server server = new Server(PORT);
+
+        ServletContextHandler contextHandler = new ServletContextHandler(server, "/");
+
         ServletContainer servletContainer = new ServletContainer(resourceConfig);
         ServletHolder servletHolder = new ServletHolder(servletContainer);
+
         servletHolder.setInitParameter("jersey.config.server.provider.packages", "resources");
         context.addServlet(servletHolder, "/*");
+        contextHandler.addServlet(servletHolder, "/*");
+
+        // Setup resources (API)
 
         // Setup http server
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[]{context});
-        Server server = new Server(PORT);
         server.setHandler(contexts);
 
         try {
@@ -62,4 +71,3 @@ public class TradingServer implements Runnable {
         }
     }
 }
-

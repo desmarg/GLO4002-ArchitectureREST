@@ -5,7 +5,7 @@ import domain.Account;
 public interface AccountRepository {
     long add(Account account);
 
-    Account findByAccountNumber(long accountNumber);
+    Account findByAccountNumber(long accountNumber) throws AccountNotFoundByAccountNumberException;
 
     boolean checkIfAccountExists(long investorId);
 }
