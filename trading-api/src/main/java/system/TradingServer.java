@@ -18,14 +18,10 @@ import persistence.AccountRepositoryInMemory;
 public class TradingServer implements Runnable {
     private static final int PORT = 8181;
 
-<<<<<<< HEAD
     public static void main(String[] args) {
         new TradingServer().run();
     }
 
-=======
-    @Override
->>>>>>> 5bea42bc80c66e2b96f898297684f8bcc6a874e6
     public void run() {
 
         // Setup resources (API)
