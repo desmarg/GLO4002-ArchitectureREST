@@ -14,14 +14,14 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import persistence.AccountRepositoryInMemory;
 
+
 public class TradingServer implements Runnable {
     private static final int PORT = 8181;
 
-    public TradingServer() {
-        this.run();
+    public static void main(String[] args) {
+        new TradingServer().run();
     }
 
-    @Override
     public void run() {
 
         // Setup resources (API)
@@ -30,7 +30,6 @@ public class TradingServer implements Runnable {
 
         // Setup API context (JERSEY + JETTY)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
         ResourceConfig resourceConfig = ResourceConfig.forApplication(new Application() {
 
             @Override
@@ -41,15 +40,22 @@ public class TradingServer implements Runnable {
             }
         });
 
+        Server server = new Server(PORT);
+
+        ServletContextHandler contextHandler = new ServletContextHandler(server, "/");
+
         ServletContainer servletContainer = new ServletContainer(resourceConfig);
         ServletHolder servletHolder = new ServletHolder(servletContainer);
+
         servletHolder.setInitParameter("jersey.config.server.provider.packages", "resources");
         context.addServlet(servletHolder, "/*");
+        contextHandler.addServlet(servletHolder, "/*");
+
+        // Setup resources (API)
 
         // Setup http server
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[]{context});
-        Server server = new Server(PORT);
         server.setHandler(contexts);
 
         try {
@@ -62,4 +68,3 @@ public class TradingServer implements Runnable {
         }
     }
 }
-
