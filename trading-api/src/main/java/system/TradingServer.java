@@ -1,65 +1,74 @@
 package system;
 
-import api.account.AccountResource;
-import api.hearbeat.HeartbeatResource;
-import application.AccountService;
+import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
-import javax.ws.rs.core.Application;
-import org.eclipse.jetty.server.Handler;
+import java.util.logging.Logger;
+
+import api.account.AccountResource;
+import api.hearbeat.HeartbeatResource;
+import persistence.AccountRepositoryInMemory;
+import application.AccountService;
+
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-import persistence.AccountRepositoryInMemory;
-
 
 public class TradingServer implements Runnable {
-    private static final int PORT = 8181;
+    private static final Logger LOGGER = Logger.getLogger(
+            TradingServer.class.getName()
+    );
+    //All exceptionsmappers should be in this folder
+    private static final String EXCEPTION_MAPPERS_PATH = "api/exceptionmappers";
 
     public static void main(String[] args) {
         new TradingServer().run();
     }
 
-    public void run() {
-
-        // Setup resources (API)
-        AccountResource accountResource = new AccountResource(new AccountService(new
-                AccountRepositoryInMemory()));
+    private static HashSet<Object> getContextResources() {
+        HashSet<Object> resources = new HashSet<>();
+        AccountResource accountResource = new AccountResource(new AccountService(
+                new AccountRepositoryInMemory()));
         HeartbeatResource heartBeatResource = new HeartbeatResource();
 
-        // Setup API context (JERSEY + JETTY)
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        ResourceConfig resourceConfig = ResourceConfig.forApplication(new Application() {
+        //TODO those will add up...
+        resources.add(accountResource);
+        resources.add(heartBeatResource);
+        return resources;
+    }
 
+    private ResourceConfig createResourceConfiguration() {
+        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(new Application() {
             @Override
             public Set<Object> getSingletons() {
-                HashSet<Object> resourcesContext = new HashSet<>();
-                resourcesContext.add(accountResource);
-                resourcesContext.add(heartBeatResource);
-                return resourcesContext;
+                return getContextResources();
             }
         });
 
-        Server server = new Server(PORT);
+        resourceConfiguration.packages(EXCEPTION_MAPPERS_PATH);
+        return resourceConfiguration;
+    }
 
-        ServletContextHandler contextHandler = new ServletContextHandler(server, "/");
+    @Override
+    public void run() {
+        // Get port ENV variable, if it is set, else use default port.
+        String portStr = System.getenv("TRADING_API_PORT");
+        int port = 8181;
+        if (portStr != null) {
+            port = Integer.parseInt(portStr);
+            LOGGER.info("Using port " + port);
+        } else {
+            LOGGER.info("TRADING_API_PORT not set, using default port " + port);
+        }
 
-        ServletContainer servletContainer = new ServletContainer(resourceConfig);
-        ServletHolder servletHolder = new ServletHolder(servletContainer);
-
-        servletHolder.setInitParameter("jersey.config.server.provider.packages", "resources");
-        context.addServlet(servletHolder, "/*");
-        contextHandler.addServlet(servletHolder, "/*");
-
-        // Setup resources (API)
-
-        // Setup http server
-        ContextHandlerCollection contexts = new ContextHandlerCollection();
-        contexts.setHandlers(new Handler[]{context});
-        server.setHandler(contexts);
+        Server server = new Server(port);
+        ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
+        ResourceConfig resourceConfiguration = createResourceConfiguration();
+        ServletContainer container = new ServletContainer(resourceConfiguration);
+        ServletHolder servletHolder = new ServletHolder(container);
+        servletContextHandler.addServlet(servletHolder, "/*");
 
         try {
             server.start();

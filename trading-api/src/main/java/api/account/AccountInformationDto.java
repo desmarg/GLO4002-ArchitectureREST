@@ -4,21 +4,21 @@ import domain.investorprofile.InvestorProfile;
 
 public class AccountInformationDto extends AccountDto {
     private InvestorProfile investorProfile;
-    private Long accountNumber;
+    private long accountNumber;
 
     public InvestorProfile getInvestorProfile() {
-        return investorProfile;
+        return this.investorProfile;
     }
 
     public void setInvestorProfile(InvestorProfile investorProfile) {
         this.investorProfile = investorProfile;
     }
 
-    public Long getAccountNumber() {
-        return accountNumber;
+    public long getAccountNumber() {
+        return this.accountNumber;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
 }

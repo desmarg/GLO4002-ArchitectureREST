@@ -30,7 +30,7 @@ public class CustomJsonProvider extends JacksonJaxbJsonProvider {
         mapper.findAndRegisterModules();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.setDateFormat(new StdDateFormat());
-     }
+    }
 
     public CustomJsonProvider() {
         super();

@@ -1,5 +1,6 @@
 package persistence;
 
+import api.account.AccountCreatorDto;
 import domain.Account;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,16 +9,18 @@ import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountRepositoryInMemoryTest {
 
-    private static final long AN_ACCOUNT_NUMBER = 123L;
-    private static final long NON_EXISTING_ACCOUNT_NUMBER = 456L;
+    private static final Long AN_ACCOUNT_NUMBER = 123L;
+    private static final Long NON_EXISTING_ACCOUNT_NUMBER = 456L;
 
     @Mock
     private Account account;
+
     private AccountRepositoryInMemory accountRepositoryInMemory;
 
     @Before
@@ -27,27 +30,12 @@ public class AccountRepositoryInMemoryTest {
     }
 
     @Test
-    public void whenAddingValidAccount_thenAccountIsAdded() throws AccountNotFoundByAccountNumberException{
-        accountRepositoryInMemory.add(account);
-        assertEquals(account, accountRepositoryInMemory.findByAccountNumber(AN_ACCOUNT_NUMBER));
+    public void whenAccountIsNotInRepository_thenAccountExistsReturnFalse(){
+        assertFalse(accountRepositoryInMemory.checkIfAccountExists(AN_ACCOUNT_NUMBER));
     }
 
-    @Test
-    public void givenCreatedAccount_whenFindingAccountByAccountNumber_thenReturnAccount() throws AccountNotFoundByAccountNumberException{
-        accountRepositoryInMemory.add(account);
-        assertEquals(account, accountRepositoryInMemory.findByAccountNumber(AN_ACCOUNT_NUMBER));
-    }
-
-    @Test
-    public void whenAddingValidAccount_thenItsAccountNumberIsReturned(){
-        long returnedAccountNumber = accountRepositoryInMemory.add(account);
-        long accountNumber = account.getAccountNumber();
-        assertEquals(returnedAccountNumber, accountNumber);
-    }
-
-    @Test(expected = AccountNotFoundByAccountNumberException.class)
-    public void givenNonexistentAccount_whenFindingAccountByAccountNumber_thenThrowAccountNotFoundException() throws AccountNotFoundByAccountNumberException{
+    @Test(expected = AccountNotFoundException.class)
+    public void givenNonexistentAccount_whenFindingAccount_thenThrowAccountNotFoundException() {
         accountRepositoryInMemory.findByAccountNumber(NON_EXISTING_ACCOUNT_NUMBER);
     }
-
 }
