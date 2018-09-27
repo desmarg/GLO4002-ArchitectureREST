@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.trading.interfaces.rest;
+package api.hearbeat;
 
 import java.time.OffsetDateTime;
 

@@ -6,21 +6,18 @@
 .settings/
 *.ipr
 *.iml
-
 # misc
 *.log
-
 #System Files
 .DS_Store
 Thumbs.db
 *.bak
 *.swp
-
 # compiled output
 **/target
+**/target/**
 **/src/main/frontend-resources
 **/src/main/generated-www
 dependency-reduced-pom.xml
-
 # node
 node_modules
