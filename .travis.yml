@@ -1,4 +1,4 @@
 language: java
 script:
     - mvn verify -B
-    - mvn checkstyle:check -pl application
+    - mvn checkstyle:check
