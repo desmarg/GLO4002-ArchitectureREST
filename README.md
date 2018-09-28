@@ -2,6 +2,14 @@
 
 [See here](CONTRIBUTING.md)
 
+# Remises
+
+[See here](http://projet2018.qualitelogicielle.ca/)
+
+# ENV
+The environment variable `TRADING_API_PORT` can be set, otherwise it
+will default to `8181`.
+
 # Linting
 
 ## Cmd

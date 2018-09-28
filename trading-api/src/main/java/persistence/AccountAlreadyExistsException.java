@@ -1,14 +1,8 @@
 package persistence;
 
-import api.account.APIException;
+public class AccountAlreadyExistsException extends RuntimeException {
 
-import java.text.MessageFormat;
-
-public class AccountAlreadyExistsException extends APIException {
-
-    public AccountAlreadyExistsException(String message, long investorId) {
-        super(message);
-        this.errorName = "ACCOUNT_ALREADY_OPEN";
-        this.errorDescription = "account already open for investor " + investorId;
+    public AccountAlreadyExistsException(Long investorId) {
+        super("account already open for investor " + investorId);
     }
 }

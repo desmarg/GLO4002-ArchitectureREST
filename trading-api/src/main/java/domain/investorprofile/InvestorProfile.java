@@ -1,22 +1,30 @@
 package domain.investorprofile;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.security.InvalidParameterException;
 
 public class InvestorProfile {
 
     private ProfileType profileType;
-    private ArrayList<String> focusAreas;
+    private List<String> focusAreas;
 
-    public InvestorProfile() {
-        this.profileType = ProfileType.CONSERVATIVE;
-        this.focusAreas = new ArrayList<>();
+    public InvestorProfile(ProfileType profileType, List<String> focusAreas) {
+        if (profileType == null) {
+            throw new InvalidParameterException("profileType cannot be null");
+        }
+
+        if (focusAreas == null) {
+            throw new InvalidParameterException("focusArea cannot be null");
+        }
+        this.profileType = profileType;
+        this.focusAreas = focusAreas;
     }
 
     public ProfileType getProfileType() {
-        return profileType;
+        return this.profileType;
     }
 
-    public ArrayList<String> getFocusAreas() {
-        return focusAreas;
+    public List<String> getFocusAreas() {
+        return this.focusAreas;
     }
 }

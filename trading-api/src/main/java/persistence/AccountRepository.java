@@ -1,11 +1,13 @@
 package persistence;
 
+import api.account.AccountCreatorDto;
 import domain.Account;
 
 public interface AccountRepository {
-    long add(Account account);
 
-    Account findByAccountNumber(long accountNumber) throws AccountNotFoundByAccountNumberException;
+    Account add(AccountCreatorDto accountCreatorDto);
 
-    boolean checkIfAccountExists(long investorId);
+    Account findByAccountNumber(Long accountNumber) throws AccountNotFoundException;
+
+    boolean checkIfAccountExists(Long investorId);
 }
