@@ -1,7 +1,5 @@
 package domain;
 
-import domain.investorprofile.TransactionId;
-
 public class Transaction {
     private TransactionId transactionId;
     private TransactionType transactionType;
@@ -12,8 +10,7 @@ public class Transaction {
 
 
     public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock, Credits transactionValue) {
-        //TODO: générer le transactionId
-        this.transactionId = transactionId;
+        this.transactionId = new TransactionId();
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
@@ -21,7 +18,7 @@ public class Transaction {
         this.transactionValue = transactionValue;
     }
 
-    public Credits calculateTransactionPrice(){
+    public Credits calculateTransactionPrice() {
         return transactionValue.multiplyByScalar(quantity);
     }
 }

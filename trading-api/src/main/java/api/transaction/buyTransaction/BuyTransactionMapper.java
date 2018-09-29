@@ -1,5 +1,6 @@
 package api.transaction.buyTransaction;
 
+import application.StockService;
 import domain.*;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -13,7 +14,8 @@ public interface BuyTransactionMapper {
         Stock stock = postBuyTransactionDto.getStock();
         Long quantity = postBuyTransactionDto.getQuantity();
         TransactionType transactionType = postBuyTransactionDto.getTransactionTypeType();
-        Credits stockPrice = Credits.fromFloat(2.0F);
+        Credits stockPrice = StockService.getStockPrice(stock, date);
+
 
         return new Transaction(transactionType, quantity, date, stock, stockPrice);
     }

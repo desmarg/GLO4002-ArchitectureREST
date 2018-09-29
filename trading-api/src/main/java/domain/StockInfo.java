@@ -9,13 +9,13 @@ public class StockInfo {
     private String market;
     private String symbol;
     private String type;
-    private ArrayList<Price> prices;
+    private ArrayList<PriceInfo> prices;
 
-    public ArrayList<Price> getPrices() {
+    public ArrayList<PriceInfo> getPrices() {
         return prices;
     }
 
-    public void setPrices(ArrayList<Price> prices) {
+    public void setPrices(ArrayList<PriceInfo> prices) {
         this.prices = prices;
     }
 
@@ -51,12 +51,12 @@ public class StockInfo {
         this.type = type;
     }
 
-    public double getPriceFromDate(String date) throws Exception {
-        for (Price price : this.prices) {
+    public Credits getPriceFromDate(DateTime date) {
+        for (PriceInfo price : this.prices) {
             if (price.getDate().equals(date)) {
                 return price.getPrice();
             }
         }
-        throw new StockNotFoundException(date);
+        throw new StockNotFoundException(this.symbol, this.market);
     }
 }

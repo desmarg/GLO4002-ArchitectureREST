@@ -34,14 +34,14 @@ public class AccountRepositoryInMemory implements AccountRepository {
                 investorProfile
         );
         this.ACCOUNT_NUMBER_COUNTER++;
-        this.investorIdByAccountNumber.put(account.getInvestorId(),account.getAccountNumber());
+        this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
         this.accountMap.put(account.getAccountNumber(), account);
         return account;
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber) throws AccountNotFoundException {
         Account account = this.accountMap.get(accountNumber);
-        if(account != null){
+        if (account != null) {
             return account;
         }
         throw new AccountNotFoundException(accountNumber);
