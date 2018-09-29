@@ -14,13 +14,17 @@ public class Credits implements Comparable<Credits> {
         this.amount = amount;
     }
 
-    public static Credits fromFloat(Float amount){
+    public static Credits fromFloat(double amount){
         BigDecimal bigDecimalAmount = BigDecimal.valueOf(amount);
         return new Credits(bigDecimalAmount);
     }
 
-    public void add(Credits money){
-        this.amount = this.amount.add(money.amount);
+    public void add(Credits amount){
+        this.amount = this.amount.add(amount.amount);
+    }
+
+    public void subtract(Credits amount) {
+        this.amount = this.amount.subtract(amount.amount);
     }
 
     public void multiply(Long quantity) {
@@ -39,6 +43,14 @@ public class Credits implements Comparable<Credits> {
     @Override
     public int compareTo(Credits money) {
         return this.amount.compareTo(money.amount);
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj instanceof Credits){
+            return ((Credits) obj).amount.equals(this.amount);
+        }
+        return false;
     }
 
 }
