@@ -18,10 +18,11 @@ public class Transaction {
         this.date = date;
         this.stock = stock;
     }
-    //calculateTransactionPrice
-    public float calculateTransactionPrice(){
+
+    public Credits calculateTransactionPrice(){
         //TODO stock.getPrice();
-        float stockPrice = 1;
-        return quantity * stockPrice;
+        Credits credit = Credits.fromFloat(180);
+        credit.multiply(quantity);
+        return credit;
     }
 }
