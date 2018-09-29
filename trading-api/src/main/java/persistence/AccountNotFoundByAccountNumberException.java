@@ -1,14 +1,15 @@
 package persistence;
 
 import api.account.APIException;
+import domain.AccountNumber;
 
 import java.text.MessageFormat;
 
 public class AccountNotFoundByAccountNumberException extends APIException {
 
-    public AccountNotFoundByAccountNumberException(String message, long accountNumber) {
+    public AccountNotFoundByAccountNumberException(String message, AccountNumber accountNumber) {
         super(message);
         this.errorName = "ACCOUNT_NOT_FOUND";
-        this.errorDescription = "account with number " + accountNumber + " not found";
+        this.errorDescription = "account with number " + accountNumber.toString() + " not found";
     }
 }

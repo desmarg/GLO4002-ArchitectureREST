@@ -4,9 +4,9 @@ import domain.investorprofile.TransactionId;
 
 public class Transaction {
     private TransactionId transactionId;
-    private long accountNumber;
+    private Long accountNumber;
     private TransactionType transactionType;
-    private long quantity;
+    private Long quantity;
     private DateTime date;
     private Stock stock;
     private Credits price;
@@ -21,5 +21,11 @@ public class Transaction {
         this.stock = stock;
         this.price = price;
     }
-    //calculateTransactionPrice
+
+    public Credits calculateTransactionPrice(){
+        //TODO stock.getPrice();
+        Credits credit = Credits.fromFloat(180);
+        credit.multiply(quantity);
+        return credit;
+    }
 }

@@ -13,7 +13,7 @@ public interface AccountMapper {
 
 
     @Mappings({
-            @Mapping(source = "accountNumber", target = "accountNumber"),
+            @Mapping(source = "accountNumber.id", target = "accountNumber"),
             @Mapping(source = "investorId", target = "investorId"),
             @Mapping(source = "investorProfile", target = "investorProfile"),
             @Mapping(source = "credits", target = "credits")
