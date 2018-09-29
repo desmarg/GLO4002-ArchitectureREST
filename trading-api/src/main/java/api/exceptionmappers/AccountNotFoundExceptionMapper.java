@@ -1,10 +1,11 @@
 package api.exceptionmappers;
 
+import api.account.ErrorResponse;
+import exception.AccountNotFoundException;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-import api.account.ErrorResponse;
-import persistence.AccountNotFoundException;
 
 
 @Provider
