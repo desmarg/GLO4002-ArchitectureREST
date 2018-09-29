@@ -2,6 +2,7 @@ package application;
 
 import api.account.AccountCreatorDto;
 import domain.Account;
+import domain.AccountNumber;
 import exception.AccountAlreadyExistsException;
 import persistence.AccountRepository;
 
@@ -18,7 +19,7 @@ public class AccountService {
         return this.accountRepository.add(accountCreatorDto);
     }
 
-    public Account findByAccountNumber(Long accountNumber) {
+    public Account findByAccountNumber(AccountNumber accountNumber) {
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
 

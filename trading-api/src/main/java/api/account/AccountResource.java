@@ -2,6 +2,7 @@ package api.account;
 
 import application.AccountService;
 import domain.Account;
+import domain.AccountNumber;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,7 +20,7 @@ public class AccountResource {
     @Path("/accounts/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber) {
-        Account account = this.accountService.findByAccountNumber(accountNumber);
+        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         AccountInformationDto accountInformationDto
                 = AccountMapper.INSTANCE.accountToAccountInformationDto(account);
         return Response.status(Response.Status.CREATED).entity(accountInformationDto).build();

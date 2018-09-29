@@ -20,5 +20,8 @@ public class Transaction {
         this.stock = stock;
         this.transactionValue = transactionValue;
     }
-    //calculateTransactionPrice
+
+    public Credits calculateTransactionPrice(){
+        return transactionValue.multiplyByScalar(quantity);
+    }
 }

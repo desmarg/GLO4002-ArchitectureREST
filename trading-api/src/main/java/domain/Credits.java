@@ -32,6 +32,12 @@ public class Credits implements Comparable<Credits> {
         this.amount = this.amount.multiply(rhs);
     }
 
+    //TODO Méthode temporaire j'ai besoin de pouvoir faire une multiplication sans modifier l'objet
+    public Credits multiplyByScalar(Long quantity) {
+        BigDecimal rhs = new BigDecimal(quantity);
+        return new Credits(this.amount.multiply(rhs));
+    }
+
     public String valueToString() {
         DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setMaximumFractionDigits(2);

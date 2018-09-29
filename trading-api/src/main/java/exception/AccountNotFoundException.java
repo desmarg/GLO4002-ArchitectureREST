@@ -1,8 +1,10 @@
 package exception;
 
+import domain.AccountNumber;
+
 public class AccountNotFoundException extends RuntimeException {
 
-    public AccountNotFoundException(Long accountNumber) {
-        super("account with number " + accountNumber + " not found");
+    public AccountNotFoundException(AccountNumber accountNumber) {
+        super("account with number " + accountNumber.toString() + " not found");
     }
 }

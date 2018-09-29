@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.security.InvalidParameterException;
 
 public class Account {
-    private Long accountNumber;
+    private AccountNumber accountNumber;
     private Long investorId;
     private InvestorProfile investorProfile;
     private String investorName;
@@ -61,10 +61,10 @@ public class Account {
         this.email = email;
         this.credits = credits;
         this.investorProfile = investorProfile;
-        this.accountNumber = accountNumber;
+        this.accountNumber = new AccountNumber(accountNumber);
     }
 
-    public Long getAccountNumber() {
+    public AccountNumber getAccountNumber() {
         return this.accountNumber;
     }
 
@@ -78,9 +78,5 @@ public class Account {
 
     public BigDecimal getCredits() {
         return this.credits;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
     }
 }

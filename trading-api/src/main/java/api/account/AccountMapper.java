@@ -11,7 +11,7 @@ public interface AccountMapper {
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
     @Mappings({
-            @Mapping(source = "accountNumber", target = "accountNumber"),
+            @Mapping(source = "accountNumber.id", target = "accountNumber"),
             @Mapping(source = "investorId", target = "investorId"),
             @Mapping(source = "investorProfile", target = "investorProfile"),
             @Mapping(source = "credits", target = "credits")
