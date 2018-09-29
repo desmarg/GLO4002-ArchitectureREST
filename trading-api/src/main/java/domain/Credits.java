@@ -19,21 +19,15 @@ public class Credits implements Comparable<Credits> {
         return new Credits(bigDecimalAmount);
     }
 
-    public void add(Credits amount) {
-        this.amount = this.amount.add(amount.amount);
+    public Credits add(Credits amount) {
+        return new Credits(this.amount.add(amount.amount));
     }
 
-    public void subtract(Credits amount) {
-        this.amount = this.amount.subtract(amount.amount);
+    public Credits subtract(Credits amount) {
+        return new Credits(this.amount.subtract(amount.amount));
     }
 
-    public void multiply(Long quantity) {
-        BigDecimal rhs = new BigDecimal(quantity);
-        this.amount = this.amount.multiply(rhs);
-    }
-
-    //TODO Méthode temporaire j'ai besoin de pouvoir faire une multiplication sans modifier l'objet
-    public Credits multiplyByScalar(Long quantity) {
+    public Credits multiply(Long quantity) {
         BigDecimal rhs = new BigDecimal(quantity);
         return new Credits(this.amount.multiply(rhs));
     }

@@ -19,6 +19,6 @@ public class Transaction {
     }
 
     public Credits calculateTransactionPrice() {
-        return transactionValue.multiplyByScalar(quantity);
+        return transactionValue.multiply(quantity);
     }
 }
