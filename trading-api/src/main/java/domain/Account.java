@@ -2,10 +2,14 @@ package domain;
 
 import api.account.InvalidCreditsAmountException;
 import domain.investorprofile.InvestorProfile;
+import domain.investorprofile.ProfileType;
 import exception.NotEnoughCreditsException;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Account {
     private AccountNumber accountNumber;
@@ -15,14 +19,14 @@ public class Account {
     private String email;
     private Credits credits;
     private List<Transaction> transactionList;
+    private Map<TransactionId, Long> stockWallet = new HashMap<>();
 
     public Account(
             Long investorId,
             String investorName,
             String email,
             Credits credits,
-            Long accountNumber,
-            InvestorProfile investorProfile
+            Long accountNumber
     ) {
         if (investorId == null) {
             throw new InvalidParameterException("investorId cannot be null");
@@ -54,20 +58,20 @@ public class Account {
             throw new InvalidParameterException("accountNumber cannot be negative");
         }
 
-        if (investorProfile == null) {
-            throw new InvalidParameterException("investorProfile cannot be null");
-        }
-
         this.investorId = investorId;
         this.investorName = investorName;
         this.email = email;
         this.credits = credits;
-        this.investorProfile = investorProfile;
+        this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
         this.accountNumber = new AccountNumber(accountNumber);
     }
 
     public AccountNumber getAccountNumber() {
         return this.accountNumber;
+    }
+
+    public Long getLongAccountNumber() {
+        return this.accountNumber.getId();
     }
 
     public InvestorProfile getInvestorProfile() {
@@ -82,12 +86,14 @@ public class Account {
         return this.credits;
     }
 
-    public void makeTransaction(Transaction transaction){
+    public void makeTransaction(Transaction transaction) {
         Credits transactionPrice = transaction.calculateTransactionPrice();
-        if(this.credits.compareTo(transactionPrice) < 0){
+        if (this.credits.compareTo(transactionPrice) < 0) {
             throw new NotEnoughCreditsException();
         }
         this.credits.subtract(transactionPrice);
+        this.transactionList.add(transaction);
 
+        this.stockWallet.put(transaction.getTransactionId(), transaction.getQuantity());
     }
 }

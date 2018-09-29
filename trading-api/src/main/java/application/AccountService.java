@@ -1,6 +1,5 @@
 package application;
 
-import api.account.PostAccountDto;
 import domain.Account;
 import domain.AccountNumber;
 import exception.AccountAlreadyExistsException;
@@ -14,9 +13,9 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account create(PostAccountDto postAccountDto) {
-        this.checkIfAccountExists(postAccountDto.getInvestorId());
-        return this.accountRepository.add(postAccountDto);
+    public void saveAccount(Account account) {
+        this.checkIfAccountExists(account.getInvestorId());
+        this.accountRepository.add(account);
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber) {
@@ -27,5 +26,9 @@ public class AccountService {
         if (this.accountRepository.checkIfAccountExists(investorId)) {
             throw new AccountAlreadyExistsException(investorId);
         }
+    }
+
+    public Long nextAccountNumber() {
+        return this.accountRepository.nextCounterValue();
     }
 }

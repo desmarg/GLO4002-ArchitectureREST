@@ -53,7 +53,7 @@ public class StockInfo {
 
     public Credits getPriceFromDate(DateTime date) {
         for (PriceInfo price : this.prices) {
-             DateTime dateTime= new DateTime(price.getDate());
+            DateTime dateTime = new DateTime(price.getDate());
             if (dateTime.equals((date))) {
                 return price.getPrice();
             }

@@ -2,7 +2,9 @@ package system;
 
 import api.account.AccountResource;
 import api.hearbeat.HeartbeatResource;
+import api.transaction.TransactionResource;
 import application.AccountService;
+import application.TransactionService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -27,13 +29,15 @@ public class TradingServer implements Runnable {
     }
 
     private static HashSet<Object> getContextResources() {
+        AccountService accountService = new AccountService(new AccountRepositoryInMemory());
         HashSet<Object> resources = new HashSet<>();
-        AccountResource accountResource = new AccountResource(new AccountService(
-                new AccountRepositoryInMemory()));
+        AccountResource accountResource = new AccountResource(accountService);
         HeartbeatResource heartBeatResource = new HeartbeatResource();
+        TransactionResource transactionResource = new TransactionResource(accountService, new TransactionService());
 
         //TODO those will add up...
         resources.add(accountResource);
+        resources.add(transactionResource);
         resources.add(heartBeatResource);
         return resources;
     }

@@ -4,13 +4,13 @@ import api.transaction.TransactionDto;
 import domain.TransactionType;
 
 public abstract class BuyTransactionDto extends TransactionDto {
-    private TransactionType transactionType;
+    private TransactionType type;
 
-    public TransactionType getTransactionTypeType() {
-        return this.transactionType;
+    public TransactionType getType() {
+        return this.type;
     }
 
-    public void setTransactionTypeType() {
-        this.transactionType = TransactionType.BUY;
+    public void setTransactionType() {
+        this.type = TransactionType.BUY;
     }
 }

@@ -1,10 +1,8 @@
 package api.account;
 
-import java.math.BigDecimal;
-
 public abstract class AccountDto {
     private Long investorId;
-    private BigDecimal credits;
+    private Float credits;
 
     public Long getInvestorId() {
         return this.investorId;
@@ -14,11 +12,11 @@ public abstract class AccountDto {
         this.investorId = investorId;
     }
 
-    public BigDecimal getCredits() {
+    public Float getCredits() {
         return this.credits;
     }
 
-    public void setCredits(BigDecimal credits) {
+    public void setCredits(Float credits) {
         this.credits = credits;
     }
 }

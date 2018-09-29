@@ -9,8 +9,9 @@ public class Transaction {
     private Credits transactionValue;
 
 
-    public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock, Credits transactionValue) {
-        this.transactionId = new TransactionId();
+    public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock,
+                       Credits transactionValue, TransactionId transactionId) {
+        this.transactionId = transactionId;
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
@@ -20,5 +21,13 @@ public class Transaction {
 
     public Credits calculateTransactionPrice() {
         return transactionValue.multiply(quantity);
+    }
+
+    public TransactionId getTransactionId() {
+        return transactionId;
+    }
+
+    public Long getQuantity() {
+        return quantity;
     }
 }

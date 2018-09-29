@@ -13,11 +13,11 @@ public interface BuyTransactionMapper {
         DateTime date = postBuyTransactionDto.getDate();
         Stock stock = postBuyTransactionDto.getStock();
         Long quantity = postBuyTransactionDto.getQuantity();
-        TransactionType transactionType = postBuyTransactionDto.getTransactionTypeType();
+        TransactionType transactionType = postBuyTransactionDto.getType();
+        TransactionId transactionId = new TransactionId();
         Credits stockPrice = StockService.getStockPrice(stock, date);
 
-
-        return new Transaction(transactionType, quantity, date, stock, stockPrice);
+        return new Transaction(transactionType, quantity, date, stock, stockPrice, transactionId);
     }
 
     @Mappings({

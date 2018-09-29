@@ -1,15 +1,10 @@
 package persistence;
 
-import api.account.PostAccountDto;
 import domain.Account;
 import domain.AccountNumber;
-import domain.investorprofile.InvestorProfile;
-import domain.investorprofile.ProfileType;
 import exception.AccountNotFoundException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AccountRepositoryInMemory implements AccountRepository {
@@ -18,25 +13,10 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
     private static Long ACCOUNT_NUMBER_COUNTER = 0L;
 
-    public Account add(PostAccountDto postAccountDto) {
-        // We use a temporary value here in case account's constructor
-        // throws.
-        Long tempAccountNumber = nextCounterValue();
-        ProfileType profileType = ProfileType.CONSERVATIVE;
-        List<String> focusAreas = new ArrayList<String>();
-        InvestorProfile investorProfile = new InvestorProfile(profileType, focusAreas);
-        Account account = new Account(
-                postAccountDto.getInvestorId(),
-                postAccountDto.getInvestorName(),
-                postAccountDto.getEmail(),
-                postAccountDto.getCredits(),
-                tempAccountNumber,
-                investorProfile
-        );
-        this.ACCOUNT_NUMBER_COUNTER++;
+    public void add(Account account) {
+        ACCOUNT_NUMBER_COUNTER++;
         this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
         this.accountMap.put(account.getAccountNumber(), account);
-        return account;
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber) throws AccountNotFoundException {
@@ -52,6 +32,6 @@ public class AccountRepositoryInMemory implements AccountRepository {
     }
 
     public Long nextCounterValue() {
-        return this.ACCOUNT_NUMBER_COUNTER + 1;
+        return ACCOUNT_NUMBER_COUNTER + 1;
     }
 }

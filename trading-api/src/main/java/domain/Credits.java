@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class Credits implements Comparable<Credits> {
-    private BigDecimal amount;
+    public BigDecimal amount;
 
     public Credits() {
         this.amount = new BigDecimal(0);
@@ -40,6 +40,9 @@ public class Credits implements Comparable<Credits> {
         return decimalFormat.format(this.amount);
     }
 
+    public Float valueToFloat() {
+        return this.amount.floatValue();
+    }
     @Override
     public int compareTo(Credits money) {
         return this.amount.compareTo(money.amount);

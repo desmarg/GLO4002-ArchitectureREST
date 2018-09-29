@@ -30,8 +30,9 @@ public class AccountResource {
     @Path("/accounts")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(PostAccountDto postAccountDto) {
-        Account account = this.accountService.create(postAccountDto);
+        Account account = AccountMapper.INSTANCE.postAccountDtoToAccount(postAccountDto, this.accountService.nextAccountNumber());
+        this.accountService.saveAccount(account);
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getAccountNumber()).build();
+                + account.getLongAccountNumber()).build();
     }
 }

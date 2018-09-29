@@ -1,6 +1,7 @@
 package api.account;
 
 import domain.Account;
+import domain.Credits;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -15,7 +16,23 @@ public interface AccountMapper {
             @Mapping(source = "accountNumber.id", target = "accountNumber"),
             @Mapping(source = "investorId", target = "investorId"),
             @Mapping(source = "investorProfile", target = "investorProfile"),
-            @Mapping(source = "credits.valueToString()", target = "credits")
+            @Mapping(source = "credits.amount", target = "credits")
     })
     GetAccountDto accountToGetAccountDto(Account account);
+
+    @Mappings({
+            @Mapping(source = "investorId", target = "investorId"),
+            @Mapping(source = "credits", target = "credits"),
+            @Mapping(source = "investorName", target = "investorName"),
+            @Mapping(source = "email", target = "email"),
+    })
+
+    default Account postAccountDtoToAccount(PostAccountDto postAccountDto, Long accountNumber) {
+        Long investorId = postAccountDto.getInvestorId();
+        Credits credits = Credits.fromFloat(postAccountDto.getCredits());
+        String investorName = postAccountDto.getInvestorName();
+        String email = postAccountDto.getEmail();
+
+        return new Account(investorId, investorName, email, credits, accountNumber);
+    }
 }
