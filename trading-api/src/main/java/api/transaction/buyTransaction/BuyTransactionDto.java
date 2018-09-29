@@ -1,7 +1,7 @@
 package api.transaction.buyTransaction;
 
 import api.transaction.TransactionDto;
-import domain.TransactionType;
+import domain.transaction.TransactionType;
 
 public abstract class BuyTransactionDto extends TransactionDto {
     private String type;

@@ -1,6 +1,6 @@
 package api.transaction.sellTransaction;
 
-import domain.Transaction;
+import domain.transaction.Transaction;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;

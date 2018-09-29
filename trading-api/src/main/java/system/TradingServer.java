@@ -22,7 +22,7 @@ public class TradingServer implements Runnable {
             TradingServer.class.getName()
     );
     //All exceptionsmappers should be in this folder
-    private static final String EXCEPTION_MAPPERS_PATH = "api/exceptionmappers";
+    private static final String EXCEPTION_MAPPERS_PATH = "exceptionmappers";
 
     public static void main(String[] args) {
         new TradingServer().run();

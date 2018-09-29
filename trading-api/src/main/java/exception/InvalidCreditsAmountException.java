@@ -1,4 +1,4 @@
-package api.account;
+package exception;
 
 public class InvalidCreditsAmountException extends RuntimeException {
 

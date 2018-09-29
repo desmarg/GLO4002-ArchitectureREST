@@ -1,5 +1,7 @@
-package domain;
+package domain.stock;
 
+import domain.Credits;
+import domain.DateTime;
 import exception.StockNotFoundException;
 
 import java.util.ArrayList;

@@ -2,7 +2,7 @@
 //
 //import domain.Credits;
 //import domain.DateTime;
-//import domain.Stock;
+//import domain.stock.Stock;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;

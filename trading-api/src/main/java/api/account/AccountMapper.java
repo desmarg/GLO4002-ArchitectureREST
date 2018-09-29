@@ -1,6 +1,6 @@
 package api.account;
 
-import domain.Account;
+import domain.account.Account;
 import domain.Credits;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

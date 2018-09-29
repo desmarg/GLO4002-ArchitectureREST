@@ -1,8 +1,8 @@
 package api.transaction.sellTransaction;
 
 import api.transaction.TransactionDto;
-import domain.TransactionId;
-import domain.TransactionType;
+import domain.transaction.TransactionId;
+import domain.transaction.TransactionType;
 
 public abstract class SellTransactionDto extends TransactionDto {
     private TransactionType transactionType;

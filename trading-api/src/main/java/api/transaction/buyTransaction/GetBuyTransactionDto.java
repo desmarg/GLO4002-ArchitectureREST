@@ -1,18 +1,26 @@
 package api.transaction.buyTransaction;
 
-import domain.TransactionId;
+import domain.transaction.Transaction;
+
+import java.util.UUID;
 
 public class GetBuyTransactionDto extends BuyTransactionDto {
-    private TransactionId transactionId;
+    private UUID transactionNumber;
 
     private Float purchasedPrice;
 
-    public TransactionId getTransactionId() {
-        return this.transactionId;
+    public GetBuyTransactionDto(Transaction transaction) {
+        this.transactionNumber = transaction.getTransactionId().getId();
+        this.purchasedPrice = transaction.getStockPrice().valueToFloat();
+        this.setType();
     }
 
-    public void setTransactionId(TransactionId transactionId) {
-        this.transactionId = transactionId;
+    public UUID getTransactionNumber() {
+        return this.transactionNumber;
+    }
+
+    public void setTransactionNumber(UUID transactionNumber) {
+        this.transactionNumber = transactionNumber;
     }
 
     public Float getPurchasedPrice() {

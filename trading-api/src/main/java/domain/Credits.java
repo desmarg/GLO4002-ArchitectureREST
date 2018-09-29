@@ -43,6 +43,7 @@ public class Credits implements Comparable<Credits> {
     public Float valueToFloat() {
         return this.amount.floatValue();
     }
+
     @Override
     public int compareTo(Credits money) {
         return this.amount.compareTo(money.amount);

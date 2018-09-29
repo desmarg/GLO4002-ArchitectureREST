@@ -1,4 +1,6 @@
-package domain;
+package domain.stock;
+
+import domain.Credits;
 
 public class PriceInfo {
     private String date;

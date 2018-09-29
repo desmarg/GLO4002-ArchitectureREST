@@ -1,6 +1,6 @@
 //package domain;
 //
-//import api.account.InvalidCreditsAmountException;
+//import exception.InvalidCreditsAmountException;
 //import domain.investorprofile.InvestorProfile;
 //import domain.investorprofile.ProfileType;
 //import org.junit.Test;

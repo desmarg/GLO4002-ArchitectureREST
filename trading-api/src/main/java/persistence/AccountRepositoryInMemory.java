@@ -1,7 +1,7 @@
 package persistence;
 
-import domain.Account;
-import domain.AccountNumber;
+import domain.account.Account;
+import domain.account.AccountNumber;
 import exception.AccountNotFoundException;
 
 import java.util.HashMap;

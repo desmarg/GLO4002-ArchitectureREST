@@ -1,8 +1,7 @@
 package api.transaction;
 
 import domain.DateTime;
-import domain.Stock;
-
+import domain.stock.Stock;
 
 public abstract class TransactionDto {
     private DateTime date;

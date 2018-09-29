@@ -2,8 +2,8 @@ package application;
 
 import domain.Credits;
 import domain.DateTime;
-import domain.Stock;
-import domain.StockInfo;
+import domain.stock.Stock;
+import domain.stock.StockInfo;
 import exception.StockNotFoundException;
 
 public class StockService {

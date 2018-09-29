@@ -1,8 +1,8 @@
 package persistence;
 
-import domain.Account;
+import domain.account.Account;
 import exception.AccountNotFoundException;
-import domain.AccountNumber;
+import domain.account.AccountNumber;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

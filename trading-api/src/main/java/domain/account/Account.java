@@ -1,14 +1,17 @@
-package domain;
+package domain.account;
 
-import api.account.InvalidCreditsAmountException;
+import domain.Credits;
 import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
+import domain.transaction.Transaction;
+import domain.transaction.TransactionId;
+import exception.InvalidCreditsAmountException;
 import exception.NotEnoughCreditsException;
+import exception.TransactionNotFoundException;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Account {
@@ -18,7 +21,7 @@ public class Account {
     private String investorName;
     private String email;
     private Credits credits;
-    private List<Transaction> transactionList;
+    private Map<TransactionId, Transaction> transactionList;
     private Map<TransactionId, Long> stockWallet;
 
     public Account(
@@ -64,7 +67,7 @@ public class Account {
         this.credits = credits;
         this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
         this.accountNumber = new AccountNumber(accountNumber);
-        this.transactionList = new ArrayList<>();
+        this.transactionList = new HashMap<>();
         this.stockWallet = new HashMap<>();
     }
 
@@ -91,11 +94,19 @@ public class Account {
     public void makeTransaction(Transaction transaction) {
         Credits transactionPrice = transaction.calculateTransactionPrice();
         if (this.credits.compareTo(transactionPrice) < 0) {
-            throw new NotEnoughCreditsException();
+            throw new NotEnoughCreditsException(transaction.getTransactionId());
         }
         this.credits.subtract(transactionPrice);
-        this.transactionList.add(transaction);
+        this.transactionList.put(transaction.getTransactionId(), transaction);
 
         this.stockWallet.put(transaction.getTransactionId(), transaction.getQuantity());
+    }
+
+    public Transaction getTransaction(TransactionId transactionId) {
+        Transaction transaction = transactionList.get(transactionId);
+        if (transaction == null) {
+            throw new TransactionNotFoundException(transactionId);
+        }
+        return transaction;
     }
 }

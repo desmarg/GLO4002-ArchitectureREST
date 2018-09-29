@@ -1,8 +1,8 @@
 package api.account;
 
 import application.AccountService;
-import domain.Account;
-import domain.AccountNumber;
+import domain.account.Account;
+import domain.account.AccountNumber;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

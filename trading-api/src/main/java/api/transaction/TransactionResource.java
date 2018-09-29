@@ -4,9 +4,10 @@ import api.transaction.buyTransaction.BuyTransactionMapper;
 import api.transaction.buyTransaction.PostBuyTransactionDto;
 import application.AccountService;
 import application.TransactionService;
-import domain.Account;
-import domain.AccountNumber;
-import domain.Transaction;
+import domain.account.Account;
+import domain.account.AccountNumber;
+import domain.transaction.Transaction;
+import domain.transaction.TransactionId;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,24 +23,24 @@ public class TransactionResource {
         this.accountService = accountService;
     }
 
-//    @GET
-//    @Path("/accounts/{accountNumber}/transactions/{transactionNumber}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response getAccountByAccountNumber(@PathParam("accountNumber")long accountNumber, @PathParam("transactionNumber")long accountNumber) {
-//        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-//        GetAccountDto accountInformationDto = AccountMapper.INSTANCE.accountToGetAccountDto(account);
-//        return Response.status(Response.Status.CREATED).entity(accountInformationDto).build();
-//    }
+    @GET
+    @Path("/accounts/{accountNumber}/transactions/{transactionId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber, @PathParam("transactionId") TransactionId transactionId) {
+        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Transaction transaction = transactionService.getTransaction(account, transactionId);
+        return Response.status(Response.Status.CREATED).entity(transaction).build();
+    }
 
     @POST
     @Path("/accounts/{accountNumber}/transactions")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response makeTransaction(@PathParam("accountNumber")long accountNumber, PostBuyTransactionDto postBuyTransactionDto) {
+    public Response makeTransaction(@PathParam("accountNumber") long accountNumber, PostBuyTransactionDto postBuyTransactionDto) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         Transaction transaction = BuyTransactionMapper.INSTANCE.buyTransactionDtoToTransaction(postBuyTransactionDto);
         TransactionService.makeTransaction(account, transaction);
 
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getLongAccountNumber()).build();
+                + account.getLongAccountNumber() + "/transactions/" + transaction.getStringTransactionId()).build();
     }
 }

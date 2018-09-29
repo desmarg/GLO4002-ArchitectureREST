@@ -1,7 +1,7 @@
 package application;
 
-import domain.Account;
-import domain.AccountNumber;
+import domain.account.Account;
+import domain.account.AccountNumber;
 import exception.AccountAlreadyExistsException;
 import persistence.AccountRepository;
 
