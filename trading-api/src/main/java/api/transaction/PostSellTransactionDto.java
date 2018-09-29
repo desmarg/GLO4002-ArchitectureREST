@@ -1,4 +1,4 @@
 package api.transaction;
 
-public class PostSellTransactionDto extends SellTransactionDto{
+public class PostSellTransactionDto extends SellTransactionDto {
 }

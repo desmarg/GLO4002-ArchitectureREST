@@ -1,20 +1,21 @@
 package api.transaction;
 
+import domain.DateTime;
 import domain.Stock;
 
 import java.util.Date;
 
 
 public abstract class TransactionDto {
-    private Date date;
+    private DateTime date;
     private Stock stock;
-    private Long quantity;
+    private long quantity;
 
-    public Date getDate() {
+    public DateTime getDate() {
         return this.date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 
@@ -22,7 +23,7 @@ public abstract class TransactionDto {
         return this.stock;
     }
 
-    public Long getQuantity() {
+    public long getQuantity() {
         return this.quantity;
     }
 
