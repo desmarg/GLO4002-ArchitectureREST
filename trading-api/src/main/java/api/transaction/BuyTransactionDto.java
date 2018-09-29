@@ -3,13 +3,13 @@ package api.transaction;
 import domain.TransactionType;
 
 public abstract class BuyTransactionDto extends TransactionDto {
-    private TransactionType type;
+    private TransactionType transactionType;
 
     public TransactionType getType() {
-        return this.type;
+        return this.transactionType;
     }
 
     public void setType() {
-        this.type = TransactionType.BUY;
+        this.transactionType = TransactionType.BUY;
     }
 }

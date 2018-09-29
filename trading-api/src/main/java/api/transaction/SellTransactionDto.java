@@ -4,14 +4,14 @@ import domain.TransactionType;
 import domain.investorprofile.TransactionId;
 
 public abstract class SellTransactionDto extends TransactionDto {
-    private TransactionType type;
+    private TransactionType transactionType;
     private TransactionId transactionId;
 
     public TransactionType getType() {
-        return this.type;
+        return this.transactionType;
     }
 
     public void setType() {
-        this.type = TransactionType.SELL;
+        this.transactionType = TransactionType.SELL;
     }
 }
