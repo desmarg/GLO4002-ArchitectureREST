@@ -37,7 +37,7 @@ public class TransactionResource {
     public Response makeTransaction(@PathParam("accountNumber")long accountNumber, PostBuyTransactionDto postBuyTransactionDto) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         Transaction transaction = BuyTransactionMapper.INSTANCE.buyTransactionDtoToTransaction(postBuyTransactionDto);
-        //TransactionService.makeTransaction(account, transaction);
+        TransactionService.makeTransaction(account, transaction);
 
 
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"

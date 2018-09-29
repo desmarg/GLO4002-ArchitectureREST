@@ -15,7 +15,7 @@ public interface AccountMapper {
             @Mapping(source = "accountNumber.id", target = "accountNumber"),
             @Mapping(source = "investorId", target = "investorId"),
             @Mapping(source = "investorProfile", target = "investorProfile"),
-            @Mapping(source = "credits", target = "credits")
+            @Mapping(source = "credits.valueToString()", target = "credits")
     })
     GetAccountDto accountToGetAccountDto(Account account);
 }

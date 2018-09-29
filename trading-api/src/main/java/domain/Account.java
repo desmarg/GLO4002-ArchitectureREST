@@ -2,9 +2,10 @@ package domain;
 
 import api.account.InvalidCreditsAmountException;
 import domain.investorprofile.InvestorProfile;
+import exception.NotEnoughCreditsException;
 
-import java.math.BigDecimal;
 import java.security.InvalidParameterException;
+import java.util.List;
 
 public class Account {
     private AccountNumber accountNumber;
@@ -12,13 +13,14 @@ public class Account {
     private InvestorProfile investorProfile;
     private String investorName;
     private String email;
-    private BigDecimal credits;
+    private Credits credits;
+    private List<Transaction> transactionList;
 
     public Account(
             Long investorId,
             String investorName,
             String email,
-            BigDecimal credits,
+            Credits credits,
             Long accountNumber,
             InvestorProfile investorProfile
     ) {
@@ -42,7 +44,7 @@ public class Account {
 
         if (credits == null) {
             throw new InvalidParameterException("credits cannot be null");
-        } else if (credits.compareTo(BigDecimal.ZERO) <= 0) {
+        } else if (credits.compareTo(Credits.fromFloat(0.00)) <= 0) {
             throw new InvalidCreditsAmountException();
         }
 
@@ -76,7 +78,16 @@ public class Account {
         return this.investorId;
     }
 
-    public BigDecimal getCredits() {
+    public Credits getCredits() {
         return this.credits;
+    }
+
+    public void makeTransaction(Transaction transaction){
+        Credits transactionPrice = transaction.calculateTransactionPrice();
+        if(this.credits.compareTo(transactionPrice) < 0){
+            throw new NotEnoughCreditsException();
+        }
+        this.credits.subtract(transactionPrice);
+
     }
 }
