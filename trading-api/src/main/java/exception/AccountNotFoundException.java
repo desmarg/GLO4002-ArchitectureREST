@@ -1,4 +1,4 @@
-package persistence;
+package exception;
 
 public class AccountNotFoundException extends RuntimeException {
 
