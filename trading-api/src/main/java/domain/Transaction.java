@@ -8,21 +8,20 @@ public class Transaction {
     private Long quantity;
     private DateTime date;
     private Stock stock;
+    private Credits transactionValue;
 
 
-    public Transaction(TransactionId transactionID, Long accountNumber, TransactionType transactionType, Long quantity, DateTime date, Stock stock){
+    public Transaction(TransactionId transactionID, Long accountNumber, TransactionType transactionType, Long quantity, DateTime date, Stock stock, Credits transactionValue){
         this.transactionID = transactionID;
         this.accountNumber = accountNumber;
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
         this.stock = stock;
+        this.transactionValue = transactionValue;
     }
 
     public Credits calculateTransactionPrice(){
-        //TODO stock.getPrice();
-        Credits credit = Credits.fromFloat(180);
-        credit.multiply(quantity);
-        return credit;
+        return transactionValue.multiplyByScalar(quantity);
     }
 }
