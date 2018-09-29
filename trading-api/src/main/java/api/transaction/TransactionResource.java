@@ -39,8 +39,7 @@ public class TransactionResource {
         Transaction transaction = BuyTransactionMapper.INSTANCE.buyTransactionDtoToTransaction(postBuyTransactionDto);
         TransactionService.makeTransaction(account, transaction);
 
-
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getAccountNumber()).build();
+                + account.getLongAccountNumber()).build();
     }
 }

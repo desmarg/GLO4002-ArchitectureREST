@@ -19,7 +19,7 @@ public class Account {
     private String email;
     private Credits credits;
     private List<Transaction> transactionList;
-    private Map<TransactionId, Long> stockWallet = new HashMap<>();
+    private Map<TransactionId, Long> stockWallet;
 
     public Account(
             Long investorId,
@@ -64,6 +64,8 @@ public class Account {
         this.credits = credits;
         this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
         this.accountNumber = new AccountNumber(accountNumber);
+        this.transactionList = new ArrayList<>();
+        this.stockWallet = new HashMap<>();
     }
 
     public AccountNumber getAccountNumber() {

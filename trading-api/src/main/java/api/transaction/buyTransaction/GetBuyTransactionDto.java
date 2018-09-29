@@ -4,7 +4,7 @@ import domain.TransactionId;
 
 public class GetBuyTransactionDto extends BuyTransactionDto {
     private TransactionId transactionId;
-    //TODO: Changer pour credits
+
     private Float purchasedPrice;
 
     public TransactionId getTransactionId() {

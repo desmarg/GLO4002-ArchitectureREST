@@ -9,6 +9,10 @@ public class Stock {
         this.symbol = symbol;
     }
 
+    public Stock() {
+
+    }
+
     public String getMarket() {
         return market;
     }

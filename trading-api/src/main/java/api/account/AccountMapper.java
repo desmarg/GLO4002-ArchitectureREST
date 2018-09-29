@@ -20,13 +20,6 @@ public interface AccountMapper {
     })
     GetAccountDto accountToGetAccountDto(Account account);
 
-    @Mappings({
-            @Mapping(source = "investorId", target = "investorId"),
-            @Mapping(source = "credits", target = "credits"),
-            @Mapping(source = "investorName", target = "investorName"),
-            @Mapping(source = "email", target = "email"),
-    })
-
     default Account postAccountDtoToAccount(PostAccountDto postAccountDto, Long accountNumber) {
         Long investorId = postAccountDto.getInvestorId();
         Credits credits = Credits.fromFloat(postAccountDto.getCredits());

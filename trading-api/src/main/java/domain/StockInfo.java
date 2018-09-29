@@ -54,7 +54,8 @@ public class StockInfo {
     public Credits getPriceFromDate(DateTime date) {
         for (PriceInfo price : this.prices) {
             DateTime dateTime = new DateTime(price.getDate());
-            if (dateTime.equals((date))) {
+
+            if (dateTime.isSameDay(date)) {
                 return price.getPrice();
             }
         }
