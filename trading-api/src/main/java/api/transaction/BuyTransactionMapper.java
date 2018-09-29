@@ -22,7 +22,7 @@ public interface BuyTransactionMapper {
             @Mapping(source = "date", target = "date"),
             @Mapping(source = "stock", target = "stock"),
             @Mapping(source = "quantity", target = "quantity"),
-            @Mapping(source = "purchasedPrice", target = "quantity"),
+            @Mapping(source = "purchasedPrice", target = "price"),
     })
     GetBuyTransactionDto transactionToGetBuyTransactionDto(Transaction transaction);
 }
