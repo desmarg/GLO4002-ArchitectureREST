@@ -1,9 +1,7 @@
-package persistence;
+package exception;
 
 import api.account.APIException;
 import domain.AccountNumber;
-
-import java.text.MessageFormat;
 
 public class AccountNotFoundByAccountNumberException extends APIException {
 

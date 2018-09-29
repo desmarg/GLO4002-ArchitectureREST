@@ -19,7 +19,7 @@ public class AccountResource {
     @GET
     @Path("/accounts/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccountByAccountNumber(@PathParam("accountNumber")long accountNumber) {
+    public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         GetAccountDto getAccountDto
                 = AccountMapper.INSTANCE.accountToGetAccountDto(account);

@@ -1,4 +1,4 @@
-package persistence;
+package exception;
 
 import domain.AccountNumber;
 

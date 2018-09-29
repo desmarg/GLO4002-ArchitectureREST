@@ -1,6 +1,7 @@
 package persistence;
 
 import domain.Account;
+import exception.AccountNotFoundException;
 import domain.AccountNumber;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,13 +24,13 @@ public class AccountRepositoryInMemoryTest {
     private AccountRepositoryInMemory accountRepositoryInMemory;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         accountRepositoryInMemory = new AccountRepositoryInMemory();
         BDDMockito.willReturn(AN_ACCOUNT_NUMBER).given(account).getAccountNumber();
     }
 
     @Test
-    public void whenAccountIsNotInRepository_thenAccountExistsReturnFalse(){
+    public void whenAccountIsNotInRepository_thenAccountExistsReturnFalse() {
         assertFalse(accountRepositoryInMemory.checkIfAccountExists(AN_ACCOUNT_NUMBER));
     }
 

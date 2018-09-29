@@ -5,13 +5,14 @@ public abstract class APIRunTimeException extends RuntimeException {
     protected String errorName;
     protected String errorDescription;
 
-    public APIRunTimeException(){}
+    public APIRunTimeException() {
+    }
 
-    public APIRunTimeException(String message){
+    public APIRunTimeException(String message) {
         super(message);
     }
 
-    public String getErrorName(){
+    public String getErrorName() {
         return this.errorName;
     }
 

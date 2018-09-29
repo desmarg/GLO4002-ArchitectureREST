@@ -3,7 +3,7 @@ package application;
 import api.account.PostAccountDto;
 import domain.Account;
 import domain.AccountNumber;
-import persistence.AccountAlreadyExistsException;
+import exception.AccountAlreadyExistsException;
 import persistence.AccountRepository;
 
 public class AccountService {

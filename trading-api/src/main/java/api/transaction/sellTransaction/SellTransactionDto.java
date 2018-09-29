@@ -1,17 +1,18 @@
-package api.transaction;
+package api.transaction.sellTransaction;
 
+import api.transaction.TransactionDto;
+import domain.TransactionId;
 import domain.TransactionType;
-import domain.investorprofile.TransactionId;
 
 public abstract class SellTransactionDto extends TransactionDto {
     private TransactionType transactionType;
     private TransactionId transactionId;
 
-    public TransactionType getType() {
+    public TransactionType getTransactionTypeType() {
         return this.transactionType;
     }
 
-    public void setType() {
+    public void setTransactionTypeType() {
         this.transactionType = TransactionType.SELL;
     }
 }

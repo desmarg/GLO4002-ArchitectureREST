@@ -1,6 +1,6 @@
-package api.transaction;
+package api.transaction.buyTransaction;
 
-import domain.investorprofile.TransactionId;
+import domain.TransactionId;
 
 public class GetBuyTransactionDto extends BuyTransactionDto {
     private TransactionId transactionId;

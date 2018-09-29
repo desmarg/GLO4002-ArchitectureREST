@@ -3,6 +3,7 @@ package persistence;
 import api.account.PostAccountDto;
 import domain.Account;
 import domain.AccountNumber;
+import exception.AccountNotFoundException;
 
 public interface AccountRepository {
 

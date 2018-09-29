@@ -1,7 +1,7 @@
 package api.exceptionmappers;
 
 import api.account.ErrorResponse;
-import persistence.AccountAlreadyExistsException;
+import exception.AccountAlreadyExistsException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

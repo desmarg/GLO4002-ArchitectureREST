@@ -3,14 +3,14 @@ package api.account;
 import java.math.BigDecimal;
 
 public abstract class AccountDto {
-    private long investorId;
+    private Long investorId;
     private BigDecimal credits;
 
-    public long getInvestorId() {
+    public Long getInvestorId() {
         return this.investorId;
     }
 
-    public void setInvestorId(long investorId) {
+    public void setInvestorId(Long investorId) {
         this.investorId = investorId;
     }
 

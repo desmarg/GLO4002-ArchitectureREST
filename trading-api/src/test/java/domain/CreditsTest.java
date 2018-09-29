@@ -14,7 +14,7 @@ public class CreditsTest {
 
 
     @Test
-    public void givenNewlyCreatedCredits_WhenDefaultCunstructor_ThenValueIsZero(){
+    public void givenNewlyCreatedCredits_WhenDefaultCunstructor_ThenValueIsZero() {
         Credits defaultCredits = new Credits();
         assertEquals(ZERO_REPRESENTATION, defaultCredits.valueToString());
     }

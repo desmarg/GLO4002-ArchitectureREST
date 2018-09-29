@@ -1,4 +1,4 @@
-package api.transaction;
+package api.transaction.sellTransaction;
 
 public class GetSellTransactionDto extends SellTransactionDto {
     //TODO: Change to credit

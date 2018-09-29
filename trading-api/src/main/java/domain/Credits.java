@@ -6,20 +6,20 @@ import java.text.DecimalFormat;
 public class Credits implements Comparable<Credits> {
     private BigDecimal amount;
 
-    public Credits(){
+    public Credits() {
         this.amount = new BigDecimal(0);
     }
 
-    public Credits(BigDecimal amount){
+    public Credits(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public static Credits fromFloat(double amount){
+    public static Credits fromFloat(double amount) {
         BigDecimal bigDecimalAmount = BigDecimal.valueOf(amount);
         return new Credits(bigDecimalAmount);
     }
 
-    public void add(Credits amount){
+    public void add(Credits amount) {
         this.amount = this.amount.add(amount.amount);
     }
 
@@ -30,6 +30,12 @@ public class Credits implements Comparable<Credits> {
     public void multiply(Long quantity) {
         BigDecimal rhs = new BigDecimal(quantity);
         this.amount = this.amount.multiply(rhs);
+    }
+
+    //TODO Méthode temporaire j'ai besoin de pouvoir faire une multiplication sans modifier l'objet
+    public Credits multiplyByScalar(Long quantity) {
+        BigDecimal rhs = new BigDecimal(quantity);
+        return new Credits(this.amount.multiply(rhs));
     }
 
     public String valueToString() {
@@ -46,8 +52,8 @@ public class Credits implements Comparable<Credits> {
     }
 
     @Override
-    public boolean equals(Object obj){
-        if (obj instanceof Credits){
+    public boolean equals(Object obj) {
+        if (obj instanceof Credits) {
             return ((Credits) obj).amount.equals(this.amount);
         }
         return false;
