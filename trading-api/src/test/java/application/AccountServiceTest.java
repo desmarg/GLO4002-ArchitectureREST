@@ -26,4 +26,6 @@ public class AccountServiceTest {
     @Test
     public void whenCreatingANewAccount_thenDelegateToRepository() {
         this.accountService.create(this.account);
-        BDDMockito.verify(this.accountRepository).add(this.a
+        BDDMockito.verify(this.accountRepository).add(this.account);
+    }
+}

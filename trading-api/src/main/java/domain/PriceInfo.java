@@ -1,14 +1,14 @@
 package domain;
 
 public class PriceInfo {
-    private DateTime date;
+    private String date;
     private Float price;
 
-    public DateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
