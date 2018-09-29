@@ -1,14 +1,15 @@
 package domain;
 
 import api.account.InvalidCreditsAmountException;
-import domain.investorprofile.ProfileType;
 import domain.investorprofile.InvestorProfile;
-
+import domain.investorprofile.ProfileType;
 import org.junit.Test;
+
 import java.math.BigDecimal;
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class AccountTest {
 
@@ -24,12 +25,12 @@ public class AccountTest {
     @Test
     public void whenCreatingANewAccount_thenItsProfileIsAlsoCreated() {
         Account newAccount = new Account(
-            AN_INVESTOR_ID,
-            AN_INVESTOR_NAME,
-            AN_INVESTOR_EMAIL,
-            A_CREDITS_AMOUNT,
-            A_VALID_ACCOUNT_NUMBER,
-            AN_INVESTOR_PROFILE
+                AN_INVESTOR_ID,
+                AN_INVESTOR_NAME,
+                AN_INVESTOR_EMAIL,
+                A_CREDITS_AMOUNT,
+                A_VALID_ACCOUNT_NUMBER,
+                AN_INVESTOR_PROFILE
         );
         assertNotNull(newAccount.getInvestorProfile());
     }
@@ -38,12 +39,12 @@ public class AccountTest {
     public void
     whenCreatingAccountWithInvalidCreditsAmount_thenThrowInvalidCreditsAmountException() {
         Account newAccount = new Account(
-            AN_INVESTOR_ID,
-            AN_INVESTOR_NAME,
-            AN_INVESTOR_EMAIL,
-            INVALID_CREDITS_AMOUNT,
-            A_VALID_ACCOUNT_NUMBER,
-            AN_INVESTOR_PROFILE
+                AN_INVESTOR_ID,
+                AN_INVESTOR_NAME,
+                AN_INVESTOR_EMAIL,
+                INVALID_CREDITS_AMOUNT,
+                A_VALID_ACCOUNT_NUMBER,
+                AN_INVESTOR_PROFILE
         );
     }
 }

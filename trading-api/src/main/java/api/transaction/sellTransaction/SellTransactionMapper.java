@@ -1,4 +1,4 @@
-package api.transaction;
+package api.transaction.sellTransaction;
 
 import domain.Transaction;
 import org.mapstruct.Mapping;

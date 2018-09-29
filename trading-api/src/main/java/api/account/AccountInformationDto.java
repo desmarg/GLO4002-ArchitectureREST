@@ -4,7 +4,7 @@ import domain.investorprofile.InvestorProfile;
 
 public class AccountInformationDto extends AccountDto {
     private InvestorProfile investorProfile;
-    private long accountNumber;
+    private Long accountNumber;
 
     public InvestorProfile getInvestorProfile() {
         return this.investorProfile;
@@ -14,11 +14,11 @@ public class AccountInformationDto extends AccountDto {
         this.investorProfile = investorProfile;
     }
 
-    public long getAccountNumber() {
+    public Long getAccountNumber() {
         return this.accountNumber;
     }
 
-    public void setAccountNumber(long accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 }

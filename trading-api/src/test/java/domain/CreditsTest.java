@@ -9,7 +9,7 @@ public class CreditsTest {
     private static final String ZeroStringRepresentation = "0.00";
 
     @Test
-    public void givenNewlyCreatedCredits_WhenDefaultCunstructor_ThenValueIsZero(){
+    public void givenNewlyCreatedCredits_WhenDefaultCunstructor_ThenValueIsZero() {
         Credits defaultCredits = new Credits();
         assertEquals(ZeroStringRepresentation, defaultCredits.valueToString());
     }

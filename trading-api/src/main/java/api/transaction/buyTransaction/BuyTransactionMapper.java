@@ -1,6 +1,6 @@
-package api.transaction;
+package api.transaction.buyTransaction;
 
-import domain.Transaction;
+import domain.*;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
@@ -8,13 +8,15 @@ import org.mapstruct.factory.Mappers;
 public interface BuyTransactionMapper {
     BuyTransactionMapper INSTANCE = Mappers.getMapper(BuyTransactionMapper.class);
 
-    @Mappings({
-            @Mapping(source = "date", target = "date"),
-            @Mapping(source = "stock", target = "stock"),
-            @Mapping(source = "quantity", target = "quantity"),
-            @Mapping(source = "transactionType", target = "transactionType")
-    })
-    Transaction BuyTransactionDtoToTransaction(PostBuyTransactionDto postBuyTransactionDto);
+    default Transaction buyTransactionDtoToTransaction(PostBuyTransactionDto postBuyTransactionDto) {
+        DateTime date = postBuyTransactionDto.getDate();
+        Stock stock = postBuyTransactionDto.getStock();
+        Long quantity = postBuyTransactionDto.getQuantity();
+        TransactionType transactionType = postBuyTransactionDto.getTransactionTypeType();
+        Credits stockPrice = Credits.fromFloat(2.0F);
+
+        return new Transaction(transactionType, quantity, date, stock, stockPrice);
+    }
 
     @Mappings({
             @Mapping(source = "transactionId", target = "transactionId"),
@@ -22,7 +24,7 @@ public interface BuyTransactionMapper {
             @Mapping(source = "date", target = "date"),
             @Mapping(source = "stock", target = "stock"),
             @Mapping(source = "quantity", target = "quantity"),
-            @Mapping(source = "purchasedPrice", target = "quantity"),
+            @Mapping(source = "purchasedPrice", target = "price"),
     })
     GetBuyTransactionDto transactionToGetBuyTransactionDto(Transaction transaction);
 }

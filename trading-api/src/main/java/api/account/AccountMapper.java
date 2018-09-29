@@ -8,7 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface AccountMapper {
-    // Lazy initialize the Mapper class
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
     @Mappings({

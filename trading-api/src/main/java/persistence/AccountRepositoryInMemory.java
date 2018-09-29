@@ -1,14 +1,14 @@
 package persistence;
 
 import api.account.AccountCreatorDto;
+import domain.Account;
 import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
-import domain.Account;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AccountRepositoryInMemory implements AccountRepository {
 

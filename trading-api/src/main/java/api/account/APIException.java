@@ -1,17 +1,20 @@
 package api.account;
 
-public abstract class APIException extends Exception{
+public abstract class APIException extends Exception {
 
     protected String errorName;
     protected String errorDescription;
 
-    public APIException(){};
+    public APIException() {
+    }
 
-    public APIException(String message){
+    ;
+
+    public APIException(String message) {
         super(message);
     }
 
-    public String getErrorName(){
+    public String getErrorName() {
         return this.errorName;
     }
 

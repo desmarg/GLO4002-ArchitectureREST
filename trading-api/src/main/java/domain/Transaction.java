@@ -4,22 +4,21 @@ import domain.investorprofile.TransactionId;
 
 public class Transaction {
     private TransactionId transactionId;
-    private long accountNumber;
     private TransactionType transactionType;
-    private long quantity;
+    private Long quantity;
     private DateTime date;
     private Stock stock;
-    private Credits price;
+    private Credits transactionValue;
 
 
-    public Transaction(TransactionId transactionId, long accountNumber, TransactionType transactionType, long quantity, DateTime date, Stock stock, Credits price) {
+    public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock, Credits transactionValue) {
+        //TODO: générer le transactionId
         this.transactionId = transactionId;
-        this.accountNumber = accountNumber;
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
         this.stock = stock;
-        this.price = price;
+        this.transactionValue = transactionValue;
     }
     //calculateTransactionPrice
 }

@@ -1,7 +1,7 @@
 package domain.investorprofile;
 
-import java.util.List;
 import java.security.InvalidParameterException;
+import java.util.List;
 
 public class InvestorProfile {
 

@@ -1,4 +1,4 @@
-package api.transaction;
+package api.transaction.buyTransaction;
 
 import domain.investorprofile.TransactionId;
 
