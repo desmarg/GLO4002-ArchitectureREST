@@ -2,15 +2,15 @@ package domain;
 
 
 public class Transaction {
-    private TransactionID transactionID;
-    private long accountNumber;
+    private TransactionId transactionID;
+    private Long accountNumber;
     private TransactionType transactionType;
-    private long quantity;
+    private Long quantity;
     private DateTime date;
     private Stock stock;
 
 
-    public Transaction(TransactionID transactionID, long accountNumber, TransactionType transactionType, long quantity, DateTime date, Stock stock){
+    public Transaction(TransactionId transactionID, Long accountNumber, TransactionType transactionType, Long quantity, DateTime date, Stock stock){
         this.transactionID = transactionID;
         this.accountNumber = accountNumber;
         this.transactionType = transactionType;
@@ -19,4 +19,9 @@ public class Transaction {
         this.stock = stock;
     }
     //calculateTransactionPrice
+    public float calculateTransactionPrice(){
+        //TODO stock.getPrice();
+        float stockPrice = 1;
+        return quantity * stockPrice;
+    }
 }

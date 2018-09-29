@@ -2,6 +2,7 @@ package persistence;
 
 import api.account.AccountCreatorDto;
 import domain.Account;
+import domain.AccountNumber;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertFalse;
 public class AccountRepositoryInMemoryTest {
 
     private static final Long AN_ACCOUNT_NUMBER = 123L;
-    private static final Long NON_EXISTING_ACCOUNT_NUMBER = 456L;
+    private static final AccountNumber NON_EXISTING_ACCOUNT_NUMBER = new AccountNumber(456L);
 
     @Mock
     private Account account;
