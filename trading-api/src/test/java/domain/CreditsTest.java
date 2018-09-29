@@ -28,8 +28,7 @@ public class CreditsTest {
     @Test
     public void givenNonZeroCredits_WhenMultiplyingWithQuantity_ThenMultiplyValue(){
         Credits credits = Credits.fromFloat(POINT_ZERO_FIZE);
-        credits.multiply(DOUBLE_QUANTITY);
-        assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
+        assertEquals(POINT_ONE_REPRESENTATION, credits.multiply(DOUBLE_QUANTITY).valueToString());
     }
 
 
@@ -37,16 +36,14 @@ public class CreditsTest {
     public void givenCredits_WhenAddingNonZeroCredits_ThenAddValue(){
         Credits credits = Credits.fromFloat(POINT_ZERO_FIZE);
         Credits creditsToAdd = Credits.fromFloat(POINT_ZERO_FIZE);
-        credits.add(creditsToAdd);
-        assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
+        assertEquals(POINT_ONE_REPRESENTATION, credits.add(creditsToAdd).valueToString());
     }
 
     @Test
     public void givenCredits_WhenSubtractingNonZeroCredits_ThenSubtractValue(){
         Credits credits = Credits.fromFloat(POINT_ZERO_FIZE);
         Credits creditsToSubtract = Credits.fromFloat(POINT_ZERO_FIZE);
-        credits.subtract(creditsToSubtract);
-        assertEquals(ZERO_REPRESENTATION, credits.valueToString());
+        assertEquals(ZERO_REPRESENTATION, credits.subtract(creditsToSubtract).valueToString());
     }
 
 
