@@ -1,6 +1,6 @@
 package application;
 
-import api.account.AccountCreatorDto;
+import api.account.PostAccountDto;
 import persistence.AccountRepository;
 
 import org.junit.Before;
@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class AccountServiceTest {
 
     @Mock
-    private AccountCreatorDto account;
+    private PostAccountDto account;
     @Mock
     private AccountRepository accountRepository;
     private AccountService accountService;
@@ -27,6 +27,4 @@ public class AccountServiceTest {
     @Test
     public void whenCreatingANewAccount_thenDelegateToRepository(){
         this.accountService.create(this.account);
-        BDDMockito.verify(this.accountRepository).add(this.account);
-    }
-}
+        BDDMockito.verify(this.accountRepository).add(this.a

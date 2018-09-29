@@ -1,6 +1,5 @@
 package persistence;
 
-import api.account.AccountCreatorDto;
 import domain.Account;
 import org.junit.Before;
 import org.junit.Test;

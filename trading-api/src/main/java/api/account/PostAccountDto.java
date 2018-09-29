@@ -1,6 +1,6 @@
 package api.account;
 
-public class AccountPostDto extends AccountDto {
+public class PostAccountDto extends AccountDto {
     private String investorName;
     private String email;
 

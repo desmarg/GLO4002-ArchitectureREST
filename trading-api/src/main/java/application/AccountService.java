@@ -1,6 +1,6 @@
 package application;
 
-import api.account.AccountCreatorDto;
+import api.account.PostAccountDto;
 import domain.Account;
 import persistence.AccountAlreadyExistsException;
 import persistence.AccountRepository;
@@ -13,9 +13,9 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account create(AccountCreatorDto accountCreatorDto) {
-        this.checkIfAccountExists(accountCreatorDto.getInvestorId());
-        return this.accountRepository.add(accountCreatorDto);
+    public Account create(PostAccountDto postAccountDto) {
+        this.checkIfAccountExists(postAccountDto.getInvestorId());
+        return this.accountRepository.add(postAccountDto);
     }
 
     public Account findByAccountNumber(Long accountNumber) {

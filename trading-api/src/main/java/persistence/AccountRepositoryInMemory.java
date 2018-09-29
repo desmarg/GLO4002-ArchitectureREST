@@ -1,6 +1,6 @@
 package persistence;
 
-import api.account.AccountCreatorDto;
+import api.account.PostAccountDto;
 import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
 import domain.Account;
@@ -15,7 +15,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private Map<Long, Account> accountMap = new HashMap<>();
     private static Long ACCOUNT_NUMBER_COUNTER = 0L;
 
-    public Account add(AccountCreatorDto accountCreatorDto) {
+    public Account add(PostAccountDto postAccountDto) {
         // We use a temporary value here in case account's constructor
         // throws.
         Long tempAccountNumber = this.ACCOUNT_NUMBER_COUNTER + 1;
@@ -23,10 +23,10 @@ public class AccountRepositoryInMemory implements AccountRepository {
         List<String> focusAreas = new ArrayList<String>();
         InvestorProfile investorProfile = new InvestorProfile(profileType, focusAreas);
         Account account = new Account(
-                accountCreatorDto.getInvestorId(),
-                accountCreatorDto.getInvestorName(),
-                accountCreatorDto.getEmail(),
-                accountCreatorDto.getCredits(),
+                postAccountDto.getInvestorId(),
+                postAccountDto.getInvestorName(),
+                postAccountDto.getEmail(),
+                postAccountDto.getCredits(),
                 tempAccountNumber,
                 investorProfile
         );
