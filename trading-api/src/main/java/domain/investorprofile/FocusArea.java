@@ -1,5 +1,3 @@
 package domain.investorprofile;
 
-public enum FocusArea {
-
-}
+public enum FocusArea {}

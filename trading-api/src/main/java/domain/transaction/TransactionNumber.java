@@ -24,7 +24,7 @@ public class TransactionNumber {
     @Override
     public boolean equals(Object other) {
         if (other instanceof TransactionNumber) {
-            return id.equals(((TransactionNumber) other).getId());
+            return this.id.equals(((TransactionNumber) other).getId());
         }
         return false;
     }
@@ -32,7 +32,7 @@ public class TransactionNumber {
     @Override
     public int hashCode() {
         int hash = 17;
-        hash = 31 * hash + id.hashCode();
+        hash = 31 * hash + this.id.hashCode();
         return hash;
     }
 }

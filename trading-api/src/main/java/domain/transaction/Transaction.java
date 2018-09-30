@@ -39,43 +39,43 @@ public class Transaction {
     }
 
 
-
     public Credits calculateTransactionPrice() {
-        return stockPrice.multiply(quantity);
+        return this.stockPrice.multiply(this.quantity);
     }
 
     public TransactionNumber getTransactionNumber() {
-        return transactionNumber;
+        return this.transactionNumber;
     }
 
     public String getStringTransactionId() {
-        return transactionNumber.getStringUUID();
+        return this.transactionNumber.getStringUUID();
     }
 
     public Long getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public Stock getStock() {
-        return stock;
+        return this.stock;
     }
 
     public Credits getPurchasedPrice() {
-        return purchasedPrice;
+        return this.purchasedPrice;
     }
 
     public Credits getStockPrice() {
-        return stockPrice;
+        return this.stockPrice;
     }
 
     public DateTime getDate() {
-        return date;
+        return this.date;
     }
 
     public TransactionType getTransactionType() {
-        return transactionType;
+        return this.transactionType;
     }
+
     public TransactionNumber getReferredTransactionNumber() {
-        return referredTransactionNumber;
+        return this.referredTransactionNumber;
     }
 }

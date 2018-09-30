@@ -8,10 +8,10 @@ public class AccountNumber {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
-    public void incrementId(){
+    public void incrementId() {
         this.id++;
     }
 
@@ -25,11 +25,11 @@ public class AccountNumber {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return this.id.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Account: " + id.toString();
+        return "Account: " + this.id.toString();
     }
 }

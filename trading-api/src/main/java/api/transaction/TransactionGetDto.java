@@ -8,7 +8,7 @@ public class TransactionGetDto extends TransactionDto {
     private float purchasedPrice;
 
     public UUID getTransactionNumber() {
-        return transactionNumber;
+        return this.transactionNumber;
     }
 
     public void setTransactionNumber(UUID transactionNumber) {
@@ -16,7 +16,7 @@ public class TransactionGetDto extends TransactionDto {
     }
 
     public float getPurchasedPrice() {
-        return purchasedPrice;
+        return this.purchasedPrice;
     }
 
     public void setPurchasedPrice(float purchasedPrice) {

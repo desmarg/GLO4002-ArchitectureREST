@@ -5,10 +5,10 @@ public class Stock {
     private String symbol;
 
     public String getMarket() {
-        return market;
+        return this.market;
     }
 
     public String getSymbol() {
-        return symbol;
+        return this.symbol;
     }
 }

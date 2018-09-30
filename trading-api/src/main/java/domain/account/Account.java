@@ -81,10 +81,10 @@ public class Account {
     }
 
     public Map<TransactionNumber, Transaction> getTransactionList() {
-        return transactionList;
+        return this.transactionList;
     }
 
     public Map<TransactionNumber, Long> getStockWallet() {
-        return stockWallet;
+        return this.stockWallet;
     }
 }
