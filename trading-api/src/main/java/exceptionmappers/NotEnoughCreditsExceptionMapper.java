@@ -14,7 +14,7 @@ public class NotEnoughCreditsExceptionMapper implements
     public Response toResponse(NotEnoughCreditsException e) {
         String errorName = "NOT_ENOUGH_CREDITS";
         String errorDescription = e.getMessage();
-        String transactionId = e.transactionId.getStringUUID();
+        String transactionId = e.transactionNumber.getStringUUID();
 
         ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionId);
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();

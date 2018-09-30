@@ -2,15 +2,15 @@ package domain.transaction;
 
 import java.util.UUID;
 
-public class TransactionId {
+public class TransactionNumber {
     private UUID id;
 
-    public TransactionId() {
+    public TransactionNumber() {
         this.id = UUID.randomUUID();
     }
 
-    public TransactionId(String id) {
-        this.id = UUID.fromString(id);
+    public TransactionNumber(UUID id) {
+        this.id = id;
     }
 
     public UUID getId() {
@@ -23,8 +23,8 @@ public class TransactionId {
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof TransactionId) {
-            return id.equals(((TransactionId) other).getId());
+        if (other instanceof TransactionNumber) {
+            return id.equals(((TransactionNumber) other).getId());
         }
         return false;
     }

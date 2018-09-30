@@ -1,9 +1,9 @@
 package exception;
 
-import domain.transaction.TransactionId;
+import domain.transaction.TransactionNumber;
 
 public class TransactionNotFoundException extends RuntimeException {
-    public TransactionNotFoundException(TransactionId transactionId) {
-        super("transaction with number " + transactionId.getStringUUID() + " not found");
+    public TransactionNotFoundException(TransactionNumber transactionNumber) {
+        super("transaction with number " + transactionNumber.getStringUUID() + " not found");
     }
 }

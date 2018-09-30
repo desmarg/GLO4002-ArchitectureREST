@@ -1,13 +1,13 @@
 package exception;
 
-import domain.transaction.TransactionId;
+import domain.transaction.TransactionNumber;
 
 public class NotEnoughCreditsException extends RuntimeException {
-    public TransactionId transactionId;
+    public TransactionNumber transactionNumber;
 
-    public NotEnoughCreditsException(TransactionId transactionId) {
+    public NotEnoughCreditsException(TransactionNumber transactionNumber) {
         super("not enough credits in wallet");
-        this.transactionId = transactionId;
+        this.transactionNumber = transactionNumber;
     }
 }
 

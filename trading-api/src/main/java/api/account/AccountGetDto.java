@@ -2,7 +2,7 @@ package api.account;
 
 import domain.investorprofile.InvestorProfile;
 
-public class GetAccountDto extends AccountDto {
+public class AccountGetDto extends AccountDto {
 
     private InvestorProfile investorProfile;
     private long accountNumber;

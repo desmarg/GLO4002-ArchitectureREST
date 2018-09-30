@@ -1,14 +1,11 @@
 package api.transaction;
 
-import api.transaction.buyTransaction.BuyTransactionMapper;
-import api.transaction.buyTransaction.GetBuyTransactionDto;
-import api.transaction.buyTransaction.PostBuyTransactionDto;
 import application.AccountService;
 import application.TransactionService;
 import domain.account.Account;
 import domain.account.AccountNumber;
 import domain.transaction.Transaction;
-import domain.transaction.TransactionId;
+import domain.transaction.TransactionNumber;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,22 +21,22 @@ public class TransactionResource {
         this.accountService = accountService;
     }
 
-    @GET
-    @Path("/accounts/{accountNumber}/transactions/{transactionId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber, @PathParam("transactionId") TransactionId transactionId) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        Transaction transaction = transactionService.getTransaction(account, transactionId);
-        GetBuyTransactionDto getBuyTransactionDto = BuyTransactionMapper.INSTANCE.transactionToGetBuyTransactionDto(transaction);
-        return Response.status(Response.Status.CREATED).entity(getBuyTransactionDto).build();
-    }
+//    @GET
+//    @Path("/accounts/{accountNumber}/transactions/{transactionNumber}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response getTransaction(@PathParam("accountNumber") long accountNumber, @PathParam("transactionNumber") TransactionNumber transactionNumber) {
+//        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+//        Transaction transaction = transactionService.getTransaction(account, transactionNumber);
+//        TransactionGetDto transactionGetDto = TransactionMapper.INSTANCE.transactionToGetBuyTransactionDto(transaction);
+//        return Response.status(Response.Status.CREATED).entity(transactionGetDto).build();
+//    }
 
     @POST
     @Path("/accounts/{accountNumber}/transactions")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response makeTransaction(@PathParam("accountNumber") long accountNumber, PostBuyTransactionDto postBuyTransactionDto) {
+    public Response makeTransaction(@PathParam("accountNumber") long accountNumber, TransactionPostDto transactionPostDto) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        Transaction transaction = BuyTransactionMapper.INSTANCE.buyTransactionDtoToTransaction(postBuyTransactionDto);
+        Transaction transaction = TransactionPostDtoToTransactionAssembler.createTransaction(transactionPostDto);
         TransactionService.makeTransaction(account, transaction);
 
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"

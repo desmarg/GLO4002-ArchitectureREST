@@ -5,18 +5,19 @@ import domain.DateTime;
 import domain.stock.Stock;
 
 public class Transaction {
-    private TransactionId transactionNumber;
+    private TransactionNumber transactionNumber;
     private TransactionType transactionType;
     private Long quantity;
     private DateTime date;
     private Stock stock;
     private Credits stockPrice;
     private Credits purchasedPrice;
+    private TransactionNumber referredTransactionNumber;
 
 
     public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock,
-                       Credits stockPrice, TransactionId transactionId) {
-        this.transactionNumber = transactionId;
+                       Credits stockPrice) {
+        this.transactionNumber = new TransactionNumber();
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
@@ -25,11 +26,25 @@ public class Transaction {
         this.purchasedPrice = this.calculateTransactionPrice();
     }
 
+    public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock,
+                       Credits stockPrice, TransactionNumber referredTransactionNumber) {
+        this.transactionNumber = new TransactionNumber();
+        this.transactionType = transactionType;
+        this.quantity = quantity;
+        this.date = date;
+        this.stock = stock;
+        this.stockPrice = stockPrice;
+        this.purchasedPrice = this.calculateTransactionPrice();
+        this.referredTransactionNumber = referredTransactionNumber;
+    }
+
+
+
     public Credits calculateTransactionPrice() {
         return stockPrice.multiply(quantity);
     }
 
-    public TransactionId getTransactionNumber() {
+    public TransactionNumber getTransactionNumber() {
         return transactionNumber;
     }
 
@@ -41,25 +56,12 @@ public class Transaction {
         return quantity;
     }
 
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-
     public Stock getStock() {
         return stock;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
-
     public Credits getPurchasedPrice() {
         return purchasedPrice;
-    }
-
-    public void setPurchasedPrice(Credits purchasedPrice) {
-        this.purchasedPrice = purchasedPrice;
     }
 
     public Credits getStockPrice() {
@@ -68,5 +70,12 @@ public class Transaction {
 
     public DateTime getDate() {
         return date;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+    public TransactionNumber getReferredTransactionNumber() {
+        return referredTransactionNumber;
     }
 }

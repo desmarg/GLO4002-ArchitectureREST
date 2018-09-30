@@ -1,6 +1,6 @@
 //package application;
 //
-//import api.account.PostAccountDto;
+//import api.account.AccountPostDto;
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@
 //public class AccountServiceTest {
 //
 //    @Mock
-//    private PostAccountDto account;
+//    private AccountPostDto account;
 //    @Mock
 //    private AccountRepository accountRepository;
 //    private AccountService accountService;

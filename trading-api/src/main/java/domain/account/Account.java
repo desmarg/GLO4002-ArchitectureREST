@@ -4,7 +4,7 @@ import domain.Credits;
 import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
 import domain.transaction.Transaction;
-import domain.transaction.TransactionId;
+import domain.transaction.TransactionNumber;
 import exception.InvalidCreditsAmountException;
 import exception.NotEnoughCreditsException;
 import exception.TransactionNotFoundException;
@@ -21,8 +21,8 @@ public class Account {
     private String investorName;
     private String email;
     private Credits credits;
-    private Map<TransactionId, Transaction> transactionList;
-    private Map<TransactionId, Long> stockWallet;
+    private Map<TransactionNumber, Transaction> transactionList;
+    private Map<TransactionNumber, Long> stockWallet;
 
     public Account(
             Long investorId,
@@ -31,36 +31,6 @@ public class Account {
             Credits credits,
             AccountNumber accountNumber
     ) {
-        if (investorId == null) {
-            throw new InvalidParameterException("investorId cannot be null");
-        } else if (investorId < 0) {
-            throw new InvalidParameterException("investorId cannot be negative");
-        }
-
-        if (investorName == null) {
-            throw new InvalidParameterException("investorName cannot be null");
-        } else if (investorName.isEmpty()) {
-            throw new InvalidParameterException("investorName cannot be empty");
-        }
-
-        if (email == null) {
-            throw new InvalidParameterException("email cannot be null");
-        } else if (email.isEmpty()) {
-            throw new InvalidParameterException("email cannot be empty");
-        }
-
-        if (credits == null) {
-            throw new InvalidParameterException("credits cannot be null");
-        } else if (credits.compareTo(Credits.fromFloat(0.00)) <= 0) {
-            throw new InvalidCreditsAmountException();
-        }
-
-        if (accountNumber == null) {
-            throw new InvalidParameterException("accountNumber cannot be null");
-        } else if (accountNumber.getId() < 0) {
-            throw new InvalidParameterException("accountNumber cannot be negative");
-        }
-
         this.investorId = investorId;
         this.investorName = investorName;
         this.email = email;
@@ -91,21 +61,31 @@ public class Account {
         return this.credits;
     }
 
-    public void makeTransaction(Transaction transaction) {
+    public void buyTransaction(Transaction transaction) {
         Credits transactionPrice = transaction.calculateTransactionPrice();
         if (this.credits.compareTo(transactionPrice) < 0) {
             throw new NotEnoughCreditsException(transaction.getTransactionNumber());
         }
         this.credits.subtract(transactionPrice);
         this.transactionList.put(transaction.getTransactionNumber(), transaction);
-
         this.stockWallet.put(transaction.getTransactionNumber(), transaction.getQuantity());
     }
 
-    public Transaction getTransaction(TransactionId transactionId) {
-        Transaction transaction = transactionList.get(transactionId);
+    public void sellTransaction(Transaction transaction) {
+
+//        Credits transactionPrice = transaction.calculateTransactionPrice();
+//        if (this.credits.compareTo(transactionPrice) < 0) {
+//            throw new NotEnoughCreditsException(transaction.getTransactionNumber());
+//        }
+//        this.credits.subtract(transactionPrice);
+//        this.transactionList.put(transaction.getTransactionNumber(), transaction);
+//        this.stockWallet.put(transaction.getTransactionNumber(), transaction.getQuantity());
+    }
+
+    public Transaction getTransaction(TransactionNumber transactionNumber) {
+        Transaction transaction = transactionList.get(transactionNumber);
         if (transaction == null) {
-            throw new TransactionNotFoundException(transactionId);
+            throw new TransactionNotFoundException(transactionNumber);
         }
         return transaction;
     }
