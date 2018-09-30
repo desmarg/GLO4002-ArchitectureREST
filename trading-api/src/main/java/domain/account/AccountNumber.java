@@ -11,6 +11,10 @@ public class AccountNumber {
         return id;
     }
 
+    public void incrementId(){
+        this.id++;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof AccountNumber) {

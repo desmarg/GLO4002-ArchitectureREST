@@ -29,7 +29,7 @@ public class Account {
             String investorName,
             String email,
             Credits credits,
-            Long accountNumber
+            AccountNumber accountNumber
     ) {
         if (investorId == null) {
             throw new InvalidParameterException("investorId cannot be null");
@@ -57,7 +57,7 @@ public class Account {
 
         if (accountNumber == null) {
             throw new InvalidParameterException("accountNumber cannot be null");
-        } else if (accountNumber < 0) {
+        } else if (accountNumber.getId() < 0) {
             throw new InvalidParameterException("accountNumber cannot be negative");
         }
 
@@ -66,7 +66,7 @@ public class Account {
         this.email = email;
         this.credits = credits;
         this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
-        this.accountNumber = new AccountNumber(accountNumber);
+        this.accountNumber = accountNumber;
         this.transactionList = new HashMap<>();
         this.stockWallet = new HashMap<>();
     }

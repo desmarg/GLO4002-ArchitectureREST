@@ -2,7 +2,7 @@ package api.account;
 
 public abstract class AccountDto {
     private Long investorId;
-    private Float credits;
+    private float credits;
 
     public Long getInvestorId() {
         return this.investorId;
@@ -12,7 +12,7 @@ public abstract class AccountDto {
         this.investorId = investorId;
     }
 
-    public Float getCredits() {
+    public float getCredits() {
         return this.credits;
     }
 

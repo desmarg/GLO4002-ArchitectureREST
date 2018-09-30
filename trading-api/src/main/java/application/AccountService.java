@@ -28,7 +28,7 @@ public class AccountService {
         }
     }
 
-    public Long nextAccountNumber() {
+    public long nextAccountNumber() {
         return this.accountRepository.nextCounterValue();
     }
 }

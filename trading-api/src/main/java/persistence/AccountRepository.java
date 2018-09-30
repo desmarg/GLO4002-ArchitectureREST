@@ -12,5 +12,5 @@ public interface AccountRepository {
 
     boolean checkIfAccountExists(Long investorId);
 
-    Long nextCounterValue();
+    long nextCounterValue();
 }

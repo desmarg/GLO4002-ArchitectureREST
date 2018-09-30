@@ -21,16 +21,16 @@ public class AccountResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        GetAccountDto getAccountDto
-                = AccountMapper.INSTANCE.accountToGetAccountDto(account);
-        return Response.status(Response.Status.CREATED).entity(getAccountDto).build();
+
+        GetAccountDto getAccountDto = AccountToGetAccountDtoAssembler.makeGetAccountDto(account);
+        return Response.status(Response.Status.OK).entity(getAccountDto).build();
     }
 
     @POST
     @Path("/accounts")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(PostAccountDto postAccountDto) {
-        Account account = AccountMapper.INSTANCE.postAccountDtoToAccount(postAccountDto, this.accountService.nextAccountNumber());
+        Account account = PostAccountDtoToAccountAssembler.createAccount(postAccountDto, this.accountService.nextAccountNumber());
         this.accountService.saveAccount(account);
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"
                 + account.getLongAccountNumber()).build();
