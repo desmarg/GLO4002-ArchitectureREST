@@ -6,17 +6,17 @@ import domain.transaction.TransactionType;
 import java.util.UUID;
 
 public abstract class TransactionDto {
-    private TransactionType type;
+    private String type;
     private String date;
     private Stock stock;
     private UUID transactionNumber;
     private long quantity;
 
-    public TransactionType getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(TransactionType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

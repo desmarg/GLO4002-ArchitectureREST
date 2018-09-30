@@ -1,18 +1,18 @@
 package exceptionmappers;
 
 import api.account.ErrorResponse;
-import exception.NotEnoughCreditsException;
+import exception.NotEnoughStockException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class NotEnoughCreditsExceptionMapper implements
-        ExceptionMapper<NotEnoughCreditsException> {
+public class NotEnoughStockExceptionMapper implements
+        ExceptionMapper<NotEnoughStockException> {
 
-    public Response toResponse(NotEnoughCreditsException e) {
-        String errorName = "NOT_ENOUGH_CREDITS";
+    public Response toResponse(NotEnoughStockException e) {
+        String errorName = "NOT_ENOUGH_STOCK";
         String errorDescription = e.getMessage();
         String transactionId = e.getTransactionNumber().getStringUUID();
 

@@ -2,12 +2,12 @@ package exception;
 
 import domain.transaction.TransactionNumber;
 
-public class NotEnoughCreditsException extends RuntimeException {
+public class InvalidTransactionNumberException extends RuntimeException {
 
     private TransactionNumber transactionNumber;
 
-    public NotEnoughCreditsException(TransactionNumber transactionNumber) {
-        super("not enough credits in wallet");
+    public InvalidTransactionNumberException(TransactionNumber transactionNumber) {
+        super("the transaction number is invalid");
         this.transactionNumber = transactionNumber;
     }
 
@@ -15,4 +15,3 @@ public class NotEnoughCreditsException extends RuntimeException {
         return transactionNumber;
     }
 }
-

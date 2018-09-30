@@ -45,8 +45,8 @@ public class Credits implements Comparable<Credits> {
     }
 
     @Override
-    public int compareTo(Credits money) {
-        return this.amount.compareTo(money.amount);
+    public int compareTo(Credits credits) {
+        return this.amount.compareTo(credits.amount);
     }
 
 }

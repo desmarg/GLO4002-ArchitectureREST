@@ -7,10 +7,4 @@ import org.mapstruct.factory.Mappers;
 public interface TransactionMapper {
     TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
 
-//    @Mappings({
-//            @Mapping(source = "accountNumber", target = "accountNumber"),
-//            @Mapping(source = "credits", target = "credits")
-//    })
-//    TransactionGetDto transactionToGetBuyTransactionDto(Transaction transaction);
-
 }

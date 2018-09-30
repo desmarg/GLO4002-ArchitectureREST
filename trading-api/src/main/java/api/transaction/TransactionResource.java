@@ -26,9 +26,9 @@ public class TransactionResource {
 //    @GET
 //    @Path("/accounts/{accountNumber}/transactions/{transactionNumber}")
 //    @Produces(MediaType.APPLICATION_JSON)
-//    public Response getTransaction(@PathParam("accountNumber") long accountNumber, @PathParam("transactionNumber") TransactionNumber transactionNumber) {
+//    public Response getTransactionFromAll(@PathParam("accountNumber") long accountNumber, @PathParam("transactionNumber") TransactionNumber transactionNumber) {
 //        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-//        Transaction transaction = transactionService.getTransaction(account, transactionNumber);
+//        Transaction transaction = transactionService.getTransactionFromAll(account, transactionNumber);
 //        TransactionGetDto transactionGetDto = TransactionMapper.INSTANCE.transactionToGetBuyTransactionDto(transaction);
 //        return Response.status(Response.Status.CREATED).entity(transactionGetDto).build();
 //    }
