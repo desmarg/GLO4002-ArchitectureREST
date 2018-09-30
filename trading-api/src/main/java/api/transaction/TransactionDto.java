@@ -4,17 +4,8 @@ import domain.DateTime;
 import domain.stock.Stock;
 
 public abstract class TransactionDto {
-    private DateTime date;
     private Stock stock;
     private Long quantity;
-
-    public DateTime getDate() {
-        return this.date;
-    }
-
-    public void setDate(DateTime date) {
-        this.date = date;
-    }
 
     public Stock getStock() {
         return this.stock;

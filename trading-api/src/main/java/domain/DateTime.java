@@ -17,4 +17,9 @@ public class DateTime {
     public boolean isSameDay(DateTime dateTime) {
         return this.localDateTime.toLocalDate().equals(dateTime.localDateTime.toLocalDate());
     }
+
+    @Override
+    public String toString() {
+        return localDateTime.toString();
+    }
 }

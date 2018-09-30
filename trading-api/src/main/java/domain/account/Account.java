@@ -94,12 +94,12 @@ public class Account {
     public void makeTransaction(Transaction transaction) {
         Credits transactionPrice = transaction.calculateTransactionPrice();
         if (this.credits.compareTo(transactionPrice) < 0) {
-            throw new NotEnoughCreditsException(transaction.getTransactionId());
+            throw new NotEnoughCreditsException(transaction.getTransactionNumber());
         }
         this.credits.subtract(transactionPrice);
-        this.transactionList.put(transaction.getTransactionId(), transaction);
+        this.transactionList.put(transaction.getTransactionNumber(), transaction);
 
-        this.stockWallet.put(transaction.getTransactionId(), transaction.getQuantity());
+        this.stockWallet.put(transaction.getTransactionNumber(), transaction.getQuantity());
     }
 
     public Transaction getTransaction(TransactionId transactionId) {

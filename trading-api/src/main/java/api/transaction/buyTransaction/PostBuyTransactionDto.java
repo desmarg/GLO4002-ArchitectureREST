@@ -1,7 +1,15 @@
 package api.transaction.buyTransaction;
 
-public class PostBuyTransactionDto extends BuyTransactionDto {
+import domain.DateTime;
 
-    public PostBuyTransactionDto() {
+public class PostBuyTransactionDto extends BuyTransactionDto {
+    private DateTime date;
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public void setDate(DateTime date) {
+        this.date = date;
     }
 }

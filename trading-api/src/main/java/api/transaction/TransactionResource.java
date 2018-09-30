@@ -1,6 +1,7 @@
 package api.transaction;
 
 import api.transaction.buyTransaction.BuyTransactionMapper;
+import api.transaction.buyTransaction.GetBuyTransactionDto;
 import api.transaction.buyTransaction.PostBuyTransactionDto;
 import application.AccountService;
 import application.TransactionService;
@@ -29,7 +30,8 @@ public class TransactionResource {
     public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber, @PathParam("transactionId") TransactionId transactionId) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         Transaction transaction = transactionService.getTransaction(account, transactionId);
-        return Response.status(Response.Status.CREATED).entity(transaction).build();
+        GetBuyTransactionDto getBuyTransactionDto = BuyTransactionMapper.INSTANCE.transactionToGetBuyTransactionDto(transaction);
+        return Response.status(Response.Status.CREATED).entity(getBuyTransactionDto).build();
     }
 
     @POST

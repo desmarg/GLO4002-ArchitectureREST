@@ -40,21 +40,13 @@ public class Credits implements Comparable<Credits> {
         return decimalFormat.format(this.amount);
     }
 
-    public Float valueToFloat() {
+    public float valueToFloat() {
         return this.amount.floatValue();
     }
 
     @Override
     public int compareTo(Credits money) {
         return this.amount.compareTo(money.amount);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Credits) {
-            return ((Credits) obj).amount.equals(this.amount);
-        }
-        return false;
     }
 
 }

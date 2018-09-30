@@ -5,41 +5,36 @@ import domain.DateTime;
 import domain.stock.Stock;
 
 public class Transaction {
-    private TransactionId transactionId;
+    private TransactionId transactionNumber;
     private TransactionType transactionType;
     private Long quantity;
     private DateTime date;
     private Stock stock;
-
-    public Credits getStockPrice() {
-        return stockPrice;
-    }
-
     private Credits stockPrice;
-    private Credits transactionPrice;
+    private Credits purchasedPrice;
 
 
     public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock,
                        Credits stockPrice, TransactionId transactionId) {
-        this.transactionId = transactionId;
+        this.transactionNumber = transactionId;
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
         this.stock = stock;
         this.stockPrice = stockPrice;
-        this.transactionPrice = this.calculateTransactionPrice();
+        this.purchasedPrice = this.calculateTransactionPrice();
     }
 
     public Credits calculateTransactionPrice() {
         return stockPrice.multiply(quantity);
     }
 
-    public TransactionId getTransactionId() {
-        return transactionId;
+    public TransactionId getTransactionNumber() {
+        return transactionNumber;
     }
 
     public String getStringTransactionId() {
-        return transactionId.getStringUUID();
+        return transactionNumber.getStringUUID();
     }
 
     public Long getQuantity() {
@@ -51,4 +46,27 @@ public class Transaction {
     }
 
 
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public Credits getPurchasedPrice() {
+        return purchasedPrice;
+    }
+
+    public void setPurchasedPrice(Credits purchasedPrice) {
+        this.purchasedPrice = purchasedPrice;
+    }
+
+    public Credits getStockPrice() {
+        return stockPrice;
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
 }
