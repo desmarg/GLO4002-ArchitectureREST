@@ -1,10 +1,5 @@
 package api.transaction;
 
-import api.transaction.TransactionDto;
-import domain.Credits;
-import domain.DateTime;
-import domain.transaction.TransactionNumber;
-
 import java.util.UUID;
 
 public class TransactionGetDto extends TransactionDto {

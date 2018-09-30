@@ -18,7 +18,7 @@ public class TransactionPostDtoToTransactionAssembler {
         long quantity = transactionPostDto.getQuantity();
         DateTime dateTime = new DateTime(transactionPostDto.getDate());
         Stock stock = transactionPostDto.getStock();
-        Credits stockPrice = StockService.getStockPrice(stock, dateTime);
+        Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
 
         if (transactionPostDto.getType() == TransactionType.SELL) {
             TransactionNumber referredTransactionNumber = new TransactionNumber(transactionPostDto.getTransactionNumber());
