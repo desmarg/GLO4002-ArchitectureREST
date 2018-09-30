@@ -14,11 +14,11 @@ public class StockInfo {
     private ArrayList<PriceInfo> prices;
 
     public Credits getPriceFromDate(DateTime date) {
-        for (PriceInfo price : this.prices) {
-            DateTime dateTime = new DateTime(price.getDate());
+        for (PriceInfo priceInfo : this.prices) {
+            DateTime dateTime = new DateTime(priceInfo.getDate());
 
             if (dateTime.isSameDay(date)) {
-                return price.getPrice();
+                return priceInfo.getPrice();
             }
         }
         throw new StockNotFoundException(this.symbol, this.market);

@@ -6,7 +6,11 @@ import domain.investorprofile.ProfileType;
 import domain.stock.Stock;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
-import exception.*;
+import exception.InvalidQuantityException;
+import exception.InvalidTransactionNumberException;
+import exception.NotEnoughCreditsException;
+import exception.NotEnoughStockException;
+import exception.TransactionNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +49,7 @@ public class Account {
         if (this.credits.compareTo(transactionPrice) < 0) {
             throw new NotEnoughCreditsException(transaction.getTransactionNumber());
         }
-        if (transaction.getQuantity() <= 0){
+        if (transaction.getQuantity() <= 0) {
             throw new InvalidQuantityException(transaction.getTransactionNumber());
         }
         this.credits = this.credits.subtract(transactionPrice);
@@ -58,7 +62,7 @@ public class Account {
         Stock referredStock = transaction.getStock();
 
         long remainingStocks = this.getRemainingStocks(referredTransaction) - transaction.getQuantity();
-        if(remainingStocks < 0){
+        if (remainingStocks < 0) {
             throw new NotEnoughStockException(referredStock, transaction);
         }
 
@@ -74,6 +78,14 @@ public class Account {
             throw new TransactionNotFoundException(transactionNumber);
         }
         return transaction;
+    }
+
+    public long getRemainingStocks(Transaction referredTransaction) {
+        Long stocksRemaining = this.stockWallet.get(referredTransaction.getTransactionNumber());
+        if (stocksRemaining == null) {
+            throw new InvalidTransactionNumberException(referredTransaction.getTransactionNumber());
+        }
+        return stocksRemaining;
     }
 
     public AccountNumber getAccountNumber() {
@@ -102,13 +114,5 @@ public class Account {
 
     public Map<TransactionNumber, Long> getStockWallet() {
         return this.stockWallet;
-    }
-
-    public long getRemainingStocks(Transaction referredTransaction) {
-        Long stocksRemaining = stockWallet.get(referredTransaction.getTransactionNumber());
-        if(stocksRemaining == null){
-            throw new InvalidTransactionNumberException(referredTransaction.getTransactionNumber());
-        }
-        return stocksRemaining;
     }
 }
