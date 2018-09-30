@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/")
+@Path("/accounts")
 public class AccountResource {
     private AccountService accountService;
 
@@ -21,7 +21,7 @@ public class AccountResource {
     }
 
     @GET
-    @Path("/accounts/{accountNumber}")
+    @Path("/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
@@ -31,7 +31,7 @@ public class AccountResource {
     }
 
     @POST
-    @Path("/accounts")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountPostDto accountPostDto) {
         Account account = AccountPostDtoToAccountAssembler.createAccount(accountPostDto, this.accountService.nextAccountNumber());
