@@ -11,10 +11,9 @@ public class TransactionService {
     }
 
     public static void makeTransaction(Account account, Transaction transaction) {
-        if(transaction.getTransactionType() == TransactionType.BUY){
+        if (transaction.getTransactionType() == TransactionType.BUY) {
             account.buyTransaction(transaction);
-        }
-        else if(transaction.getTransactionType() == TransactionType.SELL){
+        } else if (transaction.getTransactionType() == TransactionType.SELL) {
             account.sellTransaction(transaction);
         }
     }

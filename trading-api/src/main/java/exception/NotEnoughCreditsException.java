@@ -12,7 +12,7 @@ public class NotEnoughCreditsException extends RuntimeException {
     }
 
     public TransactionNumber getTransactionNumber() {
-        return transactionNumber;
+        return this.transactionNumber;
     }
 }
 

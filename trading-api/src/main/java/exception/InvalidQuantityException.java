@@ -2,7 +2,7 @@ package exception;
 
 import domain.transaction.TransactionNumber;
 
-public class InvalidQuantityException extends RuntimeException{
+public class InvalidQuantityException extends RuntimeException {
 
     private TransactionNumber transactionNumber;
 
@@ -12,6 +12,6 @@ public class InvalidQuantityException extends RuntimeException{
     }
 
     public TransactionNumber getTransactionNumber() {
-        return transactionNumber;
+        return this.transactionNumber;
     }
 }

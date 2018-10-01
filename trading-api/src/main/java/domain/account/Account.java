@@ -1,16 +1,13 @@
 package domain.account;
 
 import domain.Credits;
+import domain.investorprofile.FocusArea;
 import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
 import domain.stock.Stock;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
-import exception.InvalidQuantityException;
-import exception.InvalidTransactionNumberException;
-import exception.NotEnoughCreditsException;
-import exception.NotEnoughStockException;
-import exception.TransactionNotFoundException;
+import exception.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +34,7 @@ public class Account {
         this.investorName = investorName;
         this.email = email;
         this.credits = credits;
-        this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
+        this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
         this.accountNumber = accountNumber;
         this.transactionList = new HashMap<>();
         this.stockWallet = new HashMap<>();

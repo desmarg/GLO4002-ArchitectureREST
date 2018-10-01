@@ -12,6 +12,6 @@ public class InvalidTransactionNumberException extends RuntimeException {
     }
 
     public TransactionNumber getTransactionNumber() {
-        return transactionNumber;
+        return this.transactionNumber;
     }
 }

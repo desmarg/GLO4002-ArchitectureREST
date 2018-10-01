@@ -1,7 +1,6 @@
 package api.transaction;
 
 import domain.stock.Stock;
-import domain.transaction.TransactionType;
 
 import java.util.UUID;
 

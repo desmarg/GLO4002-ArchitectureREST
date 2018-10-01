@@ -6,7 +6,7 @@ import domain.account.AccountNumber;
 
 public class AccountPostDtoToAccountAssembler {
 
-    public static Account createAccount(AccountPostDto accountPostDto, long accountNumber){
+    public static Account createAccount(AccountPostDto accountPostDto, long accountNumber) {
         return new Account(
                 accountPostDto.getInvestorId(),
                 accountPostDto.getInvestorName(),
@@ -14,5 +14,5 @@ public class AccountPostDtoToAccountAssembler {
                 Credits.fromDouble(accountPostDto.getCredits()),
                 new AccountNumber(accountNumber)
         );
-        }
+    }
 }

@@ -5,9 +5,9 @@ import java.util.List;
 public class InvestorProfile {
 
     private ProfileType profileType;
-    private List<String> focusAreas;
+    private List<FocusArea> focusAreas;
 
-    public InvestorProfile(ProfileType profileType, List<String> focusAreas) {
+    public InvestorProfile(ProfileType profileType, List<FocusArea> focusAreas) {
         this.profileType = profileType;
         this.focusAreas = focusAreas;
     }
@@ -16,7 +16,7 @@ public class InvestorProfile {
         return this.profileType;
     }
 
-    public List<String> getFocusAreas() {
+    public List<FocusArea> getFocusAreas() {
         return this.focusAreas;
     }
 }

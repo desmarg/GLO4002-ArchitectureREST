@@ -8,8 +8,9 @@ public class JerseyClient {
     private static JerseyClient INSTANCE = null;
 
     public static JerseyClient getInstance() {
-        if (INSTANCE == null)
+        if (INSTANCE == null) {
             INSTANCE = new JerseyClient();
+        }
 
         return INSTANCE;
     }

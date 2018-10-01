@@ -28,7 +28,7 @@ public class TransactionResource {
     public Response getTransactionFromAll(@PathParam("accountNumber") long accountNumber, @PathParam("transactionNumber") String transactionNumberString) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         TransactionNumber transactionNumber = new TransactionNumber(UUID.fromString(transactionNumberString));
-        Transaction transaction = transactionService.getTransactionFromAccount(account, transactionNumber);
+        Transaction transaction = this.transactionService.getTransactionFromAccount(account, transactionNumber);
         TransactionGetDto transactionGetDto = TransactionToTransactionGetDtoAssembler.createTransactionGetDto(transaction);
         return Response.status(Response.Status.OK).entity(transactionGetDto).build();
     }

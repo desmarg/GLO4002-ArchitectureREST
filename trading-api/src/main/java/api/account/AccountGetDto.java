@@ -16,10 +16,10 @@ public class AccountGetDto extends AccountDto {
     }
 
     public InvestorProfile getInvestorProfile() {
-        return investorProfile;
+        return this.investorProfile;
     }
 
     public long getAccountNumber() {
-        return accountNumber;
+        return this.accountNumber;
     }
 }

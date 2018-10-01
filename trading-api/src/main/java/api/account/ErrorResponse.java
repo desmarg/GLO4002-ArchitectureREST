@@ -32,6 +32,6 @@ public class ErrorResponse {
     }
 
     public String getTransactionId() {
-        return transactionId;
+        return this.transactionId;
     }
 }

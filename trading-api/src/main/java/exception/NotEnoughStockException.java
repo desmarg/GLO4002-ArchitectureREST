@@ -7,6 +7,7 @@ import domain.transaction.TransactionNumber;
 public class NotEnoughStockException extends RuntimeException {
 
     private TransactionNumber transactionNumber;
+
     public NotEnoughStockException(Stock stock, Transaction transaction) {
 
         super("not enough stock '" + stock.getSymbol() + ":" + stock.getMarket());
@@ -14,6 +15,6 @@ public class NotEnoughStockException extends RuntimeException {
     }
 
     public TransactionNumber getTransactionNumber() {
-        return transactionNumber;
+        return this.transactionNumber;
     }
 }
