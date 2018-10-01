@@ -2,8 +2,10 @@ package domain.account;
 
 import domain.Credits;
 import domain.investorprofile.InvestorProfile;
+import domain.stock.Stock;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
+import exception.InvalidQuantityException;
 import exception.NotEnoughCreditsException;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
@@ -35,19 +36,31 @@ public class AccountTest {
     @Mock
     private Transaction transaction;
 
+    private static Long INSUFFICIENT_QUANTITY = 0L;
+
     private static Long SUFFICIENT_QUANTITY = 10L;
+    @Mock
+    private Stock stock;
+
     private Account account;
     private Long investorId;
     private String investorName;
     private String email;
+    private TransactionNumber transactionNumber;
     private Map<TransactionNumber, Transaction> transactionList;
     private Map<TransactionNumber, Long> stockWallet;
 
     @Before
     public void setup() {
-        this.transactionList = new HashMap<>();
-        this.stockWallet = new HashMap<>();
         this.account = new Account(this.investorId, this.investorName, this.email, this.credits, this.accountNumber);
+        this.transactionNumber = new TransactionNumber();
+    }
+
+    @Test
+    public void givenTransaction_whenBuyTransaction_thenTransactionAddedToTransactionList() {
+        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
+        this.account.buyTransaction(this.transaction);
+        assertEquals(1, this.account.getTransactionList().size());
     }
 
     @Test
@@ -66,18 +79,19 @@ public class AccountTest {
         this.account.buyTransaction(this.transaction);
     }
 
+    @Test(expected = InvalidQuantityException.class)
+    public void givenTransactionWithNotEnoughCredits_whenBuyTransaction_thenThrowInvalidQuantityException() {
+        when(this.transaction.calculateTransactionPrice()).thenReturn(this.transactionPrice);
+        when(this.transaction.getQuantity()).thenReturn(INSUFFICIENT_QUANTITY);
+
+        this.account.buyTransaction(this.transaction);
+    }
+
     @Test
     public void givenTransaction_whenBuyTransaction_thenCreditsSubstractIsCalled() {
         when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
         this.account.buyTransaction(this.transaction);
         verify(this.credits).subtract(this.transaction.calculateTransactionPrice());
-    }
-
-    @Test
-    public void givenTransaction_whenBuyTransaction_thenTransactionAddedToTransactionList() {
-        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
-        this.account.buyTransaction(this.transaction);
-        assertEquals(1, this.account.getTransactionList().size());
     }
 
     @Test
