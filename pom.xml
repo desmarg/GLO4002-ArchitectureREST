@@ -99,6 +99,15 @@
                         <encoding>UTF-8</encoding>
                         <linkXRef>false</linkXRef>
                     </configuration>
+                    <!-- Manually specify the checkstyle dep version to that
+                    the google checkstyle file is properly supported-->
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.latest.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
