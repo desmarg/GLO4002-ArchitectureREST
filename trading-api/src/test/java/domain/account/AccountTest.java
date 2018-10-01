@@ -127,13 +127,13 @@ public class AccountTest {
     @Test
     public void givenValidTransactionNumberThatExistInList_whenGetTransactionFromHistory_thenReferredTransactionReturned() {
         this.account.getTransactionList().put(this.transactionNumber, this.transaction);
-        Transaction referredTransactionReturned = this.account.getTransactionFromAll(this.transactionNumber);
+        Transaction referredTransactionReturned = this.account.getTransaction(this.transactionNumber);
         assertEquals(this.transaction, referredTransactionReturned);
     }
 
     @Test(expected = TransactionNotFoundException.class)
     public void givenTransactionNumberThatDoesNotExistInList_whenGetTransactionFromHistory_thenThrowTransactionNotFoundException() {
-        this.account.getTransactionFromAll(this.transactionNumber);
+        this.account.getTransaction(this.transactionNumber);
     }
 
     @Test
