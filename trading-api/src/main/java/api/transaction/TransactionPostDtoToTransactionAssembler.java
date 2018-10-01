@@ -1,6 +1,6 @@
 package api.transaction;
 
-import application.StockService;
+import application.stock.StockService;
 import domain.Credits;
 import domain.DateTime;
 import domain.stock.Stock;

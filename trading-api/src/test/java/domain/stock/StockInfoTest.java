@@ -1,5 +1,7 @@
 package domain.stock;
 
+import application.stock.PriceDTO;
+import application.stock.StockDTO;
 import domain.Credits;
 import domain.DateTime;
 import org.junit.Before;
@@ -14,20 +16,20 @@ public class StockInfoTest {
     private static DateTime DATETIME = new DateTime(DATE);
     private static Float PRICE = 10f;
 
-    private StockInfo stockInfo;
-    private PriceInfo priceInfo;
-    private ArrayList<PriceInfo> priceInfos;
+    private StockDTO stockInfo;
+    private PriceDTO priceInfo;
+    private ArrayList<PriceDTO> priceInfos;
 
     @Before
     public void setup() {
-        this.priceInfo = new PriceInfo();
+        this.priceInfo = new PriceDTO();
         this.priceInfo.setDate(DATE);
         this.priceInfo.setPrice(PRICE);
 
         this.priceInfos = new ArrayList<>();
         this.priceInfos.add(this.priceInfo);
 
-        this.stockInfo = new StockInfo();
+        this.stockInfo = new StockDTO();
         this.stockInfo.setPrices(this.priceInfos);
 
     }

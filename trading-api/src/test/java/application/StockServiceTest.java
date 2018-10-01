@@ -16,6 +16,6 @@
 //    public void givenValidStock_whenGettingStockPriceWithValidDate_shouldReturnPrice() {
 //        Stock stock = new Stock("NASDAQ", "MSFT");
 //        Credits price = StockService.getStockPrice(stock, new DateTime("2015-01-01T05:00:00Z"));
-//        assertEquals(Credits.fromFloat(157.54F), price);
+//        assertEquals(Credits.fromDouble(157.54F), price);
 //    }
 //}

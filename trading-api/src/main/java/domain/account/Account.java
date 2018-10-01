@@ -58,7 +58,7 @@ public class Account {
 
     public void sellTransaction(Transaction transaction) {
         this.transactionList.put(transaction.getTransactionNumber(), transaction);
-        Transaction referredTransaction = this.getTransactionFromAll(transaction.getReferredTransactionNumber());
+        Transaction referredTransaction = this.getTransaction(transaction.getReferredTransactionNumber());
         Stock referredStock = transaction.getStock();
 
         long remainingStocks = this.getRemainingStocks(referredTransaction) - transaction.getQuantity();
@@ -72,7 +72,7 @@ public class Account {
         this.stockWallet.put(referredTransaction.getTransactionNumber(), remainingStocks);
     }
 
-    public Transaction getTransactionFromAll(TransactionNumber transactionNumber) {
+    public Transaction getTransaction(TransactionNumber transactionNumber) {
         Transaction transaction = this.transactionList.get(transactionNumber);
         if (transaction == null) {
             throw new TransactionNotFoundException(transactionNumber);

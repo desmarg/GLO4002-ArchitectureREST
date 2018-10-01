@@ -11,7 +11,7 @@ public class AccountPostDtoToAccountAssembler {
                 accountPostDto.getInvestorId(),
                 accountPostDto.getInvestorName(),
                 accountPostDto.getEmail(),
-                Credits.fromFloat(accountPostDto.getCredits()),
+                Credits.fromDouble(accountPostDto.getCredits()),
                 new AccountNumber(accountNumber)
         );
         }

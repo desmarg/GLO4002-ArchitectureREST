@@ -1,9 +1,9 @@
-package application;
+package application.stock;
 
+import application.JerseyClient;
 import domain.Credits;
 import domain.DateTime;
 import domain.stock.Stock;
-import domain.stock.StockInfo;
 import exception.StockNotFoundException;
 
 public class StockService {
@@ -20,7 +20,7 @@ public class StockService {
 
     public Credits getStockPrice(Stock stock, DateTime date) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        StockInfo stockInfo = JerseyClient.getInstance().getRequest(url, StockInfo.class);
+        StockDTO stockInfo = JerseyClient.getInstance().getRequest(url, StockDTO.class);
         if (stockInfo == null) {
             throw new StockNotFoundException(stock.getSymbol(), stock.getMarket());
         }

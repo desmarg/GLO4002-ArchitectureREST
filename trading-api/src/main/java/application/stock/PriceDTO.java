@@ -1,8 +1,8 @@
-package domain.stock;
+package application.stock;
 
 import domain.Credits;
 
-public class PriceInfo {
+public class PriceDTO {
     private String date;
     private Float price;
 
@@ -15,7 +15,7 @@ public class PriceInfo {
     }
 
     public Credits getPrice() {
-        return Credits.fromFloat(price);
+        return Credits.fromDouble(price);
     }
 
     public void setPrice(Float price) {

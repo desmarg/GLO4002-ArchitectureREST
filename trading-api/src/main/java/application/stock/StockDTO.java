@@ -1,4 +1,4 @@
-package domain.stock;
+package application.stock;
 
 import domain.Credits;
 import domain.DateTime;
@@ -6,15 +6,15 @@ import exception.StockNotFoundException;
 
 import java.util.ArrayList;
 
-public class StockInfo {
+public class StockDTO {
     private Long id;
     private String market;
     private String symbol;
     private String type;
-    private ArrayList<PriceInfo> prices;
+    private ArrayList<PriceDTO> prices;
 
     public Credits getPriceFromDate(DateTime date) {
-        for (PriceInfo priceInfo : this.prices) {
+        for (PriceDTO priceInfo : this.prices) {
             DateTime dateTime = new DateTime(priceInfo.getDate());
 
             if (dateTime.isSameDay(date)) {
@@ -24,11 +24,11 @@ public class StockInfo {
         throw new StockNotFoundException(this.symbol, this.market);
     }
 
-    public ArrayList<PriceInfo> getPrices() {
+    public ArrayList<PriceDTO> getPrices() {
         return this.prices;
     }
 
-    public void setPrices(ArrayList<PriceInfo> prices) {
+    public void setPrices(ArrayList<PriceDTO> prices) {
         this.prices = prices;
     }
 

@@ -21,28 +21,28 @@ public class CreditsTest {
 
     @Test
     public void givenNewlyCreatedCredits_WhenConstructingFromFloat_ThenValueHasTwoDecimals(){
-        Credits credits = Credits.fromFloat(POINT_ONE);
+        Credits credits = Credits.fromDouble(POINT_ONE);
         assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
     }
 
     @Test
     public void givenNonZeroCredits_WhenMultiplyingWithQuantity_ThenMultiplyValue(){
-        Credits credits = Credits.fromFloat(POINT_ZERO_FIZE);
+        Credits credits = Credits.fromDouble(POINT_ZERO_FIZE);
         assertEquals(POINT_ONE_REPRESENTATION, credits.multiply(DOUBLE_QUANTITY).valueToString());
     }
 
 
     @Test
     public void givenCredits_WhenAddingNonZeroCredits_ThenAddValue(){
-        Credits credits = Credits.fromFloat(POINT_ZERO_FIZE);
-        Credits creditsToAdd = Credits.fromFloat(POINT_ZERO_FIZE);
+        Credits credits = Credits.fromDouble(POINT_ZERO_FIZE);
+        Credits creditsToAdd = Credits.fromDouble(POINT_ZERO_FIZE);
         assertEquals(POINT_ONE_REPRESENTATION, credits.add(creditsToAdd).valueToString());
     }
 
     @Test
     public void givenCredits_WhenSubtractingNonZeroCredits_ThenSubtractValue(){
-        Credits credits = Credits.fromFloat(POINT_ZERO_FIZE);
-        Credits creditsToSubtract = Credits.fromFloat(POINT_ZERO_FIZE);
+        Credits credits = Credits.fromDouble(POINT_ZERO_FIZE);
+        Credits creditsToSubtract = Credits.fromDouble(POINT_ZERO_FIZE);
         assertEquals(ZERO_REPRESENTATION, credits.subtract(creditsToSubtract).valueToString());
     }
 

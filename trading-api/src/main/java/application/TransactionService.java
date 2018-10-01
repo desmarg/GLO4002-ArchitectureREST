@@ -20,6 +20,6 @@ public class TransactionService {
     }
 
     public Transaction getTransactionFromAccount(Account account, TransactionNumber transactionNumber) {
-        return account.getTransactionFromAll(transactionNumber);
+        return account.getTransaction(transactionNumber);
     }
 }

@@ -59,10 +59,6 @@ public class Transaction {
         return this.stock;
     }
 
-    public Credits getPurchasedPrice() {
-        return this.purchasedPrice;
-    }
-
     public Credits getStockPrice() {
         return this.stockPrice;
     }
