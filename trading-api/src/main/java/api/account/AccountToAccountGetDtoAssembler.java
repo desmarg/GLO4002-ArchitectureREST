@@ -8,6 +8,8 @@ public class AccountToAccountGetDtoAssembler {
         AccountGetDto accountGetDto = new AccountGetDto();
         accountGetDto.setAccountNumber(account.getLongAccountNumber());
         accountGetDto.setInvestorProfile(account.getInvestorProfile());
+        accountGetDto.setInvestorId(account.getInvestorId());
+        accountGetDto.setCredits(account.getCredits().valueToFloat());
         return accountGetDto;
     }
 
