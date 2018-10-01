@@ -6,7 +6,10 @@ import domain.stock.Stock;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
 import exception.InvalidQuantityException;
+import exception.InvalidTransactionNumberException;
 import exception.NotEnoughCreditsException;
+import exception.NotEnoughStockException;
+import exception.TransactionNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,11 +40,11 @@ public class AccountTest {
     @Mock
     private Transaction transaction;
 
-    private static Long INSUFFICIENT_QUANTITY = 0L;
-
-    private static Long SUFFICIENT_QUANTITY = 10L;
     @Mock
     private Stock stock;
+
+    private static Long SUFFICIENT_QUANTITY = 10L;
+    private static Long INSUFFICIENT_QUANTITY = 0L;
 
     private Account account;
     private Long investorId;
@@ -107,5 +111,83 @@ public class AccountTest {
         this.account.buyTransaction(this.transaction);
         Transaction transactionFound = this.account.getTransactionList().get(this.transaction.getTransactionNumber());
         assertEquals(transactionFound, this.transaction);
+    }
+
+    @Test
+    public void givenTransaction_whenSellTransaction_thenTransactionAddedToTransactionList() {
+        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
+        when(this.transaction.getStock()).thenReturn(this.stock);
+        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+        when(this.transaction.getReferredTransactionNumber()).thenReturn(this.transactionNumber);
+        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
+        this.account.sellTransaction(this.transaction);
+        assertEquals(1, this.account.getTransactionList().size());
+    }
+
+    @Test
+    public void givenValidTransactionNumberThatExistInList_whenGetTransactionFromHistory_thenReferredTransactionReturned() {
+        this.account.getTransactionList().put(this.transactionNumber, this.transaction);
+        Transaction referredTransactionReturned = this.account.getTransactionFromAll(this.transactionNumber);
+        assertEquals(this.transaction, referredTransactionReturned);
+    }
+
+    @Test(expected = TransactionNotFoundException.class)
+    public void givenTransactionNumberThatDoesNotExistInList_whenGetTransactionFromHistory_thenThrowTransactionNotFoundException() {
+        this.account.getTransactionFromAll(this.transactionNumber);
+    }
+
+    @Test
+    public void givenReferredTransaction_whenGetRemainingStocks_thenRemainingStockIsReturned() {
+        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
+        Long remainingStock = this.account.getRemainingStocks(this.transaction);
+    }
+
+    @Test(expected = InvalidTransactionNumberException.class)
+    public void givenReferredTransactionWithNotExistingTransactionNumberInStockWallet_whenGetRemainingStocks_thenThrowInvalidTransactionNumberException() {
+        this.account.getRemainingStocks(this.transaction);
+    }
+
+    @Test(expected = NotEnoughStockException.class)
+    public void givenTransaction_whenSellTransaction_thenThrowNotEnoughStockException() {
+        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
+        when(this.transaction.getStock()).thenReturn(this.stock);
+        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+        when(this.transaction.getReferredTransactionNumber()).thenReturn(this.transactionNumber);
+        this.account.getStockWallet().put(this.transactionNumber, INSUFFICIENT_QUANTITY);
+        this.account.sellTransaction(this.transaction);
+    }
+
+    @Test
+    public void givenTransaction_whenSellTransaction_thenCalculateTransactionPriceCalled() {
+        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
+        when(this.transaction.getStock()).thenReturn(this.stock);
+        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+        when(this.transaction.getReferredTransactionNumber()).thenReturn(this.transactionNumber);
+        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
+        this.account.sellTransaction(this.transaction);
+        verify(this.transaction).calculateTransactionPrice();
+    }
+
+    @Test
+    public void givenTransaction_whenSellTransaction_thenCreditAddCalled() {
+        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
+        when(this.transaction.getStock()).thenReturn(this.stock);
+        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+        when(this.transaction.getReferredTransactionNumber()).thenReturn(this.transactionNumber);
+        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
+        this.account.sellTransaction(this.transaction);
+        verify(this.credits).add(any());
+    }
+
+    @Test
+    public void givenTransaction_whenSellTransaction_thenStockWalletIsUpdated() {
+        when(this.transaction.getQuantity()).thenReturn(SUFFICIENT_QUANTITY);
+        when(this.transaction.getStock()).thenReturn(this.stock);
+        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+        when(this.transaction.getReferredTransactionNumber()).thenReturn(this.transactionNumber);
+        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
+        this.account.sellTransaction(this.transaction);
+        assertEquals(1, this.account.getStockWallet().size());
     }
 }
