@@ -2,6 +2,7 @@ package domain;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class Credits implements Comparable<Credits> {
     public BigDecimal amount;
@@ -33,7 +34,10 @@ public class Credits implements Comparable<Credits> {
     }
 
     public String valueToString() {
+        DecimalFormatSymbols symbolsFormat = new DecimalFormatSymbols();
+        symbolsFormat.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setDecimalFormatSymbols(symbolsFormat);
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
         decimalFormat.setGroupingUsed(false);
