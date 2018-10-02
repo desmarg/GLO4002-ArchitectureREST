@@ -29,4 +29,7 @@ public class StockDto {
         return this.symbol;
     }
 
+    public String getType() {
+        return this.type;
+    }
 }
