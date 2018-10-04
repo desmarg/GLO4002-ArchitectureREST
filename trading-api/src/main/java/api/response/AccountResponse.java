@@ -1,17 +1,18 @@
-package api.account;
+package api.response;
 
+import api.account.AccountDto;
 import domain.account.Account;
 import domain.investorprofile.InvestorProfile;
 
-public class AccountGetDto extends AccountDto {
+public class AccountResponse extends AccountDto {
 
     private InvestorProfile investorProfile;
     private String accountNumber;
 
-    public AccountGetDto() {
+    public AccountResponse() {
     }
 
-    public AccountGetDto(Account account) {
+    public AccountResponse(Account account) {
         super(account);
         this.investorProfile = account.getInvestorProfile();
         this.accountNumber = account.getAccountNumber().getId();

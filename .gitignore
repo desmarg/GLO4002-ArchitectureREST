@@ -1,6 +1,7 @@
 # IDEs and editors
 /.idea
 .project
+.recommenders
 .classpath
 *.launch
 .settings/

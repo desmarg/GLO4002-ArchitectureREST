@@ -1,12 +1,12 @@
-package api.transaction;
+package api.response;
 
 import domain.transaction.Transaction;
 
-public class TransactionBuyGetDto extends TransactionDto {
+public class TransactionBuyResponse extends TransactionResponse {
 
     private float purchasedPrice;
 
-    public TransactionBuyGetDto(Transaction transaction) {
+    public TransactionBuyResponse(Transaction transaction) {
         super(transaction);
         this.setPurchasedPrice(transaction.getPrice().valueToFloat());
     }

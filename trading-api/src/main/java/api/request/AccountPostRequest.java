@@ -1,15 +1,16 @@
-package api.account;
+package api.request;
 
+import api.account.AccountDto;
 import domain.account.Account;
 
-public class AccountPostDto extends AccountDto {
+public class AccountPostRequest extends AccountDto {
     private String investorName;
     private String email;
 
-    public AccountPostDto() {
+    public AccountPostRequest() {
     }
 
-    public AccountPostDto(Account account) {
+    public AccountPostRequest(Account account) {
         super(account);
         this.investorName = account.getInvestorName();
         this.email = account.getEmail();

@@ -1,10 +1,11 @@
 package domain.stock;
 
-import application.stock.StockDto;
 import application.stock.StockPrice;
 import application.stock.StockService;
 import domain.Credits;
 import domain.DateTime;
+import external.response.StockResponse;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class StockServiceTest {
     private static Double PRICE = 10d;
 
     private StockService stockService;
-    private StockDto stockDto;
+    private StockResponse stockDto;
     private StockPrice stockPrice;
     private ArrayList<StockPrice> stockPrices;
 
@@ -33,7 +34,7 @@ public class StockServiceTest {
         this.stockPrices = new ArrayList<>();
         this.stockPrices.add(this.stockPrice);
 
-        this.stockDto = new StockDto();
+        this.stockDto = new StockResponse();
         this.stockDto.setPrices(this.stockPrices);
 
     }

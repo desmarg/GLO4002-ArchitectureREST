@@ -1,12 +1,13 @@
 package api.account;
 
+import api.response.AccountResponse;
 import domain.account.Account;
 
 public class AccountToAccountGetDtoAssembler {
 
-    public static AccountGetDto makeGetAccountDto(Account account) {
+    public static AccountResponse makeGetAccountDto(Account account) {
 
-        return new AccountGetDto(account);
+        return new AccountResponse(account);
     }
 
 }

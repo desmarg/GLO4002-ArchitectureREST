@@ -6,6 +6,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import api.response.AccountResponse;
+
 @Mapper
 public interface AccountMapper {
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
@@ -14,5 +16,5 @@ public interface AccountMapper {
             @Mapping(source = "accountNumber.id", target = "accountNumber"),
             @Mapping(source = "credits.amount", target = "credits")
     })
-    AccountGetDto accountToGetAccountDto(Account account);
+    AccountResponse accountToGetAccountDto(Account account);
 }

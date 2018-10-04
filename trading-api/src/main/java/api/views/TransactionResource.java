@@ -1,4 +1,4 @@
-package api.transaction;
+package api.views;
 
 import application.AccountService;
 import application.TransactionService;
@@ -6,6 +6,10 @@ import domain.account.Account;
 import domain.account.AccountNumber;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
+import api.request.TransactionPostRequest;
+import api.response.TransactionResponse;
+import api.transaction.TransactionPostDtoToTransactionAssembler;
+import api.transaction.TransactionToTransactionGetDtoAssembler;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -29,14 +33,14 @@ public class TransactionResource {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         TransactionNumber transactionNumber = new TransactionNumber(UUID.fromString(transactionNumberString));
         Transaction transaction = this.transactionService.getTransactionFromAccount(account, transactionNumber);
-        TransactionDto transactionDto = TransactionToTransactionGetDtoAssembler.createTransactionGetDto(transaction);
+        TransactionResponse transactionDto = TransactionToTransactionGetDtoAssembler.createTransactionGetDto(transaction);
         return Response.status(Response.Status.OK).entity(transactionDto).build();
     }
 
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response makeTransaction(@PathParam("accountNumber") String accountNumber, TransactionPostDto transactionPostDto) {
+    public Response makeTransaction(@PathParam("accountNumber") String accountNumber, TransactionPostRequest transactionPostDto) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         Transaction transaction = TransactionPostDtoToTransactionAssembler.createTransaction(transactionPostDto);
         TransactionService.makeTransaction(account, transaction);

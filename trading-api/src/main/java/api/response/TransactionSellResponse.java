@@ -1,12 +1,12 @@
-package api.transaction;
+package api.response;
 
 import domain.transaction.Transaction;
 
-public class TransactionGetSellDto extends TransactionDto {
+public class TransactionSellResponse extends TransactionResponse {
 
     private float priceSold;
 
-    public TransactionGetSellDto(Transaction transaction) {
+    public TransactionSellResponse(Transaction transaction) {
         super(transaction);
         this.priceSold = transaction.getStockPrice().valueToFloat();
     }

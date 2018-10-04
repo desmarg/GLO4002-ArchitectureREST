@@ -1,5 +1,8 @@
 package api.transaction;
 
+import api.response.TransactionBuyResponse;
+import api.response.TransactionResponse;
+import api.response.TransactionSellResponse;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionBuy;
 import domain.transaction.TransactionSell;
@@ -7,11 +10,11 @@ import exception.UnsupportedTransactionTypeException;
 
 public class TransactionDtoFactory {
 
-    public static TransactionDto createTransactionDto(Transaction transaction) {
+    public static TransactionResponse createTransactionDto(Transaction transaction) {
         if (transaction instanceof TransactionBuy) {
-            return new TransactionBuyGetDto(transaction);
+            return new TransactionBuyResponse(transaction);
         } else if (transaction instanceof TransactionSell) {
-            return new TransactionGetSellDto(transaction);
+            return new TransactionSellResponse(transaction);
         }
 
         throw new UnsupportedTransactionTypeException(transaction.getTransactionType());

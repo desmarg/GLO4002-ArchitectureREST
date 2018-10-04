@@ -5,6 +5,7 @@ import domain.Credits;
 import domain.DateTime;
 import domain.stock.Stock;
 import exception.StockNotFoundException;
+import external.response.StockResponse;
 
 public class StockService {
 
@@ -20,14 +21,14 @@ public class StockService {
 
     public Credits getStockPrice(Stock stock, DateTime date) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        StockDto stockDto = JerseyClient.getInstance().getRequest(url, StockDto.class);
+        StockResponse stockDto = JerseyClient.getInstance().getRequest(url, StockResponse.class);
         if (stockDto == null) {
             throw new StockNotFoundException(stock.getSymbol(), stock.getMarket());
         }
         return this.getPriceFromDate(stockDto, date);
     }
 
-    public Credits getPriceFromDate(StockDto stockDto, DateTime date) {
+    public Credits getPriceFromDate(StockResponse stockDto, DateTime date) {
         for (StockPrice priceInfo : stockDto.getPrices()) {
             DateTime dateTime = new DateTime(priceInfo.getDate());
 

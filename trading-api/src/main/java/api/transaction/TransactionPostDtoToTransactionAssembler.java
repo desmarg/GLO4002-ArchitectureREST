@@ -1,5 +1,6 @@
 package api.transaction;
 
+import api.request.TransactionPostRequest;
 import application.stock.StockService;
 import domain.Credits;
 import domain.DateTime;
@@ -9,7 +10,7 @@ import exception.UnsupportedTransactionTypeException;
 
 public class TransactionPostDtoToTransactionAssembler {
 
-    public static Transaction createTransaction(TransactionPostDto transactionPostDto) {
+    public static Transaction createTransaction(TransactionPostRequest transactionPostDto) {
 
         TransactionType transactionType = TransactionType.valueOf(transactionPostDto.getType());
         long quantity = transactionPostDto.getQuantity();

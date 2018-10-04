@@ -1,8 +1,10 @@
-package application.stock;
+package external.response;
 
 import java.util.ArrayList;
 
-public class StockDto {
+import application.stock.StockPrice;
+
+public class StockResponse {
     private Long id;
     private String market;
     private String symbol;

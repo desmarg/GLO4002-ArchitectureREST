@@ -1,11 +1,11 @@
-package api.transaction;
+package api.response;
 
 import domain.stock.Stock;
 import domain.transaction.Transaction;
 
 import java.util.UUID;
 
-public abstract class TransactionDto {
+public abstract class TransactionResponse {
     private String type;
     private String date;
     private Stock stock;
@@ -13,10 +13,10 @@ public abstract class TransactionDto {
     private long quantity;
     private float fees;
 
-    public TransactionDto() {
+    public TransactionResponse() {
     }
 
-    public TransactionDto(Transaction transaction) {
+    public TransactionResponse(Transaction transaction) {
         this.type = transaction.getTransactionType().toString();
         this.date = transaction.getDate().toString();
         this.stock = transaction.getStock();
