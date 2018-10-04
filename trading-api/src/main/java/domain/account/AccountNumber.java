@@ -16,7 +16,7 @@ public class AccountNumber {
     }
 
     public String makeId(String name, Long id) {
-        return this.makeInitials(name) + id.toString();
+        return this.makeInitials(name) + "-" + id.toString();
     }
 
     public String makeInitials(String name) {
