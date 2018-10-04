@@ -1,22 +1,26 @@
 package domain.account;
 
 public class AccountNumber {
-    private Long id;
+    private String id;
 
-    public AccountNumber() {
-        this.id = 0L;
+    public AccountNumber(String name, Long id) {
+        this.id = this.makeId(name, id);
     }
 
-    public AccountNumber(Long id) {
-        this.id = id;
+    public AccountNumber(String accountNumber) {
+        this.id = accountNumber;
     }
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void incrementId() {
-        this.id++;
+    public String makeId(String name, Long id) {
+        return this.makeInitials(name) + id.toString();
+    }
+
+    public String makeInitials(String name) {
+        return name.replaceAll("([^\\s])[^\\s]+", "$1").replaceAll("\\s", "").toUpperCase();
     }
 
     @Override

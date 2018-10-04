@@ -25,7 +25,7 @@ public class TransactionResource {
     @GET
     @Path("/{transactionNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTransactionFromAll(@PathParam("accountNumber") long accountNumber, @PathParam("transactionNumber") String transactionNumberString) {
+    public Response getTransactionFromAll(@PathParam("accountNumber") String accountNumber, @PathParam("transactionNumber") String transactionNumberString) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         TransactionNumber transactionNumber = new TransactionNumber(UUID.fromString(transactionNumberString));
         Transaction transaction = this.transactionService.getTransactionFromAccount(account, transactionNumber);
@@ -36,7 +36,7 @@ public class TransactionResource {
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response makeTransaction(@PathParam("accountNumber") long accountNumber, TransactionPostDto transactionPostDto) {
+    public Response makeTransaction(@PathParam("accountNumber") String accountNumber, TransactionPostDto transactionPostDto) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         Transaction transaction = TransactionPostDtoToTransactionAssembler.createTransaction(transactionPostDto);
         TransactionService.makeTransaction(account, transaction);

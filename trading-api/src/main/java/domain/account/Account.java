@@ -53,7 +53,7 @@ public class Account {
         return this.accountNumber;
     }
 
-    public Long getLongAccountNumber() {
+    public String getLongAccountNumber() {
         return this.accountNumber.getId();
     }
 
@@ -83,5 +83,13 @@ public class Account {
 
     public void addCredits(Credits transactionPrice) {
         this.credits.add(transactionPrice);
+    }
+
+    public String getInvestorName() {
+        return this.investorName;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 }

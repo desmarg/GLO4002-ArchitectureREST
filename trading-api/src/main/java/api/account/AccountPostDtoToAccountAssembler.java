@@ -12,7 +12,7 @@ public class AccountPostDtoToAccountAssembler {
                 accountPostDto.getInvestorName(),
                 accountPostDto.getEmail(),
                 Credits.fromDouble(accountPostDto.getCredits()),
-                new AccountNumber(accountNumber)
+                new AccountNumber(accountPostDto.getInvestorName(), accountNumber)
         );
     }
 }
