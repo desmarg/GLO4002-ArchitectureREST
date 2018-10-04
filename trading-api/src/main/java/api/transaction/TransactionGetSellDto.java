@@ -7,7 +7,7 @@ public class TransactionGetSellDto extends TransactionDto {
     private float priceSold;
 
     public TransactionGetSellDto(Transaction transaction) {
-        super();
+        super(transaction);
         this.priceSold = transaction.getStockPrice().valueToFloat();
     }
 
