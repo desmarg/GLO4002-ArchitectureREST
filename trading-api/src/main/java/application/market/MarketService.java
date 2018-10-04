@@ -31,12 +31,17 @@ public class MarketService {
     public boolean getMarketOpenAtHour(String market, LocalTime time) {
         String url = "/markets/" + market;
         MarketDto marketDto = getMarketDto(market);
-        ArrayList<String> timezones = marketDto.getOpenHours();
+        ArrayList<String> hours = marketDto.getOpenHours();
         boolean opened = false;
-        for (String times : timezones) {
+        LocalTime timeModifier = getTimeModifierFromTimeZone(marketDto.getTimezone());
+        for (String times : hours) {
             String[] splitTime = times.split("-");
             LocalTime beginTime = LocalTime.parse("00000".substring(splitTime[0].length()) + splitTime[0], this.formatter);
             LocalTime endTime = LocalTime.parse("00000".substring(splitTime[1].length()) + splitTime[1], this.formatter);
+            beginTime.plusHours(timeModifier.getHour());
+            beginTime.plusMinutes(timeModifier.getMinute());
+            endTime.plusHours(timeModifier.getHour());
+            endTime.plusMinutes(timeModifier.getMinute());
             if(time.compareTo(beginTime) >= 0 && time.compareTo(endTime) <= 0){
                 opened = true;
             }
@@ -46,5 +51,15 @@ public class MarketService {
 
     public boolean getMarketOpenCurrently(String market){
         return getMarketOpenAtHour(market, LocalTime.now());
+    }
+
+    private LocalTime getTimeModifierFromTimeZone(String timezone){
+        LocalTime modifier = LocalTime.parse(timezone.substring(4));
+        if(timezone.charAt(3) == '-'){
+            //TODO remove magic numbers for hours and minutes
+            modifier = modifier.withHour(23 - modifier.getHour());
+            modifier = modifier.withMinute(59 - modifier.getMinute());
+        }
+        return modifier;
     }
 }
