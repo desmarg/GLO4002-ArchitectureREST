@@ -4,10 +4,10 @@ import domain.Credits;
 import domain.investorprofile.FocusArea;
 import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
-import domain.stock.Stock;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
-import exception.*;
+import exception.InvalidTransactionNumberException;
+import exception.TransactionNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,35 +40,6 @@ public class Account {
         this.stockWallet = new HashMap<>();
     }
 
-    public void buyTransaction(Transaction transaction) {
-        this.transactionList.put(transaction.getTransactionNumber(), transaction);
-        Credits transactionPrice = transaction.calculateTransactionPrice();
-        if (this.credits.compareTo(transactionPrice) < 0) {
-            throw new NotEnoughCreditsException(transaction.getTransactionNumber());
-        }
-        if (transaction.getQuantity() <= 0) {
-            throw new InvalidQuantityException(transaction.getTransactionNumber());
-        }
-        this.credits = this.credits.subtract(transactionPrice);
-        this.stockWallet.put(transaction.getTransactionNumber(), transaction.getQuantity());
-    }
-
-    public void sellTransaction(Transaction transaction) {
-        this.transactionList.put(transaction.getTransactionNumber(), transaction);
-        Transaction referredTransaction = this.getTransaction(transaction.getReferredTransactionNumber());
-        Stock referredStock = transaction.getStock();
-
-        long remainingStocks = this.getRemainingStocks(referredTransaction) - transaction.getQuantity();
-        if (remainingStocks < 0) {
-            throw new NotEnoughStockException(referredStock, transaction);
-        }
-
-        Credits transactionGain = transaction.calculateTransactionPrice();
-        this.credits = this.credits.add(transactionGain);
-
-        this.stockWallet.put(referredTransaction.getTransactionNumber(), remainingStocks);
-    }
-
     public Transaction getTransaction(TransactionNumber transactionNumber) {
         Transaction transaction = this.transactionList.get(transactionNumber);
         if (transaction == null) {
@@ -83,6 +54,10 @@ public class Account {
             throw new InvalidTransactionNumberException(referredTransaction.getTransactionNumber());
         }
         return stocksRemaining;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        this.transactionList.put(transaction.getTransactionNumber(), transaction);
     }
 
     public AccountNumber getAccountNumber() {
@@ -111,5 +86,17 @@ public class Account {
 
     public Map<TransactionNumber, Long> getStockWallet() {
         return this.stockWallet;
+    }
+
+    public boolean hasEnoughCredits(Credits transactionPrice) {
+        return this.credits.compareTo(transactionPrice) >= 0;
+    }
+
+    public void substractCredits(Credits transactionPrice) {
+        this.credits.subtract(transactionPrice);
+    }
+
+    public void addCredits(Credits transactionPrice) {
+        this.credits.add(transactionPrice);
     }
 }

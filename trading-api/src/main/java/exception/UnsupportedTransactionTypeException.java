@@ -1,8 +1,10 @@
 package exception;
 
+import domain.transaction.TransactionType;
+
 public class UnsupportedTransactionTypeException extends RuntimeException {
 
-    public UnsupportedTransactionTypeException(String transactionType) {
-        super("transaction " + transactionType + " is not supported");
+    public UnsupportedTransactionTypeException(TransactionType transactionType) {
+        super("transaction " + transactionType.toString() + " is not supported");
     }
 }

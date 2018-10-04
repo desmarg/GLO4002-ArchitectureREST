@@ -21,7 +21,7 @@ public class TradingServer implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(
             TradingServer.class.getName()
     );
-    //All exceptionsmappers should be in this folder
+
     private static final String EXCEPTION_MAPPERS_PATH = "exceptionmappers";
 
     public static void main(String[] args) {
@@ -35,7 +35,6 @@ public class TradingServer implements Runnable {
         HeartbeatResource heartBeatResource = new HeartbeatResource();
         TransactionResource transactionResource = new TransactionResource(accountService, new TransactionService());
 
-        //TODO those will add up...
         resources.add(accountResource);
         resources.add(transactionResource);
         resources.add(heartBeatResource);
@@ -68,7 +67,7 @@ public class TradingServer implements Runnable {
 
         Server server = new Server(port);
         ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
-        ResourceConfig resourceConfiguration = createResourceConfiguration();
+        ResourceConfig resourceConfiguration = this.createResourceConfiguration();
         ServletContainer container = new ServletContainer(resourceConfiguration);
         ServletHolder servletHolder = new ServletHolder(container);
         servletContextHandler.addServlet(servletHolder, "/*");

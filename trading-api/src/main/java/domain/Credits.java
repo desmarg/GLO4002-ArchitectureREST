@@ -20,17 +20,17 @@ public class Credits implements Comparable<Credits> {
         return new Credits(bigDecimalAmount);
     }
 
-    public Credits add(Credits amount) {
-        return new Credits(this.amount.add(amount.amount));
+    public void add(Credits amount) {
+        this.amount = this.amount.add(amount.amount);
     }
 
-    public Credits subtract(Credits amount) {
-        return new Credits(this.amount.subtract(amount.amount));
+    public void subtract(Credits amount) {
+        this.amount = this.amount.subtract(amount.amount);
     }
 
-    public Credits multiply(Long quantity) {
+    public void multiply(Long quantity) {
         BigDecimal rhs = new BigDecimal(quantity);
-        return new Credits(this.amount.multiply(rhs));
+        this.amount = this.amount.multiply(rhs);
     }
 
     public String valueToString() {

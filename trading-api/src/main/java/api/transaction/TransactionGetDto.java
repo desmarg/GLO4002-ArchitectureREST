@@ -1,25 +1,14 @@
 package api.transaction;
 
-import java.util.UUID;
-
 public class TransactionGetDto extends TransactionDto {
 
-    private UUID transactionNumber;
-    private float purchasedPrice;
+    private float price;
 
-    public UUID getTransactionNumber() {
-        return this.transactionNumber;
+    public float getPrice() {
+        return this.price;
     }
 
-    public void setTransactionNumber(UUID transactionNumber) {
-        this.transactionNumber = transactionNumber;
-    }
-
-    public float getPurchasedPrice() {
-        return this.purchasedPrice;
-    }
-
-    public void setPurchasedPrice(float purchasedPrice) {
-        this.purchasedPrice = purchasedPrice;
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

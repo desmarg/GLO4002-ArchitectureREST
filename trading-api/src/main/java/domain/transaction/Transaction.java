@@ -2,45 +2,36 @@ package domain.transaction;
 
 import domain.Credits;
 import domain.DateTime;
+import domain.account.Account;
 import domain.stock.Stock;
 
-public class Transaction {
-    private TransactionNumber transactionNumber;
-    private TransactionType transactionType;
-    private Long quantity;
-    private DateTime date;
-    private Stock stock;
-    private Credits stockPrice;
-    private Credits purchasedPrice;
-    private TransactionNumber referredTransactionNumber;
+public abstract class Transaction {
+    protected TransactionNumber transactionNumber;
+    protected TransactionType transactionType;
+    protected Long quantity;
+    protected DateTime date;
+    protected Stock stock;
+    protected Credits stockPrice;
+    protected Credits price;
 
 
-    public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock,
-                       Credits stockPrice) {
+    protected Transaction(Long quantity, DateTime date, Stock stock,
+                          Credits stockPrice) {
         this.transactionNumber = new TransactionNumber();
-        this.transactionType = transactionType;
         this.quantity = quantity;
         this.date = date;
         this.stock = stock;
         this.stockPrice = stockPrice;
-        this.purchasedPrice = this.calculateTransactionPrice();
+        this.price = this.calculateTransactionPrice();
     }
 
-    public Transaction(TransactionType transactionType, Long quantity, DateTime date, Stock stock,
-                       Credits stockPrice, TransactionNumber referredTransactionNumber) {
-        this.transactionNumber = new TransactionNumber();
-        this.transactionType = transactionType;
-        this.quantity = quantity;
-        this.date = date;
-        this.stock = stock;
-        this.stockPrice = stockPrice;
-        this.purchasedPrice = this.calculateTransactionPrice();
-        this.referredTransactionNumber = referredTransactionNumber;
-    }
-
+    public abstract void make(Account account);
 
     public Credits calculateTransactionPrice() {
-        return this.stockPrice.multiply(this.quantity);
+        Credits currentStockPrice = this.stockPrice;
+        currentStockPrice.multiply(this.quantity);
+        return currentStockPrice;
+
     }
 
     public TransactionNumber getTransactionNumber() {
@@ -69,9 +60,5 @@ public class Transaction {
 
     public TransactionType getTransactionType() {
         return this.transactionType;
-    }
-
-    public TransactionNumber getReferredTransactionNumber() {
-        return this.referredTransactionNumber;
     }
 }

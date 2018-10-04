@@ -3,6 +3,10 @@ package domain.account;
 public class AccountNumber {
     private Long id;
 
+    public AccountNumber() {
+        this.id = 0L;
+    }
+
     public AccountNumber(Long id) {
         this.id = id;
     }

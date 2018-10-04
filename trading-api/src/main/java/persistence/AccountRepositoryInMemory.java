@@ -11,7 +11,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
 
     private Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
-    private static AccountNumber ACCOUNT_NUMBER_COUNTER = new AccountNumber(0L);
+    private static AccountNumber ACCOUNT_NUMBER_COUNTER = new AccountNumber();
 
     public void add(Account account) {
         ACCOUNT_NUMBER_COUNTER.incrementId();
