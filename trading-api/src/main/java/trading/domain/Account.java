@@ -1,0 +1,101 @@
+package trading.domain;
+
+import trading.exception.TransactionNotFoundException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import trading.api.request.AccountPostRequest;
+
+public class Account {
+    private AccountNumber accountNumber;
+    private Long investorId;
+    private InvestorProfile investorProfile;
+    private String investorName;
+    private String email;
+    private Credits credits;
+    private Map<TransactionNumber, Transaction> transactionList;
+
+    public Account(
+            Long investorId,
+            String investorName,
+            String email,
+            Credits credits,
+            AccountNumber accountNumber
+    ) {
+        this.investorId = investorId;
+        this.investorName = investorName;
+        this.email = email;
+        this.credits = credits;
+        this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
+        this.accountNumber = accountNumber;
+        this.transactionList = new HashMap<>();
+    }
+    
+    public static Account fromRequest(AccountPostRequest accountPostDto, long accountNumber) {
+	    return new Account(
+	            accountPostDto.getInvestorId(),
+	            accountPostDto.getInvestorName(),
+	            accountPostDto.getEmail(),
+	            Credits.fromDouble(accountPostDto.getCredits()),
+	            new AccountNumber(accountPostDto.getInvestorName(), accountNumber)
+	    );
+    }
+
+    public Transaction getTransaction(TransactionNumber transactionNumber) {
+        Transaction transaction = this.transactionList.get(transactionNumber);
+        if (transaction == null) {
+            throw new TransactionNotFoundException(transactionNumber);
+        }
+        return transaction;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        this.transactionList.put(transaction.getTransactionNumber(), transaction);
+    }
+
+    public AccountNumber getAccountNumber() {
+        return this.accountNumber;
+    }
+
+    public String getLongAccountNumber() {
+        return this.accountNumber.getId();
+    }
+
+    public InvestorProfile getInvestorProfile() {
+        return this.investorProfile;
+    }
+
+    public Long getInvestorId() {
+        return this.investorId;
+    }
+
+    public Credits getCredits() {
+        return this.credits;
+    }
+
+    public Map<TransactionNumber, Transaction> getTransactionList() {
+        return this.transactionList;
+    }
+
+    public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
+        return this.credits.compareTo(transactionPrice) >= 0;
+    }
+
+    public void substractCredits(Credits transactionPrice) {
+        this.credits.subtract(transactionPrice);
+    }
+
+    public void addCredits(Credits transactionPrice) {
+        this.credits.add(transactionPrice);
+    }
+
+    public String getInvestorName() {
+        return this.investorName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+}
