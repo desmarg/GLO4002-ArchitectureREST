@@ -1,4 +1,4 @@
-package domain.investorprofile;
+package domain;
 
 public enum ProfileType {
     CONSERVATIVE

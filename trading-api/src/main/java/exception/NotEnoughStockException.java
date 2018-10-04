@@ -1,7 +1,7 @@
 package exception;
 
-import domain.stock.Stock;
-import domain.transaction.TransactionNumber;
+import domain.Stock;
+import domain.TransactionNumber;
 
 public class NotEnoughStockException extends RuntimeException {
 

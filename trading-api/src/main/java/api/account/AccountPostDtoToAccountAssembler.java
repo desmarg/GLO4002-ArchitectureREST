@@ -1,9 +1,9 @@
 package api.account;
 
 import api.request.AccountPostRequest;
+import domain.Account;
+import domain.AccountNumber;
 import domain.Credits;
-import domain.account.Account;
-import domain.account.AccountNumber;
 
 public class AccountPostDtoToAccountAssembler {
 

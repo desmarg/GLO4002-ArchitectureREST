@@ -2,20 +2,20 @@ package external.response;
 
 import java.util.ArrayList;
 
-import application.stock.StockPrice;
+import domain.Credits;
 
 public class StockResponse {
     private Long id;
     private String market;
     private String symbol;
     private String type;
-    private ArrayList<StockPrice> prices;
+    private ArrayList<StockPriceResponse> prices;
 
-    public ArrayList<StockPrice> getPrices() {
+    public ArrayList<StockPriceResponse> getPrices() {
         return this.prices;
     }
 
-    public void setPrices(ArrayList<StockPrice> prices) {
+    public void setPrices(ArrayList<StockPriceResponse> prices) {
         this.prices = prices;
     }
 
@@ -34,4 +34,5 @@ public class StockResponse {
     public String getType() {
         return this.type;
     }
+
 }

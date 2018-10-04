@@ -1,6 +1,6 @@
 package exception;
 
-import domain.transaction.TransactionType;
+import domain.TransactionType;
 
 public class UnsupportedTransactionTypeException extends RuntimeException {
 

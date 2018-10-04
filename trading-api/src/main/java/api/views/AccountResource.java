@@ -1,7 +1,7 @@
 package api.views;
 
-import domain.account.Account;
-import domain.account.AccountNumber;
+import domain.Account;
+import domain.AccountNumber;
 import services.AccountService;
 import services.Services;
 

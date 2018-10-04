@@ -1,6 +1,6 @@
 package exception;
 
-import domain.transaction.TransactionNumber;
+import domain.TransactionNumber;
 
 public class StockParametersDontMatchException extends RuntimeException {
 

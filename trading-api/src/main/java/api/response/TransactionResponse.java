@@ -1,7 +1,7 @@
 package api.response;
 
-import domain.stock.Stock;
-import domain.transaction.Transaction;
+import domain.Stock;
+import domain.Transaction;
 
 import java.util.UUID;
 

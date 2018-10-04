@@ -1,7 +1,7 @@
 package persistence;
 
-import domain.account.Account;
-import domain.account.AccountNumber;
+import domain.Account;
+import domain.AccountNumber;
 import exception.AccountNotFoundException;
 
 public interface AccountRepository {

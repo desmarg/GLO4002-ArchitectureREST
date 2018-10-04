@@ -1,11 +1,11 @@
 package services;
 
 import application.JerseyClient;
-import application.stock.StockPrice;
 import domain.Credits;
 import domain.DateTime;
-import domain.stock.Stock;
+import domain.Stock;
 import exception.StockNotFoundException;
+import external.response.StockPriceResponse;
 import external.response.StockResponse;
 
 public class StockService {
@@ -30,7 +30,7 @@ public class StockService {
     }
 
     public Credits getPriceFromDate(StockResponse stockDto, DateTime date) {
-        for (StockPrice priceInfo : stockDto.getPrices()) {
+        for (StockPriceResponse priceInfo : stockDto.getPrices()) {
             DateTime dateTime = new DateTime(priceInfo.getDate());
 
             if (dateTime.isSameDay(date)) {

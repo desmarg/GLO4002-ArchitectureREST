@@ -1,4 +1,4 @@
-package domain.stock;
+package domain;
 
 public class Stock {
     private String market;

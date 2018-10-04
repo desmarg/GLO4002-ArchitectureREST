@@ -1,4 +1,4 @@
-package domain.account;
+package domain;
 
 public class AccountNumber {
     private String id;

@@ -1,7 +1,7 @@
 package api.transaction;
 
 import api.response.TransactionResponse;
-import domain.transaction.Transaction;
+import domain.Transaction;
 
 public class TransactionToTransactionGetDtoAssembler {
 

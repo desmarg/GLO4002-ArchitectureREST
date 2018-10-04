@@ -1,21 +1,25 @@
 package api.response;
 
-import api.account.AccountDto;
-import domain.account.Account;
-import domain.investorprofile.InvestorProfile;
 
-public class AccountResponse extends AccountDto {
+import domain.Account;
+import domain.InvestorProfile;
+
+
+public class AccountResponse{
 
     private InvestorProfile investorProfile;
     private String accountNumber;
-
+    private Long investorId;
+    private float credits;
+    
     public AccountResponse() {
     }
 
     public AccountResponse(Account account) {
-        super(account);
         this.investorProfile = account.getInvestorProfile();
         this.accountNumber = account.getAccountNumber().getId();
+        this.investorId = account.getInvestorId();
+        this.credits = account.getCredits().valueToFloat();
     }
 
     public void setInvestorProfile(InvestorProfile investorProfile) {
@@ -32,5 +36,20 @@ public class AccountResponse extends AccountDto {
 
     public String getAccountNumber() {
         return this.accountNumber;
+    }
+    public Long getInvestorId() {
+        return this.investorId;
+    }
+
+    public void setInvestorId(Long investorId) {
+        this.investorId = investorId;
+    }
+
+    public float getCredits() {
+        return this.credits;
+    }
+
+    public void setCredits(Float credits) {
+        this.credits = credits;
     }
 }

@@ -1,19 +1,20 @@
 package api.request;
 
-import api.account.AccountDto;
-import domain.account.Account;
+import domain.Account;
 
-public class AccountPostRequest extends AccountDto {
+public class AccountPostRequest {
     private String investorName;
     private String email;
+    private Long investorId;
+    private float credits;
 
-    public AccountPostRequest() {
-    }
+    public AccountPostRequest() {}
 
     public AccountPostRequest(Account account) {
-        super(account);
         this.investorName = account.getInvestorName();
         this.email = account.getEmail();
+        this.investorId = account.getInvestorId();
+        this.credits = account.getCredits().valueToFloat();
     }
 
     public void setInvestorName(String investorName) {
@@ -30,5 +31,21 @@ public class AccountPostRequest extends AccountDto {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public Long getInvestorId() {
+        return this.investorId;
+    }
+
+    public void setInvestorId(Long investorId) {
+        this.investorId = investorId;
+    }
+
+    public float getCredits() {
+        return this.credits;
+    }
+
+    public void setCredits(Float credits) {
+        this.credits = credits;
     }
 }

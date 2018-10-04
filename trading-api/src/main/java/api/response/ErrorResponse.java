@@ -1,7 +1,8 @@
 package api.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import domain.transaction.TransactionNumber;
+
+import domain.TransactionNumber;
 
 public class ErrorResponse {
 

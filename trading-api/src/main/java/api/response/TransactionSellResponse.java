@@ -1,6 +1,6 @@
 package api.response;
 
-import domain.transaction.Transaction;
+import domain.Transaction;
 
 public class TransactionSellResponse extends TransactionResponse {
 

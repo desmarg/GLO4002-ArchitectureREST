@@ -1,4 +1,4 @@
-package domain.transaction;
+package domain;
 
 public enum TransactionType {
     BUY,

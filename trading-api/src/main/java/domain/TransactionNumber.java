@@ -1,4 +1,4 @@
-package domain.transaction;
+package domain;
 
 import java.util.UUID;
 

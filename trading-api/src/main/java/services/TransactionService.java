@@ -1,8 +1,8 @@
 package services;
 
-import domain.account.Account;
-import domain.transaction.Transaction;
-import domain.transaction.TransactionNumber;
+import domain.Account;
+import domain.Transaction;
+import domain.TransactionNumber;
 
 public class TransactionService {
 

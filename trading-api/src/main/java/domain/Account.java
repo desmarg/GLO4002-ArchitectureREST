@@ -1,11 +1,5 @@
-package domain.account;
+package domain;
 
-import domain.Credits;
-import domain.investorprofile.FocusArea;
-import domain.investorprofile.InvestorProfile;
-import domain.investorprofile.ProfileType;
-import domain.transaction.Transaction;
-import domain.transaction.TransactionNumber;
 import exception.TransactionNotFoundException;
 
 import java.util.ArrayList;

@@ -3,9 +3,9 @@ package api.transaction;
 import api.response.TransactionBuyResponse;
 import api.response.TransactionResponse;
 import api.response.TransactionSellResponse;
-import domain.transaction.Transaction;
-import domain.transaction.TransactionBuy;
-import domain.transaction.TransactionSell;
+import domain.Transaction;
+import domain.TransactionBuy;
+import domain.TransactionSell;
 import exception.UnsupportedTransactionTypeException;
 
 public class TransactionDtoFactory {

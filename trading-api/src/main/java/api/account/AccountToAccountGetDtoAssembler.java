@@ -1,7 +1,7 @@
 package api.account;
 
 import api.response.AccountResponse;
-import domain.account.Account;
+import domain.Account;
 
 public class AccountToAccountGetDtoAssembler {
 

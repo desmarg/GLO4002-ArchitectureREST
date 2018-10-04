@@ -1,9 +1,5 @@
-package domain.transaction;
+package domain;
 
-import domain.Credits;
-import domain.DateTime;
-import domain.account.Account;
-import domain.stock.Stock;
 import exception.InvalidQuantityException;
 import exception.NotEnoughCreditsException;
 

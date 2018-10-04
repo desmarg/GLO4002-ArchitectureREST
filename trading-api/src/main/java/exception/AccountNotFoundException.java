@@ -1,6 +1,6 @@
 package exception;
 
-import domain.account.AccountNumber;
+import domain.AccountNumber;
 
 public class AccountNotFoundException extends RuntimeException {
 

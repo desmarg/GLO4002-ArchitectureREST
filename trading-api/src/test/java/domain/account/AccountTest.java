@@ -1,10 +1,12 @@
 package domain.account;
 
+import domain.Account;
+import domain.AccountNumber;
 import domain.Credits;
-import domain.investorprofile.InvestorProfile;
-import domain.stock.Stock;
-import domain.transaction.Transaction;
-import domain.transaction.TransactionNumber;
+import domain.InvestorProfile;
+import domain.Stock;
+import domain.Transaction;
+import domain.TransactionNumber;
 import exception.TransactionNotFoundException;
 import org.junit.Before;
 import org.junit.Test;

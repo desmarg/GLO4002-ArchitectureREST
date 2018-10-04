@@ -1,9 +1,4 @@
-package domain.transaction;
-
-import domain.Credits;
-import domain.DateTime;
-import domain.account.Account;
-import domain.stock.Stock;
+package domain;
 
 import static domain.Credits.fromDouble;
 

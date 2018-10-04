@@ -1,6 +1,6 @@
 package domain.stock;
 
-import application.stock.StockPrice;
+import external.response.StockPriceResponse;
 import domain.Credits;
 import domain.DateTime;
 import external.response.StockResponse;
@@ -20,14 +20,14 @@ public class StockServiceTest {
 
     private StockService stockService;
     private StockResponse stockDto;
-    private StockPrice stockPrice;
-    private ArrayList<StockPrice> stockPrices;
+    private StockPriceResponse stockPrice;
+    private ArrayList<StockPriceResponse> stockPrices;
 
     @Before
     public void setup() {
         this.stockService = new StockService();
 
-        this.stockPrice = new StockPrice();
+        this.stockPrice = new StockPriceResponse();
         this.stockPrice.setDate(DATE);
         this.stockPrice.setPrice(PRICE);
 

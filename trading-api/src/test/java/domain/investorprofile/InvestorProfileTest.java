@@ -2,6 +2,10 @@ package domain.investorprofile;
 
 import org.junit.Test;
 
+import domain.FocusArea;
+import domain.InvestorProfile;
+import domain.ProfileType;
+
 import java.util.ArrayList;
 import java.util.List;
 

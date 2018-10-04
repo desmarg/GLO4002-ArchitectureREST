@@ -1,9 +1,9 @@
 package api.views;
 
-import domain.account.Account;
-import domain.account.AccountNumber;
-import domain.transaction.Transaction;
-import domain.transaction.TransactionNumber;
+import domain.Account;
+import domain.AccountNumber;
+import domain.Transaction;
+import domain.TransactionNumber;
 import services.AccountService;
 import services.Services;
 import services.TransactionService;

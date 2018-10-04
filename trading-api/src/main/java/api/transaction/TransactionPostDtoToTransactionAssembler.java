@@ -3,8 +3,12 @@ package api.transaction;
 import api.request.TransactionPostRequest;
 import domain.Credits;
 import domain.DateTime;
-import domain.stock.Stock;
-import domain.transaction.*;
+import domain.Stock;
+import domain.Transaction;
+import domain.TransactionBuy;
+import domain.TransactionNumber;
+import domain.TransactionSell;
+import domain.TransactionType;
 import exception.UnsupportedTransactionTypeException;
 import services.StockService;
 
