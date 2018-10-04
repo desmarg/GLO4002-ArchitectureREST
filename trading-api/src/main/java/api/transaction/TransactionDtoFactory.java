@@ -7,12 +7,10 @@ import exception.UnsupportedTransactionTypeException;
 
 public class TransactionDtoFactory {
 
-    public static TransactionDto createTransaction(Transaction transaction) {
+    public static TransactionDto createTransactionDto(Transaction transaction) {
         if (transaction instanceof TransactionBuy) {
-
             return new TransactionBuyGetDto(transaction);
         } else if (transaction instanceof TransactionSell) {
-
             return new TransactionGetSellDto(transaction);
         }
 

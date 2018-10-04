@@ -4,7 +4,9 @@ import domain.Credits;
 import domain.DateTime;
 import domain.account.Account;
 import domain.stock.Stock;
+import exception.InvalidQuantityException;
 import exception.NotEnoughStockException;
+import exception.StockParametersDontMatchException;
 
 public class TransactionSell extends Transaction {
 
@@ -20,6 +22,14 @@ public class TransactionSell extends Transaction {
     public void make(Account account) {
         account.addTransaction(this);
         TransactionBuy referredTransaction = (TransactionBuy) account.getTransaction(this.referredTransactionNumber);
+
+        if (this.getQuantity() <= 0) {
+            throw new InvalidQuantityException(this.transactionNumber);
+        }
+
+        if (!referredTransaction.getStock().equals(this.getStock())) {
+            throw new StockParametersDontMatchException(this.transactionNumber);
+        }
 
         if (!referredTransaction.hasEnoughStock(this.quantity)) {
             throw new NotEnoughStockException(this.stock, this.transactionNumber);

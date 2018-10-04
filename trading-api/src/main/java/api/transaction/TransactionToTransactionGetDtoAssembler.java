@@ -5,6 +5,6 @@ import domain.transaction.Transaction;
 public class TransactionToTransactionGetDtoAssembler {
 
     public static TransactionDto createTransactionGetDto(Transaction transaction) {
-        return TransactionDtoFactory.createTransaction(transaction);
+        return TransactionDtoFactory.createTransactionDto(transaction);
     }
 }
