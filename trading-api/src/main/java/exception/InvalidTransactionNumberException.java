@@ -2,16 +2,17 @@ package exception;
 
 import domain.transaction.TransactionNumber;
 
-public class InvalidTransactionNumberException extends RuntimeException {
+import javax.ws.rs.core.Response.Status;
+import java.util.UUID;
 
-    private TransactionNumber transactionNumber;
+public class InvalidTransactionNumberException extends MappedException {
+
+    private UUID transactionNumber;
 
     public InvalidTransactionNumberException(TransactionNumber transactionNumber) {
-        super("the transaction number is invalid");
-        this.transactionNumber = transactionNumber;
-    }
-
-    public TransactionNumber getTransactionNumber() {
-        return this.transactionNumber;
+        this.error = "INVALID_TRANSACTION_NUMBER";
+        this.description = "the transaction number is invalid";
+        this.status = Status.BAD_REQUEST;
+        this.transactionNumber = transactionNumber.getId();
     }
 }

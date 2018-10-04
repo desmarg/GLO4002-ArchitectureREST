@@ -1,19 +1,13 @@
 package system;
 
-//import api.account.AccountResource;
-//import api.hearbeat.HeartbeatResource;
-//import api.transaction.TransactionResource;
-import application.AccountService;
-import application.TransactionService;
+import api.views.AccountResource;
+import api.views.TransactionResource;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-
-import api.views.AccountResource;
-import api.views.TransactionResource;
-import persistence.AccountRepositoryInMemory;
+import services.Services;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -25,17 +19,17 @@ public class TradingServer implements Runnable {
             TradingServer.class.getName()
     );
 
-    private static final String EXCEPTION_MAPPERS_PATH = "exceptionmappers";
+    private static final String EXCEPTION_MAPPERS_PATH = "exception";
 
     public static void main(String[] args) {
         new TradingServer().run();
     }
 
     private static HashSet<Object> getContextResources() {
-        AccountService accountService = new AccountService(new AccountRepositoryInMemory());
         HashSet<Object> resources = new HashSet<>();
-        AccountResource accountResource = new AccountResource(accountService);
-        TransactionResource transactionResource = new TransactionResource(accountService, new TransactionService());
+        Services services = new Services();
+        AccountResource accountResource = new AccountResource(services);
+        TransactionResource transactionResource = new TransactionResource(services);
 
         resources.add(accountResource);
         resources.add(transactionResource);
@@ -87,6 +81,6 @@ public class TradingServer implements Runnable {
             e.printStackTrace();
         } finally {
             server.destroy();
-        }  
+        }
     }
 }

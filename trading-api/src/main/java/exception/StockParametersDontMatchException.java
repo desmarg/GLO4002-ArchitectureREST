@@ -2,17 +2,17 @@ package exception;
 
 import domain.transaction.TransactionNumber;
 
-public class StockParametersDontMatchException extends RuntimeException {
+import javax.ws.rs.core.Response.Status;
+import java.util.UUID;
 
-    private TransactionNumber transactionNumber;
+public class StockParametersDontMatchException extends MappedException {
+
+    private UUID transactionNumber;
 
     public StockParametersDontMatchException(TransactionNumber transactionNumber) {
-
-        super("stock parameters don't match existing ones");
-        this.transactionNumber = transactionNumber;
-    }
-
-    public TransactionNumber getTransactionNumber() {
-        return this.transactionNumber;
+        this.error = "STOCK_NOT_FOUND";
+        this.description = "stock parameters don't match existing ones";
+        this.status = Status.BAD_REQUEST;
+        this.transactionNumber = transactionNumber.getId();
     }
 }

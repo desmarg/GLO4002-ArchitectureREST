@@ -1,8 +1,18 @@
 package exception;
 
-public class InvalidDateException extends RuntimeException {
+import domain.transaction.TransactionNumber;
 
-    public InvalidDateException(String symbol, String market) {
-        super("stock '" + symbol + ":" + market + "' not found");
+import javax.ws.rs.core.Response.Status;
+import java.util.UUID;
+
+public class InvalidDateException extends MappedException {
+
+    private UUID transactionNumber;
+
+    public InvalidDateException(TransactionNumber transactionNumber) {
+        this.error = "INVALID_DATE";
+        this.description = "the transaction date is invalid";
+        this.status = Status.BAD_REQUEST;
+        this.transactionNumber = transactionNumber.getId();
     }
 }

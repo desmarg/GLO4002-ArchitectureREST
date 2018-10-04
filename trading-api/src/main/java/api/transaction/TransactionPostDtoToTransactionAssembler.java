@@ -1,12 +1,12 @@
 package api.transaction;
 
 import api.request.TransactionPostRequest;
-import application.stock.StockService;
 import domain.Credits;
 import domain.DateTime;
 import domain.stock.Stock;
 import domain.transaction.*;
 import exception.UnsupportedTransactionTypeException;
+import services.StockService;
 
 public class TransactionPostDtoToTransactionAssembler {
 

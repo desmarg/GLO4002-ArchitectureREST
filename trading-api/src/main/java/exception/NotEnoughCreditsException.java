@@ -2,17 +2,17 @@ package exception;
 
 import domain.transaction.TransactionNumber;
 
-public class NotEnoughCreditsException extends RuntimeException {
+import javax.ws.rs.core.Response.Status;
+import java.util.UUID;
 
-    private TransactionNumber transactionNumber;
+public class NotEnoughCreditsException extends MappedException {
+
+    private UUID transactionNumber;
 
     public NotEnoughCreditsException(TransactionNumber transactionNumber) {
-        super("not enough credits in wallet");
-        this.transactionNumber = transactionNumber;
-    }
-
-    public TransactionNumber getTransactionNumber() {
-        return this.transactionNumber;
+        this.error = "NOT_ENOUGH_CREDITS";
+        this.description = "not enough credits in wallet";
+        this.status = Status.BAD_REQUEST;
+        this.transactionNumber = transactionNumber.getId();
     }
 }
-
