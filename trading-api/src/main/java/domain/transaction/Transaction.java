@@ -13,6 +13,7 @@ public abstract class Transaction {
     protected Stock stock;
     protected Credits stockPrice;
     protected Credits price;
+    protected Credits fees;
 
 
     protected Transaction(Long quantity, DateTime date, Stock stock,
@@ -23,6 +24,7 @@ public abstract class Transaction {
         this.stock = stock;
         this.stockPrice = stockPrice;
         this.price = this.calculateTransactionPrice();
+        this.fees = this.calculateFees();
     }
 
     public abstract void make(Account account);
@@ -31,6 +33,11 @@ public abstract class Transaction {
         Credits transactionPrice = new Credits(this.stockPrice);
         transactionPrice.multiply(this.quantity);
         return transactionPrice;
+    }
+
+    //TODO TXFR
+    public Credits calculateFees() {
+        return new Credits();
     }
 
     public TransactionNumber getTransactionNumber() {
@@ -59,5 +66,13 @@ public abstract class Transaction {
 
     public TransactionType getTransactionType() {
         return this.transactionType;
+    }
+
+    public Credits getPrice() {
+        return this.price;
+    }
+
+    public Credits getFees() {
+        return this.fees;
     }
 }

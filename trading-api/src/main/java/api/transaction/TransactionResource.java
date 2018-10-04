@@ -29,8 +29,8 @@ public class TransactionResource {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         TransactionNumber transactionNumber = new TransactionNumber(UUID.fromString(transactionNumberString));
         Transaction transaction = this.transactionService.getTransactionFromAccount(account, transactionNumber);
-        TransactionGetDto transactionGetDto = TransactionToTransactionGetDtoAssembler.createTransactionGetDto(transaction);
-        return Response.status(Response.Status.OK).entity(transactionGetDto).build();
+        TransactionDto transactionDto = TransactionToTransactionGetDtoAssembler.createTransactionGetDto(transaction);
+        return Response.status(Response.Status.OK).entity(transactionDto).build();
     }
 
     @POST
