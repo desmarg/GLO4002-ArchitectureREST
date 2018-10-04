@@ -1,6 +1,7 @@
 package exceptionmappers;
 
 import api.account.ErrorResponse;
+import domain.transaction.TransactionNumber;
 import exception.InvalidQuantityException;
 
 import javax.ws.rs.core.Response;
@@ -14,9 +15,9 @@ public class InvalidQuantityExceptionMapper implements
     public Response toResponse(InvalidQuantityException e) {
         String errorName = "INVALID_QUANTITY";
         String errorDescription = e.getMessage();
-        String transactionId = e.getTransactionNumber().getStringUUID();
+        TransactionNumber transactionNumber = e.getTransactionNumber();
 
-        ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionId);
+        ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionNumber);
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

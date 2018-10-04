@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class StockServiceTest {
     private static String DATE = "2015-01-01T05:00:00.000Z";
     private static DateTime DATETIME = new DateTime(DATE);
-    private static Float PRICE = 10f;
+    private static Double PRICE = 10d;
 
     private StockService stockService;
     private StockDto stockDto;

@@ -1,6 +1,7 @@
 package exceptionmappers;
 
 import api.account.ErrorResponse;
+import domain.transaction.TransactionNumber;
 import exception.InvalidTransactionNumberException;
 
 import javax.ws.rs.core.Response;
@@ -12,8 +13,8 @@ public class InvalidTransactionNumberMapper implements ExceptionMapper<InvalidTr
     public Response toResponse(InvalidTransactionNumberException e) {
         String errorName = "INVALID_TRANSACTION_NUMBER";
         String errorDescription = e.getMessage();
-        String transactionId = e.getTransactionNumber().getStringUUID();
-        ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionId);
+        TransactionNumber transactionNumber = e.getTransactionNumber();
+        ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionNumber);
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

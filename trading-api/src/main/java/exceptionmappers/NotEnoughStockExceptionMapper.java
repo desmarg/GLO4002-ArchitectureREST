@@ -1,6 +1,7 @@
 package exceptionmappers;
 
 import api.account.ErrorResponse;
+import domain.transaction.TransactionNumber;
 import exception.NotEnoughStockException;
 
 import javax.ws.rs.core.Response;
@@ -14,7 +15,7 @@ public class NotEnoughStockExceptionMapper implements
     public Response toResponse(NotEnoughStockException e) {
         String errorName = "NOT_ENOUGH_STOCK";
         String errorDescription = e.getMessage();
-        String transactionId = e.getTransactionNumber().getStringUUID();
+        TransactionNumber transactionId = e.getTransactionNumber();
 
         ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionId);
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();

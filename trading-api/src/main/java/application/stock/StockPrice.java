@@ -4,7 +4,7 @@ import domain.Credits;
 
 public class StockPrice {
     private String date;
-    private Float price;
+    private Double price;
 
     public String getDate() {
         return this.date;
@@ -18,7 +18,7 @@ public class StockPrice {
         return Credits.fromDouble(this.price);
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

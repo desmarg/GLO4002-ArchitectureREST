@@ -27,6 +27,7 @@ public class TransactionSell extends Transaction {
 
         referredTransaction.deduceStock(this.quantity);
         account.addCredits(this.price);
+        account.substractCredits(this.fees);
 
     }
 

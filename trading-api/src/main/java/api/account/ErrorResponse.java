@@ -1,6 +1,7 @@
 package api.account;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import domain.transaction.TransactionNumber;
 
 public class ErrorResponse {
 
@@ -16,10 +17,10 @@ public class ErrorResponse {
         this.description = errorDescription;
     }
 
-    public ErrorResponse(String errorName, String errorDescription, String transactionId) {
+    public ErrorResponse(String errorName, String errorDescription, TransactionNumber transactionNumber) {
         this.error = errorName;
         this.description = errorDescription;
-        this.transactionId = transactionId;
+        this.transactionId = transactionNumber.getId().toString();
     }
 
 

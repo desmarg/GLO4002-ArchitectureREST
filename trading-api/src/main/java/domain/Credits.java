@@ -37,6 +37,11 @@ public class Credits implements Comparable<Credits> {
         this.amount = this.amount.multiply(rhs);
     }
 
+    public void multiply(double quantity) {
+        BigDecimal rhs = new BigDecimal(quantity);
+        this.amount = this.amount.multiply(rhs);
+    }
+
     public String valueToString() {
         DecimalFormatSymbols symbolsFormat = new DecimalFormatSymbols();
         symbolsFormat.setDecimalSeparator('.');
@@ -49,7 +54,8 @@ public class Credits implements Comparable<Credits> {
     }
 
     public float valueToFloat() {
-        return this.amount.floatValue();
+        BigDecimal scaledDecimal = this.amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return scaledDecimal.floatValue();
     }
 
     @Override

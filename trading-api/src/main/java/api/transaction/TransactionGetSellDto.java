@@ -1,9 +1,15 @@
 package api.transaction;
 
+import domain.transaction.Transaction;
+
 public class TransactionGetSellDto extends TransactionDto {
 
     private float priceSold;
-    private float fees;
+
+    public TransactionGetSellDto(Transaction transaction) {
+        super();
+        this.priceSold = transaction.getStockPrice().valueToFloat();
+    }
 
     public float getPriceSold() {
         return this.priceSold;
@@ -13,11 +19,4 @@ public class TransactionGetSellDto extends TransactionDto {
         this.priceSold = priceSold;
     }
 
-    public float getFees() {
-        return this.fees;
-    }
-
-    public void setFees(float fees) {
-        this.fees = fees;
-    }
 }

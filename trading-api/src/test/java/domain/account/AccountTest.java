@@ -5,7 +5,6 @@ import domain.investorprofile.InvestorProfile;
 import domain.stock.Stock;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
-import exception.InvalidTransactionNumberException;
 import exception.TransactionNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
@@ -131,17 +129,17 @@ public class AccountTest {
         this.account.getTransaction(this.transactionNumber);
     }
 
-    @Test
-    public void givenReferredTransaction_whenGetRemainingStocks_thenRemainingStockIsReturned() {
-        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
-        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
-        Long remainingStock = this.account.getRemainingStocks(this.transaction);
-    }
-
-    @Test(expected = InvalidTransactionNumberException.class)
-    public void givenReferredTransactionWithNotExistingTransactionNumberInStockWallet_whenGetRemainingStocks_thenThrowInvalidTransactionNumberException() {
-        this.account.getRemainingStocks(this.transaction);
-    }
+//    @Test
+//    public void givenReferredTransaction_whenGetRemainingStocks_thenRemainingStockIsReturned() {
+//        when(this.transaction.getTransactionNumber()).thenReturn(this.transactionNumber);
+//        this.account.getStockWallet().put(this.transactionNumber, SUFFICIENT_QUANTITY);
+//        Long remainingStock = this.account.getRemainingStocks(this.transaction);
+//    }
+//
+//    @Test(expected = InvalidTransactionNumberException.class)
+//    public void givenReferredTransactionWithNotExistingTransactionNumberInStockWallet_whenGetRemainingStocks_thenThrowInvalidTransactionNumberException() {
+//        this.account.getRemainingStocks(this.transaction);
+//    }
 
 //    @Test(expected = NotEnoughStockException.class)
 //    public void givenTransaction_whenSellTransaction_thenThrowNotEnoughStockException() {

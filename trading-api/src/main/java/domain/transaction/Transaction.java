@@ -5,6 +5,8 @@ import domain.DateTime;
 import domain.account.Account;
 import domain.stock.Stock;
 
+import static domain.Credits.fromDouble;
+
 public abstract class Transaction {
     protected TransactionNumber transactionNumber;
     protected TransactionType transactionType;
@@ -35,9 +37,30 @@ public abstract class Transaction {
         return transactionPrice;
     }
 
-    //TODO TXFR
+    public Credits getTotalPrice() {
+        Credits totalPrice = new Credits();
+        totalPrice.add(this.price);
+        totalPrice.add(this.fees);
+        return totalPrice;
+    }
+
     public Credits calculateFees() {
-        return new Credits();
+        Credits fees = new Credits();
+        if (this.quantity <= 100) {
+            Credits baseFee = fromDouble(0.25);
+            fees.add(baseFee);
+            fees.multiply(this.quantity);
+        } else {
+            Credits baseFee = fromDouble(0.20);
+            fees.add(baseFee);
+            fees.multiply(this.quantity);
+        }
+        if (this.price.compareTo(Credits.fromDouble(5000)) > 0) {
+            Credits additionalFees = new Credits(this.price);
+            additionalFees.multiply(0.03);
+            fees.add(additionalFees);
+        }
+        return fees;
     }
 
     public TransactionNumber getTransactionNumber() {

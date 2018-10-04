@@ -1,6 +1,7 @@
 package exceptionmappers;
 
 import api.account.ErrorResponse;
+import domain.transaction.TransactionNumber;
 import exception.NotEnoughCreditsException;
 
 import javax.ws.rs.core.Response;
@@ -14,9 +15,9 @@ public class NotEnoughCreditsExceptionMapper implements
     public Response toResponse(NotEnoughCreditsException e) {
         String errorName = "NOT_ENOUGH_CREDITS";
         String errorDescription = e.getMessage();
-        String transactionId = e.getTransactionNumber().getStringUUID();
+        TransactionNumber transactionNumber = e.getTransactionNumber();
 
-        ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionId);
+        ErrorResponse errorResponse = new ErrorResponse(errorName, errorDescription, transactionNumber);
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

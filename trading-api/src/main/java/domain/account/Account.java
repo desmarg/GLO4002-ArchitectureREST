@@ -6,7 +6,6 @@ import domain.investorprofile.InvestorProfile;
 import domain.investorprofile.ProfileType;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
-import exception.InvalidTransactionNumberException;
 import exception.TransactionNotFoundException;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ public class Account {
     private String email;
     private Credits credits;
     private Map<TransactionNumber, Transaction> transactionList;
-    private Map<TransactionNumber, Long> stockWallet;
 
     public Account(
             Long investorId,
@@ -37,7 +35,6 @@ public class Account {
         this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
         this.accountNumber = accountNumber;
         this.transactionList = new HashMap<>();
-        this.stockWallet = new HashMap<>();
     }
 
     public Transaction getTransaction(TransactionNumber transactionNumber) {
@@ -46,14 +43,6 @@ public class Account {
             throw new TransactionNotFoundException(transactionNumber);
         }
         return transaction;
-    }
-
-    public long getRemainingStocks(Transaction referredTransaction) {
-        Long stocksRemaining = this.stockWallet.get(referredTransaction.getTransactionNumber());
-        if (stocksRemaining == null) {
-            throw new InvalidTransactionNumberException(referredTransaction.getTransactionNumber());
-        }
-        return stocksRemaining;
     }
 
     public void addTransaction(Transaction transaction) {
@@ -84,11 +73,7 @@ public class Account {
         return this.transactionList;
     }
 
-    public Map<TransactionNumber, Long> getStockWallet() {
-        return this.stockWallet;
-    }
-
-    public boolean hasEnoughCredits(Credits transactionPrice) {
+    public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
         return this.credits.compareTo(transactionPrice) >= 0;
     }
 
