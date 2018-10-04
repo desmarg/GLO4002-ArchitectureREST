@@ -1,6 +1,7 @@
-package application.stock;
+package services;
 
 import application.JerseyClient;
+import application.stock.StockPrice;
 import domain.Credits;
 import domain.DateTime;
 import domain.stock.Stock;

@@ -1,10 +1,10 @@
 package domain.stock;
 
 import application.stock.StockPrice;
-import application.stock.StockService;
 import domain.Credits;
 import domain.DateTime;
 import external.response.StockResponse;
+import services.StockService;
 
 import org.junit.Before;
 import org.junit.Test;

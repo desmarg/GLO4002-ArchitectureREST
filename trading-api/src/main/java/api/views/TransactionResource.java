@@ -1,11 +1,12 @@
 package api.views;
 
-import application.AccountService;
-import application.TransactionService;
 import domain.account.Account;
 import domain.account.AccountNumber;
 import domain.transaction.Transaction;
 import domain.transaction.TransactionNumber;
+import services.AccountService;
+import services.Services;
+import services.TransactionService;
 import api.request.TransactionPostRequest;
 import api.response.TransactionResponse;
 import api.transaction.TransactionPostDtoToTransactionAssembler;
@@ -21,12 +22,12 @@ public class TransactionResource {
     private TransactionService transactionService;
     private AccountService accountService;
 
-    public TransactionResource(AccountService accountService, TransactionService transactionService) {
-        this.transactionService = transactionService;
-        this.accountService = accountService;
-    }
+    public TransactionResource(Services services) {
+        this.transactionService = services.getTransactionService();
+        this.accountService = services.getAccountService();
+	}
 
-    @GET
+	@GET
     @Path("/{transactionNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTransactionFromAll(@PathParam("accountNumber") String accountNumber, @PathParam("transactionNumber") String transactionNumberString) {

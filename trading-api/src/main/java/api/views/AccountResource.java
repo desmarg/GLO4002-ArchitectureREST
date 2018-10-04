@@ -1,8 +1,11 @@
 package api.views;
 
-import application.AccountService;
 import domain.account.Account;
 import domain.account.AccountNumber;
+import services.AccountService;
+import services.Services;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,14 +18,11 @@ import api.response.AccountResponse;
 
 @Path("/accounts")
 public class AccountResource {
-	public AccountResource() {
-		
-	}
 	
     private AccountService accountService;
 
-    public AccountResource(AccountService accountService) {
-        this.accountService = accountService;
+    public AccountResource(Services services) {
+        this.accountService = services.getAccountService();
     }
 
     @GET
@@ -30,7 +30,6 @@ public class AccountResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") String accountNumber) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-
         AccountResponse accountGetDto = AccountToAccountGetDtoAssembler.makeGetAccountDto(account);
         return Response.status(Response.Status.OK).entity(accountGetDto).build();
     }
