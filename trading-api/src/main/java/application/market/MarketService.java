@@ -43,4 +43,8 @@ public class MarketService {
         }
         return opened;
     }
+
+    public boolean getMarketOpenCurrently(String market){
+        return getMarketOpenAtHour(market, LocalTime.now());
+    }
 }
