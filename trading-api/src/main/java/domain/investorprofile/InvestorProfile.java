@@ -1,21 +1,13 @@
 package domain.investorprofile;
 
 import java.util.List;
-import java.security.InvalidParameterException;
 
 public class InvestorProfile {
 
     private ProfileType profileType;
-    private List<String> focusAreas;
+    private List<FocusArea> focusAreas;
 
-    public InvestorProfile(ProfileType profileType, List<String> focusAreas) {
-        if (profileType == null) {
-            throw new InvalidParameterException("profileType cannot be null");
-        }
-
-        if (focusAreas == null) {
-            throw new InvalidParameterException("focusArea cannot be null");
-        }
+    public InvestorProfile(ProfileType profileType, List<FocusArea> focusAreas) {
         this.profileType = profileType;
         this.focusAreas = focusAreas;
     }
@@ -24,7 +16,7 @@ public class InvestorProfile {
         return this.profileType;
     }
 
-    public List<String> getFocusAreas() {
+    public List<FocusArea> getFocusAreas() {
         return this.focusAreas;
     }
 }

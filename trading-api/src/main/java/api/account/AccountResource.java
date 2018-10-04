@@ -1,13 +1,14 @@
 package api.account;
 
 import application.AccountService;
-import domain.Account;
+import domain.account.Account;
+import domain.account.AccountNumber;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/")
+@Path("/accounts")
 public class AccountResource {
     private AccountService accountService;
 
@@ -16,21 +17,22 @@ public class AccountResource {
     }
 
     @GET
-    @Path("/accounts/{accountNumber}")
+    @Path("/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccountByAccountNumber(@PathParam("accountNumber")long accountNumber) {
-        Account account = this.accountService.findByAccountNumber(accountNumber);
-        AccountInformationDto accountInformationDto
-                = AccountMapper.INSTANCE.accountToAccountInformationDto(account);
-        return Response.status(Response.Status.CREATED).entity(accountInformationDto).build();
+    public Response getAccountByAccountNumber(@PathParam("accountNumber") long accountNumber) {
+        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+
+        AccountGetDto accountGetDto = AccountToAccountGetDtoAssembler.makeGetAccountDto(account);
+        return Response.status(Response.Status.OK).entity(accountGetDto).build();
     }
 
     @POST
-    @Path("/accounts")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(AccountCreatorDto accountCreatorDto) {
-        Account account = this.accountService.create(accountCreatorDto);
+    public Response createAccount(AccountPostDto accountPostDto) {
+        Account account = AccountPostDtoToAccountAssembler.createAccount(accountPostDto, this.accountService.nextAccountNumber());
+        this.accountService.saveAccount(account);
         return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getAccountNumber()).build();
+                + account.getLongAccountNumber()).build();
     }
 }

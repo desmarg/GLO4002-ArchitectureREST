@@ -1,24 +1,22 @@
 package api.account;
 
-import java.math.BigDecimal;
-
 public abstract class AccountDto {
-    private long investorId;
-    private BigDecimal credits;
+    private Long investorId;
+    private float credits;
 
-    public long getInvestorId() {
+    public Long getInvestorId() {
         return this.investorId;
     }
 
-    public void setInvestorId(long investorId) {
+    public void setInvestorId(Long investorId) {
         this.investorId = investorId;
     }
 
-    public BigDecimal getCredits() {
+    public float getCredits() {
         return this.credits;
     }
 
-    public void setCredits(BigDecimal credits) {
+    public void setCredits(Float credits) {
         this.credits = credits;
     }
 }

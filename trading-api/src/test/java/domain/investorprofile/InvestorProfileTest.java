@@ -1,16 +1,18 @@
 package domain.investorprofile;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class InvestorProfileTest {
 
     @Test
-    public void whenCreatingNewProfile_thenItIsConservative(){
+    public void whenCreatingNewProfile_thenItIsConservative() {
         ProfileType profileType = ProfileType.CONSERVATIVE;
-        List<String> focusAreas = new ArrayList<String>();
+        List<FocusArea> focusAreas = new ArrayList<>();
         InvestorProfile newInvestorProfile = new InvestorProfile(profileType, focusAreas);
         assertEquals(newInvestorProfile.getProfileType(), ProfileType.CONSERVATIVE);
     }

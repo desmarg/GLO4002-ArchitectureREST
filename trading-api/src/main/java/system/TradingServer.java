@@ -1,40 +1,42 @@
 package system;
 
-import javax.ws.rs.core.Application;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Logger;
-
 import api.account.AccountResource;
 import api.hearbeat.HeartbeatResource;
-import persistence.AccountRepositoryInMemory;
+import api.transaction.TransactionResource;
 import application.AccountService;
-
+import application.TransactionService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import persistence.AccountRepositoryInMemory;
+
+import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Logger;
 
 public class TradingServer implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(
             TradingServer.class.getName()
     );
-    //All exceptionsmappers should be in this folder
-    private static final String EXCEPTION_MAPPERS_PATH = "api/exceptionmappers";
+
+    private static final String EXCEPTION_MAPPERS_PATH = "exceptionmappers";
 
     public static void main(String[] args) {
         new TradingServer().run();
     }
 
     private static HashSet<Object> getContextResources() {
+        AccountService accountService = new AccountService(new AccountRepositoryInMemory());
         HashSet<Object> resources = new HashSet<>();
-        AccountResource accountResource = new AccountResource(new AccountService(
-                new AccountRepositoryInMemory()));
+        AccountResource accountResource = new AccountResource(accountService);
         HeartbeatResource heartBeatResource = new HeartbeatResource();
+        TransactionResource transactionResource = new TransactionResource(accountService, new TransactionService());
 
-        //TODO those will add up...
         resources.add(accountResource);
+        resources.add(transactionResource);
         resources.add(heartBeatResource);
         return resources;
     }
@@ -65,7 +67,7 @@ public class TradingServer implements Runnable {
 
         Server server = new Server(port);
         ServletContextHandler servletContextHandler = new ServletContextHandler(server, "/");
-        ResourceConfig resourceConfiguration = createResourceConfiguration();
+        ResourceConfig resourceConfiguration = this.createResourceConfiguration();
         ServletContainer container = new ServletContainer(resourceConfiguration);
         ServletHolder servletHolder = new ServletHolder(container);
         servletContextHandler.addServlet(servletHolder, "/*");
