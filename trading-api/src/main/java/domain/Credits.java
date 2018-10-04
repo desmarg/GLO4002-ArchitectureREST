@@ -15,6 +15,10 @@ public class Credits implements Comparable<Credits> {
         this.amount = amount;
     }
 
+    public Credits(Credits credits) {
+        this.amount = credits.amount;
+    }
+
     public static Credits fromDouble(double amount) {
         BigDecimal bigDecimalAmount = BigDecimal.valueOf(amount);
         return new Credits(bigDecimalAmount);

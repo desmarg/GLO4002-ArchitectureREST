@@ -28,10 +28,9 @@ public abstract class Transaction {
     public abstract void make(Account account);
 
     public Credits calculateTransactionPrice() {
-        Credits currentStockPrice = this.stockPrice;
-        currentStockPrice.multiply(this.quantity);
-        return currentStockPrice;
-
+        Credits transactionPrice = new Credits(this.stockPrice);
+        transactionPrice.multiply(this.quantity);
+        return transactionPrice;
     }
 
     public TransactionNumber getTransactionNumber() {
