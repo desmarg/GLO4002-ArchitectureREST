@@ -5,13 +5,13 @@ import trading.domain.Account;
 import trading.domain.InvestorProfile;
 
 
-public class AccountResponse{
+public class AccountResponse {
 
     private InvestorProfile investorProfile;
     private String accountNumber;
     private Long investorId;
     private float credits;
-    
+
     public AccountResponse() {
     }
 
@@ -37,6 +37,7 @@ public class AccountResponse{
     public String getAccountNumber() {
         return this.accountNumber;
     }
+
     public Long getInvestorId() {
         return this.investorId;
     }

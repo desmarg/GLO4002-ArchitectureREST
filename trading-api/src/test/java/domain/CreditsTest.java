@@ -2,8 +2,6 @@ package domain;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
 public class CreditsTest {
 
     private static final String ZERO_REPRESENTATION = "0.00";

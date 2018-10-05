@@ -1,17 +1,14 @@
 package domain.stock;
 
-import external.response.StockPriceResponse;
 import domain.Credits;
 import domain.DateTime;
+import external.response.StockPriceResponse;
 import external.response.StockResponse;
-import services.StockService;
-
 import org.junit.Before;
 import org.junit.Test;
+import services.StockService;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 public class StockServiceTest {
     private static String DATE = "2015-01-01T05:00:00.000Z";

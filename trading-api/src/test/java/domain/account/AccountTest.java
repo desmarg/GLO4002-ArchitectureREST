@@ -1,12 +1,6 @@
 package domain.account;
 
-import domain.Account;
-import domain.AccountNumber;
-import domain.Credits;
-import domain.InvestorProfile;
-import domain.Stock;
-import domain.Transaction;
-import domain.TransactionNumber;
+import domain.*;
 import exception.TransactionNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Map;
-
-import static junit.framework.TestCase.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {

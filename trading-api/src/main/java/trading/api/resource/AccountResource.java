@@ -1,5 +1,7 @@
 package trading.api.resource;
 
+import trading.api.request.AccountPostRequest;
+import trading.api.response.AccountResponse;
 import trading.domain.Account;
 import trading.domain.AccountNumber;
 import trading.services.AccountService;
@@ -8,9 +10,6 @@ import trading.services.Services;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import trading.api.request.AccountPostRequest;
-import trading.api.response.AccountResponse;
 
 @Path("/accounts")
 public class AccountResource {

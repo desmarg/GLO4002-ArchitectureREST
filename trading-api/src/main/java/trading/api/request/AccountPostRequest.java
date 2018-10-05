@@ -8,7 +8,8 @@ public class AccountPostRequest {
     private Long investorId;
     private float credits;
 
-    public AccountPostRequest() {}
+    public AccountPostRequest() {
+    }
 
     public AccountPostRequest(Account account) {
         this.investorName = account.getInvestorName();

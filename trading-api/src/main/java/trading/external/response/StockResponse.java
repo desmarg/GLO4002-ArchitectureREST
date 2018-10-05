@@ -2,8 +2,6 @@ package trading.external.response;
 
 import java.util.ArrayList;
 
-import trading.domain.Credits;
-
 public class StockResponse {
     private Long id;
     private String market;
