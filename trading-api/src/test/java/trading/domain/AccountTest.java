@@ -1,8 +1,8 @@
-//package domain;
+//package trading.domain;
 //
 //import exception.InvalidCreditsAmountException;
-//import domain.investorprofile.InvestorProfile;
-//import domain.investorprofile.ProfileType;
+//import trading.domain.investorprofile.InvestorProfile;
+//import trading.domain.investorprofile.ProfileType;
 //import org.junit.Test;
 //
 //import java.math.BigDecimal;

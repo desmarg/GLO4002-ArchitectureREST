@@ -1,8 +1,8 @@
 //package application;
 //
-//import domain.Credits;
-//import domain.DateTime;
-//import domain.stock.Stock;
+//import trading.domain.Credits;
+//import trading.domain.DateTime;
+//import trading.domain.stock.Stock;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;

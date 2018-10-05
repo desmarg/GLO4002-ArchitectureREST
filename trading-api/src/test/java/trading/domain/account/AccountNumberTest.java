@@ -1,4 +1,4 @@
-//package domain.account;
+//package trading.domain.account;
 //
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;

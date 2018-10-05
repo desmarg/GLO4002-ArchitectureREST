@@ -1,6 +1,5 @@
-package domain.account;
+package trading.domain.account;
 
-import domain.*;
 import exception.TransactionNotFoundException;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,9 @@
-package domain.investorprofile;
+package trading.domain.investorprofile;
 
-import domain.FocusArea;
-import domain.InvestorProfile;
-import domain.ProfileType;
 import org.junit.Test;
+import trading.domain.FocusArea;
+import trading.domain.InvestorProfile;
+import trading.domain.ProfileType;
 
 import java.util.ArrayList;
 import java.util.List;

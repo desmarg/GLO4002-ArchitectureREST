@@ -1,12 +1,12 @@
-package domain.stock;
+package trading.domain.stock;
 
-import domain.Credits;
-import domain.DateTime;
 import external.response.StockPriceResponse;
 import external.response.StockResponse;
 import org.junit.Before;
 import org.junit.Test;
 import services.StockService;
+import trading.domain.Credits;
+import trading.domain.DateTime;
 
 import java.util.ArrayList;
 

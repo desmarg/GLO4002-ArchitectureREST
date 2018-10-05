@@ -6,7 +6,7 @@ public class AccountPostRequest {
     private String investorName;
     private String email;
     private Long investorId;
-    private float credits;
+    private Float credits;
 
     public AccountPostRequest() {
     }
@@ -42,7 +42,7 @@ public class AccountPostRequest {
         this.investorId = investorId;
     }
 
-    public float getCredits() {
+    public Float getCredits() {
         return this.credits;
     }
 
