@@ -2,9 +2,13 @@ package trading.exception;
 
 import trading.domain.AccountNumber;
 
-public class AccountNotFoundException extends RuntimeException {
+import javax.ws.rs.core.Response.Status;
+
+public class AccountNotFoundException extends MappedException {
 
     public AccountNotFoundException(AccountNumber accountNumber) {
-        super("account with number " + accountNumber.getId() + " not found");
+        this.error = "ACCOUNT_NOT_FOUND";
+        this.description = "account with number " + accountNumber.getId() + " not found";
+        this.status = Status.BAD_REQUEST;
     }
 }

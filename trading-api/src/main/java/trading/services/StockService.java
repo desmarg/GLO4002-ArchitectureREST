@@ -4,9 +4,12 @@ import trading.application.JerseyClient;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
+import trading.domain.TransactionNumber;
 import trading.exception.StockNotFoundException;
 import trading.external.response.StockPriceResponse;
 import trading.external.response.StockResponse;
+
+import java.util.UUID;
 
 public class StockService {
 
@@ -24,7 +27,7 @@ public class StockService {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
         StockResponse stockDto = JerseyClient.getInstance().getRequest(url, StockResponse.class);
         if (stockDto == null) {
-            throw new StockNotFoundException(stock.getSymbol(), stock.getMarket());
+            throw new StockNotFoundException(stock.getSymbol(), stock.getMarket(), new TransactionNumber(UUID.randomUUID()));
         }
         return this.getPriceFromDate(stockDto, date);
     }
@@ -37,7 +40,7 @@ public class StockService {
                 return priceInfo.getPrice();
             }
         }
-        throw new StockNotFoundException(stockDto.getSymbol(), stockDto.getMarket());
+        throw new StockNotFoundException(stockDto.getSymbol(), stockDto.getMarket(), new TransactionNumber(UUID.randomUUID()));
     }
 
 }

@@ -2,16 +2,17 @@ package trading.exception;
 
 import trading.domain.TransactionNumber;
 
-public class InvalidQuantityException extends RuntimeException {
+import javax.ws.rs.core.Response.Status;
+import java.util.UUID;
 
-    private TransactionNumber transactionNumber;
+public class InvalidQuantityException extends MappedException {
+
+    private UUID transactionNumber;
 
     public InvalidQuantityException(TransactionNumber transactionNumber) {
-        super("quantity is invalid");
-        this.transactionNumber = transactionNumber;
-    }
-
-    public TransactionNumber getTransactionNumber() {
-        return this.transactionNumber;
+        this.error = "INVALID_QUANTITY";
+        this.description = "quantity is invalid";
+        this.status = Status.BAD_REQUEST;
+        this.transactionNumber = transactionNumber.getId();
     }
 }

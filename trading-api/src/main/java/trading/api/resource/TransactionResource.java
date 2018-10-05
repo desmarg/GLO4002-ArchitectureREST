@@ -25,9 +25,9 @@ public class TransactionResource {
     public TransactionResource(Services services) {
         this.transactionService = services.getTransactionService();
         this.accountService = services.getAccountService();
-	}
+    }
 
-	@GET
+    @GET
     @Path("/{transactionNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTransactionFromAll(@PathParam("accountNumber") String accountNumber, @PathParam("transactionNumber") String transactionNumberString) {

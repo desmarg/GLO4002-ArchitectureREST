@@ -20,7 +20,7 @@ public class TradingServer implements Runnable {
             TradingServer.class.getName()
     );
 
-    private static final String EXCEPTION_MAPPERS_PATH = "exceptionmappers";
+    private static final String EXCEPTION_MAPPERS_PATH = "exception";
 
     public static void main(String[] args) {
         new TradingServer().run();
@@ -82,6 +82,6 @@ public class TradingServer implements Runnable {
             e.printStackTrace();
         } finally {
             server.destroy();
-        }  
+        }
     }
 }
