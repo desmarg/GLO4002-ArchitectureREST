@@ -12,7 +12,6 @@ import trading.persistence.AccountRepository;
 import trading.services.AccountService;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
@@ -51,7 +50,6 @@ public class AccountServiceTest {
 
     @Test(expected = AccountAlreadyExistsException.class)
     public void givenNoneExistingInvestorId_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
-        when(this.accountRepository.checkIfAccountExists(INVESTOR_ID)).thenReturn(true);
         this.accountService.checkIfAccountExists(INVESTOR_ID);
     }
 

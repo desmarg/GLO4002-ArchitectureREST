@@ -9,13 +9,14 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountNumberTest {
-    private static String AN_ACCOUNT_NUMBER = "AA-1";
-    private static String EQUAL_ACCOUNT_NUMBER = "AA-1";
-    private static String DIFFERENT_ACCOUNT_NUMBER = "AA-2";
-    private static String A_NAME = "Jeffrey Tremblay";
-    private static String INITIALS = "JT";
-    private static long A_LONG = 23;
-    private static String ID = "JT-0023";
+    private static final String AN_ACCOUNT_NUMBER = "AA-1";
+    private static final String EQUAL_ACCOUNT_NUMBER = "AA-1";
+    private static final String DIFFERENT_ACCOUNT_NUMBER = "AA-2";
+    private static final String A_NAME = "Jeffrey Tremblay";
+    private static final String INITIALS = "JT";
+    private static final long A_LONG = 23;
+    private static final String ID = "JT-0023";
+
     private static AccountNumber accountNumber;
 
     @Before
