@@ -1,4 +1,4 @@
-package domain.stock;
+package trading.services;
 
 import domain.Credits;
 import domain.DateTime;

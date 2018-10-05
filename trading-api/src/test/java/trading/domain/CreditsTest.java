@@ -1,7 +1,6 @@
-package domain;
+package trading.domain;
 
 import org.junit.Test;
-import trading.domain.Credits;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,6 +48,5 @@ public class CreditsTest {
         credits.subtract(creditsToSubtract);
         assertEquals(ZERO_REPRESENTATION, credits.valueToString());
     }
-
 
 }

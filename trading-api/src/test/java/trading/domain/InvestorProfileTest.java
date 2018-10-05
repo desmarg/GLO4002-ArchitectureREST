@@ -1,12 +1,11 @@
-package domain.investorprofile;
+package trading.domain;
 
-import domain.FocusArea;
-import domain.InvestorProfile;
-import domain.ProfileType;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class InvestorProfileTest {
 

@@ -1,4 +1,4 @@
-package application;
+package trading.application;
 
 import domain.Account;
 import domain.AccountNumber;
