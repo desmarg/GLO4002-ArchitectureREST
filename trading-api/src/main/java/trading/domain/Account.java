@@ -30,7 +30,9 @@ public class Account {
             Credits credits,
             AccountNumber accountNumber
     ) {
-        this.dataValidator(investorId, investorName, email, credits);
+        this.validateEmail(email);
+        this.validateInitialCredits(credits);
+        this.validateInvestorName(investorName);
         this.investorId = investorId;
         this.investorName = investorName;
         this.email = email;
@@ -50,40 +52,27 @@ public class Account {
         );
     }
 
-    private void dataValidator(
-            Long investorId,
-            String investorName,
-            String email,
-            Credits credits
-    ) {
-        if (investorId == null) {
-            throw new InvalidAccountInfoException("investorId cannot be null");
-        }
-        if (investorId < 0 || investorId == 0) {
-            throw new InvalidAccountInfoException("investorId cannot be lesser or equal to 0");
-        }
-        Pattern namePattern = Pattern.compile("^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$");
-        Matcher nameMatcher = namePattern.matcher(investorName);
-        if (!nameMatcher.matches()) {
-            throw new InvalidAccountInfoException("invalid investorName");
-        }
-
+    public void validateEmail(String email) {
         Pattern emailPattern = Pattern.compile("[A-z0-9._%+-]{2,20}@[A-z0-9]{2,20}\\.[A-z]{2,10}");
         Matcher emailMatcher = emailPattern.matcher(email);
         if (!emailMatcher.matches()) {
             throw new InvalidAccountInfoException("invalid email address");
         }
-        if (credits == null) {
-            throw new InvalidAccountInfoException("credits cannot be null");
-        }
-        if (
-                credits.amount.compareTo(BigDecimal.ZERO) == 0 ||
-                        credits.amount.compareTo(BigDecimal.ZERO) < 0
-        ) {
-            throw new InvalidCreditsAmountException();
+    }
+
+    public void validateInvestorName(String investorName) {
+        Pattern namePattern = Pattern.compile("^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$");
+        Matcher nameMatcher = namePattern.matcher(investorName);
+        if (!nameMatcher.matches()) {
+            throw new InvalidAccountInfoException("invalid investorName");
         }
     }
 
+    public void validateInitialCredits(Credits credits) {
+        if (credits.amount.compareTo(BigDecimal.ZERO) == 0 || credits.amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new InvalidCreditsAmountException();
+        }
+    }
 
     public void subtractCredits(Credits transactionPrice) {
         this.credits.subtract(transactionPrice);
