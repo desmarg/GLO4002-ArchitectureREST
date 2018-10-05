@@ -44,7 +44,7 @@ public class TransactionBuy extends Transaction {
             throw new InvalidQuantityException(this.transactionNumber);
         }
 
-        account.substractCredits(totalPrice);
+        account.subtractCredits(totalPrice);
     }
 
     public void deduceStock(long soldQuantity) {

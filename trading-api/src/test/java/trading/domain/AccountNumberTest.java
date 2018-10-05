@@ -1,12 +1,15 @@
 package trading.domain;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 public class AccountNumberTest {
-    private static long ACCOUNT_NUMBER = 1L;
-    private static long DIFFERENT_ACCOUNT_NUMBER = 2L;
+    private static String ACCOUNT_NUMBER = "AA-1";
+    private static String DIFFERENT_ACCOUNT_NUMBER = "AA-2";
 
     @Test
     public void givenAccountNumber_whenEqualsAValidAccountNumber_thenReturnTrue() {

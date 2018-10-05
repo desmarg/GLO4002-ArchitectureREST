@@ -1,14 +1,16 @@
 package trading.services;
 
-import domain.Credits;
-import domain.DateTime;
-import external.response.StockPriceResponse;
-import external.response.StockResponse;
+
 import org.junit.Before;
 import org.junit.Test;
-import services.StockService;
+import trading.domain.Credits;
+import trading.domain.DateTime;
+import trading.external.response.StockPriceResponse;
+import trading.external.response.StockResponse;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 public class StockServiceTest {
     private static String DATE = "2015-01-01T05:00:00.000Z";
@@ -33,14 +35,11 @@ public class StockServiceTest {
 
         this.stockDto = new StockResponse();
         this.stockDto.setPrices(this.stockPrices);
-
     }
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDate_thenReturnCredits() {
         Credits creditsFound = this.stockService.getPriceFromDate(this.stockDto, DATETIME);
-
         assertEquals(this.stockPrice.getPrice().valueToString(), creditsFound.valueToString());
     }
-
 }

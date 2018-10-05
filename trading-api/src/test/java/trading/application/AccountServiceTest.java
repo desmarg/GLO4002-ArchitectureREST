@@ -1,15 +1,15 @@
 package trading.application;
 
-import domain.Account;
-import domain.AccountNumber;
-import exception.AccountAlreadyExistsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import persistence.AccountRepository;
-import services.AccountService;
+import trading.domain.Account;
+import trading.domain.AccountNumber;
+import trading.exception.AccountAlreadyExistsException;
+import trading.persistence.AccountRepository;
+import trading.services.AccountService;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,7 +28,7 @@ public class AccountServiceTest {
 
     @Before
     public void setUp() {
-        this.accountService = new AccountService(accountRepository);
+        this.accountService = new AccountService(this.accountRepository);
     }
 
     @Test
