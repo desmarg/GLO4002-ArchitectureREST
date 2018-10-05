@@ -11,16 +11,16 @@ public class AccountNumber {
         this.id = accountNumber;
     }
 
-    public String getId() {
-        return this.id;
-    }
-
     public String makeId(String name, Long id) {
         return this.makeInitials(name) + "-" + String.format("%04d", id);
     }
 
     public String makeInitials(String name) {
         return name.replaceAll("([^\\s])[^\\s]+", "$1").replaceAll("\\s", "").toUpperCase();
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     @Override
