@@ -34,7 +34,6 @@ public class TransactionBuy extends Transaction {
     }
 
     public void make(Account account) {
-        account.addTransaction(this);
         Credits totalPrice = this.getTotalPrice();
         if (!account.hasEnoughCreditsToPay(totalPrice)) {
             throw new NotEnoughCreditsException(this.transactionNumber);
@@ -45,6 +44,7 @@ public class TransactionBuy extends Transaction {
         }
 
         account.substractCredits(totalPrice);
+        account.addTransaction(this);
     }
 
     public void deduceStock(long soldQuantity) {

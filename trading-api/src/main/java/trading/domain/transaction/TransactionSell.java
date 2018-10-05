@@ -37,7 +37,6 @@ public class TransactionSell extends Transaction {
     }
 
     public void make(Account account) {
-        account.addTransaction(this);
         TransactionBuy referredTransaction = (TransactionBuy) account.getTransaction(this.referredTransactionNumber);
 
         if (this.getQuantity() <= 0) {
@@ -55,7 +54,7 @@ public class TransactionSell extends Transaction {
         referredTransaction.deduceStock(this.quantity);
         account.addCredits(this.price);
         account.substractCredits(this.fees);
-
+        account.addTransaction(this);
     }
 
     public TransactionNumber getReferredTransactionNumber() {
