@@ -8,9 +8,11 @@ public class CreditsTest {
 
     private static final String ZERO_REPRESENTATION = "0.00";
     private static final String POINT_ONE_REPRESENTATION = "0.10";
+    private static final String POINT_25_REPRESENTATION = "0.25";
     private static final double POINT_ONE = 0.1;
     private static final double POINT_ZERO_FIVE = 0.05;
-    private static final long DOUBLE_QUANTITY = 2;
+    private static final long LONG_QUANTITY = 2;
+    private static final double DOUBLE_QUANTITY = 2.5;
 
 
     @Test
@@ -20,18 +22,31 @@ public class CreditsTest {
     }
 
     @Test
-    public void givenNewlyCreatedCredits_WhenConstructingFromFloat_ThenValueHasTwoDecimals() {
+    public void givenNewlyCreatedCredits_WhenConstructingFromDouble_ThenValueHasTwoDecimals() {
         Credits credits = Credits.fromDouble(POINT_ONE);
         assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
     }
 
     @Test
-    public void givenNonZeroCredits_WhenMultiplyingWithQuantity_ThenMultiplyValue() {
+    public void givenCreatedCredits_WhenCopyingWithConstructor_ThenNewCreditsWithSameValue() {
+        Credits credits = Credits.fromDouble(POINT_ONE);
+        Credits creditsCopy = new Credits(credits);
+        assertEquals(credits.valueToString(), creditsCopy.valueToString());
+    }
+
+    @Test
+    public void givenNonZeroCredits_WhenMultiplyingWithLongQuantity_ThenMultiplyValue() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
-        credits.multiply(DOUBLE_QUANTITY);
+        credits.multiply(LONG_QUANTITY);
         assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
     }
 
+    @Test
+    public void givenNonZeroCredits_WhenMultiplyingWithDoubleQuantity_ThenMultiplyValue() {
+        Credits credits = Credits.fromDouble(POINT_ONE);
+        credits.multiply(DOUBLE_QUANTITY);
+        assertEquals(POINT_25_REPRESENTATION, credits.valueToString());
+    }
 
     @Test
     public void givenCredits_WhenAddingNonZeroCredits_ThenAddValue() {
