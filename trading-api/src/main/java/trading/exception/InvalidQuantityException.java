@@ -17,4 +17,8 @@ public class InvalidQuantityException extends MappedException {
         );
         this.transactionNumber = transactionNumber.getId();
     }
+
+    public UUID getTransactionNumber() {
+        return this.transactionNumber;
+    }
 }
