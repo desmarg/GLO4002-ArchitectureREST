@@ -1,6 +1,10 @@
-package trading.domain;
+package trading.domain.transaction;
 
 import trading.api.request.TransactionPostRequest;
+import trading.domain.Account;
+import trading.domain.Credits;
+import trading.domain.DateTime;
+import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
 import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
@@ -16,14 +20,14 @@ public class TransactionSell extends Transaction {
         this.transactionType = TransactionType.SELL;
         this.referredTransactionNumber = referredTransactionNumber;
     }
-    
+
     public static TransactionSell fromRequest(TransactionPostRequest transactionRequest) {
         long quantity = transactionRequest.getQuantity();
         DateTime dateTime = new DateTime(transactionRequest.getDate());
         Stock stock = transactionRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
         TransactionNumber referredTransactionNumber = new TransactionNumber(transactionRequest.getTransactionNumber());
-		return new TransactionSell(
+        return new TransactionSell(
                 quantity,
                 dateTime,
                 stock,

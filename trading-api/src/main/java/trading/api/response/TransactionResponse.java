@@ -1,7 +1,7 @@
 package trading.api.response;
 
 import trading.domain.Stock;
-import trading.domain.Transaction;
+import trading.domain.transaction.Transaction;
 
 import java.util.UUID;
 

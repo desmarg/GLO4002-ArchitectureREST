@@ -1,6 +1,6 @@
 package trading.api.response;
 
-import trading.domain.Transaction;
+import trading.domain.transaction.Transaction;
 
 public class TransactionBuyResponse extends TransactionResponse {
 

@@ -1,8 +1,8 @@
 package trading.services;
 
 import trading.domain.Account;
-import trading.domain.Transaction;
-import trading.domain.TransactionNumber;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionNumber;
 
 public class TransactionService {
 

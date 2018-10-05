@@ -5,7 +5,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-
 import trading.api.resource.AccountResource;
 import trading.api.resource.TransactionResource;
 import trading.services.Services;
@@ -20,7 +19,7 @@ public class TradingServer implements Runnable {
             TradingServer.class.getName()
     );
 
-    private static final String EXCEPTION_MAPPERS_PATH = "exception";
+    private static final String EXCEPTION_MAPPERS_PATH = "trading.exception";
 
     public static void main(String[] args) {
         new TradingServer().run();

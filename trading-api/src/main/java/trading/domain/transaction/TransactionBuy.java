@@ -1,6 +1,10 @@
-package trading.domain;
+package trading.domain.transaction;
 
 import trading.api.request.TransactionPostRequest;
+import trading.domain.Account;
+import trading.domain.Credits;
+import trading.domain.DateTime;
+import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
 import trading.exception.NotEnoughCreditsException;
 import trading.services.StockService;
@@ -15,19 +19,19 @@ public class TransactionBuy extends Transaction {
         this.transactionType = TransactionType.BUY;
         this.remainingStocks = quantity;
     }
-    
-	public static Transaction fromRequest(TransactionPostRequest transactionRequest) {
+
+    public static Transaction fromRequest(TransactionPostRequest transactionRequest) {
         long quantity = transactionRequest.getQuantity();
         DateTime dateTime = new DateTime(transactionRequest.getDate());
         Stock stock = transactionRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
-		return new TransactionBuy(
+        return new TransactionBuy(
                 quantity,
                 dateTime,
                 stock,
                 stockPrice
         );
-	}
+    }
 
     public void make(Account account) {
         account.addTransaction(this);

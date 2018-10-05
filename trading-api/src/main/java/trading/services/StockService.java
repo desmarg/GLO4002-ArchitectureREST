@@ -4,7 +4,7 @@ import trading.application.JerseyClient;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
-import trading.domain.TransactionNumber;
+import trading.domain.transaction.TransactionNumber;
 import trading.exception.StockNotFoundException;
 import trading.external.response.StockPriceResponse;
 import trading.external.response.StockResponse;

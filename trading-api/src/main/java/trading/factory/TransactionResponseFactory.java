@@ -3,9 +3,9 @@ package trading.factory;
 import trading.api.response.TransactionBuyResponse;
 import trading.api.response.TransactionResponse;
 import trading.api.response.TransactionSellResponse;
-import trading.domain.Transaction;
-import trading.domain.TransactionBuy;
-import trading.domain.TransactionSell;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionSell;
 import trading.exception.UnsupportedTransactionTypeException;
 
 public class TransactionResponseFactory {

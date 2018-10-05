@@ -1,16 +1,16 @@
 package trading.api.resource;
 
+import trading.api.request.TransactionPostRequest;
+import trading.api.response.TransactionResponse;
 import trading.domain.Account;
 import trading.domain.AccountNumber;
-import trading.domain.Transaction;
-import trading.domain.TransactionNumber;
-import trading.factory.TransactionResponseFactory;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionNumber;
 import trading.factory.TransactionFactory;
+import trading.factory.TransactionResponseFactory;
 import trading.services.AccountService;
 import trading.services.Services;
 import trading.services.TransactionService;
-import trading.api.request.TransactionPostRequest;
-import trading.api.response.TransactionResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

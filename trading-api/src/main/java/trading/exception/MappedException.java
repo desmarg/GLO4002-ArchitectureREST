@@ -1,5 +1,6 @@
 package trading.exception;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.ws.rs.core.Response.Status;
@@ -10,6 +11,7 @@ public abstract class MappedException extends RuntimeException {
 
     protected String error;
     protected String description;
+    @JsonIgnore
     protected Status status;
 
     public MappedException() {

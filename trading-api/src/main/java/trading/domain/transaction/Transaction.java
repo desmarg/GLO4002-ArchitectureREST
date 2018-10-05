@@ -1,8 +1,11 @@
-package trading.domain;
+package trading.domain.transaction;
+
+import trading.domain.Account;
+import trading.domain.Credits;
+import trading.domain.DateTime;
+import trading.domain.Stock;
 
 import static trading.domain.Credits.fromDouble;
-
-import trading.services.StockService;
 
 public abstract class Transaction {
     protected TransactionNumber transactionNumber;

@@ -1,12 +1,13 @@
 package trading.domain;
 
+import trading.api.request.AccountPostRequest;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionNumber;
 import trading.exception.TransactionNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import trading.api.request.AccountPostRequest;
 
 public class Account {
     private AccountNumber accountNumber;
@@ -32,15 +33,15 @@ public class Account {
         this.accountNumber = accountNumber;
         this.transactionList = new HashMap<>();
     }
-    
+
     public static Account fromRequest(AccountPostRequest accountPostDto, long accountNumber) {
-	    return new Account(
-	            accountPostDto.getInvestorId(),
-	            accountPostDto.getInvestorName(),
-	            accountPostDto.getEmail(),
-	            Credits.fromDouble(accountPostDto.getCredits()),
-	            new AccountNumber(accountPostDto.getInvestorName(), accountNumber)
-	    );
+        return new Account(
+                accountPostDto.getInvestorId(),
+                accountPostDto.getInvestorName(),
+                accountPostDto.getEmail(),
+                Credits.fromDouble(accountPostDto.getCredits()),
+                new AccountNumber(accountPostDto.getInvestorName(), accountNumber)
+        );
     }
 
     public Transaction getTransaction(TransactionNumber transactionNumber) {
