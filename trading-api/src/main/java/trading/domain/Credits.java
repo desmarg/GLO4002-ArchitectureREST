@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 public class Credits implements Comparable<Credits> {
-    public BigDecimal amount;
+    private BigDecimal amount;
 
     public Credits() {
         this.amount = new BigDecimal(0);
@@ -58,9 +58,13 @@ public class Credits implements Comparable<Credits> {
         return scaledDecimal.floatValue();
     }
 
+    public BigDecimal getAmount() {
+        return this.amount;
+    }
+
     @Override
     public int compareTo(Credits credits) {
-        return this.amount.compareTo(credits.amount);
+        return this.amount.compareTo(credits.getAmount());
     }
 
 }

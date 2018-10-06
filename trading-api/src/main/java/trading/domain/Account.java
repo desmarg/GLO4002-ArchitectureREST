@@ -7,7 +7,6 @@ import trading.exception.InvalidAccountInfoException;
 import trading.exception.InvalidCreditsAmountException;
 import trading.exception.TransactionNotFoundException;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +68,8 @@ public class Account {
     }
 
     public void validateInitialCredits(Credits credits) {
-        if (credits.amount.compareTo(BigDecimal.ZERO) == 0 || credits.amount.compareTo(BigDecimal.ZERO) < 0) {
+        Credits nullCredits = new Credits();
+        if (credits.compareTo(nullCredits) != 1) {
             throw new InvalidCreditsAmountException();
         }
     }

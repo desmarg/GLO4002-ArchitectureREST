@@ -11,9 +11,12 @@ public class CreditsTest {
     private static final String POINT_25_REPRESENTATION = "0.25";
     private static final double POINT_ONE = 0.1;
     private static final double POINT_ZERO_FIVE = 0.05;
+    private static final double POINT_ZERO_SIX = 0.06;
+    private static final double POINT_ZERO_FIVE_ONE = 0.051;
+    private static final double POINT_ZERO_FIVE_FIVE = 0.055;
+    private static final double POINT_ZERO_FIVE_NINE = 0.059;
     private static final long LONG_QUANTITY = 2;
     private static final double DOUBLE_QUANTITY = 2.5;
-
 
     @Test
     public void givenNewlyCreatedCredits_WhenDefaultConstructor_ThenValueIsZero() {
@@ -63,5 +66,25 @@ public class CreditsTest {
         credits.subtract(creditsToSubtract);
         assertEquals(ZERO_REPRESENTATION, credits.valueToString());
     }
+
+    @Test
+    public void givenCreditsWithThirdDecimalLowerThanFive_WhenConvertingToFloat_ThenReturnHalfWayUp() {
+        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_ONE);
+        assertEquals(POINT_ZERO_FIVE, credits.valueToFloat(), 0.01);
+    }
+
+    @Test
+    public void givenCreditsWithThirdDecimalEqualFive_WhenConvertingToFloat_ThenReturnHalfWayUp() {
+        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_FIVE);
+        assertEquals(POINT_ZERO_SIX, credits.valueToFloat(), 0.01);
+    }
+
+    @Test
+    public void givenCreditsWithThirdDecimalHigherThanFive_WhenConvertingToFloat_ThenReturnHalfWayUp() {
+        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_NINE);
+        assertEquals(POINT_ZERO_SIX, credits.valueToFloat(), 0.01);
+    }
+
+
 
 }
