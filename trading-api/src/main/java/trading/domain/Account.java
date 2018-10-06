@@ -39,15 +39,6 @@ public class Account {
         this.transactionList = new HashMap<>();
     }
 
-    public static Account fromRequest(AccountPostRequest accountPostRequest) {
-        return new Account(
-                accountPostRequest.getInvestorId(),
-                accountPostRequest.getInvestorName(),
-                accountPostRequest.getEmail(),
-                Credits.fromDouble(accountPostRequest.getCredits())
-        );
-    }
-
     public void validateEmail(String email) {
         Pattern emailPattern = Pattern.compile("[A-z0-9._%+-]{2,20}@[A-z0-9]{2,20}\\.[A-z]{2,10}");
         Matcher emailMatcher = emailPattern.matcher(email);
