@@ -24,7 +24,6 @@ public class TransactionBuy extends Transaction {
         long quantity = transactionRequest.getQuantity();
         DateTime dateTime = new DateTime(transactionRequest.getDate());
         Stock stock = transactionRequest.getStock();
-        //Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
         Credits stockPrice = StockExternalApi.getStockPrice(stock, dateTime);
         return new TransactionBuy(
                 quantity,
