@@ -26,7 +26,7 @@ public class StockExternalApi{
         if (stockDto == null) {
             throw new StockNotFoundException(stock.getSymbol(), stock.getMarket(), new TransactionNumber(UUID.randomUUID()));
         }
-        System.out.println("Did the request" + stockDto);
+
         Credits sameDayCredit = StockExternalApi.getPriceFromDate(stockDto, date);
         return sameDayCredit;
         

@@ -18,14 +18,12 @@ public class StockServiceTest {
     private static DateTime DATETIME = new DateTime(DATE);
     private static Double PRICE = 10d;
 
-    private StockExternalApi stockApi;
     private StockResponse stockDto;
     private StockPriceResponse stockPrice;
     private ArrayList<StockPriceResponse> stockPrices;
 
     @Before
     public void setup() {
-        this.stockApi = new StockExternalApi();
 
         this.stockPrice = new StockPriceResponse();
         this.stockPrice.setDate(DATE);
@@ -40,7 +38,7 @@ public class StockServiceTest {
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDate_thenReturnCredits() {
-        Credits creditsFound = this.stockApi.getPriceFromDate(this.stockDto, DATETIME);
+        Credits creditsFound = StockExternalApi.getPriceFromDate(this.stockDto, DATETIME);
         assertEquals(this.stockPrice.getPrice().valueToString(), creditsFound.valueToString());
     }
 }
