@@ -86,12 +86,8 @@ public class Account {
         this.transactionList.put(transaction.getTransactionNumber(), transaction);
     }
 
-    public Map<TransactionNumber, Transaction> getTransactionList() {
-        return this.transactionList;
-    }
-
     public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
-        return this.credits.compareTo(transactionPrice) >= 0;
+        return this.credits.compareTo(transactionPrice) != -1;
     }
 
     public Transaction getTransaction(TransactionNumber transactionNumber) {
