@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import trading.domain.Credits;
 import trading.domain.DateTime;
+import trading.external.api.StockExternalApi;
 import trading.external.response.StockPriceResponse;
 import trading.external.response.StockResponse;
 
@@ -17,14 +18,14 @@ public class StockServiceTest {
     private static DateTime DATETIME = new DateTime(DATE);
     private static Double PRICE = 10d;
 
-    private StockService stockService;
+    private StockExternalApi stockApi;
     private StockResponse stockDto;
     private StockPriceResponse stockPrice;
     private ArrayList<StockPriceResponse> stockPrices;
 
     @Before
     public void setup() {
-        this.stockService = new StockService();
+        this.stockApi = new StockExternalApi();
 
         this.stockPrice = new StockPriceResponse();
         this.stockPrice.setDate(DATE);
@@ -39,7 +40,7 @@ public class StockServiceTest {
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDate_thenReturnCredits() {
-        Credits creditsFound = this.stockService.getPriceFromDate(this.stockDto, DATETIME);
+        Credits creditsFound = this.stockApi.getPriceFromDate(this.stockDto, DATETIME);
         assertEquals(this.stockPrice.getPrice().valueToString(), creditsFound.valueToString());
     }
 }

@@ -7,7 +7,7 @@ import trading.domain.DateTime;
 import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
 import trading.exception.NotEnoughCreditsException;
-import trading.services.StockService;
+import trading.external.api.StockExternalApi;
 
 public class TransactionBuy extends Transaction {
 
@@ -24,7 +24,8 @@ public class TransactionBuy extends Transaction {
         long quantity = transactionRequest.getQuantity();
         DateTime dateTime = new DateTime(transactionRequest.getDate());
         Stock stock = transactionRequest.getStock();
-        Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
+        //Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
+        Credits stockPrice = StockExternalApi.getStockPrice(stock, dateTime);
         return new TransactionBuy(
                 quantity,
                 dateTime,

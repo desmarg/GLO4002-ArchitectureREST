@@ -8,7 +8,7 @@ import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
 import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
-import trading.services.StockService;
+import trading.external.api.StockExternalApi;
 
 public class TransactionSell extends Transaction {
 
@@ -25,7 +25,8 @@ public class TransactionSell extends Transaction {
         long quantity = transactionRequest.getQuantity();
         DateTime dateTime = new DateTime(transactionRequest.getDate());
         Stock stock = transactionRequest.getStock();
-        Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
+        //Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
+        Credits stockPrice = StockExternalApi.getStockPrice(stock, dateTime);
         TransactionNumber referredTransactionNumber = new TransactionNumber(transactionRequest.getTransactionNumber());
         return new TransactionSell(
                 quantity,
