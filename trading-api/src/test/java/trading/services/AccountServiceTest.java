@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
-    private static long INVESTOR_ID = 10;
+    private static Long INVESTOR_ID = 10l;
     @Mock
     private Account account;
     @Mock
@@ -33,10 +33,21 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenSaveAccount_thenAddAccountToRepository() {
+    public void whenSave_thenAddAccountToRepository() {
+        when(this.account.getInvestorName()).thenReturn("MJ");
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
-        this.accountService.saveAccount(this.account);
+        when(this.accountRepository.nextCounterValue()).thenReturn(1l);
+        this.accountService.save(this.account);
         verify(this.accountRepository).add(this.account);
+    }
+
+    @Test
+    public void whenSave_thenGetNextCounterValueInRepository() {
+        when(this.account.getInvestorName()).thenReturn("MJ");
+        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
+        when(this.accountRepository.nextCounterValue()).thenReturn(1l);
+        this.accountService.save(this.account);
+        verify(this.accountRepository).nextCounterValue();
     }
 
     @Test
@@ -56,11 +67,4 @@ public class AccountServiceTest {
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(true);
         this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
     }
-
-    @Test
-    public void whenNextAccountNumber_thenGetNextCounterValueInRepository() {
-        this.accountService.nextAccountNumber();
-        verify(this.accountRepository).nextCounterValue();
-    }
-
 }

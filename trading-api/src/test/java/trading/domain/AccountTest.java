@@ -35,7 +35,8 @@ public class AccountTest {
     @Before
     public void setup() {
         when(this.creditsMock.compareTo(any(Credits.class))).thenReturn(1);
-        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, VALID_EMAIL, this.creditsMock, ACCOUNT_NUMBER);
+        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, VALID_EMAIL, this.creditsMock);
+        this.basicAccount.setAccountNumber(ACCOUNT_NUMBER);
     }
 
     @Test
