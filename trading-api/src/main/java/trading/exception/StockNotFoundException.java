@@ -13,7 +13,7 @@ public class StockNotFoundException extends MappedException {
         super(
                 "STOCK_NOT_FOUND",
                 "stock '" + symbol + ":" + market + "' not found",
-                Status.NOT_FOUND
+                Status.BAD_REQUEST
         );
         this.transactionNumber = transactionNumber.getId();
     }
