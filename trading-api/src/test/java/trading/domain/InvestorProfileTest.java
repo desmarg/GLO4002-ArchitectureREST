@@ -16,4 +16,5 @@ public class InvestorProfileTest {
         InvestorProfile newInvestorProfile = new InvestorProfile(profileType, focusAreas);
         assertEquals(newInvestorProfile.getProfileType(), ProfileType.CONSERVATIVE);
     }
+
 }
