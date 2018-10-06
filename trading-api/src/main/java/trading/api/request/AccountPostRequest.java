@@ -18,20 +18,20 @@ public class AccountPostRequest {
         this.credits = account.getCredits().valueToFloat();
     }
 
-    public void setInvestorName(String investorName) {
-        this.investorName = investorName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getInvestorName() {
         return this.investorName;
     }
 
+    public void setInvestorName(String investorName) {
+        this.investorName = investorName;
+    }
+
     public String getEmail() {
         return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getInvestorId() {

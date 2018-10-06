@@ -16,7 +16,6 @@ public class TransactionResponseFactory {
         } else if (transaction instanceof TransactionSell) {
             return new TransactionSellResponse(transaction);
         }
-
-        throw new UnsupportedTransactionTypeException(transaction.getTransactionType());
+        throw new UnsupportedTransactionTypeException(transaction.getTransactionType().toString());
     }
 }

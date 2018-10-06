@@ -22,20 +22,20 @@ public class AccountResponse {
         this.credits = account.getCredits().valueToFloat();
     }
 
-    public void setInvestorProfile(InvestorProfile investorProfile) {
-        this.investorProfile = investorProfile;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
     public InvestorProfile getInvestorProfile() {
         return this.investorProfile;
     }
 
+    public void setInvestorProfile(InvestorProfile investorProfile) {
+        this.investorProfile = investorProfile;
+    }
+
     public String getAccountNumber() {
         return this.accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public Long getInvestorId() {
