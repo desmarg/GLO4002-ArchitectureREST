@@ -19,7 +19,7 @@ public class AccountTest {
     private static final Long VALID_INVESTOR_ID = 1l;
     private static final String VALID_INVESTOR_NAME = "FirstName LastName";
     private static final String VALID_EMAIL = "first.last@example.com";
-    private static final AccountNumber accountNumber = new AccountNumber("FL-0001");
+    private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("FL-0001");
     private static final Credits INVALID_INITIAL_CREDITS = Credits.fromDouble(-10);
     private static final Credits A_CREDIT_ACCOUNT = Credits.fromDouble(10);
 
@@ -35,7 +35,7 @@ public class AccountTest {
     @Before
     public void setup() {
         when(this.creditsMock.compareTo(any(Credits.class))).thenReturn(1);
-        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, VALID_EMAIL, this.creditsMock, accountNumber);
+        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, VALID_EMAIL, this.creditsMock, ACCOUNT_NUMBER);
     }
 
     @Test

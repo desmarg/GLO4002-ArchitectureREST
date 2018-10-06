@@ -14,7 +14,7 @@ public class AccountService {
     }
 
     public void saveAccount(Account account) {
-        this.checkIfAccountExists(account.getInvestorId());
+        this.checkIfAccountAlreadyExists(account.getInvestorId());
         this.accountRepository.add(account);
     }
 
@@ -22,8 +22,8 @@ public class AccountService {
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
 
-    public void checkIfAccountExists(Long investorId) {
-        if (this.accountRepository.checkIfAccountExists(investorId)) {
+    public void checkIfAccountAlreadyExists(Long investorId) {
+        if (this.accountRepository.accountAlreadyExists(investorId)) {
             throw new AccountAlreadyExistsException(investorId);
         }
     }

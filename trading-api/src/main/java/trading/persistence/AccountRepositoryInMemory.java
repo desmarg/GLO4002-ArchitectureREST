@@ -27,7 +27,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         throw new AccountNotFoundException(accountNumber);
     }
 
-    public boolean checkIfAccountExists(Long investorId) {
+    public boolean accountAlreadyExists(Long investorId) {
         return this.investorIdByAccountNumber.containsKey(investorId);
     }
 
