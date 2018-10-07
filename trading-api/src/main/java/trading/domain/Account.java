@@ -7,11 +7,14 @@ import trading.exception.InvalidAccountInfoException;
 import trading.exception.InvalidCreditsAmountException;
 import trading.exception.TransactionNotFoundException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Account {
     private AccountNumber accountNumber;
@@ -76,6 +79,12 @@ public class Account {
 
     public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
         return this.credits.compareTo(transactionPrice) != -1;
+    }
+
+    public List<Transaction> getDailyTransactions(DateTime date){
+        return this.transactionList.values().stream().filter(transaction -> {
+            return transaction.getDate().isSameDay(date);
+        }).collect(Collectors.toList());
     }
 
     public Transaction getTransaction(TransactionNumber transactionNumber) {
