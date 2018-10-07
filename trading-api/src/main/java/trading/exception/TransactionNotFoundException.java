@@ -10,7 +10,7 @@ public class TransactionNotFoundException extends MappedException {
         super(
                 "TRANSACTION_NOT_FOUND",
                 "transaction with number " + transactionNumber.getId() + " not found",
-                Status.BAD_REQUEST
+                Status.NOT_FOUND
         );
     }
 }
