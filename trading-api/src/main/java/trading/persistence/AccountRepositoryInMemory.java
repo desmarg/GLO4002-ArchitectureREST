@@ -31,7 +31,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         return this.investorIdByAccountNumber.containsKey(investorId);
     }
 
-    public long nextCounterValue() {
+    public Long nextCounterValue() {
         return ACCOUNT_NUMBER_COUNTER + 1;
     }
 }

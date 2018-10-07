@@ -26,29 +26,17 @@ public class Account {
             Long investorId,
             String investorName,
             String email,
-            Credits credits,
-            AccountNumber accountNumber
+            Credits credits
     ) {
-        this.validateEmail(email);
-        this.validateInitialCredits(credits);
-        this.validateInvestorName(investorName);
+        validateEmail(email);
+        validateInitialCredits(credits);
+        validateInvestorName(investorName);
         this.investorId = investorId;
         this.investorName = investorName;
         this.email = email;
         this.credits = credits;
-        this.accountNumber = accountNumber;
         this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
         this.transactionList = new HashMap<>();
-    }
-
-    public static Account fromRequest(AccountPostRequest accountPostRequest, long accountNumber) {
-        return new Account(
-                accountPostRequest.getInvestorId(),
-                accountPostRequest.getInvestorName(),
-                accountPostRequest.getEmail(),
-                Credits.fromDouble(accountPostRequest.getCredits()),
-                new AccountNumber(accountPostRequest.getInvestorName(), accountNumber)
-        );
     }
 
     public void validateEmail(String email) {
@@ -86,12 +74,8 @@ public class Account {
         this.transactionList.put(transaction.getTransactionNumber(), transaction);
     }
 
-    public Map<TransactionNumber, Transaction> getTransactionList() {
-        return this.transactionList;
-    }
-
     public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
-        return this.credits.compareTo(transactionPrice) >= 0;
+        return this.credits.compareTo(transactionPrice) != -1;
     }
 
     public Transaction getTransaction(TransactionNumber transactionNumber) {
@@ -128,5 +112,9 @@ public class Account {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public void setAccountNumber(AccountNumber accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
