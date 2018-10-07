@@ -12,7 +12,7 @@ public class TransactionFactory {
     public static Transaction create(TransactionPostRequest transactionRequest) {
 
         NullPointerGuard.validate(transactionRequest);
-        TransactionType transactionType = TransactionType.lookup(transactionRequest.getType());
+        TransactionType transactionType = TransactionType.fromString(transactionRequest.getType());
 
         if (transactionType == TransactionType.SELL) {
             return TransactionSell.fromRequest(transactionRequest);

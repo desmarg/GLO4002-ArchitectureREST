@@ -6,11 +6,11 @@ public enum TransactionType {
     BUY,
     SELL;
 
-    static public TransactionType lookup(String type) {
+    static public TransactionType fromString(String string) {
         try {
-            return TransactionType.valueOf(type);
+            return TransactionType.valueOf(string);
         } catch (IllegalArgumentException ex) {
-            throw new UnsupportedTransactionTypeException(type);
+            throw new UnsupportedTransactionTypeException(string);
         }
     }
 }
