@@ -12,13 +12,13 @@ public class TransactionFactory {
     public static Transaction create(TransactionPostRequest transactionRequest) {
 
         NullPointerGuard.validate(transactionRequest);
-        TransactionType transactionType = TransactionType.valueOf(transactionRequest.getType());
+        TransactionType transactionType = TransactionType.lookup(transactionRequest.getType());
 
         if (transactionType == TransactionType.SELL) {
             return TransactionSell.fromRequest(transactionRequest);
         } else if (transactionType == TransactionType.BUY) {
             return TransactionBuy.fromRequest(transactionRequest);
         }
-        throw new UnsupportedTransactionTypeException(transactionType);
+        throw new UnsupportedTransactionTypeException(transactionRequest.getType());
     }
 }

@@ -10,7 +10,7 @@ public class AccountNotFoundException extends MappedException {
         super(
                 "ACCOUNT_NOT_FOUND",
                 "account with number " + accountNumber.getId() + " not found",
-                Status.BAD_REQUEST
+                Status.NOT_FOUND
         );
     }
 }
