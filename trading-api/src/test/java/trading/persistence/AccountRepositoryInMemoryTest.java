@@ -33,7 +33,7 @@ public class AccountRepositoryInMemoryTest {
     }
 
     @Test
-    public void whenAccountIsNotInRepository_thenAccountExistsReturnFalse() {
+    public void givenAccountNotInRepository_whenCheckingIfAccountExists_thenReturnsFalse() {
         assertFalse(this.accountRepositoryInMemory.accountAlreadyExists(NON_EXISTING_INVESTOR_ID));
     }
 
