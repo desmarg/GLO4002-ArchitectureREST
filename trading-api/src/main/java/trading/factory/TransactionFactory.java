@@ -11,6 +11,7 @@ public class TransactionFactory {
 
     public static Transaction create(TransactionPostRequest transactionRequest) {
 
+        NullPointerGuard.validate(transactionRequest);
         TransactionType transactionType = TransactionType.valueOf(transactionRequest.getType());
 
         if (transactionType == TransactionType.SELL) {

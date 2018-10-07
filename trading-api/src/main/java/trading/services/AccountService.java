@@ -13,22 +13,24 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public void saveAccount(Account account) {
-        this.checkIfAccountExists(account.getInvestorId());
+    public Account save(Account account) {
+        this.checkIfAccountAlreadyExists(account.getInvestorId());
+        AccountNumber accountNumber = new AccountNumber(
+                account.getInvestorName(),
+                this.accountRepository.nextCounterValue()
+        );
+        account.setAccountNumber(accountNumber);
         this.accountRepository.add(account);
+        return account;
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber) {
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
 
-    public void checkIfAccountExists(Long investorId) {
-        if (this.accountRepository.checkIfAccountExists(investorId)) {
+    public void checkIfAccountAlreadyExists(Long investorId) {
+        if (this.accountRepository.accountAlreadyExists(investorId)) {
             throw new AccountAlreadyExistsException(investorId);
         }
-    }
-
-    public long nextAccountNumber() {
-        return this.accountRepository.nextCounterValue();
     }
 }

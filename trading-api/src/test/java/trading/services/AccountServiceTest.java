@@ -11,13 +11,14 @@ import trading.exception.AccountAlreadyExistsException;
 import trading.persistence.AccountRepository;
 import trading.services.AccountService;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
-    private static long INVESTOR_ID = 10;
+    private static Long INVESTOR_ID = 10l;
     @Mock
     private Account account;
     @Mock
@@ -32,9 +33,21 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenSaveAccount_thenAddAccountToRepository() {
-        this.accountService.saveAccount(this.account);
+    public void whenSave_thenAddAccountToRepository() {
+        when(this.account.getInvestorName()).thenReturn("MJ");
+        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
+        when(this.accountRepository.nextCounterValue()).thenReturn(1l);
+        this.accountService.save(this.account);
         verify(this.accountRepository).add(this.account);
+    }
+
+    @Test
+    public void whenSave_thenGetNextCounterValueInRepository() {
+        when(this.account.getInvestorName()).thenReturn("MJ");
+        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
+        when(this.accountRepository.nextCounterValue()).thenReturn(1l);
+        this.accountService.save(this.account);
+        verify(this.accountRepository).nextCounterValue();
     }
 
     @Test
@@ -45,20 +58,13 @@ public class AccountServiceTest {
 
     @Test
     public void givenInvestorId_whenCheckIfAccountExists_thenCheckIfAccountExistsInRepository() {
-        this.accountService.checkIfAccountExists(INVESTOR_ID);
-        verify(this.accountRepository).checkIfAccountExists(INVESTOR_ID);
+        this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
+        verify(this.accountRepository).accountAlreadyExists(INVESTOR_ID);
     }
 
     @Test(expected = AccountAlreadyExistsException.class)
-    public void givenNoneExistingInvestorId_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
-        when(this.accountRepository.checkIfAccountExists(INVESTOR_ID)).thenReturn(true);
-        this.accountService.checkIfAccountExists(INVESTOR_ID);
+    public void givenExistingAccount_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
+        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(true);
+        this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
     }
-
-    @Test
-    public void whenNextAccountNumber_thenGetNextCounterValueInRepository() {
-        this.accountService.nextAccountNumber();
-        verify(this.accountRepository).nextCounterValue();
-    }
-
 }

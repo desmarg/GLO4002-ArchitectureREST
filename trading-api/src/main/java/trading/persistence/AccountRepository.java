@@ -10,7 +10,7 @@ public interface AccountRepository {
 
     Account findByAccountNumber(AccountNumber accountNumber) throws AccountNotFoundException;
 
-    boolean checkIfAccountExists(Long investorId);
+    boolean accountAlreadyExists(Long investorId);
 
-    long nextCounterValue();
+    Long nextCounterValue();
 }
