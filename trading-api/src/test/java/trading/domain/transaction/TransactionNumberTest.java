@@ -18,10 +18,17 @@ public class TransactionNumberTest {
 
     @Test
     public void givenTwoTransactionsWithEqualTransactionNumbers_whenCheckingIfEquals_thenReturnsTrue() {
-        UUID firstTransactionNumber =  A_TRANSACTION_NUMBER.getId();
-        TransactionNumber secondTransaction = new TransactionNumber(firstTransactionNumber);
+        UUID firstTransactionNumberAsUuid =  A_TRANSACTION_NUMBER.getId();
+        TransactionNumber secondTransaction = new TransactionNumber(firstTransactionNumberAsUuid);
 
         assertTrue(A_TRANSACTION_NUMBER.equals(secondTransaction));
+    }
+
+    @Test
+    public void givenObjectThatIsNotOfTypeTransactionNumber_whenCheckingIfEquals_thenReturnsFalse() {
+        UUID transactionNumberAsUuid =  A_TRANSACTION_NUMBER.getId();
+
+        assertFalse(A_TRANSACTION_NUMBER.equals(transactionNumberAsUuid));
     }
 
 }
