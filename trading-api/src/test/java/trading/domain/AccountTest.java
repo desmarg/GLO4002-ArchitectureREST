@@ -92,4 +92,9 @@ public class AccountTest {
         assertFalse(this.basicAccount.hasEnoughCreditsToPay(this.creditsMock));
     }
 
+    @Test
+    public void givenEmptyTransactionsList_whenGetDailyTransactions_thenReturnEmptyList() {
+
+    }
+
 }
