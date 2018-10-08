@@ -8,6 +8,7 @@ import trading.domain.transaction.TransactionNumber;
 import trading.exception.StockNotFoundException;
 import trading.external.response.StockPriceResponse;
 import trading.external.response.StockResponse;
+import trading.exception.InvalidDateException;
 
 import java.util.UUID;
 
@@ -41,9 +42,7 @@ public class StockService {
                 return priceInfo.getPrice();
             }
         }
-        throw new StockNotFoundException(
-                stockDto.getSymbol(),
-                stockDto.getMarket(),
+        throw new InvalidDateException(
                 new TransactionNumber(UUID.randomUUID())
         );
     }
