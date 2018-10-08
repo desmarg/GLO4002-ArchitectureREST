@@ -1,5 +1,10 @@
 language: java
+env:
+  global:
+  - CODECOV_TOKEN="baa378a5-4da5-4981-aab0-3165f759e787"
 script:
 - mvn verify -B
 - mvn checkstyle:check -pl trading-api
 - mvn checkstyle:check -pl application
+after_success:
+- bash <(curl -s https://codecov.io/bash)
