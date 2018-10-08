@@ -20,7 +20,6 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomJsonProvider extends JacksonJaxbJsonProvider {
-
     private static ObjectMapper mapper = new ObjectMapper();
 
     static {

@@ -50,6 +50,7 @@ public class Credits implements Comparable<Credits> {
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
         decimalFormat.setGroupingUsed(false);
+
         return decimalFormat.format(this.amount);
     }
 

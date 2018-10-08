@@ -13,8 +13,12 @@ public class TransactionBuy extends Transaction {
 
     private Long remainingStocks;
 
-    public TransactionBuy(Long quantity, DateTime dateTime, Stock stock,
-                          Credits stockPrice) {
+    public TransactionBuy(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice
+    ) {
         super(quantity, dateTime, stock, stockPrice);
         this.transactionType = TransactionType.BUY;
         this.remainingStocks = quantity;
@@ -25,12 +29,8 @@ public class TransactionBuy extends Transaction {
         DateTime dateTime = transactionPostRequest.getDate();
         Stock stock = transactionPostRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
-        return new TransactionBuy(
-                quantity,
-                dateTime,
-                stock,
-                stockPrice
-        );
+
+        return new TransactionBuy(quantity, dateTime, stock, stockPrice);
     }
 
     public void make(Account account) {
@@ -38,11 +38,9 @@ public class TransactionBuy extends Transaction {
         if (!account.hasEnoughCreditsToPay(totalPrice)) {
             throw new NotEnoughCreditsException(this.transactionNumber);
         }
-
         if (this.quantity <= 0) {
             throw new InvalidQuantityException(this.transactionNumber);
         }
-
         account.subtractCredits(totalPrice);
         account.addTransaction(this);
     }

@@ -5,7 +5,6 @@ import trading.domain.InvestorProfile;
 
 
 public class AccountResponse {
-
     private InvestorProfile investorProfile;
     private String accountNumber;
     private Long investorId;

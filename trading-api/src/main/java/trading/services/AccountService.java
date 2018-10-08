@@ -6,7 +6,6 @@ import trading.exception.AccountAlreadyExistsException;
 import trading.persistence.AccountRepository;
 
 public class AccountService {
-
     private AccountRepository accountRepository;
 
     public AccountService(AccountRepository accountRepository) {
@@ -21,6 +20,7 @@ public class AccountService {
         );
         account.setAccountNumber(accountNumber);
         this.accountRepository.add(account);
+
         return account;
     }
 

@@ -7,7 +7,6 @@ import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class NotEnoughStockException extends MappedException {
-
     private UUID transactionNumber;
 
     public NotEnoughStockException(Stock stock, TransactionNumber transactionNumber) {

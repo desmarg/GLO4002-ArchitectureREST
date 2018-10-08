@@ -13,7 +13,6 @@ import trading.external.response.StockResponse;
 import java.util.UUID;
 
 public class StockService {
-
     private static StockService INSTANCE = null;
 
     public static StockService getInstance() {
@@ -28,23 +27,22 @@ public class StockService {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
         StockResponse stockDto = JerseyClient.getInstance().getRequest(url, StockResponse.class);
         if (stockDto == null) {
-            throw new StockNotFoundException(stock.getSymbol(), stock.getMarket(),
-                    new TransactionNumber(UUID.randomUUID()));
+            throw new StockNotFoundException(
+                    stock.getSymbol(),
+                    stock.getMarket(),
+                    new TransactionNumber(UUID.randomUUID())
+            );
         }
         return this.getPriceFromDateTime(stockDto, dateTime);
     }
 
     public Credits getPriceFromDateTime(StockResponse stockDto, DateTime dateTime) {
         for (StockPriceResponse priceInfo : stockDto.getPrices()) {
-            // Truncate the dateTime do DAYS to check if they represent
-            // the same day.
-            if (priceInfo.getDate().truncatedToDays()
-                    .equals(dateTime.truncatedToDays())) {
+            if (priceInfo.getDate().truncatedToDays().equals(dateTime.truncatedToDays())) {
                 return priceInfo.getPrice();
             }
         }
-        throw new InvalidDateException(
-                new TransactionNumber(UUID.randomUUID())
-        );
+
+        throw new InvalidDateException(new TransactionNumber(UUID.randomUUID()));
     }
 }

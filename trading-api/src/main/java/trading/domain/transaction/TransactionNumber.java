@@ -32,6 +32,7 @@ public class TransactionNumber {
         if (otherTransactionNumber instanceof TransactionNumber) {
             return this.id.equals(((TransactionNumber) otherTransactionNumber).getId());
         }
+
         return false;
     }
 

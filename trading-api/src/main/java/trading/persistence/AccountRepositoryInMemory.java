@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AccountRepositoryInMemory implements AccountRepository {
-
     private static Long ACCOUNT_NUMBER_COUNTER = 0L;
     private Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
@@ -19,8 +18,8 @@ public class AccountRepositoryInMemory implements AccountRepository {
         this.accountMap.put(account.getAccountNumber(), account);
     }
 
-    public Account findByAccountNumber(AccountNumber accountNumber) throws
-            AccountNotFoundException {
+    public Account findByAccountNumber(AccountNumber accountNumber)
+            throws AccountNotFoundException {
         Account account = this.accountMap.get(accountNumber);
         if (account != null) {
             return account;

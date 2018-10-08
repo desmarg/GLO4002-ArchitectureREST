@@ -16,8 +16,12 @@ public abstract class Transaction {
     protected Credits fees;
 
 
-    protected Transaction(Long quantity, DateTime dateTime, Stock stock,
-                          Credits stockPrice) {
+    protected Transaction(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice
+    ) {
         this.transactionNumber = new TransactionNumber();
         this.quantity = quantity;
         this.dateTime = dateTime;
@@ -32,6 +36,7 @@ public abstract class Transaction {
     public Credits calculateTransactionPrice() {
         Credits transactionPrice = new Credits(this.stockPrice);
         transactionPrice.multiply(this.quantity);
+
         return transactionPrice;
     }
 
@@ -39,6 +44,7 @@ public abstract class Transaction {
         Credits totalPrice = new Credits();
         totalPrice.add(this.price);
         totalPrice.add(this.fees);
+
         return totalPrice;
     }
 
@@ -58,6 +64,7 @@ public abstract class Transaction {
             additionalFees.multiply(0.03);
             fees.add(additionalFees);
         }
+
         return fees;
     }
 

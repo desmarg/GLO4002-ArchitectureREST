@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/accounts")
 public class AccountResource {
-
     private AccountService accountService;
 
     public AccountResource(Services services) {
@@ -36,10 +35,12 @@ public class AccountResource {
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(AccountPostRequest accountPostDto) {
-        Account account = AccountFactory.create(accountPostDto);
+    public Response createAccount(AccountPostRequest accountPostRequest) {
+        Account account = AccountFactory.create(accountPostRequest);
         account = this.accountService.save(account);
-        return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getLongAccountNumber()).build();
+        return Response.status(Response.Status.CREATED).header(
+                "Location",
+                "accounts/" + account.getLongAccountNumber()
+        ).build();
     }
 }

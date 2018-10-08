@@ -3,7 +3,6 @@ package trading.api.response;
 import trading.domain.transaction.Transaction;
 
 public class TransactionSellResponse extends TransactionResponse {
-
     private Float priceSold;
 
     public TransactionSellResponse(Transaction transaction) {

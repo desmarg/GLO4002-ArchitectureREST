@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response.Status;
 // Explicitly ignore inherited exceptions attributes in mapped Json.
 @JsonIgnoreProperties({"cause", "stackTrace", "message", "localizedMessage", "suppressed"})
 public abstract class MappedException extends RuntimeException {
-
     protected String error;
     protected String description;
     @JsonIgnore

@@ -11,13 +11,16 @@ import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
 import trading.services.StockService;
 
-
 public class TransactionSell extends Transaction {
-
     private TransactionNumber referredTransactionNumber;
 
-    public TransactionSell(Long quantity, DateTime dateTime, Stock stock,
-                           Credits stockPrice, TransactionNumber referredTransactionNumber) {
+    public TransactionSell(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice,
+            TransactionNumber referredTransactionNumber
+    ) {
         super(quantity, dateTime, stock, stockPrice);
         this.transactionType = TransactionType.SELL;
         this.referredTransactionNumber = referredTransactionNumber;
@@ -29,18 +32,14 @@ public class TransactionSell extends Transaction {
         Stock stock = transactionPostRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
         TransactionNumber referredTransactionNumber = transactionPostRequest.getTransactionNumber();
-        return new TransactionSell(
-                quantity,
-                dateTime,
-                stock,
-                stockPrice,
-                referredTransactionNumber
-        );
+
+        return new TransactionSell(quantity, dateTime, stock, stockPrice, referredTransactionNumber);
     }
 
     public void make(Account account) {
-        TransactionBuy referredTransaction =
-                (TransactionBuy) account.getTransaction(this.referredTransactionNumber);
+        TransactionBuy referredTransaction = (TransactionBuy) account.getTransaction(
+                this.referredTransactionNumber
+        );
 
         if (this.getQuantity() <= 0) {
             throw new InvalidQuantityException(this.transactionNumber);

@@ -6,7 +6,6 @@ import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class InvalidDateException extends MappedException {
-
     private UUID transactionNumber;
 
     public InvalidDateException(TransactionNumber transactionNumber) {

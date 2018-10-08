@@ -6,13 +6,12 @@ import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class NotEnoughCreditsForFeesException extends MappedException {
-
     private UUID transactionNumber;
 
     public NotEnoughCreditsForFeesException(TransactionNumber transactionNumber) {
         super(
                 "NOT_ENOUGH_CREDITS",
-                "Not enough credits to pay the transaction fee",
+                "not enough credits to pay the transaction fee",
                 Status.BAD_REQUEST
         );
         this.transactionNumber = transactionNumber.getId();

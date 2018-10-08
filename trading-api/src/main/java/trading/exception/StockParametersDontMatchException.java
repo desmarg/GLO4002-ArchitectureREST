@@ -6,7 +6,6 @@ import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class StockParametersDontMatchException extends MappedException {
-
     private UUID transactionNumber;
 
     public StockParametersDontMatchException(TransactionNumber transactionNumber) {

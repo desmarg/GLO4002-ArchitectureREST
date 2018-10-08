@@ -12,14 +12,15 @@ public class Stock {
         return this.symbol;
     }
 
-    public boolean equals(Object o) {
-        if (o == this) {
+    public boolean equals(Object comparedObject) {
+        if (comparedObject == this) {
             return true;
         }
-        if (!(o instanceof Stock)) {
+        if (!(comparedObject instanceof Stock)) {
             return false;
         }
-        Stock stock = (Stock) o;
+        Stock stock = (Stock) comparedObject;
+
         return (stock.getMarket().equals(this.market) && stock.getSymbol().equals(this.symbol));
     }
 }

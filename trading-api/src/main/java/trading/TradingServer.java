@@ -32,19 +32,21 @@ public class TradingServer implements Runnable {
         Services services = new Services();
         AccountResource accountResource = new AccountResource(services);
         TransactionResource transactionResource = new TransactionResource(services);
-
         resources.add(accountResource);
         resources.add(transactionResource);
+
         return resources;
     }
 
     private ResourceConfig createResourceConfiguration() {
-        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(new Application() {
-            @Override
-            public Set<Object> getSingletons() {
-                return getContextResources();
-            }
-        });
+        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(
+                new Application() {
+                    @Override
+                    public Set<Object> getSingletons() {
+                        return getContextResources();
+                    }
+                }
+        );
 
         // Enable exception mapper.
         resourceConfiguration.packages(EXCEPTION_MAPPERS_PATH);
@@ -56,7 +58,6 @@ public class TradingServer implements Runnable {
 
     @Override
     public void run() {
-        // Get port ENV variable, if it is set, else use default port.
         String portStr = System.getenv("TRADING_API_PORT");
         int port = 8181;
         if (portStr != null) {
