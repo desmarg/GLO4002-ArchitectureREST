@@ -2,9 +2,7 @@ package trading.factory;
 
 import trading.exception.NullPointerGuardException;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.IllegalAccessException;
 
 // Used to validate that all the field of a given object are not null.
 public class NullPointerGuard {

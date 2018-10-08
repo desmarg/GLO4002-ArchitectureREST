@@ -1,6 +1,5 @@
 package trading.domain;
 
-import trading.api.request.AccountPostRequest;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.exception.InvalidAccountInfoException;
@@ -28,9 +27,9 @@ public class Account {
             String email,
             Credits credits
     ) {
-        validateEmail(email);
-        validateInitialCredits(credits);
-        validateInvestorName(investorName);
+        this.validateEmail(email);
+        this.validateInitialCredits(credits);
+        this.validateInvestorName(investorName);
         this.investorId = investorId;
         this.investorName = investorName;
         this.email = email;
@@ -116,5 +115,13 @@ public class Account {
 
     public void setAccountNumber(AccountNumber accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public boolean hasEnoughCreditsToPaySellFees(Credits sellPrice, Credits feesToPay) {
+        Credits balanceAfterTransaction = new Credits();
+        balanceAfterTransaction.add(sellPrice);
+        balanceAfterTransaction.add(this.credits);
+
+        return balanceAfterTransaction.compareTo(feesToPay) != -1;
     }
 }

@@ -52,11 +52,11 @@ public class TransactionSell extends Transaction {
             throw new NotEnoughStockException(this.stock, this.transactionNumber);
         }
 
-        account.addCredits(this.price);
-        if (!account.hasEnoughCreditsToPay(this.fees)) {
-            account.subtractCredits(this.price);
+        if (!account.hasEnoughCreditsToPaySellFees(this.price, this.fees)) {
             throw new NotEnoughCreditsForFeesException(this.transactionNumber);
         }
+
+        account.addCredits(this.price);
         referredTransaction.deduceStock(this.quantity);
         account.subtractCredits(this.fees);
         account.addTransaction(this);

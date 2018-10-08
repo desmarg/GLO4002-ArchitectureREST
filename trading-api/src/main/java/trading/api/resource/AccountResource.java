@@ -4,9 +4,9 @@ import trading.api.request.AccountPostRequest;
 import trading.api.response.AccountResponse;
 import trading.domain.Account;
 import trading.domain.AccountNumber;
+import trading.factory.AccountFactory;
 import trading.services.AccountService;
 import trading.services.Services;
-import trading.factory.AccountFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
