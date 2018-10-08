@@ -83,7 +83,7 @@ public class Account {
 
     public List<Transaction> getDailyTransactions(DateTime date){
         return this.transactionList.values().stream().filter(transaction -> {
-            return transaction.getDate().isSameDay(date);
+            return transaction.getDateTime().isSameDay(date);
         }).collect(Collectors.toList());
     }
 

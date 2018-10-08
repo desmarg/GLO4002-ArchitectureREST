@@ -1,13 +1,14 @@
 package trading.api.response;
 
 import trading.domain.Stock;
+import trading.domain.DateTime;
 import trading.domain.transaction.Transaction;
 
 import java.util.UUID;
 
 public abstract class TransactionResponse {
     private String type;
-    private String date;
+    private DateTime date;
     private Stock stock;
     private UUID transactionNumber;
     private long quantity;
@@ -18,7 +19,7 @@ public abstract class TransactionResponse {
 
     public TransactionResponse(Transaction transaction) {
         this.type = transaction.getTransactionType().toString();
-        this.date = transaction.getDate().toString();
+        this.date = transaction.getDateTime();
         this.stock = transaction.getStock();
         this.transactionNumber = transaction.getTransactionNumber().getId();
         this.quantity = transaction.getQuantity();
@@ -33,11 +34,11 @@ public abstract class TransactionResponse {
         this.type = type;
     }
 
-    public String getDate() {
+    public DateTime getDate() {
         return this.date;
     }
 
-    public void setDate(String date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 

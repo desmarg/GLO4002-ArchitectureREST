@@ -5,9 +5,11 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import trading.api.resource.AccountResource;
 import trading.api.resource.ReportResource;
 import trading.api.resource.TransactionResource;
+import trading.api.configuration.CustomJsonProvider;
 import trading.services.Services;
 
 import javax.ws.rs.core.Application;
@@ -47,7 +49,11 @@ public class TradingServer implements Runnable {
             }
         });
 
+        // Enable exception mapper.
         resourceConfiguration.packages(EXCEPTION_MAPPERS_PATH);
+        // Enable jackson support.
+        resourceConfiguration.register(JacksonFeature.class);
+        resourceConfiguration.register(CustomJsonProvider.class);
         return resourceConfiguration;
     }
 

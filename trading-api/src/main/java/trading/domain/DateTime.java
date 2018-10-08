@@ -1,44 +1,43 @@
 package trading.domain;
 
-import trading.exception.InvalidDateException;
-import trading.exception.InvalidTransactionDateException;
-import trading.exception.MissingDateException;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.TimeZone;
 
 public class DateTime {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(""
-            + "[yyyy-MM-dd'T'HH:mm:ss'Z']"
-            + "[yyyy-MM-dd'T'HH:mm:ss.SSS'Z']"
-    );
-    private LocalDateTime localDateTime;
+    private Instant instant;
 
-    public DateTime(String date) {
-        this.localDateTime = LocalDateTime.parse(date, this.formatter);
+    public DateTime(String text) {
+        this.instant = Instant.parse(text);
     }
 
-    public DateTime(String date, int hour, int minutes, int seconds){
-        if(date == null){
-            throw new MissingDateException();
-        }
-        try {
-            LocalDate localDate = LocalDate.parse(date);
-            LocalTime localTime = LocalTime.of(hour, minutes, seconds);
-            this.localDateTime = LocalDateTime.of(localDate, localTime);
-        } catch (Exception e){
-            throw new InvalidDateException(date);
-        }
+    public DateTime(String text, int hour, int minutes, int seconds){
+        LocalDate localDate = LocalDate.parse(text);
+        LocalTime localTime = LocalTime.of(hour, minutes, seconds);
+        this.instant = LocalDateTime.of(localDate, localTime).toInstant(ZoneOffset.UTC);
     }
 
-    public boolean isSameDay(DateTime dateTime) {
-        return this.localDateTime.toLocalDate().equals(dateTime.localDateTime.toLocalDate());
-    }
-
-    @Override
+    @JsonValue
     public String toString() {
-        return this.localDateTime.toString();
+        return this.instant.toString();
     }
+
+    public boolean isEquals(DateTime comparedDateTime) {
+        return this.instant.equals(comparedDateTime.asInstant());
+    }
+
+    public boolean isSameDay(DateTime comparedDateTime) {
+        return this.truncatedToDays().equals(comparedDateTime.truncatedToDays());
+    }
+
+    public Instant truncatedToDays() {
+        return this.instant.truncatedTo(ChronoUnit.DAYS);
+    }
+
+    public Instant asInstant() {
+        return this.instant;
+    }
+
 }

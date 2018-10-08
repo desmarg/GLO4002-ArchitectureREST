@@ -3,6 +3,8 @@ package trading.api.resource;
 import trading.api.response.ReportResponse;
 import trading.domain.*;
 import trading.domain.transaction.Transaction;
+import trading.exception.InvalidDateException;
+import trading.exception.MissingDateException;
 import trading.services.AccountService;
 import trading.services.Services;
 
@@ -26,7 +28,15 @@ public class ReportResource {
                               @QueryParam("type") String type,
                               @QueryParam("date") String date) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        DateTime reportDate = new DateTime(date, 23, 59, 59);
+        if(date == null){
+            throw new MissingDateException();
+        }
+        DateTime reportDate;
+        try {
+            reportDate = new DateTime(date, 23, 59, 59);
+        } catch (Exception e) {
+            throw new InvalidDateException(date);
+        }
         ReportType reportType = ReportType.fromString(type);
         Report report = new Report(account, reportDate, reportType);
         return Response.status(Response.Status.OK).entity(new ReportResponse(report)).build();
