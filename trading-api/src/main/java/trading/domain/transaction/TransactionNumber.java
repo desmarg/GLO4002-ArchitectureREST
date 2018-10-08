@@ -15,6 +15,10 @@ public class TransactionNumber {
         this.id = id;
     }
 
+    public TransactionNumber(String text) {
+        this.id = UUID.fromString(text);
+    }
+
     public UUID getId() {
         return this.id;
     }

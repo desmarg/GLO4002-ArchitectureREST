@@ -23,13 +23,12 @@ public class TransactionSell extends Transaction {
         this.referredTransactionNumber = referredTransactionNumber;
     }
 
-    public static TransactionSell fromRequest(TransactionPostRequest transactionRequest) {
-        Long quantity = transactionRequest.getQuantity();
-        DateTime dateTime = transactionRequest.getDate();
-        Stock stock = transactionRequest.getStock();
+    public static TransactionSell fromRequest(TransactionPostRequest transactionPostRequest) {
+        Long quantity = transactionPostRequest.getQuantity();
+        DateTime dateTime = transactionPostRequest.getDate();
+        Stock stock = transactionPostRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
-        TransactionNumber referredTransactionNumber = new TransactionNumber(
-                transactionRequest.getTransactionNumber());
+        TransactionNumber referredTransactionNumber = transactionPostRequest.getTransactionNumber();
         return new TransactionSell(
                 quantity,
                 dateTime,

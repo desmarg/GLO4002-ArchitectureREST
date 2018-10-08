@@ -3,12 +3,12 @@ package trading.exception;
 import javax.ws.rs.core.Response.Status;
 import java.lang.reflect.Field;
 
-public class NullPointerGuardException extends MappedException {
+public class MissingFieldException extends MappedException {
 
-    public NullPointerGuardException(Field field) {
+    public MissingFieldException(String field) {
         super(
                 "INVALID_REQUEST",
-                String.format("Field (%s) is missing", field.getName()),
+                "field (" + field + ") is missing",
                 Status.BAD_REQUEST
         );
     }

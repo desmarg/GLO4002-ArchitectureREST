@@ -20,10 +20,10 @@ public class TransactionBuy extends Transaction {
         this.remainingStocks = quantity;
     }
 
-    public static Transaction fromRequest(TransactionPostRequest transactionRequest) {
-        Long quantity = transactionRequest.getQuantity();
-        DateTime dateTime = transactionRequest.getDate();
-        Stock stock = transactionRequest.getStock();
+    public static Transaction fromRequest(TransactionPostRequest transactionPostRequest) {
+        Long quantity = transactionPostRequest.getQuantity();
+        DateTime dateTime = transactionPostRequest.getDate();
+        Stock stock = transactionPostRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
         return new TransactionBuy(
                 quantity,

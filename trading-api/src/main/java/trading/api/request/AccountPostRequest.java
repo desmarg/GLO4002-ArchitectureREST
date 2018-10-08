@@ -1,6 +1,7 @@
 package trading.api.request;
 
 import trading.domain.Account;
+import trading.exception.MissingFieldException;
 
 public class AccountPostRequest {
     private String investorName;
@@ -16,6 +17,21 @@ public class AccountPostRequest {
         this.email = account.getEmail();
         this.investorId = account.getInvestorId();
         this.credits = account.getCredits().valueToFloat();
+    }
+
+    public void nullCheck() {
+        if (investorName != null) {
+            throw new MissingFieldException("investorName");
+        }
+        if (email != null) {
+            throw new MissingFieldException("email");
+        }
+        if (investorId != null) {
+            throw new MissingFieldException("investorId");
+        }
+        if (credits != null) {
+            throw new MissingFieldException("credits");
+        }
     }
 
     public String getInvestorName() {

@@ -2,7 +2,9 @@ package trading.api.request;
 
 import trading.domain.DateTime;
 import trading.domain.Stock;
-import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionType;
+import trading.exception.MissingFieldException;
 
 import java.util.UUID;
 
@@ -10,20 +12,30 @@ public class TransactionPostRequest {
     private String type;
     private DateTime date;
     private Stock stock;
-    private UUID transactionNumber;
+    private TransactionNumber transactionNumber;
     private Long quantity;
-    private Float fees;
 
     public TransactionPostRequest() {
     }
 
-    public TransactionPostRequest(Transaction transaction) {
-        this.type = transaction.getTransactionType().toString();
-        this.date = transaction.getDateTime();
-        this.stock = transaction.getStock();
-        this.transactionNumber = transaction.getTransactionNumber().getId();
-        this.quantity = transaction.getQuantity();
-        this.fees = transaction.getFees().valueToFloat();
+    public void nullCheck() {
+        if (this.type == null) {
+            throw new MissingFieldException("type");
+        }
+        if (this.date == null) {
+            throw new MissingFieldException("date");
+        }
+        if (this.stock == null) {
+            throw new MissingFieldException("stock");
+        }
+        if (TransactionType.fromString(type) == TransactionType.SELL) {
+            if (this.transactionNumber == null) {
+                throw new MissingFieldException("transactionNumber");
+            }
+        }
+        if (this.quantity == null) {
+            throw new MissingFieldException("quantity");
+        }
     }
 
     public String getType() {
@@ -50,11 +62,11 @@ public class TransactionPostRequest {
         this.stock = stock;
     }
 
-    public UUID getTransactionNumber() {
+    public TransactionNumber getTransactionNumber() {
         return this.transactionNumber;
     }
 
-    public void setTransactionNumber(UUID transactionNumber) {
+    public void setTransactionNumber(TransactionNumber transactionNumber) {
         this.transactionNumber = transactionNumber;
     }
 
@@ -64,13 +76,5 @@ public class TransactionPostRequest {
 
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
-    }
-
-    public Float getFees() {
-        return this.fees;
-    }
-
-    public void setFees(Float fees) {
-        this.fees = fees;
     }
 }
