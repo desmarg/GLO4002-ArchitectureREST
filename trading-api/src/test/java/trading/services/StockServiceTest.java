@@ -43,8 +43,8 @@ public class StockServiceTest {
         );
 
         assertEquals(
-                this.stockPrice.getPrice().valueToString(),
-                creditsFound.valueToString()
+                this.stockPrice.getPrice().toString(),
+                creditsFound.toString()
         );
     }
 }
