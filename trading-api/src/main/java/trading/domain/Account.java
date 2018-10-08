@@ -1,13 +1,11 @@
 package trading.domain;
 
-import trading.api.request.AccountPostRequest;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.exception.InvalidAccountInfoException;
 import trading.exception.InvalidCreditsAmountException;
 import trading.exception.TransactionNotFoundException;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

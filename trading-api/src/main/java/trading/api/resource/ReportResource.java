@@ -2,7 +2,6 @@ package trading.api.resource;
 
 import trading.api.response.ReportResponse;
 import trading.domain.*;
-import trading.domain.transaction.Transaction;
 import trading.exception.InvalidDateException;
 import trading.exception.MissingDateException;
 import trading.services.AccountService;
@@ -11,7 +10,6 @@ import trading.services.Services;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/accounts/{accountNumber}/reports")
 public class ReportResource {

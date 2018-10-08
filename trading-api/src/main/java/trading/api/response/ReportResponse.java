@@ -1,12 +1,9 @@
 package trading.api.response;
 
-
-import trading.domain.DateTime;
 import trading.domain.Report;
 import trading.domain.transaction.Transaction;
 import trading.factory.TransactionResponseFactory;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
