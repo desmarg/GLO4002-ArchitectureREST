@@ -11,7 +11,7 @@ public class StockParametersDontMatchException extends MappedException {
 
     public StockParametersDontMatchException(TransactionNumber transactionNumber) {
         super(
-                "STOCK_NOT_FOUND",
+                "STOCK_PARAMETERS_DONT_MATCH",
                 "stock parameters don't match existing ones",
                 Status.BAD_REQUEST
         );

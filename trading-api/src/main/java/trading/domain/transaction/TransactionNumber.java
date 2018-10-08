@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public class TransactionNumber {
     private UUID id;
+    private final int FIRST_ODD_NUMBER = 17;
+    private final int SECOND_ODD_NUMBER = 31;
 
     public TransactionNumber() {
         this.id = UUID.randomUUID();
@@ -22,17 +24,15 @@ public class TransactionNumber {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other instanceof TransactionNumber) {
-            return this.id.equals(((TransactionNumber) other).getId());
+    public boolean equals(Object otherTransactionNumber) {
+        if (otherTransactionNumber instanceof TransactionNumber) {
+            return this.id.equals(((TransactionNumber) otherTransactionNumber).getId());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        int hash = 17;
-        hash = 31 * hash + this.id.hashCode();
-        return hash;
+        return FIRST_ODD_NUMBER * SECOND_ODD_NUMBER + this.id.hashCode();
     }
 }
