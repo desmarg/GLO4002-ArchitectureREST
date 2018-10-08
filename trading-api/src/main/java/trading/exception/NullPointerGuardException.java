@@ -2,7 +2,6 @@ package trading.exception;
 
 import javax.ws.rs.core.Response.Status;
 import java.lang.reflect.Field;
-import java.lang.String;
 
 public class NullPointerGuardException extends MappedException {
 

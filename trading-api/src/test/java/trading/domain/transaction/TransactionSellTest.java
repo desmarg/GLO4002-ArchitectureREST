@@ -12,6 +12,7 @@ import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
+import trading.exception.NotEnoughCreditsForFeesException;
 import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
 
@@ -79,10 +80,22 @@ public class TransactionSellTest {
         transactionSell.make(this.account);
     }
 
+    @Test(expected = NotEnoughCreditsForFeesException.class)
+    public void
+    givenNotEnoughCreditsForFees_whenSellingStock_thenThrowNotEnoughCreditsForFeesException() {
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(false);
+        when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
+                this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
+
+        transactionSell.make(this.account);
+    }
+
     @Test
     public void
     givenValidTransaction_whenSellingStock_thenCorrectQuantityDeducedFromTransactionBuy() {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
@@ -94,6 +107,7 @@ public class TransactionSellTest {
     @Test
     public void givenValidTransaction_whenSellingStock_thenAddTransactionPriceToAccountCredits() {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
@@ -108,6 +122,7 @@ public class TransactionSellTest {
     public void givenValidTransaction_whenSellingStock_thenSubtractTransactionFeesToAccountCredits
             () {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
@@ -121,6 +136,7 @@ public class TransactionSellTest {
     @Test
     public void givenValidTransaction_whenSellingStock_thenTransactionAddedToAccount() {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 

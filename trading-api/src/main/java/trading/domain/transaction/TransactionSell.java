@@ -11,23 +11,25 @@ import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
 import trading.services.StockService;
 
+
 public class TransactionSell extends Transaction {
 
     private TransactionNumber referredTransactionNumber;
 
-    public TransactionSell(Long quantity, DateTime date, Stock stock,
+    public TransactionSell(Long quantity, DateTime dateTime, Stock stock,
                            Credits stockPrice, TransactionNumber referredTransactionNumber) {
-        super(quantity, date, stock, stockPrice);
+        super(quantity, dateTime, stock, stockPrice);
         this.transactionType = TransactionType.SELL;
         this.referredTransactionNumber = referredTransactionNumber;
     }
 
     public static TransactionSell fromRequest(TransactionPostRequest transactionRequest) {
         long quantity = transactionRequest.getQuantity();
-        DateTime dateTime = new DateTime(transactionRequest.getDate());
+        DateTime dateTime = transactionRequest.getDate();
         Stock stock = transactionRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
-        TransactionNumber referredTransactionNumber = new TransactionNumber(transactionRequest.getTransactionNumber());
+        TransactionNumber referredTransactionNumber = new TransactionNumber(
+                transactionRequest.getTransactionNumber());
         return new TransactionSell(
                 quantity,
                 dateTime,
@@ -52,12 +54,12 @@ public class TransactionSell extends Transaction {
             throw new NotEnoughStockException(this.stock, this.transactionNumber);
         }
 
-        account.addCredits(this.price);
-        if (!account.hasEnoughCreditsToPay(this.fees)) {
-            account.subtractCredits(this.price);
+        if (!account.hasEnoughCreditsToPaySellFees(this.price, this.fees)) {
             throw new NotEnoughCreditsForFeesException(this.transactionNumber);
         }
+        
         referredTransaction.deduceStock(this.quantity);
+        account.addCredits(this.price);
         account.subtractCredits(this.fees);
         account.addTransaction(this);
     }

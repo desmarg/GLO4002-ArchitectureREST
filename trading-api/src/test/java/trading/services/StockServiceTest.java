@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class StockServiceTest {
-    private static String DATE = "2015-01-01T05:00:00.000Z";
-    private static DateTime DATETIME = new DateTime(DATE);
+    private static String DATE_STRING = "2015-01-01T05:00:00.000Z";
+    private static DateTime DATETIME = new DateTime(DATE_STRING);
     private static Double PRICE = 10d;
 
     private StockService stockService;
-    private StockResponse stockDto;
+    private StockResponse stockResponse;
     private StockPriceResponse stockPrice;
     private ArrayList<StockPriceResponse> stockPrices;
 
@@ -27,19 +27,24 @@ public class StockServiceTest {
         this.stockService = new StockService();
 
         this.stockPrice = new StockPriceResponse();
-        this.stockPrice.setDate(DATE);
+        this.stockPrice.setDate(DATETIME);
         this.stockPrice.setPrice(PRICE);
 
         this.stockPrices = new ArrayList<>();
         this.stockPrices.add(this.stockPrice);
 
-        this.stockDto = new StockResponse();
-        this.stockDto.setPrices(this.stockPrices);
+        this.stockResponse = new StockResponse();
+        this.stockResponse.setPrices(this.stockPrices);
     }
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDate_thenReturnCredits() {
-        Credits creditsFound = this.stockService.getPriceFromDate(this.stockDto, DATETIME);
-        assertEquals(this.stockPrice.getPrice().valueToString(), creditsFound.valueToString());
+        Credits creditsFound = this.stockService.getPriceFromDateTime(
+                this.stockResponse, DATETIME
+        );
+        assertEquals(
+                this.stockPrice.getPrice().valueToString(),
+                creditsFound.valueToString()
+        );
     }
 }

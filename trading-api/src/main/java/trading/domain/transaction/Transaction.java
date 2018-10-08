@@ -2,8 +2,8 @@ package trading.domain.transaction;
 
 import trading.domain.Account;
 import trading.domain.Credits;
-import trading.domain.DateTime;
 import trading.domain.Stock;
+import trading.domain.DateTime;
 
 import static trading.domain.Credits.fromDouble;
 
@@ -11,18 +11,18 @@ public abstract class Transaction {
     protected TransactionNumber transactionNumber;
     protected TransactionType transactionType;
     protected Long quantity;
-    protected DateTime date;
+    protected DateTime dateTime;
     protected Stock stock;
     protected Credits stockPrice;
     protected Credits price;
     protected Credits fees;
 
 
-    protected Transaction(Long quantity, DateTime date, Stock stock,
+    protected Transaction(Long quantity, DateTime dateTime, Stock stock,
                           Credits stockPrice) {
         this.transactionNumber = new TransactionNumber();
         this.quantity = quantity;
-        this.date = date;
+        this.dateTime = dateTime;
         this.stock = stock;
         this.stockPrice = stockPrice;
         this.price = this.calculateTransactionPrice();
@@ -83,8 +83,8 @@ public abstract class Transaction {
         return this.stockPrice;
     }
 
-    public DateTime getDate() {
-        return this.date;
+    public DateTime getDateTime() {
+        return this.dateTime;
     }
 
     public TransactionType getTransactionType() {
