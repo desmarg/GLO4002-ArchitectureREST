@@ -7,21 +7,20 @@ import java.util.List;
 
 // Used to validate that all the field of a given object are not null.
 public class NullPointerGuard {
-    static public void validate(Object obj) {
+    public static void validate(Object obj) {
         for (Field field : obj.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             try {
                 if (field.get(obj) == null) {
                     throw new NullPointerGuardException(field);
                 }
-            }
-            // Should never happend since we set setAccessible to true.
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
+                // Never happens
             }
         }
     }
 
-    static public void validate(Object obj, List<String> ignoredFields) {
+    public static void validate(Object obj, List<String> ignoredFields) {
         for (Field field : obj.getClass().getDeclaredFields()) {
             System.out.println(field.getName());
             if (ignoredFields.contains(field.getName())) {
@@ -33,9 +32,8 @@ public class NullPointerGuard {
                 if (field.get(obj) == null) {
                     throw new NullPointerGuardException(field);
                 }
-            }
-            // Should never happend since we set setAccessible to true.
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
+                // Never happens
             }
         }
     }

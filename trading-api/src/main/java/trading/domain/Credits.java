@@ -66,5 +66,4 @@ public class Credits implements Comparable<Credits> {
     public int compareTo(Credits credits) {
         return this.amount.compareTo(credits.getAmount());
     }
-
 }

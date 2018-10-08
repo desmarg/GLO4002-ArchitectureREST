@@ -1,6 +1,5 @@
 package trading.api.response;
 
-
 import trading.domain.Account;
 import trading.domain.InvestorProfile;
 

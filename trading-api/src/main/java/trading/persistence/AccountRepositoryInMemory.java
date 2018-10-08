@@ -19,7 +19,8 @@ public class AccountRepositoryInMemory implements AccountRepository {
         this.accountMap.put(account.getAccountNumber(), account);
     }
 
-    public Account findByAccountNumber(AccountNumber accountNumber) throws AccountNotFoundException {
+    public Account findByAccountNumber(AccountNumber accountNumber) throws
+            AccountNotFoundException {
         Account account = this.accountMap.get(accountNumber);
         if (account != null) {
             return account;

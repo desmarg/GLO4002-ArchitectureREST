@@ -18,5 +18,4 @@ public class TransactionSellResponse extends TransactionResponse {
     public void setPriceSold(Float priceSold) {
         this.priceSold = priceSold;
     }
-
 }

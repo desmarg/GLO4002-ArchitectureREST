@@ -4,7 +4,8 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TransactionNumberTest {
 
@@ -17,18 +18,19 @@ public class TransactionNumberTest {
     }
 
     @Test
-    public void givenTwoTransactionsWithEqualTransactionNumbers_whenCheckingIfEquals_thenReturnsTrue() {
-        UUID firstTransactionNumberAsUuid =  A_TRANSACTION_NUMBER.getId();
+    public void
+    givenTwoTransactionsWithEqualTransactionNumbers_whenCheckingIfEquals_thenReturnsTrue() {
+        UUID firstTransactionNumberAsUuid = A_TRANSACTION_NUMBER.getId();
         TransactionNumber secondTransaction = new TransactionNumber(firstTransactionNumberAsUuid);
 
         assertTrue(A_TRANSACTION_NUMBER.equals(secondTransaction));
     }
 
     @Test
-    public void givenObjectThatIsNotOfTypeTransactionNumber_whenCheckingIfEquals_thenReturnsFalse() {
-        UUID transactionNumberAsUuid =  A_TRANSACTION_NUMBER.getId();
+    public void givenObjectThatIsNotOfTypeTransactionNumber_whenCheckingIfEquals_thenReturnsFalse
+            () {
+        UUID transactionNumberAsUuid = A_TRANSACTION_NUMBER.getId();
 
         assertFalse(A_TRANSACTION_NUMBER.equals(transactionNumberAsUuid));
     }
-
 }

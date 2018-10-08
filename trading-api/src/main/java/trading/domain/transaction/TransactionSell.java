@@ -40,7 +40,8 @@ public class TransactionSell extends Transaction {
     }
 
     public void make(Account account) {
-        TransactionBuy referredTransaction = (TransactionBuy) account.getTransaction(this.referredTransactionNumber);
+        TransactionBuy referredTransaction =
+                (TransactionBuy) account.getTransaction(this.referredTransactionNumber);
 
         if (this.getQuantity() <= 0) {
             throw new InvalidQuantityException(this.transactionNumber);

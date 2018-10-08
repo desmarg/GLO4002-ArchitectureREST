@@ -19,71 +19,83 @@ public class CreditsTest {
     private static final double DOUBLE_QUANTITY = 2.5;
 
     @Test
-    public void givenNewlyCreatedCredits_WhenDefaultConstructor_ThenValueIsZero() {
+    public void givenNewlyCreatedCredits_whenDefaultConstructor_thenValueIsZero() {
         Credits defaultCredits = new Credits();
+
         assertEquals(ZERO_REPRESENTATION, defaultCredits.valueToString());
     }
 
     @Test
-    public void givenNewlyCreatedCredits_WhenConstructingFromDouble_ThenValueHasTwoDecimals() {
+    public void givenNewlyCreatedCredits_whenConstructingFromDouble_thenValueHasTwoDecimals() {
         Credits credits = Credits.fromDouble(POINT_ONE);
+
         assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
     }
 
     @Test
-    public void givenCreatedCredits_WhenCopyingWithConstructor_ThenNewCreditsWithSameValue() {
+    public void givenCreatedCredits_whenCopyingWithConstructor_thenNewCreditsWithSameValue() {
         Credits credits = Credits.fromDouble(POINT_ONE);
         Credits creditsCopy = new Credits(credits);
+
         assertEquals(credits.valueToString(), creditsCopy.valueToString());
     }
 
     @Test
-    public void givenNonZeroCredits_WhenMultiplyingWithLongQuantity_ThenMultiplyValue() {
+    public void givenNonZeroCredits_whenMultiplyingWithLongQuantity_thenMultiplyValue() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
+
         credits.multiply(LONG_QUANTITY);
+
         assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
     }
 
     @Test
-    public void givenNonZeroCredits_WhenMultiplyingWithDoubleQuantity_ThenMultiplyValue() {
+    public void givenNonZeroCredits_whenMultiplyingWithDoubleQuantity_thenMultiplyValue() {
         Credits credits = Credits.fromDouble(POINT_ONE);
+
         credits.multiply(DOUBLE_QUANTITY);
+
         assertEquals(POINT_25_REPRESENTATION, credits.valueToString());
     }
 
     @Test
-    public void givenCredits_WhenAddingNonZeroCredits_ThenAddValue() {
+    public void givenCredits_whenAddingNonZeroCredits_thenAddValue() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
         Credits creditsToAdd = Credits.fromDouble(POINT_ZERO_FIVE);
+
         credits.add(creditsToAdd);
+
         assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
     }
 
     @Test
-    public void givenCredits_WhenSubtractingNonZeroCredits_ThenSubtractValue() {
+    public void givenCredits_whenSubtractingNonZeroCredits_thenSubtractValue() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
         Credits creditsToSubtract = Credits.fromDouble(POINT_ZERO_FIVE);
+
         credits.subtract(creditsToSubtract);
+
         assertEquals(ZERO_REPRESENTATION, credits.valueToString());
     }
 
     @Test
-    public void givenCreditsWithThirdDecimalLowerThanFive_WhenConvertingToFloat_ThenReturnHalfWayUp() {
+    public void givenCreditsWithThirdDecimalLowerThanFive_whenConvertingToFloat_thenReturnHalfWayUp() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_ONE);
+
         assertEquals(POINT_ZERO_FIVE, credits.valueToFloat(), 0.01);
     }
 
     @Test
-    public void givenCreditsWithThirdDecimalEqualFive_WhenConvertingToFloat_ThenReturnHalfWayUp() {
+    public void givenCreditsWithThirdDecimalEqualFive_whenConvertingToFloat_thenReturnHalfWayUp() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_FIVE);
+
         assertEquals(POINT_ZERO_SIX, credits.valueToFloat(), 0.01);
     }
 
     @Test
-    public void givenCreditsWithThirdDecimalHigherThanFive_WhenConvertingToFloat_ThenReturnHalfWayUp() {
+    public void givenCreditsWithThirdDecimalHigherThanFive_whenConvertingToFloat_thenReturnHalfWayUp() {
         Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_NINE);
+
         assertEquals(POINT_ZERO_SIX, credits.valueToFloat(), 0.01);
     }
-
-
 }

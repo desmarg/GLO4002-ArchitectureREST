@@ -34,7 +34,8 @@ public class Account {
         this.investorName = investorName;
         this.email = email;
         this.credits = credits;
-        this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
+        this.investorProfile =
+                new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
         this.transactionList = new HashMap<>();
     }
 
@@ -47,7 +48,8 @@ public class Account {
     }
 
     public void validateInvestorName(String investorName) {
-        Pattern namePattern = Pattern.compile("^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$");
+        Pattern namePattern =
+                Pattern.compile("^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$");
         Matcher nameMatcher = namePattern.matcher(investorName);
         if (!nameMatcher.matches()) {
             throw new InvalidAccountInfoException("invalid investorName");

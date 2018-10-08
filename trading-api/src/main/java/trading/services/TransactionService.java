@@ -13,7 +13,8 @@ public class TransactionService {
         transaction.make(account);
     }
 
-    public Transaction getTransactionFromAccount(Account account, TransactionNumber transactionNumber) {
+    public Transaction getTransactionFromAccount(Account account, TransactionNumber
+            transactionNumber) {
         return account.getTransaction(transactionNumber);
     }
 }

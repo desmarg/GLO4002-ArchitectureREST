@@ -2,10 +2,8 @@ package trading.domain.transaction;
 
 import trading.domain.Account;
 import trading.domain.Credits;
-import trading.domain.Stock;
 import trading.domain.DateTime;
-
-import static trading.domain.Credits.fromDouble;
+import trading.domain.Stock;
 
 public abstract class Transaction {
     protected TransactionNumber transactionNumber;
@@ -47,11 +45,11 @@ public abstract class Transaction {
     public Credits calculateFees() {
         Credits fees = new Credits();
         if (this.quantity <= 100) {
-            Credits baseFee = fromDouble(0.25);
+            Credits baseFee = Credits.fromDouble(0.25);
             fees.add(baseFee);
             fees.multiply(this.quantity);
         } else {
-            Credits baseFee = fromDouble(0.20);
+            Credits baseFee = Credits.fromDouble(0.20);
             fees.add(baseFee);
             fees.multiply(this.quantity);
         }

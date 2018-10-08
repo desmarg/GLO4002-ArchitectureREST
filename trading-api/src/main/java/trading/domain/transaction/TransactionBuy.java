@@ -58,6 +58,4 @@ public class TransactionBuy extends Transaction {
     public Long getRemainingStocks() {
         return this.remainingStocks;
     }
-
 }
-

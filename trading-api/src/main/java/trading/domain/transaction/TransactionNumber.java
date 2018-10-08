@@ -33,6 +33,6 @@ public class TransactionNumber {
 
     @Override
     public int hashCode() {
-        return FIRST_ODD_NUMBER * SECOND_ODD_NUMBER + this.id.hashCode();
+        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
     }
 }

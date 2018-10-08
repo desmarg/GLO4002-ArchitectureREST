@@ -32,5 +32,4 @@ public class StockResponse {
     public String getType() {
         return this.type;
     }
-
 }

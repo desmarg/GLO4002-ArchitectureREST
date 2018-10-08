@@ -1,4 +1,4 @@
-package trading.application;
+package trading.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,6 @@ import trading.domain.Account;
 import trading.domain.AccountNumber;
 import trading.exception.AccountAlreadyExistsException;
 import trading.persistence.AccountRepository;
-import trading.services.AccountService;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -38,6 +37,7 @@ public class AccountServiceTest {
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
         when(this.accountRepository.nextCounterValue()).thenReturn(1l);
         this.accountService.save(this.account);
+
         verify(this.accountRepository).add(this.account);
     }
 
@@ -47,12 +47,14 @@ public class AccountServiceTest {
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
         when(this.accountRepository.nextCounterValue()).thenReturn(1l);
         this.accountService.save(this.account);
+
         verify(this.accountRepository).nextCounterValue();
     }
 
     @Test
     public void whenFindByAccountNumber_thenFindAccountNumberInRepository() {
         this.accountService.findByAccountNumber(this.accountNumber);
+
         verify(this.accountRepository).findByAccountNumber(this.accountNumber);
     }
 
@@ -63,8 +65,10 @@ public class AccountServiceTest {
     }
 
     @Test(expected = AccountAlreadyExistsException.class)
-    public void givenExistingAccount_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
+    public void
+    givenExistingAccount_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(true);
+
         this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
     }
 }

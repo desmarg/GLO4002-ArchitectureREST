@@ -11,4 +11,3 @@ public class CustomExceptionMapper implements
         return Response.status(error.getStatus()).entity(error).build();
     }
 }
-

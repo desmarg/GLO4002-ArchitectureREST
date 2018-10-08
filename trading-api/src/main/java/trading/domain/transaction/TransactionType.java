@@ -6,7 +6,7 @@ public enum TransactionType {
     BUY,
     SELL;
 
-    static public TransactionType fromString(String string) {
+    public static TransactionType fromString(String string) {
         try {
             return TransactionType.valueOf(string);
         } catch (IllegalArgumentException ex) {

@@ -1,6 +1,5 @@
 package trading.services;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import trading.domain.Credits;
@@ -42,6 +41,7 @@ public class StockServiceTest {
         Credits creditsFound = this.stockService.getPriceFromDateTime(
                 this.stockResponse, DATETIME
         );
+
         assertEquals(
                 this.stockPrice.getPrice().valueToString(),
                 creditsFound.valueToString()

@@ -35,27 +35,27 @@ public class TransactionTest {
 
     @Test
     public void whenCalculatingTransactionPrice_thenStockPriceIsMultipliedByQuantity() {
-        transaction = new TransactionImplementation(VALID_QUANTITY_SMALLER_THAN_HUNDRED,
-                VALID_DATE, stock, SOME_STOCK_PRICE);
+        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.SOME_STOCK_PRICE);
 
-        Credits transactionPrice = transaction.calculateTransactionPrice();
+        Credits transactionPrice = this.transaction.calculateTransactionPrice();
 
-        BigDecimal expectedTransactionPrice = new BigDecimal(VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
-                (SOME_STOCK_PRICE.getAmount());
+        BigDecimal expectedTransactionPrice = new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
+                (this.SOME_STOCK_PRICE.getAmount());
         assertEquals(expectedTransactionPrice, transactionPrice.getAmount());
     }
 
     @Test
     public void
-            givenTotalLessThan5000AndQuantitySmallerThan100_whenCalculatingFees_thenQuarterRateFees
+    givenTotalLessThan5000AndQuantitySmallerThan100_whenCalculatingFees_thenQuarterRateFees
             () {
-        transaction = new TransactionImplementation(VALID_QUANTITY_SMALLER_THAN_HUNDRED,
-                VALID_DATE, stock, SOME_STOCK_PRICE);
+        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.SOME_STOCK_PRICE);
 
-        Credits transactionFees = transaction.calculateFees();
+        Credits transactionFees = this.transaction.calculateFees();
 
         Credits expectedFees = Credits.fromDouble(0.25);
-        expectedFees.multiply(VALID_QUANTITY_SMALLER_THAN_HUNDRED);
+        expectedFees.multiply(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED);
         assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
     }
 
@@ -63,26 +63,26 @@ public class TransactionTest {
     public void
     givenTotalLessThan5000AndQuantityBiggerThan100_whenCalculatingFees_thenFifthRateFees
             () {
-        transaction = new TransactionImplementation(VALID_QUANTITY_BIGGER_THAN_HUNDRED,
-                VALID_DATE, stock, SOME_STOCK_PRICE);
+        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.SOME_STOCK_PRICE);
 
-        Credits transactionFees = transaction.calculateFees();
+        Credits transactionFees = this.transaction.calculateFees();
 
         Credits expectedFees = Credits.fromDouble(0.20);
-        expectedFees.multiply(VALID_QUANTITY_BIGGER_THAN_HUNDRED);
+        expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
         assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
     }
 
     @Test
     public void givenTotalPriceMoreThan5000_whenCalculatingFees_thenAdditionalRateAdded() {
-        transaction = new TransactionImplementation(VALID_QUANTITY_BIGGER_THAN_HUNDRED,
-                VALID_DATE, stock, LARGE_STOCK_PRICE);
+        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.LARGE_STOCK_PRICE);
 
-        Credits transactionFees = transaction.calculateFees();
+        Credits transactionFees = this.transaction.calculateFees();
 
         Credits expectedFees = Credits.fromDouble(0.20);
-        expectedFees.multiply(VALID_QUANTITY_BIGGER_THAN_HUNDRED);
-        Credits additionalFees = new Credits(transaction.calculateTransactionPrice());
+        expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
+        Credits additionalFees = new Credits(this.transaction.calculateTransactionPrice());
         additionalFees.multiply(0.03);
         expectedFees.add(additionalFees);
         assertEquals(expectedFees.getAmount(), transactionFees.getAmount());

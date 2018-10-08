@@ -9,7 +9,8 @@ public class StockNotFoundException extends MappedException {
 
     private UUID transactionNumber;
 
-    public StockNotFoundException(String symbol, String market, TransactionNumber transactionNumber) {
+    public StockNotFoundException(String symbol, String market, TransactionNumber
+            transactionNumber) {
         super(
                 "STOCK_NOT_FOUND",
                 "stock '" + symbol + ":" + market + "' not found",
