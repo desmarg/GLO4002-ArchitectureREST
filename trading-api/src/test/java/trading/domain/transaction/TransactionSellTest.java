@@ -95,6 +95,7 @@ public class TransactionSellTest {
     public void
     givenValidTransaction_whenSellingStock_thenCorrectQuantityDeducedFromTransactionBuy() {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
@@ -106,6 +107,7 @@ public class TransactionSellTest {
     @Test
     public void givenValidTransaction_whenSellingStock_thenAddTransactionPriceToAccountCredits() {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
@@ -120,6 +122,7 @@ public class TransactionSellTest {
     public void givenValidTransaction_whenSellingStock_thenSubtractTransactionFeesToAccountCredits
             () {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
@@ -133,6 +136,7 @@ public class TransactionSellTest {
     @Test
     public void givenValidTransaction_whenSellingStock_thenTransactionAddedToAccount() {
         when(this.account.getTransaction(any(TransactionNumber.class))).thenReturn(this.transactionBuy);
+        when(this.account.hasEnoughCreditsToPaySellFees(any(), any())).thenReturn(true);
         TransactionSell transactionSell = new TransactionSell(this.VALID_SELL_QUANTITY, this.VALID_DATE,
                 this.stock, this.SOME_STOCK_PRICE, this.SOME_TRANSACTION_NUMBER);
 
