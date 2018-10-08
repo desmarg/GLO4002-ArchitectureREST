@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class MarketService {
+    private static int maxHourOfDay = 23;
+    private static int maxMinuteOfDay = 59;
     private static MarketService INSTANCE = null;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -56,9 +58,8 @@ public class MarketService {
     private LocalTime getTimeModifierFromTimeZone(String timezone){
         LocalTime modifier = LocalTime.parse(timezone.substring(4));
         if(timezone.charAt(3) == '-'){
-            //TODO remove magic numbers for hours and minutes
-            modifier = modifier.withHour(23 - modifier.getHour());
-            modifier = modifier.withMinute(59 - modifier.getMinute());
+            modifier = modifier.withHour(maxHourOfDay - modifier.getHour());
+            modifier = modifier.withMinute(maxMinuteOfDay - modifier.getMinute());
         }
         return modifier;
     }
