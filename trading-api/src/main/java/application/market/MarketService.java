@@ -1,15 +1,19 @@
 package application.market;
 
 import application.JerseyClient;
+import com.sun.scenario.effect.Offset;
+import exception.InvalidTimezoneException;
 import exception.MarketNotFoundException;
+import javafx.util.Pair;
 
+import java.lang.reflect.Array;
 import java.time.LocalTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class MarketService {
-    private static int maxHourOfDay = 23;
-    private static int maxMinuteOfDay = 59;
     private static MarketService INSTANCE = null;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -30,21 +34,26 @@ public class MarketService {
         return marketDto;
     }
 
-    public boolean getMarketOpenAtHour(String market, LocalTime time) {
-        String url = "/markets/" + market;
-        MarketDto marketDto = getMarketDto(market);
+    public ArrayList<Pair<LocalTime, LocalTime>> parseMarketHours(MarketDto marketDto){
         ArrayList<String> hours = marketDto.getOpenHours();
-        boolean opened = false;
-        LocalTime timeModifier = getTimeModifierFromTimeZone(marketDto.getTimezone());
-        for (String times : hours) {
-            String[] splitTime = times.split("-");
+        ArrayList<Pair<LocalTime, LocalTime>> times = new ArrayList<>();
+        for (String hour : hours) {
+            String[] splitTime = hour.split("-");
             LocalTime beginTime = LocalTime.parse("00000".substring(splitTime[0].length()) + splitTime[0], this.formatter);
             LocalTime endTime = LocalTime.parse("00000".substring(splitTime[1].length()) + splitTime[1], this.formatter);
-            beginTime.plusHours(timeModifier.getHour());
-            beginTime.plusMinutes(timeModifier.getMinute());
-            endTime.plusHours(timeModifier.getHour());
-            endTime.plusMinutes(timeModifier.getMinute());
-            if(time.compareTo(beginTime) >= 0 && time.compareTo(endTime) <= 0){
+            times.add(new Pair<>(beginTime,endTime));
+        }
+        return times;
+    }
+
+    public boolean validateMarketOpenAtHour(ArrayList<Pair<LocalTime, LocalTime>> hours, ZoneOffset offset, LocalTime time) {
+
+        boolean opened = false;
+
+        for (Pair<LocalTime, LocalTime> times : hours) {
+            OffsetTime beginOffsetTime = OffsetTime.of(times.getKey(),offset);
+            OffsetTime endOffsetTime = OffsetTime.of(times.getValue(),offset);
+            if(time.compareTo(beginOffsetTime.toLocalTime()) >= 0 && time.compareTo(endOffsetTime.toLocalTime()) <= 0){
                 opened = true;
             }
         }
@@ -52,15 +61,8 @@ public class MarketService {
     }
 
     public boolean getMarketOpenCurrently(String market){
-        return getMarketOpenAtHour(market, LocalTime.now());
-    }
-
-    private LocalTime getTimeModifierFromTimeZone(String timezone){
-        LocalTime modifier = LocalTime.parse(timezone.substring(4));
-        if(timezone.charAt(3) == '-'){
-            modifier = modifier.withHour(maxHourOfDay - modifier.getHour());
-            modifier = modifier.withMinute(maxMinuteOfDay - modifier.getMinute());
-        }
-        return modifier;
+        MarketDto marketDto = getMarketDto(market);
+        ZoneOffset offset = ZoneOffset.of(marketDto.getTimezone().substring(3));
+        return validateMarketOpenAtHour(parseMarketHours(marketDto), offset, LocalTime.now());
     }
 }
