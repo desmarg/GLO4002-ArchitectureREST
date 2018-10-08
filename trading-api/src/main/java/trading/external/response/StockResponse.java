@@ -1,19 +1,19 @@
 package trading.external.response;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class StockResponse {
     private Long id;
     private String market;
     private String symbol;
     private String type;
-    private ArrayList<StockPriceResponse> prices;
+    private List<StockPriceResponse> prices;
 
-    public ArrayList<StockPriceResponse> getPrices() {
+    public List<StockPriceResponse> getPrices() {
         return this.prices;
     }
 
-    public void setPrices(ArrayList<StockPriceResponse> prices) {
+    public void setPrices(List<StockPriceResponse> prices) {
         this.prices = prices;
     }
 

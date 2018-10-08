@@ -1,3 +1,52 @@
+# SEMESTER PROJECT - GLO4002UL - TEAM 5
+|   FIRSTNAME  |    LASTNAME    |   IDUL   |  MATRICULATION  |
+|:---------:|:---------:|:--------:|:-----------:|
+|   Jacob   |  Bouchard | JABOU404 | 111 127 636 |
+|  Maxence  |   Caron   | MACAR703 | 111 157 100 |
+|   Jessy   |    Chea   |  JECHE34 | 111 128 599 |
+|   Samuel  | Dansereau |  SADAN16 | 111 157 751 |
+| Guillaume | Desmarais |  GUDED1  | 111 022 887 |
+|   Thomas  |   Drouin  |  THDRO15 | 111 007 979 |
+|  Raphael  | Gaudrealt |  RAGAU72 | 111 129 495 |
+|   Daniel  |   Lavoie  | DALAV162 | 111 103 095 |
+|  Antoine  |   Somma   |  ANSOM2  | 111 105 700 |
+
+## PROJECT STATUS
+|                                USER STORIES                               | STATUS   |
+|:-------------------------------------------------------------------------:|----------|
+| COOU - Ouvrir un compte avec des crédits                                  | COMPLETE |
+| TXAC - Effectuer un achat                                                 | COMPLETE |
+| TXVE - Effectuer une vente                                                | COMPLETE |
+| TXFR - Appliquer des frais de transaction                                 | COMPLETE |
+| TXHO - Refuser les transactions en dehors des heures d’ouverture          | PENDING PR |
+| RTHI - Lister l’historique des transactions                               | PENDING PR |
+| RTBA - Calculer la valeur du portefeuille                                 | TODO     |
+| EVDI - Traiter l’émission d’un dividende                                  | TODO     |
+| RTPO - Afficher le rapport trimestriel                                    | TODO     |
+| TXHF - Supporter les transactions faites en dehors des heures d’ouverture | TODO     |
+| RANN - Consulter le rapport annuel                                        | TODO     |
+| COPR - Choisir mon profil d’investisseur                                  | TODO     |
+| TXCO - Faire une transaction avec contrainte du profil d’investisseur     | TODO     |
+| COTY - Change le type de compte (à découvert)                             | TODO     |
+| TXVD - Effectuer une vente à découvert                                    | TODO     |
+
+# ENV
+The environment variable `TRADING_API_PORT` can be set, otherwise it
+will default to `8181`.
+
+# Commands
+
+## Linting
+```bash
+# While in project root
+mvn checkstyle:check -pl application
+```
+
+## Run project
+```bash
+# While in project root
+mvn exec:java -pl application
+```
 # Contributing
 
 [See here](CONTRIBUTING.md)
@@ -6,59 +55,8 @@
 
 [See here](http://projet2018.qualitelogicielle.ca/)
 
-# ENV
-The environment variable `TRADING_API_PORT` can be set, otherwise it
-will default to `8181`.
-
-# Linting
-
-## Cmd
-```bash
-# While in project root
-mvn checkstyle:check -pl application
-```
-
 ## IDE Integration
 [Here](https://plugins.jetbrains.com/plugin/1065-checkstyle-idea)
 is a jetbrains plugin for checkstyle, and
 [here](https://checkstyle.org/eclipse-cs/#!/)
 the eclipse one.
-
-# ReadMe à supprimer avant la remise
-
-Ce readme sert à vous expliquer la structure de base de votre projet. Vous devez le remplacer par le vôtre **avant** la remise!
-
-## Structure des modules
-
-Il existe trois [modules maven](https://maven.apache.org/guides/mini/guide-multiple-modules.html) dans le projet : 
-
- * stocks-api : Un API qui vous permet d'obtenir des valeurs d'actions. Il vous est fourni comme "service externe", donc vous ne **pouvez pas le modifier**. Vous ne pouvez pas y référer directement en java non plus, vous devez passer par son API REST. Voir la documentation de ce projet au fil des stories pour l'utiliser.
- * trading-api : le projet que vous développerez. Ici, vous pouvez modifier tout ce qui vous plait. Le code présent n'est pas nécessairement bon/bien placé/selon les normes de votes équipe. À vous de voir!
- * application : permet de démarrer les 2 API simultanément. Vous pouvez le modifier également.
- 
-Vous pouvez également modifier tous les autres fichiers du projet, autre que ceux dans `stock-api`.
-
-## Intégration travis
-
-L'intégration avec travis vous est fourni. Si travis ne fonctionne pas, n'hésitez pas à nous contacter.
-
-## Démarrer le projet
-
-Vous pouvez démarrer soit un des deux serveurs (StocksServer ou TradingServer) individuellement ou simultanément.
-
-Il y a trois classes que vous pouvez exécuter dans intelliJ ou Eclipse pour cela : `StocksServer`, `TradingServer` ou `ApplicationServer`. Aucun des `main()` ne demande d'argument.
-
-Vous pouvez également rouler le serveur via maven (**c'est ce qui sera utilisé pour corriger votre projet**) : 
-
-```bash
-mvn clean install
-mvn exec:java -pl application
-```
-
-## Prochaines étapes
-
-Nous regarderons le projet rapidement mercredi. La cliente sera également présente pour vous le présenter davantage. D'ici là, assurez-vous de pouvoir exécuter le code sur votre machine.
-
-## Besoin d'aide?
-
-Vous pouvez nous écrire à aide@qualitelogicielle.ca si quelque chose ne fonctionne pas!

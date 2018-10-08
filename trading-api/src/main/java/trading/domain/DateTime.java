@@ -1,25 +1,27 @@
 package trading.domain;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 public class DateTime {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(""
-            + "[yyyy-MM-dd'T'HH:mm:ss'Z']"
-            + "[yyyy-MM-dd'T'HH:mm:ss.SSS'Z']"
-    );
-    private LocalDateTime localDateTime;
+    private Instant instant;
 
-    public DateTime(String date) {
-        this.localDateTime = LocalDateTime.parse(date, this.formatter);
+    public DateTime(String text) {
+        this.instant = Instant.parse(text);
     }
 
-    public boolean isSameDay(DateTime dateTime) {
-        return this.localDateTime.toLocalDate().equals(dateTime.localDateTime.toLocalDate());
-    }
-
-    @Override
+    @JsonValue
     public String toString() {
-        return this.localDateTime.toString();
+        return this.instant.toString();
+    }
+
+    public Instant truncatedToDays() {
+        return this.instant.truncatedTo(ChronoUnit.DAYS);
+    }
+
+    public Instant asInstant() {
+        return this.instant;
     }
 }
