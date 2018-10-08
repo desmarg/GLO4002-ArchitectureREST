@@ -11,8 +11,8 @@ public class TransactionPostRequest {
     private DateTime date;
     private Stock stock;
     private UUID transactionNumber;
-    private long quantity;
-    private float fees;
+    private Long quantity;
+    private Float fees;
 
     public TransactionPostRequest() {
     }
@@ -58,19 +58,19 @@ public class TransactionPostRequest {
         this.transactionNumber = transactionNumber;
     }
 
-    public long getQuantity() {
+    public Long getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
-    public float getFees() {
+    public Float getFees() {
         return this.fees;
     }
 
-    public void setFees(float fees) {
+    public void setFees(Float fees) {
         this.fees = fees;
     }
 }

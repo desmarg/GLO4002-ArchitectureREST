@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class AccountRepositoryInMemory implements AccountRepository {
 
-    private static long ACCOUNT_NUMBER_COUNTER = 0L;
+    private static Long ACCOUNT_NUMBER_COUNTER = 0L;
     private Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
 

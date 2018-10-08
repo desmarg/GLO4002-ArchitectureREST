@@ -53,7 +53,7 @@ public class Credits implements Comparable<Credits> {
         return decimalFormat.format(this.amount);
     }
 
-    public float valueToFloat() {
+    public Float valueToFloat() {
         BigDecimal scaledDecimal = this.amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return scaledDecimal.floatValue();
     }

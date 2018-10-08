@@ -24,7 +24,7 @@ public class TransactionSell extends Transaction {
     }
 
     public static TransactionSell fromRequest(TransactionPostRequest transactionRequest) {
-        long quantity = transactionRequest.getQuantity();
+        Long quantity = transactionRequest.getQuantity();
         DateTime dateTime = transactionRequest.getDate();
         Stock stock = transactionRequest.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
@@ -57,7 +57,7 @@ public class TransactionSell extends Transaction {
         if (!account.hasEnoughCreditsToPaySellFees(this.price, this.fees)) {
             throw new NotEnoughCreditsForFeesException(this.transactionNumber);
         }
-        
+
         referredTransaction.deduceStock(this.quantity);
         account.addCredits(this.price);
         account.subtractCredits(this.fees);

@@ -10,7 +10,7 @@ public class AccountResponse {
     private InvestorProfile investorProfile;
     private String accountNumber;
     private Long investorId;
-    private float credits;
+    private Float credits;
 
     public AccountResponse() {
     }
@@ -46,7 +46,7 @@ public class AccountResponse {
         this.investorId = investorId;
     }
 
-    public float getCredits() {
+    public Float getCredits() {
         return this.credits;
     }
 
