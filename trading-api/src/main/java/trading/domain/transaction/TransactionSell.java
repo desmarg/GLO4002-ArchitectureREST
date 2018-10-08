@@ -6,6 +6,7 @@ import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
+import trading.exception.NotEnoughCreditsForFeesException;
 import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
 import trading.services.StockService;
@@ -51,8 +52,12 @@ public class TransactionSell extends Transaction {
             throw new NotEnoughStockException(this.stock, this.transactionNumber);
         }
 
-        referredTransaction.deduceStock(this.quantity);
         account.addCredits(this.price);
+        if (!account.hasEnoughCreditsToPay(this.fees)) {
+            account.subtractCredits(this.price);
+            throw new NotEnoughCreditsForFeesException(this.transactionNumber);
+        }
+        referredTransaction.deduceStock(this.quantity);
         account.subtractCredits(this.fees);
         account.addTransaction(this);
     }
