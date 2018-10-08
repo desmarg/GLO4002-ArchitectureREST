@@ -20,16 +20,16 @@ public class AccountPostRequest {
     }
 
     public void nullCheck() {
-        if (investorName != null) {
+        if (investorName == null) {
             throw new MissingFieldException("investorName");
         }
-        if (email != null) {
+        if (email == null) {
             throw new MissingFieldException("email");
         }
-        if (investorId != null) {
+        if (investorId == null) {
             throw new MissingFieldException("investorId");
         }
-        if (credits != null) {
+        if (credits == null) {
             throw new MissingFieldException("credits");
         }
     }
