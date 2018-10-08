@@ -1,13 +1,14 @@
 package trading.api.request;
 
 import trading.domain.Account;
+import trading.domain.Credits;
 import trading.exception.MissingFieldException;
 
 public class AccountPostRequest {
     private String investorName;
     private String email;
     private Long investorId;
-    private Float credits;
+    private Credits credits;
 
     public AccountPostRequest() {
     }
@@ -16,7 +17,7 @@ public class AccountPostRequest {
         this.investorName = account.getInvestorName();
         this.email = account.getEmail();
         this.investorId = account.getInvestorId();
-        this.credits = account.getCredits().valueToFloat();
+        this.credits = account.getCredits();
     }
 
     public void nullCheck() {
@@ -58,11 +59,11 @@ public class AccountPostRequest {
         this.investorId = investorId;
     }
 
-    public Float getCredits() {
+    public Credits getCredits() {
         return this.credits;
     }
 
-    public void setCredits(Float credits) {
+    public void setCredits(Credits credits) {
         this.credits = credits;
     }
 }

@@ -22,14 +22,14 @@ public class CreditsTest {
     public void givenNewlyCreatedCredits_whenDefaultConstructor_thenValueIsZero() {
         Credits defaultCredits = new Credits();
 
-        assertEquals(ZERO_REPRESENTATION, defaultCredits.valueToString());
+        assertEquals(ZERO_REPRESENTATION, defaultCredits.toString());
     }
 
     @Test
     public void givenNewlyCreatedCredits_whenConstructingFromDouble_thenValueHasTwoDecimals() {
         Credits credits = Credits.fromDouble(POINT_ONE);
 
-        assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
+        assertEquals(POINT_ONE_REPRESENTATION, credits.toString());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class CreditsTest {
         Credits credits = Credits.fromDouble(POINT_ONE);
         Credits creditsCopy = new Credits(credits);
 
-        assertEquals(credits.valueToString(), creditsCopy.valueToString());
+        assertEquals(credits.toString(), creditsCopy.toString());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class CreditsTest {
 
         credits.multiply(LONG_QUANTITY);
 
-        assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
+        assertEquals(POINT_ONE_REPRESENTATION, credits.toString());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CreditsTest {
 
         credits.multiply(DOUBLE_QUANTITY);
 
-        assertEquals(POINT_25_REPRESENTATION, credits.valueToString());
+        assertEquals(POINT_25_REPRESENTATION, credits.toString());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class CreditsTest {
 
         credits.add(creditsToAdd);
 
-        assertEquals(POINT_ONE_REPRESENTATION, credits.valueToString());
+        assertEquals(POINT_ONE_REPRESENTATION, credits.toString());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class CreditsTest {
 
         credits.subtract(creditsToSubtract);
 
-        assertEquals(ZERO_REPRESENTATION, credits.valueToString());
+        assertEquals(ZERO_REPRESENTATION, credits.toString());
     }
 
     @Test

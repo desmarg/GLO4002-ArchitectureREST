@@ -1,5 +1,7 @@
 package trading.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -42,7 +44,8 @@ public class Credits implements Comparable<Credits> {
         this.amount = this.amount.multiply(rhs);
     }
 
-    public String valueToString() {
+    @JsonValue
+    public String toString() {
         DecimalFormatSymbols symbolsFormat = new DecimalFormatSymbols();
         symbolsFormat.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat();
