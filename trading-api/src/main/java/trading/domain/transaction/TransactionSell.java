@@ -3,8 +3,8 @@ package trading.domain.transaction;
 import trading.api.request.TransactionPostRequest;
 import trading.domain.Account;
 import trading.domain.Credits;
-import trading.domain.Stock;
 import trading.domain.DateTime;
+import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
 import trading.exception.NotEnoughCreditsForFeesException;
 import trading.exception.NotEnoughStockException;
@@ -57,9 +57,9 @@ public class TransactionSell extends Transaction {
         if (!account.hasEnoughCreditsToPaySellFees(this.price, this.fees)) {
             throw new NotEnoughCreditsForFeesException(this.transactionNumber);
         }
-
-        account.addCredits(this.price);
+        
         referredTransaction.deduceStock(this.quantity);
+        account.addCredits(this.price);
         account.subtractCredits(this.fees);
         account.addTransaction(this);
     }
