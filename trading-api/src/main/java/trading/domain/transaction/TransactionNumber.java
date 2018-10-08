@@ -1,5 +1,7 @@
 package trading.domain.transaction;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.UUID;
 
 public class TransactionNumber {
@@ -17,6 +19,11 @@ public class TransactionNumber {
 
     public TransactionNumber(String text) {
         this.id = UUID.fromString(text);
+    }
+
+    @JsonValue
+    public String toString() {
+        return this.id.toString();
     }
 
     public UUID getId() {

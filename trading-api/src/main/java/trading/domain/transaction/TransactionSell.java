@@ -6,9 +6,11 @@ import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
 import trading.exception.InvalidQuantityException;
+import trading.exception.InvalidTransactionNumberException;
 import trading.exception.NotEnoughCreditsForFeesException;
 import trading.exception.NotEnoughStockException;
 import trading.exception.StockParametersDontMatchException;
+import trading.exception.TransactionNotFoundException;
 import trading.services.StockService;
 
 public class TransactionSell extends Transaction {
@@ -37,30 +39,35 @@ public class TransactionSell extends Transaction {
     }
 
     public void make(Account account) {
-        TransactionBuy referredTransaction = (TransactionBuy) account.getTransaction(
-                this.referredTransactionNumber
-        );
+        try {
+            TransactionBuy referredTransaction = (TransactionBuy) account.getTransaction(
+                    this.referredTransactionNumber
+            );
 
-        if (this.getQuantity() <= 0) {
-            throw new InvalidQuantityException(this.transactionNumber);
+            if (this.getQuantity() <= 0) {
+                throw new InvalidQuantityException(this.referredTransactionNumber);
+            }
+
+            if (!referredTransaction.getStock().equals(this.getStock())) {
+                throw new StockParametersDontMatchException(this.transactionNumber);
+            }
+
+            if (!referredTransaction.hasEnoughStock(this.quantity)) {
+                throw new NotEnoughStockException(this.stock, this.transactionNumber);
+            }
+
+            if (!account.hasEnoughCreditsToPaySellFees(this.price, this.fees)) {
+                throw new NotEnoughCreditsForFeesException(this.transactionNumber);
+            }
+
+            referredTransaction.deduceStock(this.quantity);
+            account.addCredits(this.price);
+            account.subtractCredits(this.fees);
+            account.addTransaction(this);
+
+        } catch (TransactionNotFoundException e) {
+            throw new InvalidTransactionNumberException(this.transactionNumber);
         }
-
-        if (!referredTransaction.getStock().equals(this.getStock())) {
-            throw new StockParametersDontMatchException(this.transactionNumber);
-        }
-
-        if (!referredTransaction.hasEnoughStock(this.quantity)) {
-            throw new NotEnoughStockException(this.stock, this.transactionNumber);
-        }
-
-        if (!account.hasEnoughCreditsToPaySellFees(this.price, this.fees)) {
-            throw new NotEnoughCreditsForFeesException(this.transactionNumber);
-        }
-
-        referredTransaction.deduceStock(this.quantity);
-        account.addCredits(this.price);
-        account.subtractCredits(this.fees);
-        account.addTransaction(this);
     }
 
     public TransactionNumber getReferredTransactionNumber() {

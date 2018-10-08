@@ -12,7 +12,7 @@ public class AccountFactory {
                 accountPostRequest.getInvestorId(),
                 accountPostRequest.getInvestorName(),
                 accountPostRequest.getEmail(),
-                Credits.fromDouble(accountPostRequest.getCredits())
+                accountPostRequest.getCredits()
         );
     }
 }
