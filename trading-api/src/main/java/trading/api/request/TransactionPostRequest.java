@@ -73,5 +73,4 @@ public class TransactionPostRequest {
     public void setFees(float fees) {
         this.fees = fees;
     }
-
 }
