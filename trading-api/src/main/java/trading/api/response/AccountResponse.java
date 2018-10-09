@@ -10,9 +10,6 @@ public class AccountResponse {
     private Long investorId;
     private Float credits;
 
-    public AccountResponse() {
-    }
-
     public AccountResponse(Account account) {
         this.investorProfile = account.getInvestorProfile();
         this.accountNumber = account.getAccountNumber().getId();

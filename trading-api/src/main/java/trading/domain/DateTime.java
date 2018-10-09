@@ -8,8 +8,8 @@ import java.time.temporal.ChronoUnit;
 public class DateTime {
     private Instant instant;
 
-    public DateTime(String text) {
-        this.instant = Instant.parse(text);
+    public DateTime(String date) {
+        this.instant = Instant.parse(date);
     }
 
     @JsonValue

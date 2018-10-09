@@ -45,6 +45,6 @@ public class TransactionNumber {
 
     @Override
     public int hashCode() {
-        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
+        return this.id.hashCode();
     }
 }

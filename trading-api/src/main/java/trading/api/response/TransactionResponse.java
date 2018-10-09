@@ -14,9 +14,6 @@ public abstract class TransactionResponse {
     private Long quantity;
     private Float fees;
 
-    public TransactionResponse() {
-    }
-
     public TransactionResponse(Transaction transaction) {
         this.type = transaction.getTransactionType().toString();
         this.date = transaction.getDateTime();

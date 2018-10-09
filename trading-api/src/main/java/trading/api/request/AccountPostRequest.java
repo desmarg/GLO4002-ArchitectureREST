@@ -13,13 +13,6 @@ public class AccountPostRequest {
     public AccountPostRequest() {
     }
 
-    public AccountPostRequest(Account account) {
-        this.investorName = account.getInvestorName();
-        this.email = account.getEmail();
-        this.investorId = account.getInvestorId();
-        this.credits = account.getCredits();
-    }
-
     public void nullCheck() {
         if (investorName == null) {
             throw new MissingFieldException("investorName");

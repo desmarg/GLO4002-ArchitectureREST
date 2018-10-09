@@ -3,16 +3,16 @@ package trading.domain;
 public class AccountNumber {
     private String id;
 
-    public AccountNumber(String name, Long id) {
-        this.id = this.makeId(name, id);
+    public AccountNumber(String name, Long accoundId) {
+        this.id = this.makeId(name, accoundId);
     }
 
     public AccountNumber(String accountNumber) {
         this.id = accountNumber;
     }
 
-    public String makeId(String name, Long id) {
-        return this.makeInitials(name) + "-" + String.format("%04d", id);
+    public String makeId(String name, Long accountId) {
+        return this.makeInitials(name) + "-" + String.format("%04d", accountId);
     }
 
     public String makeInitials(String name) {

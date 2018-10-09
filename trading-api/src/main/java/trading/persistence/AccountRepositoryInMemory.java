@@ -13,7 +13,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
 
     public void add(Account account) {
-        ACCOUNT_NUMBER_COUNTER++;
+        nextCounterValue();
         this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
         this.accountMap.put(account.getAccountNumber(), account);
     }

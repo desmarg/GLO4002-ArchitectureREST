@@ -13,7 +13,7 @@ public class Stock {
     }
 
     public boolean equals(Object comparedObject) {
-        if (comparedObject == this) {
+        if (this == comparedObject) {
             return true;
         }
         if (!(comparedObject instanceof Stock)) {
