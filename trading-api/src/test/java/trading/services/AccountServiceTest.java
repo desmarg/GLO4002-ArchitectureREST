@@ -1,20 +1,15 @@
 package trading.services;
 
-import trading.domain.Account;
-import trading.domain.AccountNumber;
-import trading.exception.AccountAlreadyExistsException;
-import trading.persistence.AccountRepository;
-import trading.domain.InvestorProfile;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.Transaction;
-import trading.domain.Credits;
-import trading.exception.AccountNotFoundException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import trading.domain.Account;
+import trading.domain.AccountNumber;
+import trading.domain.Credits;
+import trading.exception.AccountAlreadyExistsException;
+import trading.persistence.AccountRepository;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -28,7 +23,6 @@ public class AccountServiceTest {
     private static final String INVESTOR_NAME = "Example Name";
     private static final String EMAIL = "example@mail.com";
     private static final Credits CREDITS = Credits.fromDouble(1.1);
-    private static final AccountNumber NON_EXISTING_ACCOUNT_NUMBER = new AccountNumber("TA-456");
 
     private Account account;
     private AccountService accountService;
@@ -40,6 +34,7 @@ public class AccountServiceTest {
     @Before
     public void setUp() {
         this.accountService = new AccountService(this.accountRepository);
+        this.accountNumber = ACCOUNT_NUMBER;
         this.account = new Account(
                 INVESTOR_ID,
                 INVESTOR_NAME,

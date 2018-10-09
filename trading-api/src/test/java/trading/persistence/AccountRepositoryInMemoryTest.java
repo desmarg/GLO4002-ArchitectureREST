@@ -3,25 +3,19 @@ package trading.persistence;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account;
 import trading.domain.AccountNumber;
-import trading.domain.InvestorProfile;
-import trading.domain.ProfileType;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.Transaction;
 import trading.domain.Credits;
 import trading.exception.AccountNotFoundException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountRepositoryInMemoryTest {
 
-    private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("TA-123");
     private static final Long INVESTOR_ID = 1l;
     private static final String INVESTOR_NAME = "Example Name";
     private static final String EMAIL = "example@mail.com";

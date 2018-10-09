@@ -1,8 +1,8 @@
 package trading.domain;
 
 public class AccountNumber {
-    private static final int ODD_1 = 13;
-    private static final int ODD_2 = 17;
+    private static final int FIRST_ODD_NUMBER = 13;
+    private static final int SECOND_ODD_NUMBER = 17;
     private String id;
 
     public AccountNumber(String name, Long accoundId) {
@@ -35,6 +35,6 @@ public class AccountNumber {
 
     @Override
     public int hashCode() {
-        return this.ODD_1 * this.ODD_2 + this.id.hashCode();
+        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
     }
 }
