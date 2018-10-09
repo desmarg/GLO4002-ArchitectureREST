@@ -26,7 +26,6 @@
         <checkstyle.latest.version>8.12</checkstyle.latest.version>
     </properties>
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
