@@ -1,6 +1,7 @@
 # IDEs and editors
 /.idea
 .project
+.recommenders
 .classpath
 *.launch
 .settings/
@@ -21,3 +22,6 @@ Thumbs.db
 dependency-reduced-pom.xml
 # node
 node_modules
+/.metadata/
+
+tags
