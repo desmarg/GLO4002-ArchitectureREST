@@ -36,17 +36,18 @@ will default to `8181`.
 
 # Commands
 
+## Run project
+```bash
+# While in project root
+mvn exec:java -pl application
+```
+
 ## Linting
 ```bash
 # While in project root
 mvn checkstyle:check -pl application
 ```
 
-## Run project
-```bash
-# While in project root
-mvn exec:java -pl application
-```
 # Contributing
 
 [See here](CONTRIBUTING.md)
