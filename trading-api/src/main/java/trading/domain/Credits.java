@@ -21,8 +21,12 @@ public class Credits implements Comparable<Credits> {
         this.amount = credits.amount;
     }
 
-    public Credits(Number number) {
-        this(fromDouble(number.doubleValue()));
+    public Credits(Integer amount) {
+        this(new BigDecimal(amount));
+    }
+
+    public Credits(double amount) {
+        this(fromDouble(amount));
     }
 
     public static Credits fromDouble(double amount) {
