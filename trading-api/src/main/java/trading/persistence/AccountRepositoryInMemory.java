@@ -12,10 +12,14 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
 
-    public void add(Account account) {
-        nextCounterValue();
+    public Account save(Account account) {
+        AccountNumber accountNumber = new AccountNumber(
+                account.getInvestorName(), ACCOUNT_NUMBER_COUNTER++
+        );
+        account.setAccountNumber(accountNumber);
         this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
         this.accountMap.put(account.getAccountNumber(), account);
+        return account;
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber)
@@ -31,7 +35,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         return this.investorIdByAccountNumber.containsKey(investorId);
     }
 
-    public Long nextCounterValue() {
-        return ACCOUNT_NUMBER_COUNTER + 1;
+    public Long getCounter() {
+        return this.ACCOUNT_NUMBER_COUNTER;
     }
 }

@@ -14,14 +14,7 @@ public class AccountService {
 
     public Account save(Account account) {
         this.checkIfAccountAlreadyExists(account.getInvestorId());
-        AccountNumber accountNumber = new AccountNumber(
-                account.getInvestorName(),
-                this.accountRepository.nextCounterValue()
-        );
-        account.setAccountNumber(accountNumber);
-        this.accountRepository.add(account);
-
-        return account;
+        return this.accountRepository.save(account);
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber) {
