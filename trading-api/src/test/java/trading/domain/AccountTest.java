@@ -10,9 +10,7 @@ import trading.domain.transaction.TransactionNumber;
 import trading.exception.InvalidAccountInfoException;
 import trading.exception.InvalidCreditsAmountException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -90,11 +88,6 @@ public class AccountTest {
     public void givenInsufficientFunds_whenCheckingBalance_thenReturnFalse() {
         when(this.creditsMock.compareTo(any(Credits.class))).thenReturn(-1);
         assertFalse(this.basicAccount.hasEnoughCreditsToPay(this.creditsMock));
-    }
-
-    @Test
-    public void givenEmptyTransactionsList_whenGetDailyTransactions_thenReturnEmptyList() {
-
     }
 
 }

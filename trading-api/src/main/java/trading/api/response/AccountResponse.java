@@ -1,19 +1,14 @@
 package trading.api.response;
 
-
 import trading.domain.Account;
 import trading.domain.InvestorProfile;
 
 
 public class AccountResponse {
-
     private InvestorProfile investorProfile;
     private String accountNumber;
     private Long investorId;
-    private float credits;
-
-    public AccountResponse() {
-    }
+    private Float credits;
 
     public AccountResponse(Account account) {
         this.investorProfile = account.getInvestorProfile();
@@ -46,7 +41,7 @@ public class AccountResponse {
         this.investorId = investorId;
     }
 
-    public float getCredits() {
+    public Float getCredits() {
         return this.credits;
     }
 

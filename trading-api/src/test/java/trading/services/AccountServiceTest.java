@@ -1,4 +1,4 @@
-package trading.application;
+package trading.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account;
 import trading.domain.AccountNumber;
+import trading.domain.Credits;
 import trading.exception.AccountAlreadyExistsException;
 import trading.persistence.AccountRepository;
-import trading.services.AccountService;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -18,41 +18,43 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
-    private static Long INVESTOR_ID = 10l;
-    @Mock
+    private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("TA-123");
+    private static final Long INVESTOR_ID = 1l;
+    private static final String INVESTOR_NAME = "Example Name";
+    private static final String EMAIL = "example@mail.com";
+    private static final Credits CREDITS = Credits.fromDouble(1.1);
+
     private Account account;
+    private AccountService accountService;
     @Mock
     private AccountRepository accountRepository;
     @Mock
     private AccountNumber accountNumber;
-    private AccountService accountService;
 
     @Before
     public void setUp() {
         this.accountService = new AccountService(this.accountRepository);
+        this.accountNumber = ACCOUNT_NUMBER;
+        this.account = new Account(
+                INVESTOR_ID,
+                INVESTOR_NAME,
+                EMAIL,
+                CREDITS
+        );
     }
 
     @Test
-    public void whenSave_thenAddAccountToRepository() {
-        when(this.account.getInvestorName()).thenReturn("MJ");
+    public void whenSave_thenSaveAccountToRepository() {
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
-        when(this.accountRepository.nextCounterValue()).thenReturn(1l);
         this.accountService.save(this.account);
-        verify(this.accountRepository).add(this.account);
-    }
 
-    @Test
-    public void whenSave_thenGetNextCounterValueInRepository() {
-        when(this.account.getInvestorName()).thenReturn("MJ");
-        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
-        when(this.accountRepository.nextCounterValue()).thenReturn(1l);
-        this.accountService.save(this.account);
-        verify(this.accountRepository).nextCounterValue();
+        verify(this.accountRepository).save(this.account);
     }
 
     @Test
     public void whenFindByAccountNumber_thenFindAccountNumberInRepository() {
         this.accountService.findByAccountNumber(this.accountNumber);
+
         verify(this.accountRepository).findByAccountNumber(this.accountNumber);
     }
 
@@ -63,8 +65,10 @@ public class AccountServiceTest {
     }
 
     @Test(expected = AccountAlreadyExistsException.class)
-    public void givenExistingAccount_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
+    public void
+    givenExistingAccount_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(true);
+
         this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
     }
 }

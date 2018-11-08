@@ -11,11 +11,9 @@ public class Services {
         this.accountService = new AccountService(new AccountRepositoryInMemory());
     }
 
-
     public TransactionService getTransactionService() {
         return this.transactionService;
     }
-
 
     public AccountService getAccountService() {
         return this.accountService;

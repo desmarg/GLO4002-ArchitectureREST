@@ -10,15 +10,14 @@ import trading.exception.UnsupportedTransactionTypeException;
 public class TransactionFactory {
 
     public static Transaction create(TransactionPostRequest transactionRequest) {
-
-        NullPointerGuard.validate(transactionRequest);
+        transactionRequest.nullCheck();
         TransactionType transactionType = TransactionType.fromString(transactionRequest.getType());
-
         if (transactionType == TransactionType.SELL) {
             return TransactionSell.fromRequest(transactionRequest);
         } else if (transactionType == TransactionType.BUY) {
             return TransactionBuy.fromRequest(transactionRequest);
         }
+
         throw new UnsupportedTransactionTypeException(transactionRequest.getType());
     }
 }

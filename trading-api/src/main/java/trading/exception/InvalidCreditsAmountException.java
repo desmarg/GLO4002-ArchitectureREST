@@ -3,7 +3,6 @@ package trading.exception;
 import javax.ws.rs.core.Response.Status;
 
 public class InvalidCreditsAmountException extends MappedException {
-
     public InvalidCreditsAmountException() {
         super(
                 "INVALID_AMOUNT",

@@ -23,3 +23,5 @@ dependency-reduced-pom.xml
 # node
 node_modules
 /.metadata/
+
+tags

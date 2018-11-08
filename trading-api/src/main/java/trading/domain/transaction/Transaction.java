@@ -2,10 +2,8 @@ package trading.domain.transaction;
 
 import trading.domain.Account;
 import trading.domain.Credits;
-import trading.domain.Stock;
 import trading.domain.DateTime;
-
-import static trading.domain.Credits.fromDouble;
+import trading.domain.Stock;
 
 public abstract class Transaction {
     protected TransactionNumber transactionNumber;
@@ -18,8 +16,12 @@ public abstract class Transaction {
     protected Credits fees;
 
 
-    protected Transaction(Long quantity, DateTime dateTime, Stock stock,
-                          Credits stockPrice) {
+    protected Transaction(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice
+    ) {
         this.transactionNumber = new TransactionNumber();
         this.quantity = quantity;
         this.dateTime = dateTime;
@@ -34,6 +36,7 @@ public abstract class Transaction {
     public Credits calculateTransactionPrice() {
         Credits transactionPrice = new Credits(this.stockPrice);
         transactionPrice.multiply(this.quantity);
+
         return transactionPrice;
     }
 
@@ -41,17 +44,18 @@ public abstract class Transaction {
         Credits totalPrice = new Credits();
         totalPrice.add(this.price);
         totalPrice.add(this.fees);
+
         return totalPrice;
     }
 
     public Credits calculateFees() {
         Credits fees = new Credits();
         if (this.quantity <= 100) {
-            Credits baseFee = fromDouble(0.25);
+            Credits baseFee = Credits.fromDouble(0.25);
             fees.add(baseFee);
             fees.multiply(this.quantity);
         } else {
-            Credits baseFee = fromDouble(0.20);
+            Credits baseFee = Credits.fromDouble(0.20);
             fees.add(baseFee);
             fees.multiply(this.quantity);
         }
@@ -60,6 +64,7 @@ public abstract class Transaction {
             additionalFees.multiply(0.03);
             fees.add(additionalFees);
         }
+
         return fees;
     }
 

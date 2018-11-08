@@ -3,7 +3,6 @@ package trading.domain;
 import java.util.List;
 
 public class InvestorProfile {
-
     private ProfileType profileType;
     private List<FocusArea> focusAreas;
 

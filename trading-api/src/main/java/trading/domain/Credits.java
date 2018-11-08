@@ -1,5 +1,7 @@
 package trading.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -17,6 +19,14 @@ public class Credits implements Comparable<Credits> {
 
     public Credits(Credits credits) {
         this.amount = credits.amount;
+    }
+
+    public Credits(Integer amount) {
+        this(new BigDecimal(amount));
+    }
+
+    public Credits(double amount) {
+        this(fromDouble(amount));
     }
 
     public static Credits fromDouble(double amount) {
@@ -42,7 +52,8 @@ public class Credits implements Comparable<Credits> {
         this.amount = this.amount.multiply(rhs);
     }
 
-    public String valueToString() {
+    @JsonValue
+    public String toString() {
         DecimalFormatSymbols symbolsFormat = new DecimalFormatSymbols();
         symbolsFormat.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat();
@@ -50,10 +61,11 @@ public class Credits implements Comparable<Credits> {
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
         decimalFormat.setGroupingUsed(false);
+
         return decimalFormat.format(this.amount);
     }
 
-    public float valueToFloat() {
+    public Float valueToFloat() {
         BigDecimal scaledDecimal = this.amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return scaledDecimal.floatValue();
     }
@@ -66,5 +78,4 @@ public class Credits implements Comparable<Credits> {
     public int compareTo(Credits credits) {
         return this.amount.compareTo(credits.getAmount());
     }
-
 }

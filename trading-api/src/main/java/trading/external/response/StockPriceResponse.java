@@ -5,7 +5,7 @@ import trading.domain.DateTime;
 
 public class StockPriceResponse {
     private DateTime date;
-    private Double price;
+    private Credits price;
 
     public DateTime getDate() {
         return this.date;
@@ -16,10 +16,10 @@ public class StockPriceResponse {
     }
 
     public Credits getPrice() {
-        return Credits.fromDouble(this.price);
+        return this.price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Credits price) {
         this.price = price;
     }
 }

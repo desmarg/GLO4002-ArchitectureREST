@@ -29,14 +29,17 @@ public class Account {
             String email,
             Credits credits
     ) {
-        validateEmail(email);
-        validateInitialCredits(credits);
-        validateInvestorName(investorName);
+        this.validateEmail(email);
+        this.validateInitialCredits(credits);
+        this.validateInvestorName(investorName);
         this.investorId = investorId;
         this.investorName = investorName;
         this.email = email;
         this.credits = credits;
-        this.investorProfile = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<FocusArea>());
+        this.investorProfile = new InvestorProfile(
+                ProfileType.CONSERVATIVE,
+                new ArrayList<FocusArea>()
+        );
         this.transactionList = new HashMap<>();
     }
 
@@ -49,7 +52,9 @@ public class Account {
     }
 
     public void validateInvestorName(String investorName) {
-        Pattern namePattern = Pattern.compile("^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$");
+        Pattern namePattern = Pattern.compile(
+                "^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$"
+        );
         Matcher nameMatcher = namePattern.matcher(investorName);
         if (!nameMatcher.matches()) {
             throw new InvalidAccountInfoException("invalid investorName");
@@ -123,5 +128,13 @@ public class Account {
 
     public void setAccountNumber(AccountNumber accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public boolean hasEnoughCreditsToPaySellFees(Credits sellPrice, Credits feesToPay) {
+        Credits balanceAfterTransaction = new Credits();
+        balanceAfterTransaction.add(sellPrice);
+        balanceAfterTransaction.add(this.credits);
+
+        return balanceAfterTransaction.compareTo(feesToPay) != -1;
     }
 }

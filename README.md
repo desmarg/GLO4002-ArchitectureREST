@@ -5,7 +5,7 @@
 |  Maxence  |   Caron   | MACAR703 | 111 157 100 |
 |   Jessy   |    Chea   |  JECHE34 | 111 128 599 |
 |   Samuel  | Dansereau |  SADAN16 | 111 157 751 |
-| Guillaume | Desmarais |  GUDED1  | 111 022 887 |
+| Guillaume | Desmarais-de Grandpré |  GUDED1  | 111 022 887 |
 |   Thomas  |   Drouin  |  THDRO15 | 111 007 979 |
 |  Raphael  | Gaudrealt |  RAGAU72 | 111 129 495 |
 |   Daniel  |   Lavoie  | DALAV162 | 111 103 095 |
@@ -36,10 +36,10 @@ will default to `8181`.
 
 # Commands
 
-## Linting
+## Install project
 ```bash
 # While in project root
-mvn checkstyle:check -pl application
+mvn clean install
 ```
 
 ## Run project
@@ -47,6 +47,13 @@ mvn checkstyle:check -pl application
 # While in project root
 mvn exec:java -pl application
 ```
+
+## Linting
+```bash
+# While in project root
+mvn checkstyle:check -pl application
+```
+
 # Contributing
 
 [See here](CONTRIBUTING.md)

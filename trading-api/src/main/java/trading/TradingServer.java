@@ -3,13 +3,12 @@ package trading;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import trading.api.resource.AccountResource;
-import trading.api.resource.ReportResource;
-import trading.api.resource.TransactionResource;
 import trading.api.configuration.CustomJsonProvider;
+import trading.api.resource.AccountResource;
+import trading.api.resource.TransactionResource;
 import trading.services.Services;
 
 import javax.ws.rs.core.Application;
@@ -33,21 +32,21 @@ public class TradingServer implements Runnable {
         Services services = new Services();
         AccountResource accountResource = new AccountResource(services);
         TransactionResource transactionResource = new TransactionResource(services);
-        ReportResource reportResource = new ReportResource(services);
-
         resources.add(accountResource);
         resources.add(transactionResource);
-        resources.add(reportResource);
+
         return resources;
     }
 
     private ResourceConfig createResourceConfiguration() {
-        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(new Application() {
-            @Override
-            public Set<Object> getSingletons() {
-                return getContextResources();
-            }
-        });
+        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(
+                new Application() {
+                    @Override
+                    public Set<Object> getSingletons() {
+                        return getContextResources();
+                    }
+                }
+        );
 
         // Enable exception mapper.
         resourceConfiguration.packages(EXCEPTION_MAPPERS_PATH);
@@ -59,7 +58,6 @@ public class TradingServer implements Runnable {
 
     @Override
     public void run() {
-        // Get port ENV variable, if it is set, else use default port.
         String portStr = System.getenv("TRADING_API_PORT");
         int port = 8181;
         if (portStr != null) {
@@ -75,13 +73,6 @@ public class TradingServer implements Runnable {
         ServletContainer container = new ServletContainer(resourceConfiguration);
         ServletHolder servletHolder = new ServletHolder(container);
         servletContextHandler.addServlet(servletHolder, "/*");
-        /*ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-        context.setContextPath("/");
-        Server server = new Server(port);
-        server.setHandler(context);
-        ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
-        jerseyServlet.setInitOrder(0);
-        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "api.views");*/
 
         try {
             server.start();

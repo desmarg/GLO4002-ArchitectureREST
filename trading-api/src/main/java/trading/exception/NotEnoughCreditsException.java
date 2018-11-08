@@ -6,7 +6,6 @@ import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class NotEnoughCreditsException extends MappedException {
-
     private UUID transactionNumber;
 
     public NotEnoughCreditsException(TransactionNumber transactionNumber) {

@@ -1,7 +1,7 @@
 package trading.api.response;
 
-import trading.domain.Stock;
 import trading.domain.DateTime;
+import trading.domain.Stock;
 import trading.domain.transaction.Transaction;
 
 import java.util.UUID;
@@ -11,11 +11,8 @@ public abstract class TransactionResponse {
     private DateTime date;
     private Stock stock;
     private UUID transactionNumber;
-    private long quantity;
-    private float fees;
-
-    public TransactionResponse() {
-    }
+    private Long quantity;
+    private Float fees;
 
     public TransactionResponse(Transaction transaction) {
         this.type = transaction.getTransactionType().toString();
@@ -58,19 +55,19 @@ public abstract class TransactionResponse {
         this.transactionNumber = transactionNumber;
     }
 
-    public long getQuantity() {
+    public Long getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
-    public float getFees() {
+    public Float getFees() {
         return this.fees;
     }
 
-    public void setFees(float fees) {
+    public void setFees(Float fees) {
         this.fees = fees;
     }
 }

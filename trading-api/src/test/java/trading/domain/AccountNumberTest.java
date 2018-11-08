@@ -34,6 +34,7 @@ public class AccountNumberTest {
     @Test
     public void givenAccountNumber_whenEqualsADifferentAccountNumber_thenReturnFalse() {
         AccountNumber differentAccountNumber = new AccountNumber(DIFFERENT_ACCOUNT_NUMBER);
+
         assertEquals(false, accountNumber.equals(differentAccountNumber));
     }
 

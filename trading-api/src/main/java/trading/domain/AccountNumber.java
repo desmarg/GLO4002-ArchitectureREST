@@ -1,18 +1,20 @@
 package trading.domain;
 
 public class AccountNumber {
+    private static final int FIRST_ODD_NUMBER = 13;
+    private static final int SECOND_ODD_NUMBER = 17;
     private String id;
 
-    public AccountNumber(String name, Long id) {
-        this.id = this.makeId(name, id);
+    public AccountNumber(String name, Long accoundId) {
+        this.id = this.makeId(name, accoundId);
     }
 
     public AccountNumber(String accountNumber) {
         this.id = accountNumber;
     }
 
-    public String makeId(String name, Long id) {
-        return this.makeInitials(name) + "-" + String.format("%04d", id);
+    public String makeId(String name, Long accountId) {
+        return this.makeInitials(name) + "-" + String.format("%04d", accountId);
     }
 
     public String makeInitials(String name) {
@@ -33,6 +35,6 @@ public class AccountNumber {
 
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
     }
 }

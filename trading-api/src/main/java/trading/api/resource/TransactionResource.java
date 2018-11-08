@@ -39,9 +39,16 @@ public class TransactionResource {
             @PathParam("transactionNumber") String transactionNumberString
     ) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        TransactionNumber transactionNumber = new TransactionNumber(UUID.fromString(transactionNumberString));
-        Transaction transaction = this.transactionService.getTransactionFromAccount(account, transactionNumber);
-        TransactionResponse transactionDto = TransactionResponseFactory.createTransactionDto(transaction);
+        TransactionNumber transactionNumber = new TransactionNumber(
+                UUID.fromString(transactionNumberString)
+        );
+        Transaction transaction = this.transactionService.getTransactionFromAccount(
+                account,
+                transactionNumber
+        );
+        TransactionResponse transactionDto =
+                TransactionResponseFactory.createTransactionDto(transaction);
+
         return Response.status(Response.Status.OK).entity(transactionDto).build();
     }
 
@@ -56,7 +63,10 @@ public class TransactionResource {
         Transaction transaction = TransactionFactory.create(transactionPostDto);
         TransactionService.makeTransaction(account, transaction);
 
-        return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getLongAccountNumber() + "/transactions/" + transaction.getStringTransactionId()).build();
+        return Response.status(Response.Status.CREATED).header(
+                "Location",
+                "accounts/" + account.getLongAccountNumber()
+                        + "/transactions/" + transaction.getStringTransactionId()
+        ).build();
     }
 }

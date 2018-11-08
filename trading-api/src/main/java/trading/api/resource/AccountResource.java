@@ -4,9 +4,9 @@ import trading.api.request.AccountPostRequest;
 import trading.api.response.AccountResponse;
 import trading.domain.Account;
 import trading.domain.AccountNumber;
+import trading.factory.AccountFactory;
 import trading.services.AccountService;
 import trading.services.Services;
-import trading.factory.AccountFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/accounts")
 public class AccountResource {
-
     private AccountService accountService;
 
     public AccountResource(Services services) {
@@ -36,10 +35,12 @@ public class AccountResource {
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAccount(AccountPostRequest accountPostDto) {
-        Account account = AccountFactory.create(accountPostDto);
+    public Response createAccount(AccountPostRequest accountPostRequest) {
+        Account account = AccountFactory.create(accountPostRequest);
         account = this.accountService.save(account);
-        return Response.status(Response.Status.CREATED).header("Location", "accounts/"
-                + account.getLongAccountNumber()).build();
+        return Response.status(Response.Status.CREATED).header(
+                "Location",
+                "accounts/" + account.getLongAccountNumber()
+        ).build();
     }
 }

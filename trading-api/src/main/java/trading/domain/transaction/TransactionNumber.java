@@ -1,9 +1,13 @@
 package trading.domain.transaction;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.UUID;
 
 public class TransactionNumber {
     private UUID id;
+    private final int FIRST_ODD_NUMBER = 17;
+    private final int SECOND_ODD_NUMBER = 31;
 
     public TransactionNumber() {
         this.id = UUID.randomUUID();
@@ -11,6 +15,15 @@ public class TransactionNumber {
 
     public TransactionNumber(UUID id) {
         this.id = id;
+    }
+
+    public TransactionNumber(String text) {
+        this.id = UUID.fromString(text);
+    }
+
+    @JsonValue
+    public String toString() {
+        return this.id.toString();
     }
 
     public UUID getId() {
@@ -22,17 +35,16 @@ public class TransactionNumber {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other instanceof TransactionNumber) {
-            return this.id.equals(((TransactionNumber) other).getId());
+    public boolean equals(Object otherTransactionNumber) {
+        if (otherTransactionNumber instanceof TransactionNumber) {
+            return this.id.equals(((TransactionNumber) otherTransactionNumber).getId());
         }
+
         return false;
     }
 
     @Override
     public int hashCode() {
-        int hash = 17;
-        hash = 31 * hash + this.id.hashCode();
-        return hash;
+        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
     }
 }
