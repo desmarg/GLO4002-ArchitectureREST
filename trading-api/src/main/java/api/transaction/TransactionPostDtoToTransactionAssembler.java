@@ -19,9 +19,10 @@ public class TransactionPostDtoToTransactionAssembler {
         Stock stock = transactionPostDto.getStock();
         Credits stockPrice = StockService.getInstance().getStockPrice(stock, dateTime);
         TransactionNumber referredTransactionNumber = new TransactionNumber(transactionPostDto.getTransactionNumber());
-        if(MarketService.getInstance().getMarketOpenCurrently(stock.getMarket())){
+        //TODO Implement MarketService and check if market currently open
+        /*if(MarketService.getInstance().getMarketOpenCurrently(stock.getMarket())){
             throw new MarketClosedException(stock.getMarket());
-        }
+        }*/
         if (transactionType == TransactionType.SELL) {
             return new TransactionSell(
                     quantity,

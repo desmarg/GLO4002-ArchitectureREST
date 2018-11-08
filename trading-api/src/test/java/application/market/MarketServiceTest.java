@@ -22,15 +22,14 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MarketServiceTest {
-    @Mock
-    private MarketDto marketDto;
     private String validTimezone = "+13:08";
     private String openedTime = "12:00";
     private String closedTime = "22:00";
+    private MarketService marketService;
 
     @Before
     public void setup(){
-
+        marketService = new MarketService();
     }
 
     @Test
@@ -38,7 +37,7 @@ public class MarketServiceTest {
         ArrayList<Pair<LocalTime, LocalTime>> hours = new ArrayList<>();
         hours.add(new Pair<>(LocalTime.parse("06:00"),LocalTime.parse("12:00")));
         hours.add(new Pair<>(LocalTime.parse("13:00"),LocalTime.parse("17:00")));
-        assertTrue(MarketService.getInstance().validateMarketOpenAtHour(hours, ZoneOffset.of(validTimezone),LocalTime.parse(openedTime)));
+        assertTrue(marketService.validateMarketOpenAtHour(hours, ZoneOffset.of(validTimezone),LocalTime.parse(openedTime)));
     }
 
     @Test
@@ -46,7 +45,7 @@ public class MarketServiceTest {
         ArrayList<Pair<LocalTime, LocalTime>> hours = new ArrayList<>();
         hours.add(new Pair<>(LocalTime.parse("06:00"),LocalTime.parse("12:00")));
         hours.add(new Pair<>(LocalTime.parse("13:00"),LocalTime.parse("17:00")));
-        assertFalse(MarketService.getInstance().validateMarketOpenAtHour(hours, ZoneOffset.of(validTimezone),LocalTime.parse(closedTime)));
+        assertFalse(marketService.validateMarketOpenAtHour(hours, ZoneOffset.of(validTimezone),LocalTime.parse(closedTime)));
     }
 
     @Test
@@ -54,8 +53,10 @@ public class MarketServiceTest {
         ArrayList<String> hours = new ArrayList<>();
         hours.add("06:00-12:00");
         hours.add("13:00-17:00");
-        when(marketDto.getOpenHours()).thenReturn(hours);
-        ArrayList<Pair<LocalTime, LocalTime>> parsedHours = MarketService.getInstance().parseMarketHours(marketDto);
+
+        MarketDto marketDto = new MarketDto();
+        marketDto.openHours = hours;
+        ArrayList<Pair<LocalTime, LocalTime>> parsedHours = marketService.parseMarketHours(marketDto);
         assertEquals(parsedHours.get(0).getKey(), LocalTime.parse("06:00"));
         assertEquals(parsedHours.get(0).getValue(), LocalTime.parse("12:00"));
         assertEquals(parsedHours.get(1).getKey(), LocalTime.parse("13:00"));
