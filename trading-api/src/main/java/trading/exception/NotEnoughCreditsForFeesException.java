@@ -8,13 +8,13 @@ import java.util.UUID;
 public class NotEnoughCreditsForFeesException extends MappedException {
     private UUID transactionNumber;
 
-    public NotEnoughCreditsForFeesException(TransactionNumber transactionNumber) {
+    public NotEnoughCreditsForFeesException() {
         super(
                 "NOT_ENOUGH_CREDITS",
                 "not enough credits to pay the transaction fee",
                 Status.BAD_REQUEST
         );
-        this.transactionNumber = transactionNumber.getId();
+        this.transactionNumber = new TransactionNumber().getId();
     }
 
     public UUID getTransactionNumber() {

@@ -10,7 +10,6 @@ import trading.domain.Account;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
-import trading.exception.InvalidQuantityException;
 import trading.exception.NotEnoughCreditsException;
 
 import java.math.BigDecimal;
@@ -36,14 +35,15 @@ public class TransactionBuyTest {
     private DateTime VALID_DATE = new DateTime("2018-08-21T15:23:20.142Z");
     private Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
 
-    @Test(expected = InvalidQuantityException.class)
-    public void givenBuyQuantitySmallerThanOne_whenMakingTransaction_thenThrowInvalidQuantityException() {
-        when(this.account.hasEnoughCreditsToPay(any(Credits.class))).thenReturn(true);
-        TransactionBuy transactionBuy = new TransactionBuy(this.INVALID_QUANTITY, this.VALID_DATE, this.stock,
-                this.SOME_STOCK_PRICE);
-
-        transactionBuy.make(this.account);
-    }
+    //TODO mettre dans test assembleur
+//    @Test(expected = InvalidQuantityException.class)
+//    public void givenBuyQuantitySmallerThanOne_whenMakingTransaction_thenThrowInvalidQuantityException() {
+//        when(this.account.hasEnoughCreditsToPay(any(Credits.class))).thenReturn(true);
+//        TransactionBuy transactionBuy = new TransactionBuy(this.INVALID_QUANTITY, this.VALID_DATE, this.stock,
+//                this.SOME_STOCK_PRICE);
+//
+//        transactionBuy.executeTransaction(this.account);
+//    }
 
     @Test(expected = NotEnoughCreditsException.class)
     public void givenNotEnoughCredits_whenMakingTransaction_thenThrowNotEnoughCreditsException() {
@@ -51,7 +51,7 @@ public class TransactionBuyTest {
         TransactionBuy transactionBuy = new TransactionBuy(this.VALID_QUANTITY, this.VALID_DATE, this.stock,
                 this.SOME_STOCK_PRICE);
 
-        transactionBuy.make(this.account);
+        transactionBuy.executeTransaction(this.account);
     }
 
     @Test
@@ -61,22 +61,11 @@ public class TransactionBuyTest {
         TransactionBuy transactionBuy = new TransactionBuy(this.VALID_QUANTITY, this.VALID_DATE, this.stock,
                 this.SOME_STOCK_PRICE);
 
-        transactionBuy.make(this.account);
+        transactionBuy.executeTransaction(this.account);
 
         Credits expectedTotalPrice = transactionBuy.getTotalPrice();
         verify(this.account).subtractCredits(this.creditsArgumentCaptor.capture());
         assertEquals(expectedTotalPrice.getAmount(), this.creditsArgumentCaptor.getValue().getAmount());
-    }
-
-    @Test
-    public void givenValidTransaction_whenMakingTransaction_thenTransactionIsAddedToAccount() {
-        when(this.account.hasEnoughCreditsToPay(any(Credits.class))).thenReturn(true);
-        TransactionBuy transactionBuy = new TransactionBuy(this.VALID_QUANTITY, this.VALID_DATE, this.stock,
-                this.SOME_STOCK_PRICE);
-
-        transactionBuy.make(this.account);
-
-        verify(this.account).addTransaction(transactionBuy);
     }
 
     @Test

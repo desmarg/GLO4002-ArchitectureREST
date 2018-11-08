@@ -1,14 +1,9 @@
 package trading.domain;
 
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionNumber;
 import trading.exception.InvalidAccountInfoException;
 import trading.exception.InvalidCreditsAmountException;
-import trading.exception.TransactionNotFoundException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +14,6 @@ public class Account {
     private String investorName;
     private String email;
     private Credits credits;
-    private Map<TransactionNumber, Transaction> transactionList;
 
     public Account(
             Long investorId,
@@ -38,7 +32,6 @@ public class Account {
                 ProfileType.CONSERVATIVE,
                 new ArrayList<FocusArea>()
         );
-        this.transactionList = new HashMap<>();
     }
 
     public void validateEmail(String email) {
@@ -74,20 +67,8 @@ public class Account {
         this.credits.add(transactionPrice);
     }
 
-    public void addTransaction(Transaction transaction) {
-        this.transactionList.put(transaction.getTransactionNumber(), transaction);
-    }
-
     public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
         return this.credits.compareTo(transactionPrice) != -1;
-    }
-
-    public Transaction getTransaction(TransactionNumber transactionNumber) {
-        Transaction transaction = this.transactionList.get(transactionNumber);
-        if (transaction == null) {
-            throw new TransactionNotFoundException(transactionNumber);
-        }
-        return transaction;
     }
 
     public AccountNumber getAccountNumber() {

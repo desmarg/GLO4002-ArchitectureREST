@@ -1,6 +1,5 @@
 package trading.domain.transaction;
 
-import trading.domain.Account;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
@@ -30,8 +29,6 @@ public abstract class Transaction {
         this.price = this.calculateTransactionPrice();
         this.fees = this.calculateFees();
     }
-
-    public abstract void make(Account account);
 
     public Credits calculateTransactionPrice() {
         Credits transactionPrice = new Credits(this.stockPrice);

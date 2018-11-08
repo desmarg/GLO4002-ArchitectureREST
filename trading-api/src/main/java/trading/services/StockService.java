@@ -13,15 +13,6 @@ import trading.external.response.StockResponse;
 import java.util.UUID;
 
 public class StockService {
-    private static StockService INSTANCE = null;
-
-    public static StockService getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new StockService();
-        }
-
-        return INSTANCE;
-    }
 
     public Credits getStockPrice(Stock stock, DateTime dateTime) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();

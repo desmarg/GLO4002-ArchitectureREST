@@ -8,13 +8,13 @@ import java.util.UUID;
 public class InvalidQuantityException extends MappedException {
     private UUID transactionNumber;
 
-    public InvalidQuantityException(TransactionNumber transactionNumber) {
+    public InvalidQuantityException() {
         super(
                 "INVALID_QUANTITY",
                 "quantity is invalid",
                 Status.BAD_REQUEST
         );
-        this.transactionNumber = transactionNumber.getId();
+        this.transactionNumber = new TransactionNumber().getId();
     }
 
     public UUID getTransactionNumber() {

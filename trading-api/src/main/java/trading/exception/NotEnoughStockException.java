@@ -9,13 +9,13 @@ import java.util.UUID;
 public class NotEnoughStockException extends MappedException {
     private UUID transactionNumber;
 
-    public NotEnoughStockException(Stock stock, TransactionNumber transactionNumber) {
+    public NotEnoughStockException(Stock stock) {
         super(
                 "NOT_ENOUGH_STOCK",
                 "not enough stock '" + stock.getSymbol() + ":" + stock.getMarket() + "'",
                 Status.BAD_REQUEST
         );
-        this.transactionNumber = transactionNumber.getId();
+        this.transactionNumber = new TransactionNumber().getId();
     }
 
     public UUID getTransactionNumber() {

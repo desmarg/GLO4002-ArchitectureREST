@@ -8,13 +8,13 @@ import java.util.UUID;
 public class StockParametersDontMatchException extends MappedException {
     private UUID transactionNumber;
 
-    public StockParametersDontMatchException(TransactionNumber transactionNumber) {
+    public StockParametersDontMatchException() {
         super(
                 "STOCK_PARAMETERS_DONT_MATCH",
                 "stock parameters don't match existing ones",
                 Status.BAD_REQUEST
         );
-        this.transactionNumber = transactionNumber.getId();
+        this.transactionNumber = new TransactionNumber().getId();
     }
 
     public UUID getTransactionNumber() {
