@@ -1,8 +1,8 @@
 package application.market;
 
-import application.JerseyClient;
 import exception.MarketNotFoundException;
 import javafx.util.Pair;
+import trading.application.JerseyClient;
 
 import java.time.LocalTime;
 import java.time.OffsetTime;

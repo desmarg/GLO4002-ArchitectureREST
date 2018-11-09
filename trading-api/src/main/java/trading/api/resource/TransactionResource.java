@@ -1,5 +1,6 @@
 package trading.api.resource;
 
+import application.market.MarketService;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.api.response.TransactionResponse;
 import trading.domain.Account;
@@ -22,11 +23,13 @@ public class TransactionResource {
     private TransactionService transactionService;
     private AccountService accountService;
     private StockService stockService;
+    private MarketService marketService;
 
     public TransactionResource(Services services) {
         this.transactionService = services.getTransactionService();
         this.accountService = services.getAccountService();
         this.stockService = services.getStockService();
+        this.marketService = services.getMarketService();
     }
 
     @GET
