@@ -14,6 +14,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private Map<AccountNumber, Account> accountMap = new HashMap<>();
 
     public Account save(Account account) {
+        System.out.println(account);
         AccountNumber accountNumber = new AccountNumber(
                 account.getInvestorName(), ACCOUNT_NUMBER_COUNTER++
         );

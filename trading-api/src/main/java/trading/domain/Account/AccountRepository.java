@@ -1,8 +1,5 @@
 package trading.domain.Account;
 
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
-
 public interface AccountRepository {
     Account save(Account account);
 

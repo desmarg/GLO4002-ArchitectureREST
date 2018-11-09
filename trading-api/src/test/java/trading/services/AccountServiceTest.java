@@ -38,16 +38,16 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void givenAccountPostRequestDto_whenSave_thenSaveAccountToRepository() {
+    public void givenAccountPostRequestDto_whenSave_thenSaveIsCalledInAccountRepository() {
 
         this.accountPostRequestDto.credits = CREDITS;
         this.accountPostRequestDto.investorId = INVESTOR_ID;
         this.accountPostRequestDto.investorName = INVESTOR_NAME;
 
         when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
-        Account savedAccount = this.accountService.save(this.accountPostRequestDto);
+        this.accountService.save(this.accountPostRequestDto);
 
-        verify(this.accountRepository).save(savedAccount);
+        verify(this.accountRepository).save(any());
     }
 
     @Test
