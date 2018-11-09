@@ -1,13 +1,17 @@
 package trading.api.resource;
 
+import application.market.MarketService;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.api.response.TransactionResponse;
-import trading.api.response.TransactionResponseFactory;
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
+import trading.domain.Account;
+import trading.domain.AccountNumber;
 import trading.domain.transaction.*;
 import trading.exception.UnsupportedTransactionTypeException;
-import trading.services.*;
+import trading.factory.TransactionResponseFactory;
+import trading.services.AccountService;
+import trading.services.Services;
+import trading.services.StockService;
+import trading.services.TransactionService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,14 +22,10 @@ import java.util.UUID;
 public class TransactionResource {
     private TransactionService transactionService;
     private AccountService accountService;
-    private StockService stockService;
-    private MarketService marketService;
 
     public TransactionResource(Services services) {
         this.transactionService = services.getTransactionService();
         this.accountService = services.getAccountService();
-        this.stockService = services.getStockService();
-        this.marketService = services.getMarketService();
     }
 
     @GET
@@ -42,11 +42,9 @@ public class TransactionResource {
         Transaction transaction = this.transactionService.getTransaction(
                 transactionNumber
         );
-        if (!transaction.getAccountNumber().equals(accountNumber)) {
-            throw new RuntimeException("This account does not have this transaction");
-        }
         TransactionResponse transactionDto =
                 TransactionResponseFactory.createTransactionDto(transaction);
+
         return Response.status(Response.Status.OK).entity(transactionDto).build();
     }
 
@@ -57,17 +55,12 @@ public class TransactionResource {
             @PathParam("accountNumber") String accountNumber,
             TransactionPostRequestDTO transactionPostDto
     ) {
-        //this.marketService.assertMarketOpenAtHour(transactionPostDto.stock.getMarket());
         Transaction transaction;
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         if (TransactionType.fromString(transactionPostDto.type) == TransactionType.BUY) {
-            TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostDto, account.getAccountNumber(), this.stockService);
-            this.transactionService.executeTransactionBuy(account, transactionBuy);
-            transaction = transactionBuy;
+            transaction = this.transactionService.executeTransactionBuy(account, transactionPostDto);
         } else if (TransactionType.fromString(transactionPostDto.type) == TransactionType.SELL) {
-            TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostDto, account.getAccountNumber(), this.stockService);
-            this.transactionService.executeTransactionSell(account, transactionSell);
-            transaction = transactionSell;
+            transaction = this.transactionService.executeTransactionSell(account, transactionPostDto);
         } else {
             throw new UnsupportedTransactionTypeException(transactionPostDto.type);
         }

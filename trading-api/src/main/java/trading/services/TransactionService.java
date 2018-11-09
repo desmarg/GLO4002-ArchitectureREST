@@ -1,30 +1,41 @@
 package trading.services;
 
-import trading.domain.Account.Account;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionSell;
+import application.market.MarketService;
+import exception.MarketClosedException;
+import trading.api.request.TransactionPostRequestDTO;
+import trading.domain.Account;
+import trading.domain.transaction.*;
 import trading.exception.StockParametersDontMatchException;
 import trading.persistence.TransactionRepository;
 
 public class TransactionService {
 
     private TransactionRepository transactionRepository;
+    private StockService stockService;
+    private MarketService marketService;
 
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService) {
         this.transactionRepository = transactionRepository;
+        this.stockService = stockService;
+        this.marketService = marketService;
     }
 
-    public Transaction executeTransactionBuy(Account account, TransactionBuy transactionBuy) {
-
+    public Transaction executeTransactionBuy(Account account, TransactionPostRequestDTO transactionPostRequestDTO) {
+        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, this.stockService);
+        if(transactionBuy.isMarketOpen(this.marketService)){
+            throw new MarketClosedException();
+        }
         transactionBuy.executeTransaction(account);
         this.transactionRepository.save(transactionBuy);
         return transactionBuy;
     }
 
-    public Transaction executeTransactionSell(Account account, TransactionSell transactionSell) {
+    public Transaction executeTransactionSell(Account account, TransactionPostRequestDTO transactionPostRequestDTO) {
+        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, this.stockService);
         TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
+        if(transactionSell.isMarketOpen(this.marketService)){
+            throw new MarketClosedException();
+        }
         transactionSell.executeTransaction(account, referredTransaction);
         this.deduceStocks(referredTransaction.getTransactionNumber(), transactionSell.getQuantity());
         this.transactionRepository.save(transactionSell);
