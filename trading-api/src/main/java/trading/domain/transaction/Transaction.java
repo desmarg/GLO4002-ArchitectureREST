@@ -108,4 +108,8 @@ public abstract class Transaction {
     public AccountNumber getAccountNumber() {
         return this.accountNumber;
     }
+
+    public String getMarket() {
+        return this.stock.getMarket();
+    }
 }

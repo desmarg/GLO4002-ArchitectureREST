@@ -1,16 +1,16 @@
 package trading.api.resource;
 
-import application.market.MarketService;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.api.response.TransactionResponse;
-import trading.domain.Account;
-import trading.domain.AccountNumber;
-import trading.domain.transaction.*;
+import trading.api.response.TransactionResponseFactory;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionType;
 import trading.exception.UnsupportedTransactionTypeException;
-import trading.factory.TransactionResponseFactory;
 import trading.services.AccountService;
 import trading.services.Services;
-import trading.services.StockService;
 import trading.services.TransactionService;
 
 import javax.ws.rs.*;
@@ -20,8 +20,8 @@ import java.util.UUID;
 
 @Path("/accounts/{accountNumber}/transactions")
 public class TransactionResource {
-    private TransactionService transactionService;
-    private AccountService accountService;
+    private final TransactionService transactionService;
+    private final AccountService accountService;
 
     public TransactionResource(Services services) {
         this.transactionService = services.getTransactionService();

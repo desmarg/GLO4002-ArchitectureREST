@@ -2,7 +2,6 @@ package trading.services;
 
 import javafx.util.Pair;
 import trading.application.JerseyClient;
-import trading.external.response.Market.MarketClosedException;
 import trading.external.response.Market.MarketDto;
 import trading.external.response.Market.MarketNotFoundException;
 
@@ -13,9 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class MarketService {
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public void assertMarketOpenAtHour(String market) {
+    public boolean isMarketOpen(String market) {
 
         LocalTime time = LocalTime.now();
         MarketDto marketDto = this.getMarketDto(market);
@@ -26,9 +25,10 @@ public class MarketService {
             OffsetTime beginOffsetTime = OffsetTime.of(timesPair.getKey(), offset);
             OffsetTime endOffsetTime = OffsetTime.of(timesPair.getValue(), offset);
             if (!(time.compareTo(beginOffsetTime.toLocalTime()) >= 0 && time.compareTo(endOffsetTime.toLocalTime()) <= 0)) {
-                throw new MarketClosedException(market);
+                return false;
             }
         }
+        return true;
     }
 
     public MarketDto getMarketDto(String market) {

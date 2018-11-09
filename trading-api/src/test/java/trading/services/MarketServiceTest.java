@@ -29,7 +29,7 @@ public class MarketServiceTest {
 //        ArrayList<Pair<LocalTime, LocalTime>> hours = new ArrayList<>();
 //        hours.add(new Pair<>(LocalTime.parse("06:00"), LocalTime.parse("12:00")));
 //        hours.add(new Pair<>(LocalTime.parse("13:00"), LocalTime.parse("17:00")));
-//        assertTrue(this.marketService.assertMarketOpenAtHour(hours, ZoneOffset.of(this.validTimezone), LocalTime.parse(this.openedTime)));
+//        assertTrue(this.marketService.isMarketOpen(hours, ZoneOffset.of(this.validTimezone), LocalTime.parse(this.openedTime)));
 //    }
 //
 //    @Test
@@ -37,7 +37,7 @@ public class MarketServiceTest {
 //        ArrayList<Pair<LocalTime, LocalTime>> hours = new ArrayList<>();
 //        hours.add(new Pair<>(LocalTime.parse("06:00"), LocalTime.parse("12:00")));
 //        hours.add(new Pair<>(LocalTime.parse("13:00"), LocalTime.parse("17:00")));
-//        assertFalse(this.marketService.assertMarketOpenAtHour(hours, ZoneOffset.of(this.validTimezone), LocalTime.parse(this.closedTime)));
+//        assertFalse(this.marketService.isMarketOpen(hours, ZoneOffset.of(this.validTimezone), LocalTime.parse(this.closedTime)));
 //    }
 
     @Test
