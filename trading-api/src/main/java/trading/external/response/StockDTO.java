@@ -2,7 +2,7 @@ package trading.external.response;
 
 import java.util.List;
 
-public class StockResponse {
+public class StockDTO {
     private Long id;
     private String market;
     private String symbol;

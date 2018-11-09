@@ -1,12 +1,10 @@
 package trading.services;
 
-import org.junit.Before;
 import org.junit.Test;
 import trading.domain.Credits;
 import trading.domain.DateTime;
+import trading.external.response.StockDTO;
 import trading.external.response.StockPriceResponse;
-import trading.external.response.StockResponse;
-import trading.exception.InvalidDateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ public class StockServiceTest {
 
     private StockService stockService = new StockService();
 
-    StockResponse createStockResponse(DateTime dateTime) {
+    StockDTO createStockResponse(DateTime dateTime) {
         StockPriceResponse stockPrice = new StockPriceResponse();
         stockPrice.setDate(dateTime);
         stockPrice.setPrice(PRICE);
@@ -28,15 +26,15 @@ public class StockServiceTest {
         List stockPrices = new ArrayList<>();
         stockPrices.add(stockPrice);
 
-        StockResponse stockResponse = new StockResponse();
-        stockResponse.setPrices(stockPrices);
-        return stockResponse;
+        StockDTO stockDTO = new StockDTO();
+        stockDTO.setPrices(stockPrices);
+        return stockDTO;
     }
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDateTime_thenReturnCredits() {
         Credits creditsFound = this.stockService.getPriceFromDateTime(
-                createStockResponse(DATE_TIME), DATE_TIME
+                this.createStockResponse(DATE_TIME), DATE_TIME
         );
 
         assertEquals(

@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.exception.InvalidAccountInfoException;

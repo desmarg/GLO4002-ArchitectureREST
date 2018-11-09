@@ -1,4 +1,4 @@
-package trading.domain;
+package trading.domain.Account;
 
 public class AccountNumber {
     private static final int FIRST_ODD_NUMBER = 13;
@@ -29,6 +29,8 @@ public class AccountNumber {
     public boolean equals(Object obj) {
         if (obj instanceof AccountNumber) {
             return this.id.equals(((AccountNumber) obj).getId());
+        } else if (obj instanceof String) {
+            return this.id.equals(obj);
         }
         return false;
     }

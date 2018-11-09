@@ -1,5 +1,9 @@
-package trading.domain;
+package trading.domain.Account;
 
+import trading.domain.Credits;
+import trading.domain.FocusArea;
+import trading.domain.InvestorProfile;
+import trading.domain.ProfileType;
 import trading.exception.InvalidAccountInfoException;
 import trading.exception.InvalidCreditsAmountException;
 

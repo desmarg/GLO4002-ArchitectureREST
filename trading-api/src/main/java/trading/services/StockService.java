@@ -7,8 +7,8 @@ import trading.domain.Stock;
 import trading.domain.transaction.TransactionNumber;
 import trading.exception.InvalidDateException;
 import trading.exception.StockNotFoundException;
+import trading.external.response.StockDTO;
 import trading.external.response.StockPriceResponse;
-import trading.external.response.StockResponse;
 
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ public class StockService {
 
     public Credits getStockPrice(Stock stock, DateTime dateTime) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        StockResponse stockDto = JerseyClient.getInstance().getRequest(url, StockResponse.class);
+        StockDTO stockDto = JerseyClient.getInstance().getRequest(url, StockDTO.class);
         if (stockDto == null) {
             throw new StockNotFoundException(
                     stock.getSymbol(),
@@ -27,13 +27,12 @@ public class StockService {
         return this.getPriceFromDateTime(stockDto, dateTime);
     }
 
-    public Credits getPriceFromDateTime(StockResponse stockDto, DateTime dateTime) {
+    public Credits getPriceFromDateTime(StockDTO stockDto, DateTime dateTime) {
         for (StockPriceResponse priceInfo : stockDto.getPrices()) {
             if (priceInfo.getDate().truncatedToDays().equals(dateTime.truncatedToDays())) {
                 return priceInfo.getPrice();
             }
         }
-
         throw new InvalidDateException(new TransactionNumber(UUID.randomUUID()));
     }
 }

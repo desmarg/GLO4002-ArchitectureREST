@@ -1,6 +1,6 @@
 package trading.services;
 
-import trading.domain.Account;
+import trading.domain.Account.Account;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionNumber;

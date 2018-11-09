@@ -1,7 +1,7 @@
 package trading.services;
 
-import trading.domain.Account;
-import trading.domain.AccountNumber;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
 import trading.exception.AccountAlreadyExistsException;
 import trading.persistence.AccountRepository;
 

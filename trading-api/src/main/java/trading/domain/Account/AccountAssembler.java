@@ -1,9 +1,8 @@
-package trading.factory;
+package trading.domain.Account;
 
 import trading.api.request.AccountPostRequest;
-import trading.domain.Account;
 
-public class AccountFactory {
+public class AccountAssembler {
     public static Account create(AccountPostRequest accountPostRequest) {
 
         return new Account(

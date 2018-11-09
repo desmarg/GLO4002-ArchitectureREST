@@ -6,7 +6,7 @@
 //import org.mockito.Captor;
 //import org.mockito.Mock;
 //import org.mockito.runners.MockitoJUnitRunner;
-//import trading.domain.Account;
+//import trading.domain.Account.Account;
 //import trading.domain.Credits;
 //import trading.domain.DateTime;
 //import trading.domain.Stock;

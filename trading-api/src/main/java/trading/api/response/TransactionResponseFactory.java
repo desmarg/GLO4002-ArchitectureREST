@@ -1,8 +1,5 @@
-package trading.factory;
+package trading.api.response;
 
-import trading.api.response.TransactionBuyResponse;
-import trading.api.response.TransactionResponse;
-import trading.api.response.TransactionSellResponse;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;

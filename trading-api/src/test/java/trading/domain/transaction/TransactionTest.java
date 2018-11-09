@@ -1,8 +1,10 @@
 package trading.domain.transaction;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import trading.domain.Account;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
@@ -14,8 +16,8 @@ import static org.junit.Assert.assertEquals;
 public class TransactionTest {
     private class TransactionImplementation extends Transaction {
         public TransactionImplementation(Long quantity, DateTime dateTime, Stock stock, Credits
-                stockPrice) {
-            super(quantity, dateTime, stock, stockPrice);
+                stockPrice, AccountNumber accountNumber) {
+            super(quantity, dateTime, stock, stockPrice, accountNumber);
         }
 
         public void make(Account account) {
@@ -29,19 +31,25 @@ public class TransactionTest {
     private Long VALID_QUANTITY_SMALLER_THAN_HUNDRED = 10L;
     private Long VALID_QUANTITY_BIGGER_THAN_HUNDRED = 200L;
     private DateTime VALID_DATE = new DateTime("2018-08-21T15:23:20.142Z");
-    private Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(10));
+    private Credits SMALL_STOCK_PRICE = new Credits(new BigDecimal(10));
     private Credits LARGE_STOCK_PRICE = new Credits(new BigDecimal(10000));
-    private TransactionImplementation transaction;
+    private AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
+    private TransactionBuy transaction;
+
+    @Before
+    public void initialize() {
+        this.transaction = new TransactionBuy(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.SMALL_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
+    }
 
     @Test
     public void whenCalculatingTransactionPrice_thenStockPriceIsMultipliedByQuantity() {
-        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED,
-                this.VALID_DATE, this.stock, this.SOME_STOCK_PRICE);
+
 
         Credits transactionPrice = this.transaction.calculateTransactionPrice();
 
         BigDecimal expectedTransactionPrice = new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
-                (this.SOME_STOCK_PRICE.getAmount());
+                (this.SMALL_STOCK_PRICE.getAmount());
         assertEquals(expectedTransactionPrice, transactionPrice.getAmount());
     }
 
@@ -49,8 +57,6 @@ public class TransactionTest {
     public void
     givenTotalLessThan5000AndQuantitySmallerThan100_whenCalculatingFees_thenQuarterRateFees
             () {
-        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED,
-                this.VALID_DATE, this.stock, this.SOME_STOCK_PRICE);
 
         Credits transactionFees = this.transaction.calculateFees();
 
@@ -63,9 +69,8 @@ public class TransactionTest {
     public void
     givenTotalLessThan5000AndQuantityBiggerThan100_whenCalculatingFees_thenFifthRateFees
             () {
-        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
-                this.VALID_DATE, this.stock, this.SOME_STOCK_PRICE);
-
+        this.transaction = new TransactionBuy(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.SMALL_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
         Credits transactionFees = this.transaction.calculateFees();
 
         Credits expectedFees = Credits.fromDouble(0.20);
@@ -75,9 +80,8 @@ public class TransactionTest {
 
     @Test
     public void givenTotalPriceMoreThan5000_whenCalculatingFees_thenAdditionalRateAdded() {
-        this.transaction = new TransactionImplementation(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
-                this.VALID_DATE, this.stock, this.LARGE_STOCK_PRICE);
-
+        this.transaction = new TransactionBuy(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
+                this.VALID_DATE, this.stock, this.LARGE_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
         Credits transactionFees = this.transaction.calculateFees();
 
         Credits expectedFees = Credits.fromDouble(0.20);

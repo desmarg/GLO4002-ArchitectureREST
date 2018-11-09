@@ -1,4 +1,4 @@
-package application.market;
+package trading.external.response.Market;
 
 import java.util.ArrayList;
 

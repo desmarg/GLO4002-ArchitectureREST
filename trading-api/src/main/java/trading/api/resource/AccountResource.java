@@ -2,9 +2,9 @@ package trading.api.resource;
 
 import trading.api.request.AccountPostRequest;
 import trading.api.response.AccountResponse;
-import trading.domain.Account;
-import trading.domain.AccountNumber;
-import trading.factory.AccountFactory;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountAssembler;
+import trading.domain.Account.AccountNumber;
 import trading.services.AccountService;
 import trading.services.Services;
 
@@ -31,7 +31,7 @@ public class AccountResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountPostRequest accountPostRequest) {
-        Account account = AccountFactory.create(accountPostRequest);
+        Account account = AccountAssembler.create(accountPostRequest);
         account = this.accountService.save(account);
         return Response.status(Response.Status.CREATED).header(
                 "Location",

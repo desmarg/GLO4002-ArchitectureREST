@@ -1,10 +1,12 @@
 package trading.domain.transaction;
 
+import trading.domain.Account.AccountNumber;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
 
 public abstract class Transaction {
+    protected AccountNumber accountNumber;
     protected TransactionNumber transactionNumber;
     protected TransactionType transactionType;
     protected Long quantity;
@@ -19,13 +21,15 @@ public abstract class Transaction {
             Long quantity,
             DateTime dateTime,
             Stock stock,
-            Credits stockPrice
+            Credits stockPrice,
+            AccountNumber accountNumber
     ) {
         this.transactionNumber = new TransactionNumber();
         this.quantity = quantity;
         this.dateTime = dateTime;
         this.stock = stock;
         this.stockPrice = stockPrice;
+        this.accountNumber = accountNumber;
         this.price = this.calculateTransactionPrice();
         this.fees = this.calculateFees();
     }
@@ -99,5 +103,9 @@ public abstract class Transaction {
 
     public Credits getFees() {
         return this.fees;
+    }
+
+    public AccountNumber getAccountNumber() {
+        return this.accountNumber;
     }
 }

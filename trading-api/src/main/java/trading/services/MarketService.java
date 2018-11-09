@@ -1,8 +1,10 @@
-package application.market;
+package trading.services;
 
-import application.JerseyClient;
-import exception.MarketNotFoundException;
 import javafx.util.Pair;
+import trading.application.JerseyClient;
+import trading.external.response.Market.MarketClosedException;
+import trading.external.response.Market.MarketDto;
+import trading.external.response.Market.MarketNotFoundException;
 
 import java.time.LocalTime;
 import java.time.OffsetTime;
@@ -12,6 +14,22 @@ import java.util.ArrayList;
 
 public class MarketService {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+    public void assertMarketOpenAtHour(String market) {
+
+        LocalTime time = LocalTime.now();
+        MarketDto marketDto = this.getMarketDto(market);
+        ArrayList<Pair<LocalTime, LocalTime>> times = this.parseMarketHours(marketDto);
+        ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
+
+        for (Pair<LocalTime, LocalTime> timesPair : times) {
+            OffsetTime beginOffsetTime = OffsetTime.of(timesPair.getKey(), offset);
+            OffsetTime endOffsetTime = OffsetTime.of(timesPair.getValue(), offset);
+            if (!(time.compareTo(beginOffsetTime.toLocalTime()) >= 0 && time.compareTo(endOffsetTime.toLocalTime()) <= 0)) {
+                throw new MarketClosedException(market);
+            }
+        }
+    }
 
     public MarketDto getMarketDto(String market) {
         String url = "/markets/" + market;
@@ -34,23 +52,4 @@ public class MarketService {
         return times;
     }
 
-    public boolean validateMarketOpenAtHour(ArrayList<Pair<LocalTime, LocalTime>> hours, ZoneOffset offset, LocalTime time) {
-
-        boolean opened = false;
-
-        for (Pair<LocalTime, LocalTime> times : hours) {
-            OffsetTime beginOffsetTime = OffsetTime.of(times.getKey(), offset);
-            OffsetTime endOffsetTime = OffsetTime.of(times.getValue(), offset);
-            if (time.compareTo(beginOffsetTime.toLocalTime()) >= 0 && time.compareTo(endOffsetTime.toLocalTime()) <= 0) {
-                opened = true;
-            }
-        }
-        return opened;
-    }
-
-    public boolean getMarketOpenCurrently(String market) {
-        MarketDto marketDto = getMarketDto(market);
-        ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
-        return validateMarketOpenAtHour(parseMarketHours(marketDto), offset, LocalTime.now());
-    }
 }

@@ -4,14 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.domain.Account;
-import trading.domain.AccountNumber;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
 import trading.domain.Credits;
 import trading.exception.AccountNotFoundException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountRepositoryInMemoryTest {

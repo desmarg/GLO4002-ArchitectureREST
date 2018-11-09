@@ -1,7 +1,7 @@
 package trading.persistence;
 
-import trading.domain.Account;
-import trading.domain.AccountNumber;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
 import trading.exception.AccountNotFoundException;
 
 import java.util.HashMap;
