@@ -5,11 +5,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import trading.api.request.AccountPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits;
-import trading.exception.AccountAlreadyExistsException;
-import trading.persistence.AccountRepository;
+import trading.domain.Credits.Credits;
+import trading.domain.Account.AccountAlreadyExistsException;
+import trading.domain.Account.AccountRepository;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -19,12 +20,11 @@ import static org.mockito.Mockito.when;
 public class AccountServiceTest {
 
     private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("TA-123");
-    private static final Long INVESTOR_ID = 1l;
+    private static final Long INVESTOR_ID = 1L;
     private static final String INVESTOR_NAME = "Example Name";
-    private static final String EMAIL = "example@mail.com";
     private static final Credits CREDITS = Credits.fromDouble(1.1);
 
-    private Account account;
+    private AccountPostRequestDTO accountPostRequestDto = new AccountPostRequestDTO();
     private AccountService accountService;
     @Mock
     private AccountRepository accountRepository;
@@ -35,20 +35,19 @@ public class AccountServiceTest {
     public void setUp() {
         this.accountService = new AccountService(this.accountRepository);
         this.accountNumber = ACCOUNT_NUMBER;
-        this.account = new Account(
-                INVESTOR_ID,
-                INVESTOR_NAME,
-                EMAIL,
-                CREDITS
-        );
     }
 
     @Test
-    public void whenSave_thenSaveAccountToRepository() {
-        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
-        this.accountService.save(this.account);
+    public void givenAccountPostRequestDto_whenSave_thenSaveAccountToRepository() {
 
-        verify(this.accountRepository).save(this.account);
+        this.accountPostRequestDto.credits = CREDITS;
+        this.accountPostRequestDto.investorId = INVESTOR_ID;
+        this.accountPostRequestDto.investorName = INVESTOR_NAME;
+
+        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
+        Account savedAccount = this.accountService.save(this.accountPostRequestDto);
+
+        verify(this.accountRepository).save(savedAccount);
     }
 
     @Test
@@ -56,19 +55,5 @@ public class AccountServiceTest {
         this.accountService.findByAccountNumber(this.accountNumber);
 
         verify(this.accountRepository).findByAccountNumber(this.accountNumber);
-    }
-
-    @Test
-    public void givenInvestorId_whenCheckIfAccountExists_thenCheckIfAccountExistsInRepository() {
-        this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
-        verify(this.accountRepository).accountAlreadyExists(INVESTOR_ID);
-    }
-
-    @Test(expected = AccountAlreadyExistsException.class)
-    public void
-    givenExistingAccount_whenCheckIfAccountExists_thenThrowAccountAlreadyExistsException() {
-        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(true);
-
-        this.accountService.checkIfAccountAlreadyExists(INVESTOR_ID);
     }
 }

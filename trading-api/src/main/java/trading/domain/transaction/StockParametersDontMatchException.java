@@ -1,17 +1,18 @@
-package trading.exception;
+package trading.domain.transaction;
 
 import trading.domain.transaction.TransactionNumber;
+import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
-public class InvalidQuantityException extends MappedException {
+public class StockParametersDontMatchException extends MappedException {
     private UUID transactionNumber;
 
-    public InvalidQuantityException() {
+    public StockParametersDontMatchException() {
         super(
-                "INVALID_QUANTITY",
-                "quantity is invalid",
+                "STOCK_PARAMETERS_DONT_MATCH",
+                "stock parameters don't match existing ones",
                 Status.BAD_REQUEST
         );
         this.transactionNumber = new TransactionNumber().getId();

@@ -8,7 +8,7 @@ import trading.domain.Account.AccountNumber;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.domain.transaction.TransactionType;
-import trading.exception.UnsupportedTransactionTypeException;
+import trading.domain.transaction.UnsupportedTransactionTypeException;
 import trading.services.AccountService;
 import trading.services.Services;
 import trading.services.TransactionService;

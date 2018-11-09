@@ -2,10 +2,10 @@ package trading.domain.transaction;
 
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits;
-import trading.domain.DateTime;
+import trading.domain.Credits.Credits;
+import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.exception.NotEnoughCreditsException;
+import trading.domain.Account.NotEnoughCreditsException;
 
 public class TransactionBuy extends Transaction {
 

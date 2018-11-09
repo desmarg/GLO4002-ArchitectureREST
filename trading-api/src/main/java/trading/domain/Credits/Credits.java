@@ -1,4 +1,4 @@
-package trading.domain;
+package trading.domain.Credits;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -72,6 +72,19 @@ public class Credits implements Comparable<Credits> {
 
     public BigDecimal getAmount() {
         return this.amount;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Credits) {
+            return this.amount.equals(((Credits) obj).getAmount());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.amount.multiply(new BigDecimal(1000))).intValue();
     }
 
     @Override

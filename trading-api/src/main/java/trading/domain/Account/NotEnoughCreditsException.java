@@ -1,20 +1,21 @@
-package trading.exception;
+package trading.domain.Account;
 
 import trading.domain.transaction.TransactionNumber;
+import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
-public class NotEnoughCreditsForFeesException extends MappedException {
+public class NotEnoughCreditsException extends MappedException {
     private UUID transactionNumber;
 
-    public NotEnoughCreditsForFeesException() {
+    public NotEnoughCreditsException(TransactionNumber transactionNumber) {
         super(
                 "NOT_ENOUGH_CREDITS",
-                "not enough credits to pay the transaction fee",
+                "not enough credits in wallet",
                 Status.BAD_REQUEST
         );
-        this.transactionNumber = new TransactionNumber().getId();
+        this.transactionNumber = transactionNumber.getId();
     }
 
     public UUID getTransactionNumber() {

@@ -1,8 +1,9 @@
 package trading.persistence;
 
+import trading.domain.transaction.TransactionRepository;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
-import trading.exception.TransactionNotFoundException;
+import trading.domain.transaction.TransactionNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;

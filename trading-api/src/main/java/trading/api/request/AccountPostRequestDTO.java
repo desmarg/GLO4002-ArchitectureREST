@@ -1,10 +1,9 @@
 package trading.api.request;
 
-import trading.domain.Credits;
+import trading.domain.Credits.Credits;
 
-public class AccountPostRequest {
+public class AccountPostRequestDTO {
     public String investorName;
-    public String email;
     public Long investorId;
     public Credits credits;
 }

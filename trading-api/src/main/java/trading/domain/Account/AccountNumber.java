@@ -13,10 +13,6 @@ public class AccountNumber {
         this.id = accountNumber;
     }
 
-    public String makeId(String name, Long accountId) {
-        return this.makeInitials(name) + "-" + String.format("%04d", accountId);
-    }
-
     public String makeInitials(String name) {
         return name.replaceAll("([^\\s])[^\\s]+", "$1").replaceAll("\\s", "").toUpperCase();
     }
@@ -38,5 +34,9 @@ public class AccountNumber {
     @Override
     public int hashCode() {
         return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
+    }
+
+    private String makeId(String name, Long accountId) {
+        return this.makeInitials(name) + "-" + String.format("%04d", accountId);
     }
 }

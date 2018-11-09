@@ -1,4 +1,4 @@
-package trading.persistence;
+package trading.domain.Account;
 
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;

@@ -1,36 +1,27 @@
 package trading.domain.Account;
 
-import trading.domain.Credits;
+import trading.domain.Credits.Credits;
 import trading.domain.FocusArea;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
-import trading.exception.InvalidAccountInfoException;
-import trading.exception.InvalidCreditsAmountException;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Account {
     private AccountNumber accountNumber;
     private Long investorId;
     private InvestorProfile investorProfile;
     private String investorName;
-    private String email;
     private Credits credits;
 
     public Account(
             Long investorId,
             String investorName,
-            String email,
             Credits credits
     ) {
-        this.validateEmail(email);
         this.validateInitialCredits(credits);
-        this.validateInvestorName(investorName);
         this.investorId = investorId;
         this.investorName = investorName;
-        this.email = email;
         this.credits = credits;
         this.investorProfile = new InvestorProfile(
                 ProfileType.CONSERVATIVE,
@@ -38,27 +29,9 @@ public class Account {
         );
     }
 
-    public void validateEmail(String email) {
-        Pattern emailPattern = Pattern.compile("[A-z0-9._%+-]{2,20}@[A-z0-9]{2,20}\\.[A-z]{2,10}");
-        Matcher emailMatcher = emailPattern.matcher(email);
-        if (!emailMatcher.matches()) {
-            throw new InvalidAccountInfoException("invalid email address");
-        }
-    }
-
-    public void validateInvestorName(String investorName) {
-        Pattern namePattern = Pattern.compile(
-                "^[a-zA-Z'\\u00C0-\\u017F]+[ a-zA-Z'\\u00C0-\\u017F]+$"
-        );
-        Matcher nameMatcher = namePattern.matcher(investorName);
-        if (!nameMatcher.matches()) {
-            throw new InvalidAccountInfoException("invalid investorName");
-        }
-    }
-
     public void validateInitialCredits(Credits credits) {
         Credits nullCredits = new Credits();
-        if (credits.compareTo(nullCredits) != 1) {
+        if (credits.compareTo(nullCredits) < 0) {
             throw new InvalidCreditsAmountException();
         }
     }
@@ -72,7 +45,7 @@ public class Account {
     }
 
     public boolean hasEnoughCreditsToPay(Credits transactionPrice) {
-        return this.credits.compareTo(transactionPrice) != -1;
+        return this.credits.compareTo(transactionPrice) >= 0;
     }
 
     public AccountNumber getAccountNumber() {
@@ -97,10 +70,6 @@ public class Account {
 
     public String getInvestorName() {
         return this.investorName;
-    }
-
-    public String getEmail() {
-        return this.email;
     }
 
     public void setAccountNumber(AccountNumber accountNumber) {

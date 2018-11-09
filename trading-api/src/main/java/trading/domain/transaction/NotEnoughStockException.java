@@ -1,17 +1,19 @@
-package trading.exception;
+package trading.domain.transaction;
 
+import trading.domain.Stock;
 import trading.domain.transaction.TransactionNumber;
+import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
-public class StockParametersDontMatchException extends MappedException {
+public class NotEnoughStockException extends MappedException {
     private UUID transactionNumber;
 
-    public StockParametersDontMatchException() {
+    public NotEnoughStockException(Stock stock) {
         super(
-                "STOCK_PARAMETERS_DONT_MATCH",
-                "stock parameters don't match existing ones",
+                "NOT_ENOUGH_STOCK",
+                "not enough stock '" + stock.getSymbol() + ":" + stock.getMarket() + "'",
                 Status.BAD_REQUEST
         );
         this.transactionNumber = new TransactionNumber().getId();

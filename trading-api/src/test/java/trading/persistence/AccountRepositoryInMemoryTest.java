@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.Account;
+import trading.domain.Account.AccountNotFoundException;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits;
-import trading.exception.AccountNotFoundException;
+import trading.domain.Credits.Credits;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,6 @@ public class AccountRepositoryInMemoryTest {
 
     private static final Long INVESTOR_ID = 1l;
     private static final String INVESTOR_NAME = "Example Name";
-    private static final String EMAIL = "example@mail.com";
     private static final Credits CREDITS = Credits.fromDouble(1.1);
     private static final Long NON_EXISTING_INVESTOR_ID = 456L;
     private static final AccountNumber NON_EXISTING_ACCOUNT_NUMBER = new AccountNumber("TA-456");
@@ -30,7 +29,6 @@ public class AccountRepositoryInMemoryTest {
         this.account = new Account(
                 INVESTOR_ID,
                 INVESTOR_NAME,
-                EMAIL,
                 CREDITS
         );
     }
@@ -41,26 +39,26 @@ public class AccountRepositoryInMemoryTest {
     }
 
     @Test
-    public void whenSave_thenPersists() {
+    public void whenSave_thenRightAccountIsSaved() {
         Account savedAccount = this.accountRepositoryInMemory.save(this.account);
 
-        this.accountRepositoryInMemory.findByAccountNumber(
+        Account inMemoryAccount = this.accountRepositoryInMemory.findByAccountNumber(
                 savedAccount.getAccountNumber()
         );
+
+        assertEquals(savedAccount, inMemoryAccount);
     }
 
     @Test
-    public void whenSave_thenCounterIncrements() {
+    public void whenSave_thenCounterIsDifferentThanInitial() {
         Long initialCounter = this.accountRepositoryInMemory.getCounter();
         this.accountRepositoryInMemory.save(this.account);
 
-        assertEquals(++initialCounter, this.accountRepositoryInMemory.getCounter());
+        assertNotEquals(initialCounter, this.accountRepositoryInMemory.getCounter());
     }
 
     @Test
     public void givenAccountNotInRepository_whenCheckingIfAccountExists_thenReturnsFalse() {
-        this.accountRepositoryInMemory.save(this.account);
-
         assertFalse(this.accountRepositoryInMemory.accountAlreadyExists(NON_EXISTING_INVESTOR_ID));
     }
 

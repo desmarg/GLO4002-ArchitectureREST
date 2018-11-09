@@ -1,4 +1,6 @@
-package trading.exception;
+package trading.domain.transaction;
+
+import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 

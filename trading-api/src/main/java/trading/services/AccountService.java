@@ -1,18 +1,17 @@
 package trading.services;
 
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
-import trading.exception.AccountAlreadyExistsException;
-import trading.persistence.AccountRepository;
+import trading.api.request.AccountPostRequestDTO;
+import trading.domain.Account.*;
 
 public class AccountService {
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    public Account save(Account account) {
+    public Account save(AccountPostRequestDTO accountPostRequestDTO) {
+        Account account = AccountAssembler.create(accountPostRequestDTO);
         this.checkIfAccountAlreadyExists(account.getInvestorId());
         return this.accountRepository.save(account);
     }
@@ -21,7 +20,7 @@ public class AccountService {
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
 
-    public void checkIfAccountAlreadyExists(Long investorId) {
+    private void checkIfAccountAlreadyExists(Long investorId) {
         if (this.accountRepository.accountAlreadyExists(investorId)) {
             throw new AccountAlreadyExistsException(investorId);
         }

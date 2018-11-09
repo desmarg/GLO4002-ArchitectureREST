@@ -1,17 +1,18 @@
-package trading.exception;
+package trading.domain.DateTime;
 
 import trading.domain.transaction.TransactionNumber;
+import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
-public class InvalidTransactionNumberException extends MappedException {
+public class InvalidDateException extends MappedException {
     private UUID transactionNumber;
 
-    public InvalidTransactionNumberException(TransactionNumber transactionNumber) {
+    public InvalidDateException(TransactionNumber transactionNumber) {
         super(
-                "INVALID_TRANSACTION_NUMBER",
-                "the transaction number is invalid",
+                "INVALID_DATE",
+                "the transaction date is invalid",
                 Status.BAD_REQUEST
         );
         this.transactionNumber = transactionNumber.getId();

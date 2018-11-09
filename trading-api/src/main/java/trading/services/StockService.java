@@ -1,12 +1,12 @@
 package trading.services;
 
 import trading.application.JerseyClient;
-import trading.domain.Credits;
-import trading.domain.DateTime;
+import trading.domain.Credits.Credits;
+import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 import trading.domain.transaction.TransactionNumber;
-import trading.exception.InvalidDateException;
-import trading.exception.StockNotFoundException;
+import trading.domain.DateTime.InvalidDateException;
+import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockDTO;
 import trading.external.response.StockPriceResponse;
 

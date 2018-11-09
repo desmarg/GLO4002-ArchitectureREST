@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits;
-import trading.domain.DateTime;
+import trading.domain.Credits.Credits;
+import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
 import java.math.BigDecimal;

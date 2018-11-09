@@ -1,8 +1,8 @@
 package trading.services;
 
 import org.junit.Test;
-import trading.domain.Credits;
-import trading.domain.DateTime;
+import trading.domain.Credits.Credits;
+import trading.domain.DateTime.DateTime;
 import trading.external.response.StockDTO;
 import trading.external.response.StockPriceResponse;
 

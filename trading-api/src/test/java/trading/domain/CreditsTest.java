@@ -1,6 +1,7 @@
 package trading.domain;
 
 import org.junit.Test;
+import trading.domain.Credits.Credits;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,17 +10,12 @@ public class CreditsTest {
     private static final String ZERO_REPRESENTATION = "0.00";
     private static final String POINT_ONE_REPRESENTATION = "0.10";
     private static final String POINT_25_REPRESENTATION = "0.25";
-    private static final double POINT_ONE = 0.1;
-    private static final double POINT_ZERO_FIVE = 0.05;
-    private static final double POINT_ZERO_SIX = 0.06;
-    private static final double POINT_ZERO_FIVE_ONE = 0.051;
-    private static final double POINT_ZERO_FIVE_FIVE = 0.055;
-    private static final double POINT_ZERO_FIVE_NINE = 0.059;
     private static final long LONG_QUANTITY = 2;
     private static final double DOUBLE_QUANTITY = 2.5;
+    private static final double DELTA = 0.01;
 
     @Test
-    public void givenNewlyCreatedCredits_whenDefaultConstructor_thenValueIsZero() {
+    public void givenCredits_whenDefaultConstructor_thenValueIsZero() {
         Credits defaultCredits = new Credits();
 
         assertEquals(ZERO_REPRESENTATION, defaultCredits.toString());
@@ -27,14 +23,14 @@ public class CreditsTest {
 
     @Test
     public void givenNewlyCreatedCredits_whenConstructingFromDouble_thenValueHasTwoDecimals() {
-        Credits credits = Credits.fromDouble(POINT_ONE);
+        Credits credits = Credits.fromDouble(0.1);
 
         assertEquals(POINT_ONE_REPRESENTATION, credits.toString());
     }
 
     @Test
     public void givenCreatedCredits_whenCopyingWithConstructor_thenNewCreditsWithSameValue() {
-        Credits credits = Credits.fromDouble(POINT_ONE);
+        Credits credits = Credits.fromDouble(0.1);
         Credits creditsCopy = new Credits(credits);
 
         assertEquals(credits.toString(), creditsCopy.toString());
@@ -42,7 +38,7 @@ public class CreditsTest {
 
     @Test
     public void givenNonZeroCredits_whenMultiplyingWithLongQuantity_thenMultiplyValue() {
-        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
+        Credits credits = Credits.fromDouble(0.05);
 
         credits.multiply(LONG_QUANTITY);
 
@@ -51,7 +47,7 @@ public class CreditsTest {
 
     @Test
     public void givenNonZeroCredits_whenMultiplyingWithDoubleQuantity_thenMultiplyValue() {
-        Credits credits = Credits.fromDouble(POINT_ONE);
+        Credits credits = Credits.fromDouble(0.1);
 
         credits.multiply(DOUBLE_QUANTITY);
 
@@ -60,8 +56,8 @@ public class CreditsTest {
 
     @Test
     public void givenCredits_whenAddingNonZeroCredits_thenAddValue() {
-        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
-        Credits creditsToAdd = Credits.fromDouble(POINT_ZERO_FIVE);
+        Credits credits = Credits.fromDouble(0.05);
+        Credits creditsToAdd = Credits.fromDouble(0.05);
 
         credits.add(creditsToAdd);
 
@@ -70,8 +66,8 @@ public class CreditsTest {
 
     @Test
     public void givenCredits_whenSubtractingNonZeroCredits_thenSubtractValue() {
-        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE);
-        Credits creditsToSubtract = Credits.fromDouble(POINT_ZERO_FIVE);
+        Credits credits = Credits.fromDouble(0.05);
+        Credits creditsToSubtract = Credits.fromDouble(0.05);
 
         credits.subtract(creditsToSubtract);
 
@@ -80,22 +76,22 @@ public class CreditsTest {
 
     @Test
     public void givenCreditsWithThirdDecimalLowerThanFive_whenConvertingToFloat_thenReturnHalfWayUp() {
-        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_ONE);
+        Credits credits = Credits.fromDouble(0.05);
 
-        assertEquals(POINT_ZERO_FIVE, credits.valueToFloat(), 0.01);
+        assertEquals(0.05, credits.valueToFloat(), DELTA);
     }
 
     @Test
     public void givenCreditsWithThirdDecimalEqualFive_whenConvertingToFloat_thenReturnHalfWayUp() {
-        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_FIVE);
+        Credits credits = Credits.fromDouble(0.05);
 
-        assertEquals(POINT_ZERO_SIX, credits.valueToFloat(), 0.01);
+        assertEquals(0.06, credits.valueToFloat(), DELTA);
     }
 
     @Test
     public void givenCreditsWithThirdDecimalHigherThanFive_whenConvertingToFloat_thenReturnHalfWayUp() {
-        Credits credits = Credits.fromDouble(POINT_ZERO_FIVE_NINE);
+        Credits credits = Credits.fromDouble(0.05);
 
-        assertEquals(POINT_ZERO_SIX, credits.valueToFloat(), 0.01);
+        assertEquals(0.06, credits.valueToFloat(), DELTA);
     }
 }

@@ -1,18 +1,18 @@
-package trading.exception;
+package trading.domain.Account;
 
-import trading.domain.Stock;
 import trading.domain.transaction.TransactionNumber;
+import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
-public class NotEnoughStockException extends MappedException {
+public class NotEnoughCreditsForFeesException extends MappedException {
     private UUID transactionNumber;
 
-    public NotEnoughStockException(Stock stock) {
+    public NotEnoughCreditsForFeesException() {
         super(
-                "NOT_ENOUGH_STOCK",
-                "not enough stock '" + stock.getSymbol() + ":" + stock.getMarket() + "'",
+                "NOT_ENOUGH_CREDITS",
+                "not enough credits to pay the transaction fee",
                 Status.BAD_REQUEST
         );
         this.transactionNumber = new TransactionNumber().getId();

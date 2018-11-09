@@ -1,7 +1,7 @@
 package trading.external.response;
 
-import trading.domain.Credits;
-import trading.domain.DateTime;
+import trading.domain.Credits.Credits;
+import trading.domain.DateTime.DateTime;
 
 public class StockPriceResponse {
     private DateTime date;

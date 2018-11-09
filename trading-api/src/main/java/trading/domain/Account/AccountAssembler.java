@@ -1,15 +1,14 @@
 package trading.domain.Account;
 
-import trading.api.request.AccountPostRequest;
+import trading.api.request.AccountPostRequestDTO;
 
 public class AccountAssembler {
-    public static Account create(AccountPostRequest accountPostRequest) {
+    public static Account create(AccountPostRequestDTO accountPostRequestDto) {
 
         return new Account(
-                accountPostRequest.investorId,
-                accountPostRequest.investorName,
-                accountPostRequest.email,
-                accountPostRequest.credits
+                accountPostRequestDto.investorId,
+                accountPostRequestDto.investorName,
+                accountPostRequestDto.credits
         );
     }
 }

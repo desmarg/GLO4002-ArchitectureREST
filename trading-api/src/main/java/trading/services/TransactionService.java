@@ -3,9 +3,9 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.transaction.*;
-import trading.exception.StockParametersDontMatchException;
+import trading.domain.transaction.StockParametersDontMatchException;
 import trading.external.response.Market.MarketClosedException;
-import trading.persistence.TransactionRepository;
+import trading.domain.transaction.TransactionRepository;
 
 public class TransactionService {
 
