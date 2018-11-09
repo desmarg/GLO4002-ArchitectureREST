@@ -22,14 +22,10 @@ import java.util.UUID;
 public class TransactionResource {
     private TransactionService transactionService;
     private AccountService accountService;
-    private StockService stockService;
-    private MarketService marketService;
 
     public TransactionResource(Services services) {
         this.transactionService = services.getTransactionService();
         this.accountService = services.getAccountService();
-        this.stockService = services.getStockService();
-        this.marketService = services.getMarketService();
     }
 
     @GET
@@ -39,7 +35,6 @@ public class TransactionResource {
             @PathParam("accountNumber") String accountNumber,
             @PathParam("transactionNumber") String transactionNumberString
     ) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         TransactionNumber transactionNumber = new TransactionNumber(
                 UUID.fromString(transactionNumberString)
         );
@@ -63,13 +58,9 @@ public class TransactionResource {
         Transaction transaction;
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         if (TransactionType.fromString(transactionPostDto.type) == TransactionType.BUY) {
-            TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostDto, this.stockService);
-            this.transactionService.executeTransactionBuy(account, transactionBuy);
-            transaction = transactionBuy;
+            transaction = this.transactionService.executeTransactionBuy(account, transactionPostDto);
         } else if (TransactionType.fromString(transactionPostDto.type) == TransactionType.SELL) {
-            TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostDto, this.stockService, this.transactionService);
-            this.transactionService.executeTransactionSell(account, transactionSell);
-            transaction = transactionSell;
+            transaction = this.transactionService.executeTransactionSell(account, transactionPostDto);
         } else {
             throw new UnsupportedTransactionTypeException(transactionPostDto.type);
         }

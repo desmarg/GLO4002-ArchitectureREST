@@ -1,6 +1,5 @@
 package exceptionmappers;
 
-import api.account.ErrorResponse;
 import exception.MarketClosedException;
 
 import javax.ws.rs.core.Response;

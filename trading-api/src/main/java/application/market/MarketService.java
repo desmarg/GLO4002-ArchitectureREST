@@ -48,7 +48,7 @@ public class MarketService {
         return opened;
     }
 
-    public boolean getMarketOpenCurrently(String market) {
+    public boolean isMarketOpenCurrently(String market) {
         MarketDto marketDto = getMarketDto(market);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
         return validateMarketOpenAtHour(parseMarketHours(marketDto), offset, LocalTime.now());

@@ -1,5 +1,6 @@
 package trading.domain.transaction;
 
+import application.market.MarketService;
 import trading.domain.Credits;
 import trading.domain.DateTime;
 import trading.domain.Stock;
@@ -99,5 +100,9 @@ public abstract class Transaction {
 
     public Credits getFees() {
         return this.fees;
+    }
+
+    public boolean isMarketOpen(MarketService marketService){
+        return marketService.isMarketOpenCurrently(stock.getMarket());
     }
 }
