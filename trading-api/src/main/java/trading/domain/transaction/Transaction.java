@@ -1,6 +1,5 @@
 package trading.domain.transaction;
 
-import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "Transactions")
 public abstract class Transaction {
     @Id
-    protected AccountNumber accountNumber;
+    protected Long accountNumber;
     @Column
     protected TransactionNumber transactionNumber;
     @Column
@@ -36,7 +35,7 @@ public abstract class Transaction {
             DateTime dateTime,
             Stock stock,
             Credits stockPrice,
-            AccountNumber accountNumber
+            Long accountNumber
     ) {
         this.transactionNumber = new TransactionNumber();
         this.quantity = quantity;
@@ -119,7 +118,7 @@ public abstract class Transaction {
         return this.fees;
     }
 
-    public AccountNumber getAccountNumber() {
+    public Long getAccountNumber() {
         return this.accountNumber;
     }
 

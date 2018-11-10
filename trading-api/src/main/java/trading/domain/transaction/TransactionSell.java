@@ -15,7 +15,7 @@ public class TransactionSell extends Transaction {
             Stock stock,
             Credits stockPrice,
             TransactionNumber referredTransactionNumber,
-            AccountNumber accountNumber
+            Long accountNumber
     ) {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.SELL;

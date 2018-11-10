@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 
-    private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("TA-123");
+    private static final Long ACCOUNT_NUMBER = 1L; //"TA-123"
     private static final Long INVESTOR_ID = 1L;
     private static final String INVESTOR_NAME = "Example Name";
     private static final BigDecimal CREDITS = new BigDecimal(1.1);
@@ -30,13 +30,10 @@ public class AccountServiceTest {
     private AccountService accountService;
     @Mock
     private AccountRepository accountRepository;
-    @Mock
-    private AccountNumber accountNumber;
 
     @Before
     public void setUp() {
         this.accountService = new AccountService(this.accountRepository);
-        this.accountNumber = ACCOUNT_NUMBER;
     }
 
     @Test
@@ -54,8 +51,8 @@ public class AccountServiceTest {
 
     @Test
     public void whenFindByAccountNumber_thenFindAccountNumberInRepository() {
-        this.accountService.findByAccountNumber(this.accountNumber);
+        this.accountService.findByAccountNumber(ACCOUNT_NUMBER);
 
-        verify(this.accountRepository).findByAccountNumber(this.accountNumber);
+        verify(this.accountRepository).findByAccountNumber(ACCOUNT_NUMBER);
     }
 }

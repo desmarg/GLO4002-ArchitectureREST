@@ -37,7 +37,7 @@ public class TransactionBuyTest {
     private DateTime VALID_DATE = new DateTime("2018-08-21T15:23:20.142Z");
     private Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
     private TransactionBuy transactionBuy;
-    private AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
+    private Long VALID_ACCOUNT_NUMBER = 1L; //"TD-0000"
 
 
     @Before

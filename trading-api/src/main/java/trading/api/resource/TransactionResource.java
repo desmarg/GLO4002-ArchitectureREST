@@ -56,7 +56,7 @@ public class TransactionResource {
             TransactionPostRequestDTO transactionPostDto
     ) {
         Transaction transaction;
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Account account = this.accountService.findByAccountNumber(Long.valueOf(accountNumber));
         if (TransactionType.fromString(transactionPostDto.type) == TransactionType.BUY) {
             transaction = this.transactionService.executeTransactionBuy(account, transactionPostDto);
         } else if (TransactionType.fromString(transactionPostDto.type) == TransactionType.SELL) {
@@ -66,7 +66,7 @@ public class TransactionResource {
         }
         return Response.status(Response.Status.CREATED).header(
                 "Location",
-                "accounts/" + account.getLongAccountNumber()
+                "accounts/" + account.getId()
                         + "/transactions/" + transaction.getStringTransactionId()
         ).build();
     }

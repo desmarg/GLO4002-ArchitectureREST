@@ -61,6 +61,10 @@ public class Account implements Serializable {
         return this.id;
     }
 
+    public String getResponseId() {
+        return this.makeId();
+    }
+
     public InvestorProfile getInvestorProfile() {
         return this.investorProfile;
     }
@@ -77,11 +81,23 @@ public class Account implements Serializable {
         return this.investorName;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public boolean hasEnoughCreditsToPaySellFees(Credits sellPrice, Credits feesToPay) {
         Credits balanceAfterTransaction = new Credits();
         balanceAfterTransaction.add(sellPrice);
         balanceAfterTransaction.add(this.credits);
 
         return balanceAfterTransaction.compareTo(feesToPay) != -1;
+    }
+
+    private String makeInitials(String name) {
+        return name.replaceAll("([^\\s])[^\\s]+", "$1").replaceAll("\\s", "").toUpperCase();
+    }
+
+    private String makeId() {
+        return this.makeInitials(this.investorName) + "-" + String.format("%04d", this.id);
     }
 }

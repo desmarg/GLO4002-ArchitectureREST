@@ -16,7 +16,7 @@ public class TransactionBuy extends Transaction {
             DateTime dateTime,
             Stock stock,
             Credits stockPrice,
-            AccountNumber accountNumber
+            Long accountNumber
     ) {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.BUY;

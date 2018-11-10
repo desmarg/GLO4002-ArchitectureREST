@@ -35,26 +35,18 @@ public class AccountRepositoryInMemoryTest {
 
     @Test(expected = AccountNotFoundException.class)
     public void givenNonexistentAccount_whenFindingAccount_thenThrowAccountNotFoundException() {
-        this.accountRepositoryInMemory.findByAccountId(NON_EXISTING_ACCOUNT_ID);
+        this.accountRepositoryInMemory.findByAccountNumber(NON_EXISTING_ACCOUNT_ID);
     }
 
     @Test
     public void whenSave_thenRightAccountIsSaved() {
         Long savedAccountId = this.accountRepositoryInMemory.save(this.account);
 
-        Account inMemoryAccount = this.accountRepositoryInMemory.findByAccountId(
+        Account inMemoryAccount = this.accountRepositoryInMemory.findByAccountNumber(
                 savedAccountId
         );
 
         assertEquals(this.account, inMemoryAccount);
-    }
-
-    @Test
-    public void whenSave_thenCounterIsDifferentThanInitial() {
-        Long initialCounter = this.accountRepositoryInMemory.getCounter();
-        this.accountRepositoryInMemory.save(this.account);
-
-        assertNotEquals(initialCounter, this.accountRepositoryInMemory.getCounter());
     }
 
     @Test

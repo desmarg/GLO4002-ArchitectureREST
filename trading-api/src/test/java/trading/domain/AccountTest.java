@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 public class AccountTest {
 
     private static final Long VALID_INVESTOR_ID = 1L;
-    private static final String VALID_INVESTOR_NAME = "FirstName LastName";
-    private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("FL-0001");
+    private static final String VALID_INVESTOR_NAME = "FirstName LastName"; //"FL-0001"
+    private static final Long ACCOUNT_NUMBER = 1L;
     private static final Credits INVALID_INITIAL_CREDITS = Credits.fromDouble(-10);
     private static final Credits AN_ACCOUNT_BALANCE = Credits.fromDouble(1000);
     private static final Credits SOME_CREDITS_AMOUNT = Credits.fromDouble(100);

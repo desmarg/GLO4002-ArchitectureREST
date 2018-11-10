@@ -10,13 +10,15 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account save(AccountPostRequestDTO accountPostRequestDTO) {
+    public Long save(AccountPostRequestDTO accountPostRequestDTO) {
         Account account = AccountAssembler.create(accountPostRequestDTO);
-        this.checkIfAccountAlreadyExists(account.getInvestorId());
+        if(account.getId() != null) {
+            throw new AccountAlreadyExistsException(account.getId());
+        }
         return this.accountRepository.save(account);
     }
 
-    public Account findByAccountNumber(AccountNumber accountNumber) {
+    public Account findByAccountNumber(Long accountNumber) {
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
 

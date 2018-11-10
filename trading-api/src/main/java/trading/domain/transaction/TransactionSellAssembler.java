@@ -10,7 +10,7 @@ import trading.services.StockService;
 public class TransactionSellAssembler {
 
     public static TransactionSell fromDTO(TransactionPostRequestDTO transactionPostRequestDTO,
-                                          AccountNumber accountNumber,
+                                          Long accountNumber,
                                           StockService stockService) {
         DateTime dateTime = DateTime.fromInstant(transactionPostRequestDTO.date);
         Stock stock = new Stock(transactionPostRequestDTO.stock.market, transactionPostRequestDTO.stock.symbol);

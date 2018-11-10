@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class TransactionTest {
     private class TransactionImplementation extends Transaction {
         public TransactionImplementation(Long quantity, DateTime dateTime, Stock stock, Credits
-                stockPrice, AccountNumber accountNumber) {
+                stockPrice, Long accountNumber) {
             super(quantity, dateTime, stock, stockPrice, accountNumber);
         }
 
@@ -33,7 +33,7 @@ public class TransactionTest {
     private DateTime VALID_DATE = new DateTime("2018-08-21T15:23:20.142Z");
     private Credits SMALL_STOCK_PRICE = new Credits(new BigDecimal(10));
     private Credits LARGE_STOCK_PRICE = new Credits(new BigDecimal(10000));
-    private AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
+    private Long VALID_ACCOUNT_NUMBER = 1L;//"TD-0000"
     private TransactionBuy transaction;
 
     @Before

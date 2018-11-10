@@ -23,17 +23,17 @@ public class AccountResource {
     @Path("/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") String accountNumber) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Account account = this.accountService.findByAccountNumber(Long.valueOf(accountNumber));
         return Response.status(Response.Status.OK).entity(new AccountResponse(account)).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountPostRequestDTO accountPostRequestDto) {
-        Account account = this.accountService.save(accountPostRequestDto);
+        Long id = this.accountService.save(accountPostRequestDto);
         return Response.status(Response.Status.CREATED).header(
                 "Location",
-                "accounts/" + account.getLongAccountNumber()
+                "accounts/" + id
         ).build();
     }
 }
