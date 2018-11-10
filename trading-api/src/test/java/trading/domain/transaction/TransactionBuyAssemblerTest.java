@@ -18,6 +18,9 @@ public class TransactionBuyAssemblerTest {
     public static final long INVALID_QUANTITY = 0L;
     private final AccountNumber accountNumber = new AccountNumber("TD-0000");
     private static final Instant INSTANT = new DateTime("2015-01-01T05:00:00.000Z").toInstant();
+    private static final StockDTO VALID_STOCKDTO = new StockDTO();
+    private static final String MARKET = "bla";
+    private static final String SYMBOL = "bla";
 
 
     @Mock
@@ -28,9 +31,9 @@ public class TransactionBuyAssemblerTest {
         TransactionPostRequestDTO transactionPostRequestDTO = new TransactionPostRequestDTO();
         transactionPostRequestDTO.date = INSTANT;
         transactionPostRequestDTO.quantity = INVALID_QUANTITY;
-        transactionPostRequestDTO.stock = new StockDTO();
-        transactionPostRequestDTO.stock.market = "BitteMarket";
-        transactionPostRequestDTO.stock.symbol = "BitteSymbol";
+        transactionPostRequestDTO.stock = VALID_STOCKDTO;
+        transactionPostRequestDTO.stock.market = MARKET;
+        transactionPostRequestDTO.stock.symbol = SYMBOL;
         TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, this.accountNumber, this.stockService);
     }
 }
