@@ -32,14 +32,6 @@ public class TransactionSellTest {
     private Stock stock;
 
     @Test
-    public void givenTransactionSell_whenExecuteTransaction_thenDecuceStockCalled() {
-        TransactionSell transactionSell = new TransactionSell(A_QUANTITY, VALID_DATE, this.stock,
-                SOME_STOCK_PRICE, SOME_TRANSACTION_NUMBER, VALID_ACCOUNT_NUMBER);
-        transactionSell.executeTransaction(this.account);
-        verify(this.transactionBuy).deduceStock(A_QUANTITY);
-    }
-
-    @Test
     public void givenTransactionSell_whenExecuteTransaction_thenAddCreditsCalled() {
         TransactionSell transactionSell = new TransactionSell(A_QUANTITY, VALID_DATE, this.stock,
                 SOME_STOCK_PRICE, SOME_TRANSACTION_NUMBER, VALID_ACCOUNT_NUMBER);
