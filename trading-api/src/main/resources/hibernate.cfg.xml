@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="trading.domain.Account.AccountNumber"/>
+        <mapping class="trading.domain.Account.Account"/>
+        <mapping class="trading.domain.InvestorProfile"/>
+        <mapping class="trading.domain.Credits.Credits"/>
+    </session-factory>
+</hibernate-configuration>

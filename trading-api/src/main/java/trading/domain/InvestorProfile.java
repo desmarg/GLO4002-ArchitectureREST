@@ -1,12 +1,19 @@
 package trading.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class InvestorProfile {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @Column
     private ProfileType profileType;
-    private List<FocusArea> focusAreas;
+    @ElementCollection
+    private List<String> focusAreas;
 
-    public InvestorProfile(ProfileType profileType, List<FocusArea> focusAreas) {
+    public InvestorProfile(ProfileType profileType, List<String> focusAreas) {
         this.profileType = profileType;
         this.focusAreas = focusAreas;
     }
@@ -15,7 +22,7 @@ public class InvestorProfile {
         return this.profileType;
     }
 
-    public List<FocusArea> getFocusAreas() {
+    public List<String> getFocusAreas() {
         return this.focusAreas;
     }
 }

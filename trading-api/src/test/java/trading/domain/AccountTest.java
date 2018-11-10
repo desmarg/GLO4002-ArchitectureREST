@@ -29,7 +29,7 @@ public class AccountTest {
     @Before
     public void setup() {
         this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE);
-        this.basicAccount.setAccountNumber(ACCOUNT_NUMBER);
+        this.basicAccount.setId(ACCOUNT_NUMBER);
     }
 
     @Test

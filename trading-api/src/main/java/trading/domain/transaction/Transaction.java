@@ -5,15 +5,29 @@ import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Transactions")
 public abstract class Transaction {
+    @Id
     protected AccountNumber accountNumber;
+    @Column
     protected TransactionNumber transactionNumber;
+    @Column
     protected TransactionType transactionType;
+    @Column
     protected Long quantity;
+    @Column
     protected DateTime dateTime;
+    @Column
     protected Stock stock;
+    @Column
     protected Credits stockPrice;
+    @Column
     protected Credits price;
+    @Column
     protected Credits fees;
 
 

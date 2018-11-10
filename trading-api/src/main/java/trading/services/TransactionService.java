@@ -20,7 +20,7 @@ public class TransactionService {
     }
 
     public Transaction executeTransactionBuy(Account account, TransactionPostRequestDTO transactionPostRequestDTO) {
-        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
+        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getId(), this.stockService);
         String market = transactionBuy.getMarket();
         if (this.marketService.isMarketOpen(market)) {
             throw new MarketClosedException(market);
@@ -31,7 +31,7 @@ public class TransactionService {
     }
 
     public Transaction executeTransactionSell(Account account, TransactionPostRequestDTO transactionPostRequestDTO) {
-        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
+        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getId(), this.stockService);
         TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
         String market = transactionSell.getMarket();
         if (this.marketService.isMarketOpen(market)) {

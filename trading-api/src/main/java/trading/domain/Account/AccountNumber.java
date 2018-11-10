@@ -1,39 +1,54 @@
 package trading.domain.Account;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class AccountNumber {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column
+    private String identifiants;
+
     private static final int FIRST_ODD_NUMBER = 13;
     private static final int SECOND_ODD_NUMBER = 17;
-    private String id;
 
-    public AccountNumber(String name, Long accoundId) {
-        this.id = this.makeId(name, accoundId);
+    public AccountNumber(String name, Long id) {
+        this.identifiants = this.makeId(name, id);
     }
 
     public AccountNumber(String accountNumber) {
-        this.id = accountNumber;
+        this.identifiants = accountNumber;
     }
 
     public String makeInitials(String name) {
         return name.replaceAll("([^\\s])[^\\s]+", "$1").replaceAll("\\s", "").toUpperCase();
     }
 
-    public String getId() {
+    public String getIdentifiants() {
+        return this.identifiants;
+    }
+
+    public Long getId() {
         return this.id;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof AccountNumber) {
-            return this.id.equals(((AccountNumber) obj).getId());
+            return this.identifiants.equals(((AccountNumber) obj).getIdentifiants());
         } else if (obj instanceof String) {
-            return this.id.equals(obj);
+            return this.identifiants.equals(obj);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
+        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.identifiants.hashCode();
     }
 
     private String makeId(String name, Long accountId) {

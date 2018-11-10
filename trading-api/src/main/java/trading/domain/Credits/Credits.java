@@ -2,11 +2,20 @@ package trading.domain.Credits;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+@Entity
 public class Credits implements Comparable<Credits> {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @Column
     private BigDecimal amount;
 
     public Credits() {

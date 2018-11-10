@@ -1,17 +1,26 @@
 package trading.domain.Account;
 
 import trading.domain.Credits.Credits;
-import trading.domain.FocusArea;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Account {
-    private AccountNumber accountNumber;
+@Entity
+@Table(name = "ACCOUNTS")
+public class Account implements Serializable {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column
     private Long investorId;
+    @OneToOne(targetEntity = InvestorProfile.class)
     private InvestorProfile investorProfile;
+    @Column
     private String investorName;
+    @OneToOne(targetEntity = Credits.class)
     private Credits credits;
 
     public Account(
@@ -25,7 +34,7 @@ public class Account {
         this.credits = credits;
         this.investorProfile = new InvestorProfile(
                 ProfileType.CONSERVATIVE,
-                new ArrayList<FocusArea>()
+                new ArrayList<String>()
         );
     }
 
@@ -48,12 +57,8 @@ public class Account {
         return this.credits.compareTo(transactionPrice) >= 0;
     }
 
-    public AccountNumber getAccountNumber() {
-        return this.accountNumber;
-    }
-
-    public String getLongAccountNumber() {
-        return this.accountNumber.getId();
+    public Long getId() {
+        return this.id;
     }
 
     public InvestorProfile getInvestorProfile() {
@@ -70,10 +75,6 @@ public class Account {
 
     public String getInvestorName() {
         return this.investorName;
-    }
-
-    public void setAccountNumber(AccountNumber accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
     public boolean hasEnoughCreditsToPaySellFees(Credits sellPrice, Credits feesToPay) {

@@ -1,9 +1,9 @@
 package trading.domain.Account;
 
 public interface AccountRepository {
-    Account save(Account account);
+    Long save(Account account);
 
-    Account findByAccountNumber(AccountNumber accountNumber);
+    Account findByAccountId(Long accountNumber);
 
     boolean accountAlreadyExists(Long investorId);
 }
