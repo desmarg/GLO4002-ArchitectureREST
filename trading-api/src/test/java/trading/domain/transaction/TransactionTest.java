@@ -33,7 +33,7 @@ public class TransactionTest {
 
     @Test
     public void whenCalculatingTransactionPrice_thenStockPriceIsMultipliedByQuantity() {
-        Credits transactionPrice = this.transaction.getPriceWithoutFees();
+        Credits transactionPrice = this.transaction.getPrice();
 
         BigDecimal expectedTransactionPrice = new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
                 (this.SMALL_STOCK_PRICE.getAmount());
@@ -43,7 +43,7 @@ public class TransactionTest {
     @Test
     public void
     givenTotalLessThan5000AndQuantitySmallerThan100_whenCalculatingFees_thenQuarterRateFees() {
-        Credits transactionFees = this.transaction.calculateFees();
+        Credits transactionFees = this.transaction.getFees();
 
         Credits expectedFees = Credits.fromDouble(this.FEE_FOR_100_OR_MORE_TRANSACTIONS);
         expectedFees.multiply(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED);
@@ -55,7 +55,7 @@ public class TransactionTest {
     givenTotalLessThan5000AndQuantityBiggerThan100_whenCalculatingFees_thenFifthRateFees() {
         this.transaction = new TransactionBuy(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
                 this.VALID_DATE, this.stock, this.SMALL_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
-        Credits transactionFees = this.transaction.calculateFees();
+        Credits transactionFees = this.transaction.getFees();
 
         Credits expectedFees = Credits.fromDouble(this.FEE_UNDER_100_TRANSACTIONS);
         expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
@@ -66,11 +66,11 @@ public class TransactionTest {
     public void givenTotalPriceMoreThan5000_whenCalculatingFees_thenAdditionalRateAdded() {
         this.transaction = new TransactionBuy(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED,
                 this.VALID_DATE, this.stock, this.LARGE_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
-        Credits transactionFees = this.transaction.calculateFees();
+        Credits transactionFees = this.transaction.getFees();
 
         Credits expectedFees = Credits.fromDouble(this.FEE_UNDER_100_TRANSACTIONS);
         expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
-        Credits additionalFees = new Credits(this.transaction.getPriceWithoutFees());
+        Credits additionalFees = new Credits(this.transaction.getPrice());
         additionalFees.multiply(0.03);
         expectedFees.add(additionalFees);
         assertEquals(expectedFees.getAmount(), transactionFees.getAmount());

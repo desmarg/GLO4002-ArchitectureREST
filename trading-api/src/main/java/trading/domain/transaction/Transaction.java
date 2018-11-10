@@ -41,14 +41,6 @@ public abstract class Transaction {
         return transactionPrice;
     }
 
-    public Credits getTotalPrice() {
-        Credits totalPrice = new Credits();
-        totalPrice.add(this.price);
-        totalPrice.add(this.fees);
-
-        return totalPrice;
-    }
-
     private Credits calculateFees() {
         Credits fees = new Credits();
         if (this.quantity <= 100) {

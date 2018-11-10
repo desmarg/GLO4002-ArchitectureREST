@@ -35,4 +35,12 @@ public class TransactionBuy extends Transaction {
     public Long getRemainingStocks() {
         return this.remainingStocks;
     }
+
+    public Credits getPriceWithFees() {
+        Credits totalPrice = new Credits();
+        totalPrice.add(this.price);
+        totalPrice.add(this.fees);
+
+        return totalPrice;
+    }
 }

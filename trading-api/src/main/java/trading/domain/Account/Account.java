@@ -3,7 +3,8 @@ package trading.domain.Account;
 import trading.domain.Credits.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
-import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionSell;
 
 import java.util.ArrayList;
 
@@ -28,23 +29,19 @@ public class Account {
         );
     }
 
-    public void buyTransaction(Transaction transaction) {
-        if (this.credits.compareTo(transaction.getTotalPrice()) < 0) {
-            throw new NotEnoughCreditsException(transaction.getTransactionNumber());
+    public void buyTransaction(TransactionBuy transactionBuy) {
+        if (this.credits.compareTo(transactionBuy.getPriceWithFees()) < 0) {
+            throw new NotEnoughCreditsException(transactionBuy.getTransactionNumber());
         }
-        this.credits.subtract(transaction.getTotalPrice());
+        this.credits.subtract(transactionBuy.getPriceWithFees());
     }
 
-    public void sellTransaction(Transaction transaction) {
-        if (this.credits.compareTo(transaction.getFees()) < 0) {
+    public void sellTransaction(TransactionSell transactionSell) {
+        if (this.credits.compareTo(transactionSell.getFees()) < 0) {
             throw new NotEnoughCreditsForFeesException();
         }
-        this.credits.subtract(transaction.getFees());
-        this.credits.add(transaction.getPrice());
-    }
-
-    public void addCredits(Credits transactionPrice) {
-        this.credits.add(transactionPrice);
+        this.credits.subtract(transactionSell.getFees());
+        this.credits.add(transactionSell.getPrice());
     }
 
     public AccountNumber getAccountNumber() {
