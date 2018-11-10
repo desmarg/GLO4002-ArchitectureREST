@@ -9,6 +9,7 @@ import trading.external.response.Market.MarketDTO;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,7 +49,7 @@ public class MarketServiceTest {
 
         MarketDTO marketDto = new MarketDTO();
         marketDto.openHours = hours;
-        ArrayList<Pair<LocalTime, LocalTime>> parsedHours = this.marketService.parseMarketHours(marketDto);
+        List<Pair<LocalTime, LocalTime>> parsedHours = this.marketService.parseMarketHours(marketDto);
         assertEquals(parsedHours.get(0).getKey(), LocalTime.parse("06:00"));
         assertEquals(parsedHours.get(0).getValue(), LocalTime.parse("12:00"));
         assertEquals(parsedHours.get(1).getKey(), LocalTime.parse("13:00"));

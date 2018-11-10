@@ -6,6 +6,7 @@ import trading.domain.transaction.TransactionNumber;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.UUID;
 
 public class TransactionPostRequestDTO {
     @NotNull
@@ -13,8 +14,8 @@ public class TransactionPostRequestDTO {
     @NotNull
     public Instant date;
     @NotNull
-    public Stock stock;
+    public StockDTO stock;
     @NotNull
     public Long quantity;
-    public TransactionNumber transactionNumber;
+    public UUID transactionNumber;
 }

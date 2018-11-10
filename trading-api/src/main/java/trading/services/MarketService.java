@@ -10,6 +10,7 @@ import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MarketService {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -18,7 +19,7 @@ public class MarketService {
 
         LocalTime time = LocalTime.now();
         MarketDTO marketDto = this.getMarketDto(market);
-        ArrayList<Pair<LocalTime, LocalTime>> times = this.parseMarketHours(marketDto);
+        List<Pair<LocalTime, LocalTime>> times = this.parseMarketHours(marketDto);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
 
         for (Pair<LocalTime, LocalTime> timesPair : times) {
@@ -40,9 +41,9 @@ public class MarketService {
         return marketDto;
     }
 
-    public ArrayList<Pair<LocalTime, LocalTime>> parseMarketHours(MarketDTO marketDto) {
-        ArrayList<String> hours = marketDto.openHours;
-        ArrayList<Pair<LocalTime, LocalTime>> times = new ArrayList<>();
+    public List<Pair<LocalTime, LocalTime>> parseMarketHours(MarketDTO marketDto) {
+        List<String> hours = marketDto.openHours;
+        List<Pair<LocalTime, LocalTime>> times = new ArrayList<>();
         for (String hour : hours) {
             String[] splitTime = hour.split("-");
             LocalTime beginTime = LocalTime.parse("00000".substring(splitTime[0].length()) + splitTime[0], this.formatter);

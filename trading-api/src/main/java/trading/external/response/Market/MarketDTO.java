@@ -1,9 +1,13 @@
 package trading.external.response.Market;
 
-import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class MarketDTO {
-    public ArrayList<String> openHours;
+    @NotNull
+    public List<String> openHours;
+    @NotNull
     public String symbol;
+    @NotNull
     public String timezone;
 }

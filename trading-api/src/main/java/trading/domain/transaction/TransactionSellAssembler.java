@@ -13,13 +13,13 @@ public class TransactionSellAssembler {
                                           AccountNumber accountNumber,
                                           StockService stockService) {
         DateTime dateTime = DateTime.fromInstant(transactionPostRequestDTO.date);
-        Stock stock = transactionPostRequestDTO.stock;
+        Stock stock = new Stock(transactionPostRequestDTO.stock.market, transactionPostRequestDTO.stock.symbol);
 
         Long quantity = transactionPostRequestDTO.quantity;
         if (quantity <= 0) {
             throw new InvalidQuantityException();
         }
-        TransactionNumber referredTransactionNumber = transactionPostRequestDTO.transactionNumber;
+        TransactionNumber referredTransactionNumber = new TransactionNumber(transactionPostRequestDTO.transactionNumber);
         Credits stockPrice = stockService.getStockPrice(stock, dateTime);
 
         return new TransactionSell(quantity, dateTime, stock, stockPrice, referredTransactionNumber, accountNumber);

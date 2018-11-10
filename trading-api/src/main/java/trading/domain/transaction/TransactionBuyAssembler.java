@@ -13,7 +13,7 @@ public class TransactionBuyAssembler {
                                          AccountNumber accountNumber,
                                          StockService stockService) {
         DateTime dateTime = DateTime.fromInstant(transactionPostRequestDTO.date);
-        Stock stock = transactionPostRequestDTO.stock;
+        Stock stock = new Stock(transactionPostRequestDTO.stock.market, transactionPostRequestDTO.stock.symbol);
 
         Long quantity = transactionPostRequestDTO.quantity;
         if (quantity <= 0) {

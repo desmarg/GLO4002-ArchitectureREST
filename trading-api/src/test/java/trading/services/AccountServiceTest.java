@@ -12,6 +12,8 @@ import trading.domain.Credits.Credits;
 import trading.domain.Account.AccountAlreadyExistsException;
 import trading.domain.Account.AccountRepository;
 
+import java.math.BigDecimal;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,7 +24,7 @@ public class AccountServiceTest {
     private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("TA-123");
     private static final Long INVESTOR_ID = 1L;
     private static final String INVESTOR_NAME = "Example Name";
-    private static final Credits CREDITS = Credits.fromDouble(1.1);
+    private static final BigDecimal CREDITS = new BigDecimal(1.1);
 
     private AccountPostRequestDTO accountPostRequestDto = new AccountPostRequestDTO();
     private AccountService accountService;

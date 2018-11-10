@@ -1,6 +1,7 @@
 package trading.domain.Account;
 
 import trading.api.request.AccountPostRequestDTO;
+import trading.domain.Credits.Credits;
 
 public class AccountAssembler {
     public static Account create(AccountPostRequestDTO accountPostRequestDto) {
@@ -8,7 +9,7 @@ public class AccountAssembler {
         return new Account(
                 accountPostRequestDto.investorId,
                 accountPostRequestDto.investorName,
-                accountPostRequestDto.credits
+                new Credits(accountPostRequestDto.credits)
         );
     }
 }
