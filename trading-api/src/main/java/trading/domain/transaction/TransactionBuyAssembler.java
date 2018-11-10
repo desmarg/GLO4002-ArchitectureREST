@@ -12,7 +12,7 @@ public class TransactionBuyAssembler {
     public static TransactionBuy fromDTO(TransactionPostRequestDTO transactionPostRequestDTO,
                                          AccountNumber accountNumber,
                                          StockService stockService) {
-        DateTime dateTime = transactionPostRequestDTO.date;
+        DateTime dateTime = DateTime.fromInstant(transactionPostRequestDTO.date);
         Stock stock = transactionPostRequestDTO.stock;
 
         Long quantity = transactionPostRequestDTO.quantity;

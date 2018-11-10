@@ -29,7 +29,10 @@ public class StockService {
 
     public Credits getPriceFromDateTime(StockDTO stockDto, DateTime dateTime) {
         for (StockPriceResponse priceInfo : stockDto.getPrices()) {
-            if (priceInfo.getDate().truncatedToDays().equals(dateTime.truncatedToDays())) {
+
+            DateTime princeInfoDateTime = DateTime.fromInstant(priceInfo.getDate());
+
+            if (princeInfoDateTime.getDayOfYear().equals(dateTime.getDayOfYear())) {
                 return priceInfo.getPrice();
             }
         }

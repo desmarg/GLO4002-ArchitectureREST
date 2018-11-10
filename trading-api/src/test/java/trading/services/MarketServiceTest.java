@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.external.response.Market.MarketDto;
+import trading.external.response.Market.MarketDTO;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class MarketServiceTest {
         hours.add("06:00-12:00");
         hours.add("13:00-17:00");
 
-        MarketDto marketDto = new MarketDto();
+        MarketDTO marketDto = new MarketDTO();
         marketDto.openHours = hours;
         ArrayList<Pair<LocalTime, LocalTime>> parsedHours = this.marketService.parseMarketHours(marketDto);
         assertEquals(parsedHours.get(0).getKey(), LocalTime.parse("06:00"));

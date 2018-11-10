@@ -1,27 +1,30 @@
 package trading.domain.DateTime;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 public class DateTime {
-    private Instant instant;
+    private OffsetDateTime dateTime;
 
     public DateTime(String date) {
-        this.instant = Instant.parse(date);
+        Instant instant = Instant.parse(date);
+        this.dateTime = OffsetDateTime.ofInstant(instant, ZoneId.of("UTC"));
     }
 
-    @JsonValue
-    public String toString() {
-        return this.instant.toString();
+    public DateTime(OffsetDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public Instant truncatedToDays() {
-        return this.instant.truncatedTo(ChronoUnit.DAYS);
+    public static DateTime fromInstant(Instant instant) {
+        return new DateTime(OffsetDateTime.ofInstant(instant, ZoneId.of("UTC")));
     }
 
-    public Instant asInstant() {
-        return this.instant;
+    public Integer getDayOfYear() {
+        return this.dateTime.getDayOfYear();
+    }
+
+    public Instant toInstant() {
+        return this.dateTime.toInstant();
     }
 }

@@ -20,7 +20,7 @@ public class StockServiceTest {
 
     StockDTO createStockResponse(DateTime dateTime) {
         StockPriceResponse stockPrice = new StockPriceResponse();
-        stockPrice.setDate(dateTime);
+        stockPrice.setDate(dateTime.toInstant());
         stockPrice.setPrice(PRICE);
 
         List stockPrices = new ArrayList<>();

@@ -1,18 +1,19 @@
 package trading.external.response;
 
 import trading.domain.Credits.Credits;
-import trading.domain.DateTime.DateTime;
+
+import java.time.Instant;
 
 public class StockPriceResponse {
-    private DateTime date;
+    private Instant date;
     private Credits price;
 
-    public DateTime getDate() {
+    public Instant getDate() {
         return this.date;
     }
 
-    public void setDate(DateTime dateTime) {
-        this.date = dateTime;
+    public void setDate(Instant date) {
+        this.date = date;
     }
 
     public Credits getPrice() {

@@ -2,7 +2,7 @@ package trading.services;
 
 import javafx.util.Pair;
 import trading.application.JerseyClient;
-import trading.external.response.Market.MarketDto;
+import trading.external.response.Market.MarketDTO;
 import trading.external.response.Market.MarketNotFoundException;
 
 import java.time.LocalTime;
@@ -17,7 +17,7 @@ public class MarketService {
     public boolean isMarketOpen(String market) {
 
         LocalTime time = LocalTime.now();
-        MarketDto marketDto = this.getMarketDto(market);
+        MarketDTO marketDto = this.getMarketDto(market);
         ArrayList<Pair<LocalTime, LocalTime>> times = this.parseMarketHours(marketDto);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
 
@@ -31,16 +31,16 @@ public class MarketService {
         return true;
     }
 
-    public MarketDto getMarketDto(String market) {
+    public MarketDTO getMarketDto(String market) {
         String url = "/markets/" + market;
-        MarketDto marketDto = JerseyClient.getInstance().getRequest(url, MarketDto.class);
+        MarketDTO marketDto = JerseyClient.getInstance().getRequest(url, MarketDTO.class);
         if (marketDto == null) {
             throw new MarketNotFoundException(market);
         }
         return marketDto;
     }
 
-    public ArrayList<Pair<LocalTime, LocalTime>> parseMarketHours(MarketDto marketDto) {
+    public ArrayList<Pair<LocalTime, LocalTime>> parseMarketHours(MarketDTO marketDto) {
         ArrayList<String> hours = marketDto.openHours;
         ArrayList<Pair<LocalTime, LocalTime>> times = new ArrayList<>();
         for (String hour : hours) {
