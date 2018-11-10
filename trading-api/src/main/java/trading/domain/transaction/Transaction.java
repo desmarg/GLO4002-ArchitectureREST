@@ -52,17 +52,20 @@ public abstract class Transaction {
     public Credits calculateFees() {
         Credits fees = new Credits();
         if (this.quantity <= 100) {
-            Credits baseFee = Credits.fromDouble(0.25);
+            double feeFor100orMoreTransactions = 0.25;
+            Credits baseFee = Credits.fromDouble(feeFor100orMoreTransactions);
             fees.add(baseFee);
             fees.multiply(this.quantity);
         } else {
-            Credits baseFee = Credits.fromDouble(0.20);
+            double feeUnder100Transactions = 0.20;
+            Credits baseFee = Credits.fromDouble(feeUnder100Transactions);
             fees.add(baseFee);
             fees.multiply(this.quantity);
         }
         if (this.price.compareTo(Credits.fromDouble(5000)) > 0) {
             Credits additionalFees = new Credits(this.price);
-            additionalFees.multiply(0.03);
+            double additionalPercentFeeOver5000 = 0.03;
+            additionalFees.multiply(additionalPercentFeeOver5000);
             fees.add(additionalFees);
         }
 

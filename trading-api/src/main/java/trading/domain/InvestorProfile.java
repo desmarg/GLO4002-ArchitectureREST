@@ -3,10 +3,10 @@ package trading.domain;
 import java.util.List;
 
 public class InvestorProfile {
-    private ProfileType profileType;
-    private List<FocusArea> focusAreas;
+    private final ProfileType profileType;
+    private final List<String> focusAreas;
 
-    public InvestorProfile(ProfileType profileType, List<FocusArea> focusAreas) {
+    public InvestorProfile(final ProfileType profileType, final List<String> focusAreas) {
         this.profileType = profileType;
         this.focusAreas = focusAreas;
     }
@@ -15,7 +15,7 @@ public class InvestorProfile {
         return this.profileType;
     }
 
-    public List<FocusArea> getFocusAreas() {
+    public List<String> getFocusAreas() {
         return this.focusAreas;
     }
 }

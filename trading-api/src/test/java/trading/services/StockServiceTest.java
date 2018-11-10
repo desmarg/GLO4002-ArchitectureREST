@@ -17,14 +17,14 @@ public class StockServiceTest {
     private static final DateTime INVALID_DATE_TIME = new DateTime("1801-05-04T05:00:00.000Z");
     private static final BigDecimal PRICE = new BigDecimal(1.);
 
-    private StockService stockService = new StockService();
+    private final StockService stockService = new StockService();
 
     StockApiDTO createStockResponse(DateTime dateTime) {
         StockPriceResponseDTO stockPrice = new StockPriceResponseDTO();
         stockPrice.date = dateTime.toInstant();
         stockPrice.price = PRICE;
 
-        List stockPrices = new ArrayList<>();
+        final List stockPrices = new ArrayList<>();
         stockPrices.add(stockPrice);
 
         StockApiDTO stockDTO = new StockApiDTO();
@@ -34,7 +34,7 @@ public class StockServiceTest {
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDateTime_thenReturnCredits() {
-        Credits creditsFound = this.stockService.getPriceFromDateTime(
+        final Credits creditsFound = this.stockService.retrievePriceFromDateTime(
                 this.createStockResponse(DATE_TIME), DATE_TIME
         );
 

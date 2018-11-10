@@ -3,8 +3,6 @@ package trading.api.resource;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.api.response.TransactionResponse;
 import trading.api.response.TransactionResponseFactory;
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.domain.transaction.TransactionType;
@@ -13,10 +11,13 @@ import trading.services.AccountService;
 import trading.services.Services;
 import trading.services.TransactionService;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.UUID;
 
 @Path("/accounts/{accountNumber}/transactions")
 public class TransactionResource {
@@ -33,19 +34,14 @@ public class TransactionResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTransaction(
             @PathParam("accountNumber") String accountNumber,
-            @PathParam("transactionNumber") String transactionNumberString
+            @PathParam("transactionNumber") String transactionNumberParam
     ) {
-        TransactionNumber transactionNumber = new TransactionNumber(
-                UUID.fromString(transactionNumberString)
-        );
+        TransactionNumber transactionNumber = new TransactionNumber(transactionNumberParam);
 
-        Transaction transaction = this.transactionService.getTransaction(
-                transactionNumber
-        );
-        TransactionResponse transactionDto =
-                TransactionResponseFactory.createTransactionDto(transaction);
+        Transaction transaction = this.transactionService.getTransaction(transactionNumber);
+        TransactionResponse transactionResponse = TransactionResponseFactory.createTransactionResponse(transaction);
 
-        return Response.status(Response.Status.OK).entity(transactionDto).build();
+        return Response.status(Response.Status.OK).entity(transactionResponse).build();
     }
 
     @POST
@@ -56,18 +52,16 @@ public class TransactionResource {
             TransactionPostRequestDTO transactionPostDto
     ) {
         Transaction transaction;
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         if (TransactionType.fromString(transactionPostDto.type) == TransactionType.BUY) {
-            transaction = this.transactionService.executeTransactionBuy(account, transactionPostDto);
+            transaction = this.transactionService.executeTransactionBuy(accountNumber, transactionPostDto);
         } else if (TransactionType.fromString(transactionPostDto.type) == TransactionType.SELL) {
-            transaction = this.transactionService.executeTransactionSell(account, transactionPostDto);
+            transaction = this.transactionService.executeTransactionSell(accountNumber, transactionPostDto);
         } else {
             throw new UnsupportedTransactionTypeException(transactionPostDto.type);
         }
         return Response.status(Response.Status.CREATED).header(
                 "Location",
-                "accounts/" + account.getLongAccountNumber()
-                        + "/transactions/" + transaction.getStringTransactionId()
+                "accounts/" + accountNumber + "/transactions/" + transaction.getStringTransactionId()
         ).build();
     }
 }

@@ -3,10 +3,10 @@ package trading.services;
 import trading.application.JerseyClient;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
-import trading.domain.Stock;
-import trading.domain.transaction.TransactionNumber;
 import trading.domain.DateTime.InvalidDateException;
+import trading.domain.Stock;
 import trading.domain.transaction.StockNotFoundException;
+import trading.domain.transaction.TransactionNumber;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
 
@@ -14,9 +14,9 @@ import java.util.UUID;
 
 public class StockService {
 
-    public Credits getStockPrice(Stock stock, DateTime dateTime) {
-        String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        StockApiDTO stockDto = JerseyClient.getInstance().getRequest(url, StockApiDTO.class);
+    public Credits retrieveStockPrice(final Stock stock, final DateTime dateTime) {
+        final String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
+        final StockDTO stockDto = JerseyClient.getInstance().getRequest(url, StockDTO.class);
         if (stockDto == null) {
             throw new StockNotFoundException(
                     stock.getSymbol(),
@@ -24,7 +24,7 @@ public class StockService {
                     new TransactionNumber(UUID.randomUUID())
             );
         }
-        return this.getPriceFromDateTime(stockDto, dateTime);
+        return this.retrievePriceFromDateTime(stockDto, dateTime);
     }
 
     public Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
