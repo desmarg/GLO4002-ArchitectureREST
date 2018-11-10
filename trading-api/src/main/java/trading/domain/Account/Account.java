@@ -18,7 +18,6 @@ public class Account {
             final String investorName,
             final Credits credits
     ) {
-        this.validateInitialCredits(credits);
         this.investorId = investorId;
         this.investorName = investorName;
         this.credits = credits;
@@ -26,13 +25,6 @@ public class Account {
                 ProfileType.CONSERVATIVE,
                 new ArrayList<String>()
         );
-    }
-
-    public void validateInitialCredits(final Credits credits) {
-        final Credits nullCredits = new Credits();
-        if (credits.compareTo(nullCredits) < 0) {
-            throw new InvalidCreditsAmountException();
-        }
     }
 
     public void subtractCredits(final Credits transactionPrice) {

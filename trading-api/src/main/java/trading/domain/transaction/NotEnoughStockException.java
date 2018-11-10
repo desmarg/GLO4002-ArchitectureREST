@@ -1,14 +1,13 @@
 package trading.domain.transaction;
 
 import trading.domain.Stock;
-import trading.domain.transaction.TransactionNumber;
 import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class NotEnoughStockException extends MappedException {
-    private UUID transactionNumber;
+    private final UUID transactionNumber;
 
     public NotEnoughStockException(Stock stock) {
         super(

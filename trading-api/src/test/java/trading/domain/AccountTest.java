@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Account.InvalidCreditsAmountException;
 import trading.domain.Credits.Credits;
 
 import static org.junit.Assert.*;
@@ -35,12 +34,6 @@ public class AccountTest {
     @Test
     public void whenCreatingNewAccount_thenProfileTypeIsConservative() {
         assertEquals(ProfileType.CONSERVATIVE, this.basicAccount.getInvestorProfile().getProfileType());
-    }
-
-
-    @Test(expected = InvalidCreditsAmountException.class)
-    public void givenInvalidCreditsAmount_whenValidating_thenThrowInvalidCreditsAmountException() {
-        this.basicAccount.validateInitialCredits(INVALID_INITIAL_CREDITS);
     }
 
     @Test

@@ -1,8 +1,7 @@
 package trading.api.request;
 
-import trading.domain.DateTime.DateTime;
-import trading.domain.Stock;
-import trading.domain.transaction.TransactionNumber;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import trading.api.configuration.CustomInstantDeserializer;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -12,6 +11,7 @@ public class TransactionPostRequestDTO {
     @NotNull
     public String type;
     @NotNull
+    @JsonDeserialize(using = CustomInstantDeserializer.class)
     public Instant date;
     @NotNull
     public StockDTO stock;

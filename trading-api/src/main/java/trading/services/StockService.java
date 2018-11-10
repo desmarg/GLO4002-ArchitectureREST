@@ -14,14 +14,13 @@ import java.util.UUID;
 
 public class StockService {
 
-    public Credits retrieveStockPrice(final Stock stock, final DateTime dateTime) {
-        final String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        final StockApiDTO stockApiDTO = JerseyClient.getInstance().getRequest(url, StockApiDTO.class);
+    public Credits retrieveStockPrice(Stock stock, DateTime dateTime) {
+        String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
+        StockApiDTO stockApiDTO = JerseyClient.getInstance().getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
             throw new StockNotFoundException(
                     stock.getSymbol(),
-                    stock.getMarket(),
-                    new TransactionNumber(UUID.randomUUID())
+                    stock.getMarket()
             );
         }
         return this.getPriceFromDateTime(stockApiDTO, dateTime);
