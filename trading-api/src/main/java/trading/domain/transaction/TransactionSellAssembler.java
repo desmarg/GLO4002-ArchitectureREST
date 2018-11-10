@@ -9,18 +9,18 @@ import trading.services.StockService;
 
 public class TransactionSellAssembler {
 
-    public static TransactionSell fromDTO(TransactionPostRequestDTO transactionPostRequestDTO,
-                                          AccountNumber accountNumber,
-                                          StockService stockService) {
-        DateTime dateTime = transactionPostRequestDTO.date;
-        Stock stock = transactionPostRequestDTO.stock;
+    public static TransactionSell fromDTO(final TransactionPostRequestDTO transactionPostRequestDTO,
+                                          final AccountNumber accountNumber,
+                                          final StockService stockService) {
+        final DateTime dateTime = transactionPostRequestDTO.date;
+        final Stock stock = transactionPostRequestDTO.stock;
 
-        Long quantity = transactionPostRequestDTO.quantity;
+        final Long quantity = transactionPostRequestDTO.quantity;
         if (quantity <= 0) {
             throw new InvalidQuantityException();
         }
-        TransactionNumber referredTransactionNumber = transactionPostRequestDTO.transactionNumber;
-        Credits stockPrice = stockService.getStockPrice(stock, dateTime);
+        final TransactionNumber referredTransactionNumber = transactionPostRequestDTO.transactionNumber;
+        final Credits stockPrice = stockService.retrieveStockPrice(stock, dateTime);
 
         return new TransactionSell(quantity, dateTime, stock, stockPrice, referredTransactionNumber, accountNumber);
     }

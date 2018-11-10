@@ -7,7 +7,7 @@ import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
 public class TransactionSell extends Transaction {
-    private TransactionNumber referredTransactionNumber;
+    private final TransactionNumber referredTransactionNumber;
 
     public TransactionSell(
             Long quantity,
@@ -22,8 +22,7 @@ public class TransactionSell extends Transaction {
         this.referredTransactionNumber = referredTransactionNumber;
     }
 
-    public void executeTransaction(Account account, TransactionBuy referredTransaction) {
-        referredTransaction.deduceStock(this.quantity);
+    public void executeTransaction(Account account) {
         account.addCredits(this.price);
         account.subtractCredits(this.fees);
     }

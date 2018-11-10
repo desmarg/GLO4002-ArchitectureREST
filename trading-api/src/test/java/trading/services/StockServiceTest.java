@@ -16,24 +16,24 @@ public class StockServiceTest {
     private static final DateTime INVALID_DATE_TIME = new DateTime("1801-05-04T05:00:00.000Z");
     private static final Credits PRICE = Credits.fromDouble(1.);
 
-    private StockService stockService = new StockService();
+    private final StockService stockService = new StockService();
 
-    StockDTO createStockResponse(DateTime dateTime) {
-        StockPriceResponse stockPrice = new StockPriceResponse();
+    StockDTO createStockResponse(final DateTime dateTime) {
+        final StockPriceResponse stockPrice = new StockPriceResponse();
         stockPrice.setDate(dateTime);
         stockPrice.setPrice(PRICE);
 
-        List stockPrices = new ArrayList<>();
+        final List stockPrices = new ArrayList<>();
         stockPrices.add(stockPrice);
 
-        StockDTO stockDTO = new StockDTO();
+        final StockDTO stockDTO = new StockDTO();
         stockDTO.setPrices(stockPrices);
         return stockDTO;
     }
 
     @Test
     public void givenValidDateTime_whenGetPriceFromDateTime_thenReturnCredits() {
-        Credits creditsFound = this.stockService.getPriceFromDateTime(
+        final Credits creditsFound = this.stockService.retrievePriceFromDateTime(
                 this.createStockResponse(DATE_TIME), DATE_TIME
         );
 

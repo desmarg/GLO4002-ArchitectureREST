@@ -2,10 +2,10 @@ package trading.domain.transaction;
 
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
+import trading.domain.Account.NotEnoughCreditsException;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.domain.Account.NotEnoughCreditsException;
 
 public class TransactionBuy extends Transaction {
 
@@ -32,15 +32,13 @@ public class TransactionBuy extends Transaction {
     }
 
     public void deduceStock(Long soldQuantity) {
+        if (this.remainingStocks < soldQuantity) {
+            throw new NotEnoughStockException(this.stock);
+        }
         this.remainingStocks -= soldQuantity;
     }
 
     public boolean hasEnoughStock(Long soldQuantity) {
         return this.remainingStocks >= soldQuantity;
     }
-
-    public Long getRemainingStocks() {
-        return this.remainingStocks;
-    }
-
 }

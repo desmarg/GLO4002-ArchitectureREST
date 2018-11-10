@@ -8,8 +8,8 @@ public class Services {
     private final AccountService accountService;
 
     public Services() {
-        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(), new MarketService());
         this.accountService = new AccountService(new AccountRepositoryInMemory());
+        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(), new MarketService(), this.accountService);
     }
 
     public TransactionService getTransactionService() {
