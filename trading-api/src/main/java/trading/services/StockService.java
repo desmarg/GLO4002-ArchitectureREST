@@ -16,15 +16,15 @@ public class StockService {
 
     public Credits retrieveStockPrice(final Stock stock, final DateTime dateTime) {
         final String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        final StockDTO stockDto = JerseyClient.getInstance().getRequest(url, StockDTO.class);
-        if (stockDto == null) {
+        final StockApiDTO stockApiDTO = JerseyClient.getInstance().getRequest(url, StockApiDTO.class);
+        if (stockApiDTO == null) {
             throw new StockNotFoundException(
                     stock.getSymbol(),
                     stock.getMarket(),
                     new TransactionNumber(UUID.randomUUID())
             );
         }
-        return this.retrievePriceFromDateTime(stockDto, dateTime);
+        return this.getPriceFromDateTime(stockApiDTO, dateTime);
     }
 
     public Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {

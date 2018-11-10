@@ -20,7 +20,7 @@ public class TransactionSellAssembler {
             throw new InvalidQuantityException();
         }
         TransactionNumber referredTransactionNumber = new TransactionNumber(transactionPostRequestDTO.transactionNumber);
-        Credits stockPrice = stockService.getStockPrice(stock, dateTime);
+        Credits stockPrice = stockService.retrieveStockPrice(stock, dateTime);
 
         return new TransactionSell(quantity, dateTime, stock, stockPrice, referredTransactionNumber, accountNumber);
     }

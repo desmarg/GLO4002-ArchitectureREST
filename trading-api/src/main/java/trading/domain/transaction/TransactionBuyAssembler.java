@@ -20,7 +20,7 @@ public class TransactionBuyAssembler {
             throw new InvalidQuantityException();
         }
 
-        Credits stockPrice = stockService.getStockPrice(stock, dateTime);
+        Credits stockPrice = stockService.retrieveStockPrice(stock, dateTime);
 
         return new TransactionBuy(quantity, dateTime, stock, stockPrice, accountNumber);
     }

@@ -8,12 +8,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.AccountPostRequestDTO;
 import trading.domain.Account.AccountNumber;
 import trading.domain.Account.AccountRepository;
-import trading.domain.Credits.Credits;
 
 import java.math.BigDecimal;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
@@ -36,7 +36,7 @@ public class AccountServiceTest {
         this.accountNumber = ACCOUNT_NUMBER;
     }
 
-//    @Test
+    //    @Test
 //    public void givenAccountPostRequestDto_whenSave_thenSaveAccountToRepository() {
 //
 //        this.accountPostRequestDto.credits = CREDITS;

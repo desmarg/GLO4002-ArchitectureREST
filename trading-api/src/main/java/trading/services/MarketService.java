@@ -1,15 +1,15 @@
 package trading.services;
 
 import trading.application.JerseyClient;
-import trading.external.response.Market.MarketDto;
+import trading.external.response.Market.MarketDTO;
 import trading.external.response.Market.MarketNotFoundException;
 
 import java.time.LocalTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MarketService {
@@ -18,7 +18,7 @@ public class MarketService {
     public boolean isMarketOpen(String market) {
 
         LocalTime time = LocalTime.now();
-        MarketDto marketDto = this.getMarketDto(market);
+        MarketDTO marketDto = this.getMarketDto(market);
         Map<LocalTime, LocalTime> times = this.parseMarketHours(marketDto);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
 
@@ -32,17 +32,17 @@ public class MarketService {
         return true;
     }
 
-    public MarketDto getMarketDto(String market) {
+    public MarketDTO getMarketDto(String market) {
         String url = "/markets/" + market;
-        MarketDto marketDto = JerseyClient.getInstance().getRequest(url, MarketDto.class);
+        MarketDTO marketDto = JerseyClient.getInstance().getRequest(url, MarketDTO.class);
         if (marketDto == null) {
             throw new MarketNotFoundException(market);
         }
         return marketDto;
     }
 
-    private Map<LocalTime, LocalTime> parseMarketHours(MarketDto marketDto) {
-        ArrayList<String> hours = marketDto.openHours;
+    private Map<LocalTime, LocalTime> parseMarketHours(MarketDTO marketDto) {
+        List<String> hours = marketDto.openHours;
         Map pairMap = new HashMap<LocalTime, LocalTime>();
         for (String hour : hours) {
             String[] splitTime = hour.split("-");
