@@ -53,7 +53,7 @@ public class TransactionBuyTest {
         this.transactionBuy.executeTransaction(this.account);
 
         Credits expectedTotalPrice = this.transactionBuy.getTotalPrice();
-        verify(this.account).subtractCredits(expectedTotalPrice);
+        verify(this.account).buyTransaction(expectedTotalPrice);
     }
 
     @Test

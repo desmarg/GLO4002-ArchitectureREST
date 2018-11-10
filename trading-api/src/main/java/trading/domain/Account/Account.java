@@ -3,6 +3,7 @@ package trading.domain.Account;
 import trading.domain.Credits.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
+import trading.domain.transaction.Transaction;
 
 import java.util.ArrayList;
 
@@ -14,9 +15,9 @@ public class Account {
     private AccountNumber accountNumber;
 
     public Account(
-            final Long investorId,
-            final String investorName,
-            final Credits credits
+            Long investorId,
+            String investorName,
+            Credits credits
     ) {
         this.investorId = investorId;
         this.investorName = investorName;
@@ -27,23 +28,30 @@ public class Account {
         );
     }
 
-    public void subtractCredits(final Credits transactionPrice) {
-        this.credits.subtract(transactionPrice);
+    public void buyTransaction(Transaction transaction) {
+        if (this.credits.compareTo(transaction.getTotalPrice()) < 0) {
+            throw new NotEnoughCreditsException(transaction.getTransactionNumber());
+        }
+        this.credits.subtract(transaction.getTotalPrice());
     }
 
-    public void addCredits(final Credits transactionPrice) {
+    public void sellTransaction(Transaction transaction) {
+        if (this.credits.compareTo(transaction.getFees()) < 0) {
+            throw new NotEnoughCreditsForFeesException();
+        }
+        this.credits.subtract(transaction.getFees());
+        this.credits.add(transaction.getPrice());
+    }
+
+    public void addCredits(Credits transactionPrice) {
         this.credits.add(transactionPrice);
-    }
-
-    public boolean hasEnoughCreditsToPay(final Credits transactionPrice) {
-        return this.credits.compareTo(transactionPrice) >= 0;
     }
 
     public AccountNumber getAccountNumber() {
         return this.accountNumber;
     }
 
-    public void setAccountNumber(final AccountNumber accountNumber) {
+    public void setAccountNumber(AccountNumber accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -65,13 +73,5 @@ public class Account {
 
     public String getInvestorName() {
         return this.investorName;
-    }
-
-    public boolean hasEnoughCreditsToPaySellFees(final Credits sellPrice, final Credits feesToPay) {
-        final Credits balanceAfterTransaction = new Credits();
-        balanceAfterTransaction.add(sellPrice);
-        balanceAfterTransaction.add(this.credits);
-
-        return balanceAfterTransaction.compareTo(feesToPay) != -1;
     }
 }

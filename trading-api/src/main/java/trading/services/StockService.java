@@ -6,11 +6,11 @@ import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
 import trading.domain.Stock;
 import trading.domain.transaction.StockNotFoundException;
-import trading.domain.transaction.TransactionNumber;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
 
-import java.util.UUID;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 public class StockService {
 
@@ -27,14 +27,14 @@ public class StockService {
     }
 
     public Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
+        Instant queryInstant = dateTime.toInstant().truncatedTo(ChronoUnit.DAYS);
         for (StockPriceResponseDTO priceInfo : stockDto.prices) {
 
-            DateTime princeInfoDateTime = DateTime.fromInstant(priceInfo.date);
-
-            if (princeInfoDateTime.getDayOfYear().equals(dateTime.getDayOfYear())) {
+            Instant priceInfoInstant = priceInfo.date.truncatedTo(ChronoUnit.DAYS);
+            if (priceInfoInstant.equals(queryInstant)) {
                 return new Credits(priceInfo.price);
             }
         }
-        throw new InvalidDateException(new TransactionNumber(UUID.randomUUID()));
+        throw new InvalidDateException();
     }
 }

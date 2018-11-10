@@ -1,16 +1,13 @@
 package trading.persistence;
 
-import trading.domain.transaction.TransactionRepository;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionNotFoundException;
+import trading.domain.transaction.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TransactionRepositoryInMemory implements TransactionRepository {
 
-    private Map<TransactionNumber, Transaction> transactionMap = new HashMap<>();
+    private final Map<TransactionNumber, Transaction> transactionMap = new HashMap<>();
 
     public Transaction save(Transaction transaction) {
         this.transactionMap.put(transaction.getTransactionNumber(), transaction);
@@ -23,6 +20,17 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
             return retrievedTransaction;
         }
         throw new TransactionNotFoundException(transactionNumber);
+    }
+
+    public TransactionBuy findReferredTransaction(TransactionNumber transactionNumber) {
+        Transaction retrievedTransaction = this.transactionMap.get(transactionNumber);
+        if (!(retrievedTransaction instanceof TransactionBuy)) {
+            throw new InvalidTransactionNumberException(transactionNumber);
+        }
+        if (retrievedTransaction == null) {
+            throw new InvalidTransactionNumberException(transactionNumber);
+        }
+        return (TransactionBuy) retrievedTransaction;
     }
 }
 

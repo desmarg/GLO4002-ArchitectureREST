@@ -30,11 +30,11 @@ public abstract class Transaction {
         this.stock = stock;
         this.stockPrice = stockPrice;
         this.accountNumber = accountNumber;
-        this.price = this.calculateTransactionPrice();
+        this.price = this.calculatePriceWithoutFees();
         this.fees = this.calculateFees();
     }
 
-    public Credits calculateTransactionPrice() {
+    private Credits calculatePriceWithoutFees() {
         Credits transactionPrice = new Credits(this.stockPrice);
         transactionPrice.multiply(this.quantity);
 
@@ -49,7 +49,7 @@ public abstract class Transaction {
         return totalPrice;
     }
 
-    public Credits calculateFees() {
+    private Credits calculateFees() {
         Credits fees = new Credits();
         if (this.quantity <= 100) {
             double feeFor100orMoreTransactions = 0.25;

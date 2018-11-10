@@ -33,7 +33,7 @@ public class TransactionTest {
 
     @Test
     public void whenCalculatingTransactionPrice_thenStockPriceIsMultipliedByQuantity() {
-        Credits transactionPrice = this.transaction.calculateTransactionPrice();
+        Credits transactionPrice = this.transaction.getPriceWithoutFees();
 
         BigDecimal expectedTransactionPrice = new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
                 (this.SMALL_STOCK_PRICE.getAmount());
@@ -70,7 +70,7 @@ public class TransactionTest {
 
         Credits expectedFees = Credits.fromDouble(this.FEE_UNDER_100_TRANSACTIONS);
         expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
-        Credits additionalFees = new Credits(this.transaction.calculateTransactionPrice());
+        Credits additionalFees = new Credits(this.transaction.getPriceWithoutFees());
         additionalFees.multiply(0.03);
         expectedFees.add(additionalFees);
         assertEquals(expectedFees.getAmount(), transactionFees.getAmount());

@@ -3,14 +3,7 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
-import trading.domain.transaction.StockParametersDontMatchException;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionBuyAssembler;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionRepository;
-import trading.domain.transaction.TransactionSell;
-import trading.domain.transaction.TransactionSellAssembler;
+import trading.domain.transaction.*;
 import trading.external.response.Market.MarketClosedException;
 
 public class TransactionService {
@@ -31,7 +24,7 @@ public class TransactionService {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
         TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
         this.validateMarketIsOpen(transactionBuy);
-        transactionBuy.executeTransaction(account);
+        account.buyTransaction(transactionBuy);
         this.transactionRepository.save(transactionBuy);
         return transactionBuy;
     }
@@ -42,10 +35,17 @@ public class TransactionService {
         this.validateMarketIsOpen(transactionSell);
         TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
         this.validateStockIsFromAccount(account, referredTransaction);
-        transactionSell.executeTransaction(account);
+        this.validateEnoughStock(referredTransaction, transactionSell);
+        account.sellTransaction(transactionSell);
         this.deduceReferredTransactionStocks(referredTransaction, transactionSell);
         this.transactionRepository.save(transactionSell);
         return transactionSell;
+    }
+
+    private void validateEnoughStock(TransactionBuy referredTransaction, TransactionSell transactionSell) {
+        if (referredTransaction.getRemainingStocks() < transactionSell.getQuantity()) {
+            throw new NotEnoughStockException(transactionSell.getStock());
+        }
     }
 
     private void validateStockIsFromAccount(Account account, TransactionBuy referredTransaction) {
@@ -67,12 +67,8 @@ public class TransactionService {
 
 
     private TransactionBuy getReferredTransaction(TransactionNumber transactionNumber) {
-
-        Transaction transaction = this.transactionRepository.findByTransactionNumber(transactionNumber);
-        if (!(transaction instanceof TransactionBuy)) {
-            throw new StockParametersDontMatchException();
-        }
-        return (TransactionBuy) transaction;
+        TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionNumber);
+        return referredTransaction;
     }
 
     public void deduceReferredTransactionStocks(TransactionBuy referredTransaction, TransactionSell transactionSell) {

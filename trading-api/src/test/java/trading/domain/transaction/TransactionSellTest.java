@@ -44,6 +44,6 @@ public class TransactionSellTest {
         TransactionSell transactionSell = new TransactionSell(A_QUANTITY, VALID_DATE, this.stock,
                 SOME_STOCK_PRICE, SOME_TRANSACTION_NUMBER, VALID_ACCOUNT_NUMBER);
         transactionSell.executeTransaction(this.account);
-        verify(this.account).subtractCredits(A_CREDIT_FEE);
+        verify(this.account).buyTransaction(A_CREDIT_FEE);
     }
 }

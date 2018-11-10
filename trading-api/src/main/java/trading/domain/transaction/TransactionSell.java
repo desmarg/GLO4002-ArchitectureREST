@@ -1,6 +1,5 @@
 package trading.domain.transaction;
 
-import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
@@ -20,11 +19,6 @@ public class TransactionSell extends Transaction {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.SELL;
         this.referredTransactionNumber = referredTransactionNumber;
-    }
-
-    public void executeTransaction(Account account) {
-        account.addCredits(this.price);
-        account.subtractCredits(this.fees);
     }
 
     public TransactionNumber getReferredTransactionNumber() {
