@@ -21,8 +21,9 @@ public class MarketService {
         this.jerseyClient = jerseyClient;
     }
 
-    public boolean isMarketOpenAtHour(String market, DateTime currentTime) {
+    public boolean isMarketOpenAtHour(String market, DateTime currentDateTime) {
 
+        OffsetTime transactionTime = currentDateTime.getDateTime().toOffsetTime();
         MarketDTO marketDto = this.getMarketDto(market);
         Map<LocalTime, LocalTime> times = this.parseMarketHours(marketDto);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
@@ -30,11 +31,11 @@ public class MarketService {
         for (Map.Entry<LocalTime, LocalTime> OpenCloseTimes : times.entrySet()) {
             OffsetTime beginOffsetTime = OffsetTime.of(OpenCloseTimes.getKey(), offset);
             OffsetTime endOffsetTime = OffsetTime.of(OpenCloseTimes.getValue(), offset);
-            if (!(currentTime.getDateTime().toLocalTime().compareTo(beginOffsetTime.toLocalTime()) >= 0 && currentTime.getDateTime().toLocalTime().compareTo(endOffsetTime.toLocalTime()) <= 0)) {
-                return false;
+            if (transactionTime.compareTo(beginOffsetTime) >= 0 && transactionTime.compareTo(endOffsetTime) <= 0) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public MarketDTO getMarketDto(String market) {
