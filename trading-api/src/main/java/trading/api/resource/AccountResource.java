@@ -51,7 +51,7 @@ public class AccountResource {
         AccountNumber accountNumber = this.accountService.save(accountPostRequestDto);
         return Response.status(Response.Status.CREATED).header(
                 "Location",
-                "accounts/" + accountNumber
+                "accounts/" + accountNumber.getId()
         ).build();
     }
 }
