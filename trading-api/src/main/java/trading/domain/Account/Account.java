@@ -15,6 +15,8 @@ public class Account implements Serializable {
     @GeneratedValue
     private Long id;
     @Column
+    private AccountNumber accountNumber;
+    @Column
     private Long investorId;
     @OneToOne(targetEntity = InvestorProfile.class)
     private InvestorProfile investorProfile;

@@ -3,10 +3,9 @@ package trading.persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import trading.domain.Account.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNotFoundException;
+import trading.domain.Account.AccountRepository;
 
 public class AccountRepositoryInMemory implements AccountRepository {
     private final Session session;
