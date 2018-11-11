@@ -4,12 +4,13 @@ import org.junit.Test;
 import trading.domain.DateTime.DateTime;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 import static org.junit.Assert.assertTrue;
 
 public class StockServiceTest {
-    private static final DateTime DATE_TIME = new DateTime("2015-01-01T05:00:00.000Z");
-    private static final DateTime INVALID_DATE_TIME = new DateTime("1801-05-04T05:00:00.000Z");
+    private static final DateTime DATE_TIME = DateTime.fromInstant(Instant.parse("2015-01-01T05:00:00.000Z"));
+    private static final DateTime INVALID_DATE_TIME = DateTime.fromInstant(Instant.parse("1801-05-04T05:00:00.000Z"));
     private static final BigDecimal PRICE = new BigDecimal(1.);
 
     private final StockService stockService = new StockService();
@@ -21,7 +22,7 @@ public class StockServiceTest {
 //    StockApiDTO createStock(DateTime dateTime) {
 //        StockPriceResponseDTO stockPrice = new StockPriceResponseDTO();
 //        stockPrice.date = dateTime.toInstant();
-//        stockPrice.price = PRICE;
+//        stockPrice.value = PRICE;
 //
 //        final List stockPrices = new ArrayList<>();
 //        stockPrices.add(stockPrice);

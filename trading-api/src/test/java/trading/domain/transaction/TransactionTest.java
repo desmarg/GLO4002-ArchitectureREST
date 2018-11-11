@@ -9,6 +9,7 @@ import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +18,7 @@ public class TransactionTest {
     private final double FEE_UNDER_100_TRANSACTIONS = 0.20;
     private final Long VALID_QUANTITY_SMALLER_THAN_HUNDRED = 10L;
     private final Long VALID_QUANTITY_BIGGER_THAN_HUNDRED = 200L;
-    private final DateTime VALID_DATE = new DateTime("2018-08-21T15:23:20.142Z");
+    private final DateTime VALID_DATE = DateTime.fromInstant(Instant.parse("2018-08-21T15:23:20.142Z"));
     private final Credits SMALL_STOCK_PRICE = new Credits(new BigDecimal(10));
     private final Credits LARGE_STOCK_PRICE = new Credits(new BigDecimal(10000));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
@@ -33,7 +34,7 @@ public class TransactionTest {
 
     @Test
     public void whenCalculatingTransactionPrice_thenStockPriceIsMultipliedByQuantity() {
-        Credits transactionPrice = this.transaction.getPrice();
+        Credits transactionPrice = this.transaction.getValue();
 
         BigDecimal expectedTransactionPrice = new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
                 (this.SMALL_STOCK_PRICE.getAmount());
@@ -70,7 +71,7 @@ public class TransactionTest {
 
         Credits expectedFees = Credits.fromDouble(this.FEE_UNDER_100_TRANSACTIONS);
         expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
-        Credits additionalFees = new Credits(this.transaction.getPrice());
+        Credits additionalFees = new Credits(this.transaction.getValue());
         additionalFees.multiply(0.03);
         expectedFees.add(additionalFees);
         assertEquals(expectedFees.getAmount(), transactionFees.getAmount());

@@ -51,10 +51,10 @@ public class AccountRepositoryInMemoryTest {
 
     @Test
     public void whenSave_thenCounterIsDifferentThanInitial() {
-        Long initialCounter = this.accountRepositoryInMemory.getCounter();
+        Long initialCounter = this.accountRepositoryInMemory.getCurrentAccountNumber();
         this.accountRepositoryInMemory.save(this.account);
 
-        assertNotEquals(initialCounter, this.accountRepositoryInMemory.getCounter());
+        assertNotEquals(initialCounter, this.accountRepositoryInMemory.getCurrentAccountNumber());
     }
 
     @Test

@@ -12,6 +12,7 @@ import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 public class TransactionBuyTest {
     private final Long INVALID_QUANTITY = 0L;
     private final Long VALID_QUANTITY = 100L;
-    private final DateTime VALID_DATE = new DateTime("2018-08-21T15:23:20.142Z");
+    private final DateTime VALID_DATE = DateTime.fromInstant(Instant.parse("2018-08-21T15:23:20.142Z"));
     private final Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
 
@@ -48,7 +49,7 @@ public class TransactionBuyTest {
 //
 //        this.transactionBuy.executeTransaction(this.account);
 //
-//        Credits expectedTotalPrice = this.transactionBuy.getPriceWithFees();
+//        Credits expectedTotalPrice = this.transactionBuy.getValueWithFees();
 //        verify(this.account).buyTransaction(expectedTotalPrice);
 //    }
 

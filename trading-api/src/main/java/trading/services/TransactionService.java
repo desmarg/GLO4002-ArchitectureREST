@@ -3,8 +3,13 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
+import trading.domain.DateTime.DateTime;
+import trading.domain.Report.Report;
+import trading.domain.Report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.Market.MarketClosedException;
+
+import java.util.List;
 
 public class TransactionService {
 
@@ -34,25 +39,12 @@ public class TransactionService {
         TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
         this.validateMarketIsOpen(transactionSell);
         TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
-        this.validateStockIsFromAccount(account, referredTransaction);
-        this.validateEnoughStock(referredTransaction, transactionSell);
-        account.sellTransaction(transactionSell);
-        this.deduceReferredTransactionStocks(referredTransaction, transactionSell);
+        account.sellTransaction(transactionSell, referredTransaction);
+        this.accountService.update(account);
         this.transactionRepository.save(transactionSell);
         return transactionSell;
     }
 
-    private void validateEnoughStock(TransactionBuy referredTransaction, TransactionSell transactionSell) {
-        if (referredTransaction.getRemainingStocks() < transactionSell.getQuantity()) {
-            throw new NotEnoughStockException(transactionSell.getStock());
-        }
-    }
-
-    private void validateStockIsFromAccount(Account account, TransactionBuy referredTransaction) {
-        if (referredTransaction.getAccountNumber() != account.getAccountNumber()) {
-            throw new RuntimeException("The account does not possess this stock...");
-        }
-    }
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
@@ -65,14 +57,15 @@ public class TransactionService {
         return this.transactionRepository.findByTransactionNumber(transactionNumber);
     }
 
-
     private TransactionBuy getReferredTransaction(TransactionNumber transactionNumber) {
         TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionNumber);
         return referredTransaction;
     }
 
-    public void deduceReferredTransactionStocks(TransactionBuy referredTransaction, TransactionSell transactionSell) {
-        referredTransaction.deduceStock(transactionSell.getQuantity());
-        this.transactionRepository.save(referredTransaction);
+    public Report getReportFromDate(Account account, DateTime date, String reportType) {
+        ReportType.fromString(reportType);
+        List<Transaction> transactionList = this.transactionRepository.findAllTransactionFromDate(account.getAccountNumber(), date);
+        Report report = new Report(date, transactionList);
+        return report;
     }
 }

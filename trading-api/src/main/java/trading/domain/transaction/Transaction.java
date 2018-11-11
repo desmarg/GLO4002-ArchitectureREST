@@ -13,7 +13,7 @@ public abstract class Transaction {
     protected DateTime dateTime;
     protected Stock stock;
     protected Credits stockPrice;
-    protected Credits price;
+    protected Credits value;
     protected Credits fees;
 
 
@@ -30,11 +30,11 @@ public abstract class Transaction {
         this.stock = stock;
         this.stockPrice = stockPrice;
         this.accountNumber = accountNumber;
-        this.price = this.calculatePriceWithoutFees();
+        this.value = this.calculateValue();
         this.fees = this.calculateFees();
     }
 
-    private Credits calculatePriceWithoutFees() {
+    private Credits calculateValue() {
         Credits transactionPrice = new Credits(this.stockPrice);
         transactionPrice.multiply(this.quantity);
 
@@ -54,8 +54,8 @@ public abstract class Transaction {
             fees.add(baseFee);
             fees.multiply(this.quantity);
         }
-        if (this.price.compareTo(Credits.fromDouble(5000)) > 0) {
-            Credits additionalFees = new Credits(this.price);
+        if (this.value.compareTo(Credits.fromDouble(5000)) > 0) {
+            Credits additionalFees = new Credits(this.value);
             double additionalPercentFeeOver5000 = 0.03;
             additionalFees.multiply(additionalPercentFeeOver5000);
             fees.add(additionalFees);
@@ -92,8 +92,8 @@ public abstract class Transaction {
         return this.transactionType;
     }
 
-    public Credits getPrice() {
-        return this.price;
+    public Credits getValue() {
+        return this.value;
     }
 
     public Credits getFees() {

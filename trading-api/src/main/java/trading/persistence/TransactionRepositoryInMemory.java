@@ -1,8 +1,12 @@
 package trading.persistence;
 
+import trading.domain.Account.AccountNumber;
+import trading.domain.DateTime.DateTime;
 import trading.domain.transaction.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TransactionRepositoryInMemory implements TransactionRepository {
@@ -31,6 +35,16 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
             throw new InvalidTransactionNumberException(transactionNumber);
         }
         return (TransactionBuy) retrievedTransaction;
+    }
+
+    public List<Transaction> findAllTransactionFromDate(AccountNumber accountNumber, DateTime date) {
+        List<Transaction> returnTransactionMap = new ArrayList<>();
+        for (Transaction transaction : this.transactionMap.values()) {
+            if (transaction.getAccountNumber() == accountNumber && transaction.getDateTime().toInstant().compareTo(date.toInstant()) <= 0) {
+                returnTransactionMap.add(transaction);
+            }
+        }
+        return returnTransactionMap;
     }
 }
 

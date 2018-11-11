@@ -59,28 +59,28 @@ public class AccountTest {
 
     @Test
     public void givenValidSellTransaction_whenSellTransaction_thenPayFeesAndAddTransactionMoney() {
-        when(this.transactionSell.getPrice()).thenReturn(PRICE);
+        when(this.transactionSell.getValue()).thenReturn(PRICE);
         when(this.transactionSell.getFees()).thenReturn(FEES);
         Credits remainingCredits = this.basicAccount.getCredits();
         remainingCredits.subtract(this.transactionSell.getFees());
-        remainingCredits.add(this.transactionSell.getPrice());
+        remainingCredits.add(this.transactionSell.getValue());
         this.basicAccount.sellTransaction(this.transactionSell);
         assertEquals(this.basicAccount.getCredits(), remainingCredits);
     }
 
     @Test(expected = NotEnoughCreditsException.class)
     public void givenNotEnoughCreditsToPayTransaction_whenBuyTransaction_thenThrowNotEnoughCreditsException() {
-        when(this.transactionBuy.getPriceWithFees()).thenReturn(PRICE_TOO_HIGH);
+        when(this.transactionBuy.getValueWithFees()).thenReturn(PRICE_TOO_HIGH);
         when(this.transactionBuy.getTransactionNumber()).thenReturn(new TransactionNumber());
         this.notEnoughCreditsAccount.buyTransaction(this.transactionBuy);
     }
 
     @Test
     public void givenValidBuyTransaction_whenBuyTransaction_thenPayTotalPrice() {
-        when(this.transactionBuy.getPriceWithFees()).thenReturn(FEES);
+        when(this.transactionBuy.getValueWithFees()).thenReturn(FEES);
         when(this.transactionBuy.getTransactionNumber()).thenReturn(new TransactionNumber());
         Credits remainingCredits = this.basicAccount.getCredits();
-        Credits totalPrice = this.transactionBuy.getPriceWithFees();
+        Credits totalPrice = this.transactionBuy.getValueWithFees();
         remainingCredits.subtract(totalPrice);
         this.basicAccount.buyTransaction(this.transactionBuy);
         assertEquals(this.basicAccount.getCredits(), remainingCredits);

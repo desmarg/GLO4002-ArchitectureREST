@@ -1,27 +1,27 @@
 package trading.persistence;
 
 import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
 import trading.domain.Account.AccountNotFoundException;
+import trading.domain.Account.AccountNumber;
 import trading.domain.Account.AccountRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class AccountRepositoryInMemory implements AccountRepository {
-    private static Long ACCOUNT_NUMBER_COUNTER = 0L;
-    private Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
-    private Map<AccountNumber, Account> accountMap = new HashMap<>();
+    private final AtomicLong ACCOUNT_NUMBER_COUNTER = new AtomicLong();
+    private final Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
+    private final Map<AccountNumber, Account> accountMap = new HashMap<>();
 
-    public Account save(Account account) {
-        System.out.println(account);
-        AccountNumber accountNumber = new AccountNumber(
-                account.getInvestorName(), ACCOUNT_NUMBER_COUNTER++
-        );
-        account.setAccountNumber(accountNumber);
+    public void save(Account account) {
         this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
         this.accountMap.put(account.getAccountNumber(), account);
-        return account;
+    }
+
+    public void update(Account account) {
+        this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
+        this.accountMap.put(account.getAccountNumber(), account);
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber)
@@ -37,7 +37,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         return this.investorIdByAccountNumber.containsKey(investorId);
     }
 
-    public Long getCounter() {
-        return this.ACCOUNT_NUMBER_COUNTER;
+    public Long getCurrentAccountNumber() {
+        return this.ACCOUNT_NUMBER_COUNTER.get();
     }
 }

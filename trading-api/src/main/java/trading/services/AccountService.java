@@ -10,10 +10,16 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account save(AccountPostRequestDTO accountPostRequestDTO) {
-        Account account = AccountAssembler.create(accountPostRequestDTO);
+    public AccountNumber save(AccountPostRequestDTO accountPostRequestDTO) {
+        AccountNumber accountNumber = new AccountNumber(accountPostRequestDTO.investorName, this.accountRepository.getCurrentAccountNumber()+1);
+        Account account = AccountAssembler.create(accountPostRequestDTO, accountNumber);
         this.checkIfAccountAlreadyExists(account.getInvestorId());
-        return this.accountRepository.save(account);
+        this.accountRepository.save(account);
+        return account.getAccountNumber();
+    }
+
+    public void update(Account account) {
+        this.accountRepository.update(account);
     }
 
     public Account findByAccountNumber(AccountNumber accountNumber) {

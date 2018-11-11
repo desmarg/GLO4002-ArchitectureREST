@@ -7,8 +7,6 @@ import trading.domain.Stock;
 
 public class TransactionBuy extends Transaction {
 
-    private Long remainingStocks;
-
     public TransactionBuy(
             Long quantity,
             DateTime dateTime,
@@ -18,27 +16,11 @@ public class TransactionBuy extends Transaction {
     ) {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.BUY;
-        this.remainingStocks = quantity;
     }
 
-    public void deduceStock(Long soldQuantity) {
-        if (this.remainingStocks < soldQuantity) {
-            throw new NotEnoughStockException(this.stock);
-        }
-        this.remainingStocks -= soldQuantity;
-    }
-
-    public boolean hasEnoughStock(Long soldQuantity) {
-        return this.remainingStocks >= soldQuantity;
-    }
-
-    public Long getRemainingStocks() {
-        return this.remainingStocks;
-    }
-
-    public Credits getPriceWithFees() {
+    public Credits getValueWithFees() {
         Credits totalPrice = new Credits();
-        totalPrice.add(this.price);
+        totalPrice.add(this.value);
         totalPrice.add(this.fees);
 
         return totalPrice;

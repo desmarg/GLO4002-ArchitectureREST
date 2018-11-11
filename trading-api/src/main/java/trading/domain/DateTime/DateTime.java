@@ -1,15 +1,33 @@
 package trading.domain.DateTime;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.TimeZone;
 
 public class DateTime {
-    private OffsetDateTime dateTime;
+    private final OffsetDateTime dateTime;
 
     public DateTime(String date) {
-        Instant instant = Instant.parse(date);
-        this.dateTime = OffsetDateTime.ofInstant(instant, ZoneId.of("UTC"));
+        if (date == null) {
+            throw new MissingDateException();
+        }
+        TimeZone timeZone = TimeZone.getDefault();
+        String instantString = date.concat(" 23:59:59.999");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        try {
+            LocalDateTime.parse(instantString, dateTimeFormatter);
+        } catch (Exception e) {
+            throw new InvalidDateException();
+        }
+        LocalDateTime localDateTime = LocalDateTime.parse(instantString, dateTimeFormatter);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(timeZone.toZoneId());
+        Instant instant = zonedDateTime.toInstant();
+        if ((instant.truncatedTo(ChronoUnit.DAYS)).compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) >= 0) {
+            throw new InvalidDateException();
+        }
+        OffsetDateTime myDate = OffsetDateTime.ofInstant(instant, ZoneId.of("UTC"));
+        this.dateTime = myDate;
     }
 
     public DateTime(OffsetDateTime dateTime) {
@@ -20,11 +38,11 @@ public class DateTime {
         return new DateTime(OffsetDateTime.ofInstant(instant, ZoneId.of("UTC")));
     }
 
-    public Integer getDayOfYear() {
-        return this.dateTime.getDayOfYear();
-    }
-
     public Instant toInstant() {
         return this.dateTime.toInstant();
+    }
+
+    public Instant toInstantDate() {
+        return this.dateTime.toInstant().truncatedTo((ChronoUnit.DAYS));
     }
 }
