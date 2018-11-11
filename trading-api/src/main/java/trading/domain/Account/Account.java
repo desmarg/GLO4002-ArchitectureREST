@@ -34,6 +34,22 @@ public class Account {
         this.remainingStocksMap = new HashMap<>();
     }
 
+    public Account(
+            Long investorId,
+            String investorName,
+            Credits credits,
+            AccountNumber accountNumber,
+            InvestorProfile investorProfile,
+            Map<TransactionNumber, Long> remainingStocksMap
+    ) {
+        this.investorId = investorId;
+        this.investorName = investorName;
+        this.credits = credits;
+        this.accountNumber = accountNumber;
+        this.investorProfile = investorProfile;
+        this.remainingStocksMap = remainingStocksMap;
+    }
+
     public void buyTransaction(TransactionBuy transactionBuy) {
         if (this.credits.compareTo(transactionBuy.getValueWithFees()) < 0) {
             throw new NotEnoughCreditsException(transactionBuy.getTransactionNumber());
@@ -83,5 +99,9 @@ public class Account {
 
     public String getInvestorName() {
         return this.investorName;
+    }
+
+    public Map<TransactionNumber, Long> getRemainingStocksMap() {
+        return this.remainingStocksMap;
     }
 }
