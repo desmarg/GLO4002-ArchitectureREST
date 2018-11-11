@@ -12,7 +12,7 @@ public class Services {
     public Services() {
         this.jerseyClient = new JerseyClient();
         this.accountService = new AccountService(new AccountRepositoryInMemory());
-        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(this.jerseyClient), new MarketService(), this.accountService);
+        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(this.jerseyClient), new MarketService(this.jerseyClient), this.accountService);
     }
 
     public TransactionService getTransactionService() {

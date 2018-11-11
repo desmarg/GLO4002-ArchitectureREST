@@ -13,9 +13,8 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
 
     private final Map<TransactionNumber, Transaction> transactionMap = new HashMap<>();
 
-    public Transaction save(Transaction transaction) {
+    public void save(Transaction transaction) {
         this.transactionMap.put(transaction.getTransactionNumber(), transaction);
-        return transaction;
     }
 
     public Transaction findByTransactionNumber(TransactionNumber transactionNumber) {

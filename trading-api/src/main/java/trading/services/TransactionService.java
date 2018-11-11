@@ -30,6 +30,7 @@ public class TransactionService {
         TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
+        this.accountService.update(account);
         this.transactionRepository.save(transactionBuy);
         return transactionBuy;
     }
