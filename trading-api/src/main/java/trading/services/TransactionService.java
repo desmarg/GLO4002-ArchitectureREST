@@ -30,6 +30,7 @@ public class TransactionService {
         TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
+        this.accountService.update(account);
         this.transactionRepository.save(transactionBuy);
         return transactionBuy;
     }
@@ -48,7 +49,7 @@ public class TransactionService {
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
-        if (this.marketService.isMarketOpen(market)) {
+        if (this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
             throw new MarketClosedException(market);
         }
     }

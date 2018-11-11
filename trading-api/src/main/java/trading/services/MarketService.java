@@ -1,6 +1,7 @@
 package trading.services;
 
 import trading.application.JerseyClient;
+import trading.domain.DateTime.DateTime;
 import trading.external.response.Market.MarketDTO;
 import trading.external.response.Market.MarketNotFoundException;
 
@@ -20,9 +21,9 @@ public class MarketService {
         this.jerseyClient = jerseyClient;
     }
 
-    public boolean isMarketOpen(String market) {
+    public boolean isMarketOpenAtHour(String market, DateTime currentDateTime) {
 
-        LocalTime time = LocalTime.now();
+        OffsetTime transactionTime = currentDateTime.getDateTime().toOffsetTime();
         MarketDTO marketDto = this.getMarketDto(market);
         Map<LocalTime, LocalTime> times = this.parseMarketHours(marketDto);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
@@ -30,11 +31,11 @@ public class MarketService {
         for (Map.Entry<LocalTime, LocalTime> OpenCloseTimes : times.entrySet()) {
             OffsetTime beginOffsetTime = OffsetTime.of(OpenCloseTimes.getKey(), offset);
             OffsetTime endOffsetTime = OffsetTime.of(OpenCloseTimes.getValue(), offset);
-            if (!(time.compareTo(beginOffsetTime.toLocalTime()) >= 0 && time.compareTo(endOffsetTime.toLocalTime()) <= 0)) {
-                return false;
+            if (transactionTime.compareTo(beginOffsetTime) >= 0 && transactionTime.compareTo(endOffsetTime) <= 0) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public MarketDTO getMarketDto(String market) {

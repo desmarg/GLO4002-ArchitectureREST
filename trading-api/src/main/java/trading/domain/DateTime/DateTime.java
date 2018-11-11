@@ -45,4 +45,8 @@ public class DateTime {
     public Instant toInstantDate() {
         return this.dateTime.toInstant().truncatedTo((ChronoUnit.DAYS));
     }
+
+    public OffsetDateTime getDateTime() {
+        return dateTime;
+    }
 }

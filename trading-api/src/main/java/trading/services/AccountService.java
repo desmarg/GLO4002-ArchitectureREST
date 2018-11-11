@@ -18,6 +18,7 @@ public class AccountService {
         Account account = AccountAssembler.create(accountPostRequestDTO, accountNumber);
         this.accountRepository.validateAccountDoesNotExists(account.getInvestorId());
         this.accountRepository.save(account);
+
         return account.getAccountNumber();
     }
 
@@ -28,5 +29,4 @@ public class AccountService {
     public Account findByAccountNumber(AccountNumber accountNumber) {
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
-
 }

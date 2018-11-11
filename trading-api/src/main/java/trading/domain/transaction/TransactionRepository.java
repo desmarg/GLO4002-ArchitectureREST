@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TransactionRepository {
 
-    Transaction save(Transaction transaction);
+    void save(Transaction transaction);
 
     Transaction findByTransactionNumber(TransactionNumber transactionNumber);
 

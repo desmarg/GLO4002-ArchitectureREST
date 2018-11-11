@@ -15,7 +15,8 @@ public class AccountAssembler {
         return new Account(
                 accountPostRequestDto.investorId,
                 accountPostRequestDto.investorName,
-                new Credits(accountPostRequestDto.credits)
+                new Credits(accountPostRequestDto.credits),
+                accountNumber
         );
     }
 }

@@ -26,6 +26,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
     public void save(Account account) {
         this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
         this.accountMap.put(account.getAccountNumber(), account);
+        this.incrementCounter();
     }
 
     public void update(Account account) {
@@ -50,5 +51,9 @@ public class AccountRepositoryInMemory implements AccountRepository {
 
     public Long getCurrentAccountNumber() {
         return this.ACCOUNT_NUMBER_COUNTER.get();
+    }
+
+    private void incrementCounter() {
+        this.ACCOUNT_NUMBER_COUNTER.set(this.ACCOUNT_NUMBER_COUNTER.incrementAndGet());
     }
 }

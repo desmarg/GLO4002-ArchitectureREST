@@ -8,7 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
 import trading.domain.transaction.TransactionBuy;
-import trading.persistence.TransactionRepositoryInMemory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
@@ -16,7 +15,7 @@ public class TransactionServiceTest {
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber(this.accountNumber);
     @Mock
     private AccountService accountService;
-    private final TransactionService transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(), new MarketService(), this.accountService);
+    //    private final TransactionService transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(), new MarketService(), this.accountService);
     @Mock
     private Account account;
     @Mock
