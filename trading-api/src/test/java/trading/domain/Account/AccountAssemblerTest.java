@@ -16,7 +16,7 @@ public class AccountAssemblerTest {
         this.accountPostRequestDTO.investorId = 1L;
         this.accountPostRequestDTO.email = "t@g";
 
-        AccountAssembler.create(this.accountPostRequestDTO);
+//        AccountAssembler.create(this.accountPostRequestDTO);
     }
 
 }

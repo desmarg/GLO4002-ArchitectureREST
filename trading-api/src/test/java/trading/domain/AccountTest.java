@@ -41,9 +41,9 @@ public class AccountTest {
 
     @Before
     public void setup() {
-        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE);
-        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS);
-        this.basicAccount.setAccountNumber(ACCOUNT_NUMBER);
+//        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE);
+//        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS);
+//        this.basicAccount.setAccountNumber(ACCOUNT_NUMBER);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AccountTest {
     @Test(expected = NotEnoughCreditsForFeesException.class)
     public void givenNotEnoughCreditsToPayFees_whenSellTransaction_thenThrowNotEnoughCreditsForFeesException() {
         when(this.transactionSell.getFees()).thenReturn(TOO_MANY_FEES);
-        this.notEnoughCreditsAccount.sellTransaction(this.transactionSell);
+//        this.notEnoughCreditsAccount.sellTransaction(this.transactionSell);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class AccountTest {
         Credits remainingCredits = this.basicAccount.getCredits();
         remainingCredits.subtract(this.transactionSell.getFees());
         remainingCredits.add(this.transactionSell.getValue());
-        this.basicAccount.sellTransaction(this.transactionSell);
+//        this.basicAccount.sellTransaction(this.transactionSell);
         assertEquals(this.basicAccount.getCredits(), remainingCredits);
     }
 

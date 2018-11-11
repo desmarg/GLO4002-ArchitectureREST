@@ -22,7 +22,11 @@ public class MarketService {
 
     public boolean isMarketOpen(String market) {
 
-        LocalTime time = LocalTime.now();
+        return isMarketOpenAtHour(market, LocalTime.now());
+    }
+
+    public boolean isMarketOpenAtHour(String market, LocalTime currentTime) {
+
         MarketDTO marketDto = this.getMarketDto(market);
         Map<LocalTime, LocalTime> times = this.parseMarketHours(marketDto);
         ZoneOffset offset = ZoneOffset.of(marketDto.timezone.substring(3));
@@ -30,7 +34,7 @@ public class MarketService {
         for (Map.Entry<LocalTime, LocalTime> OpenCloseTimes : times.entrySet()) {
             OffsetTime beginOffsetTime = OffsetTime.of(OpenCloseTimes.getKey(), offset);
             OffsetTime endOffsetTime = OffsetTime.of(OpenCloseTimes.getValue(), offset);
-            if (!(time.compareTo(beginOffsetTime.toLocalTime()) >= 0 && time.compareTo(endOffsetTime.toLocalTime()) <= 0)) {
+            if (!(currentTime.compareTo(beginOffsetTime.toLocalTime()) >= 0 && currentTime.compareTo(endOffsetTime.toLocalTime()) <= 0)) {
                 return false;
             }
         }

@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
@@ -55,7 +54,7 @@ public class AccountServiceTest {
         this.accountPostRequestDto.investorId = INVESTOR_ID;
         this.accountPostRequestDto.investorName = INVESTOR_NAME;
 
-        when(this.accountRepository.validateAccountDoesNotExists(any(Long.class))).thenReturn(false);
+//        when(this.accountRepository.validateAccountDoesNotExists(any(Long.class))).thenReturn(false);
         this.accountService.save(this.accountPostRequestDto);
 
         verify(this.accountRepository).save(any());

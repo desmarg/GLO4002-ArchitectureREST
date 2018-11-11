@@ -13,7 +13,7 @@ public class StockServiceTest {
     private static final DateTime INVALID_DATE_TIME = DateTime.fromInstant(Instant.parse("1801-05-04T05:00:00.000Z"));
     private static final BigDecimal PRICE = new BigDecimal(1.);
 
-    private final StockService stockService = new StockService();
+//    private final StockService stockService = new StockService();
 
     @Test
     public void assertTrues() {
