@@ -1,46 +1,42 @@
 package trading.services;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import trading.application.JerseyClient;
 import trading.domain.DateTime.DateTime;
+import trading.domain.Stock;
+import trading.domain.transaction.StockNotFoundException;
+import trading.external.response.StockApiDTO;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 public class StockServiceTest {
-    private static final DateTime DATE_TIME = DateTime.fromInstant(Instant.parse("2015-01-01T05:00:00.000Z"));
-    private static final DateTime INVALID_DATE_TIME = DateTime.fromInstant(Instant.parse("1801-05-04T05:00:00.000Z"));
-    private static final BigDecimal PRICE = new BigDecimal(1.);
+    private static final String A_MARKET = "HELLO";
+    private static final String A_SYMBOL = "WORLD";
+    private static final String A_URL = "A";
+    @Mock
+    StockApiDTO stockApiDTO;
+    private StockService stockService;
+    private Stock stock;
+    private DateTime dateTime;
+    @Mock
+    private JerseyClient jerseyClient;
 
-//    private final StockService stockService = new StockService();
+    @Before
+    public void setup() {
+        this.stockService = new StockService(this.jerseyClient);
+    }
+
+    @Test(expected = StockNotFoundException.class)
+    public void givenInvalidStockAndDateTime_whenRetrieveStockPrice_thenStockNotFoundException() {
+        this.stock = new Stock(A_MARKET, A_SYMBOL);
+        when(this.jerseyClient.getRequest(any(), any())).thenReturn(this.stockApiDTO);
+        this.stockService.retrieveStockPrice(this.stock, this.dateTime);
+    }
 
     @Test
-    public void assertTrues() {
-        assertTrue(true);
+    public void givenValidDateTime_whenGetPriceFromDateTime_thenReturnCredits() {
     }
-//    StockApiDTO createStock(DateTime dateTime) {
-//        StockPriceResponseDTO stockPrice = new StockPriceResponseDTO();
-//        stockPrice.date = dateTime.toInstant();
-//        stockPrice.value = PRICE;
-//
-//        final List stockPrices = new ArrayList<>();
-//        stockPrices.add(stockPrice);
-//
-//        StockApiDTO stockApiDTO = new StockApiDTO();
-//        stockApiDTO.prices = stockPrices;
-//        return stockApiDTO;
-//    }
-//
-//    @Test
-//    public void givenValidDateTime_whenGetPriceFromDateTime_thenReturnCredits() {
-//        final Credits creditsFound = this.stockService.retrieveStockPrice(
-//                this.createStockResponse(DATE_TIME), DATE_TIME
-//        );
-//
-//        assertEquals(
-//                new Credits(PRICE),
-//                creditsFound
-//        );
-//    }
 }

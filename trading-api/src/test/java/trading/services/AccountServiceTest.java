@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.AccountPostRequestDTO;
+import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
 import trading.domain.Account.AccountRepository;
 
@@ -24,6 +25,9 @@ public class AccountServiceTest {
 
     private final AccountPostRequestDTO accountPostRequestDto = new AccountPostRequestDTO();
     private AccountService accountService;
+
+    @Mock
+    private Account account;
     @Mock
     private AccountRepository accountRepository;
     @Mock
@@ -35,18 +39,24 @@ public class AccountServiceTest {
         this.accountNumber = ACCOUNT_NUMBER;
     }
 
-    //    @Test
-//    public void givenAccountPostRequestDto_whenSave_thenSaveAccountToRepository() {
-//
-//        this.accountPostRequestDto.credits = CREDITS;
-//        this.accountPostRequestDto.investorId = INVESTOR_ID;
-//        this.accountPostRequestDto.investorName = INVESTOR_NAME;
-//
-//        when(this.accountRepository.validateAccountDoesNotExists(any(Long.class))).thenReturn(false);
-//        Account savedAccount = this.accountService.save(this.accountPostRequestDto);
-//
-//        verify(this.accountRepository).save(savedAccount);
-//    }
+    @Test
+    public void givenAccountPostRequestDto_whenSave_thenValidateAccountDoesNotExistsCalled() {
+        this.accountPostRequestDto.credits = CREDITS;
+        this.accountPostRequestDto.investorId = INVESTOR_ID;
+        this.accountPostRequestDto.investorName = INVESTOR_NAME;
+
+        this.accountService.save(this.accountPostRequestDto);
+
+        verify(this.accountRepository).validateAccountDoesNotExists(any());
+    }
+
+    @Test
+    public void givenAccount_whenUpdate_thenAccountRepositoryCalled() {
+        this.accountService.update(this.account);
+
+        verify(this.accountRepository).update(this.account);
+    }
+
     @Test
     public void givenAccountPostRequestDto_whenSave_thenSaveIsCalledInAccountRepository() {
 
@@ -54,7 +64,6 @@ public class AccountServiceTest {
         this.accountPostRequestDto.investorId = INVESTOR_ID;
         this.accountPostRequestDto.investorName = INVESTOR_NAME;
 
-//        when(this.accountRepository.validateAccountDoesNotExists(any(Long.class))).thenReturn(false);
         this.accountService.save(this.accountPostRequestDto);
 
         verify(this.accountRepository).save(any());

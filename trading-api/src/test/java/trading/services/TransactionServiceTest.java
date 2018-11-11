@@ -15,7 +15,7 @@ public class TransactionServiceTest {
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber(this.accountNumber);
     @Mock
     private AccountService accountService;
-    //private final TransactionService transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(), new MarketService(), this.accountService);
+    //    private final TransactionService transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(), new MarketService(), this.accountService);
     @Mock
     private Account account;
     @Mock

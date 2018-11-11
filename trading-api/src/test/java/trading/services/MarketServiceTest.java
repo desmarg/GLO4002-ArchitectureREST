@@ -36,13 +36,7 @@ public class MarketServiceTest {
 
     @Before
     public void setup() {
-
         this.marketService = new MarketService(this.jerseyClient);
-    }
-
-    @Test
-    public void assertTrues() {
-        assertTrue(true);
     }
 
     @Test
