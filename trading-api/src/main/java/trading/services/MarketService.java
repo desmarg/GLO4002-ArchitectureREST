@@ -14,6 +14,11 @@ import java.util.Map;
 
 public class MarketService {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final JerseyClient jerseyClient;
+
+    public MarketService(JerseyClient jerseyClient) {
+        this.jerseyClient = jerseyClient;
+    }
 
     public boolean isMarketOpen(String market) {
 
@@ -34,7 +39,7 @@ public class MarketService {
 
     public MarketDTO getMarketDto(String market) {
         String url = "/markets/" + market;
-        MarketDTO marketDto = JerseyClient.getInstance().getRequest(url, MarketDTO.class);
+        MarketDTO marketDto = this.jerseyClient.getRequest(url, MarketDTO.class);
         if (marketDto == null) {
             throw new MarketNotFoundException(market);
         }

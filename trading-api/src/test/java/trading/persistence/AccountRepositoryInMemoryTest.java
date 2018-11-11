@@ -59,14 +59,14 @@ public class AccountRepositoryInMemoryTest {
 
     @Test
     public void givenAccountNotInRepository_whenCheckingIfAccountExists_thenReturnsFalse() {
-        assertFalse(this.accountRepositoryInMemory.accountAlreadyExists(NON_EXISTING_INVESTOR_ID));
+        assertFalse(this.accountRepositoryInMemory.validateAccountDoesNotExists(NON_EXISTING_INVESTOR_ID));
     }
 
     @Test
     public void givenAccountInRepository_whenCheckingIfAccountExists_thenReturnsTrue() {
         this.accountRepositoryInMemory.save(this.account);
 
-        assertTrue(this.accountRepositoryInMemory.accountAlreadyExists(INVESTOR_ID));
+        assertTrue(this.accountRepositoryInMemory.validateAccountDoesNotExists(INVESTOR_ID));
     }
 
 }

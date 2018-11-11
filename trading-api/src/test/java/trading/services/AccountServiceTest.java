@@ -43,7 +43,7 @@ public class AccountServiceTest {
 //        this.accountPostRequestDto.investorId = INVESTOR_ID;
 //        this.accountPostRequestDto.investorName = INVESTOR_NAME;
 //
-//        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
+//        when(this.accountRepository.validateAccountDoesNotExists(any(Long.class))).thenReturn(false);
 //        Account savedAccount = this.accountService.save(this.accountPostRequestDto);
 //
 //        verify(this.accountRepository).save(savedAccount);
@@ -55,7 +55,7 @@ public class AccountServiceTest {
         this.accountPostRequestDto.investorId = INVESTOR_ID;
         this.accountPostRequestDto.investorName = INVESTOR_NAME;
 
-        when(this.accountRepository.accountAlreadyExists(any(Long.class))).thenReturn(false);
+        when(this.accountRepository.validateAccountDoesNotExists(any(Long.class))).thenReturn(false);
         this.accountService.save(this.accountPostRequestDto);
 
         verify(this.accountRepository).save(any());

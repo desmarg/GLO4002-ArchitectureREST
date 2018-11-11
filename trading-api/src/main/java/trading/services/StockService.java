@@ -14,9 +14,15 @@ import java.time.temporal.ChronoUnit;
 
 public class StockService {
 
+    private final JerseyClient jerseyClient;
+
+    public StockService(JerseyClient jerseyClient) {
+        this.jerseyClient = jerseyClient;
+    }
+
     public Credits retrieveStockPrice(Stock stock, DateTime dateTime) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        StockApiDTO stockApiDTO = JerseyClient.getInstance().getRequest(url, StockApiDTO.class);
+        StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
             throw new StockNotFoundException(
                     stock.getSymbol(),

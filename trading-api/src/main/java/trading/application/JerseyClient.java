@@ -5,16 +5,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
 public class JerseyClient {
-    private static final String URL = "http://localhost:8080";
-    private static JerseyClient INSTANCE = null;
-
-    public static JerseyClient getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new JerseyClient();
-        }
-
-        return INSTANCE;
-    }
+    private final String URL = "http://localhost:8080";
 
     public <T> T getRequest(String uri, Class<T> responseType) {
         Client client = ClientBuilder.newClient();

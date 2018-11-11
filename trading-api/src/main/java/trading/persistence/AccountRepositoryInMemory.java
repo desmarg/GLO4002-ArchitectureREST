@@ -1,9 +1,6 @@
 package trading.persistence;
 
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNotFoundException;
-import trading.domain.Account.AccountNumber;
-import trading.domain.Account.AccountRepository;
+import trading.domain.Account.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +30,10 @@ public class AccountRepositoryInMemory implements AccountRepository {
         throw new AccountNotFoundException(accountNumber);
     }
 
-    public boolean accountAlreadyExists(Long investorId) {
-        return this.investorIdByAccountNumber.containsKey(investorId);
+    public void validateAccountDoesNotExists(Long investorId) {
+        if (this.investorIdByAccountNumber.containsKey(investorId)) {
+            throw new AccountAlreadyExistsException(investorId);
+        }
     }
 
     public Long getCurrentAccountNumber() {
