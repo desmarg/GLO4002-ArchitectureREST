@@ -3,8 +3,8 @@ package trading.domain.Account;
 import trading.domain.Credits.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionSell;
+import trading.domain.Transaction.TransactionBuy;
+import trading.domain.Transaction.TransactionSell;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@ import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
 import trading.domain.Stock;
-import trading.domain.transaction.StockNotFoundException;
+import trading.domain.Transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
 

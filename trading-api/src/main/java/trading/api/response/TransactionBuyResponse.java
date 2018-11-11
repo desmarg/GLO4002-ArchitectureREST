@@ -1,6 +1,6 @@
 package trading.api.response;
 
-import trading.domain.transaction.Transaction;
+import trading.domain.Transaction.Transaction;
 
 public class TransactionBuyResponse extends TransactionResponse {
     private Float purchasedPrice;

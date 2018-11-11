@@ -1,13 +1,13 @@
 package trading.domain.Account;
 
-import trading.domain.transaction.TransactionNumber;
+import trading.domain.Transaction.TransactionNumber;
 import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class NotEnoughCreditsForFeesException extends MappedException {
-    private UUID transactionNumber;
+    private final UUID transactionNumber;
 
     public NotEnoughCreditsForFeesException() {
         super(

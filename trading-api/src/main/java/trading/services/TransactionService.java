@@ -3,18 +3,24 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
-import trading.domain.transaction.*;
+import trading.domain.Transaction.*;
 import trading.external.response.Market.MarketClosedException;
 
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
+    private final WalletService walletService;
     private final StockService stockService;
     private final MarketService marketService;
     private final AccountService accountService;
 
-    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService, AccountService accountService) {
+    public TransactionService(TransactionRepository transactionRepository,
+                              WalletService walletService,
+                              StockService stockService,
+                              MarketService marketService,
+                              AccountService accountService) {
         this.transactionRepository = transactionRepository;
+        this.walletService = walletService;
         this.stockService = stockService;
         this.marketService = marketService;
         this.accountService = accountService;
@@ -26,6 +32,7 @@ public class TransactionService {
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
         this.transactionRepository.save(transactionBuy);
+        this.walletService.update(account, transactionBuy);
         return transactionBuy;
     }
 

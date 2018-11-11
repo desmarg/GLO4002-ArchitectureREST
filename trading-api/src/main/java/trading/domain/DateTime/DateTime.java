@@ -3,9 +3,10 @@ package trading.domain.DateTime;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
 public class DateTime {
-    private OffsetDateTime dateTime;
+    private final OffsetDateTime dateTime;
 
     public DateTime(String date) {
         Instant instant = Instant.parse(date);
@@ -20,11 +21,11 @@ public class DateTime {
         return new DateTime(OffsetDateTime.ofInstant(instant, ZoneId.of("UTC")));
     }
 
-    public Integer getDayOfYear() {
-        return this.dateTime.getDayOfYear();
-    }
-
     public Instant toInstant() {
         return this.dateTime.toInstant();
+    }
+
+    public Instant getInstantDate() {
+        return this.toInstant().truncatedTo((ChronoUnit.DAYS));
     }
 }

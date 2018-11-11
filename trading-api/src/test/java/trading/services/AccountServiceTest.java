@@ -29,10 +29,12 @@ public class AccountServiceTest {
     private AccountRepository accountRepository;
     @Mock
     private AccountNumber accountNumber;
+    @Mock
+    private WalletService walletService;
 
     @Before
     public void setUp() {
-        this.accountService = new AccountService(this.accountRepository);
+        this.accountService = new AccountService(this.accountRepository, this.walletService);
         this.accountNumber = ACCOUNT_NUMBER;
     }
 

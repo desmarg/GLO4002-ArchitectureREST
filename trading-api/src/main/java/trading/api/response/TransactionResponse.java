@@ -2,7 +2,7 @@ package trading.api.response;
 
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.domain.transaction.Transaction;
+import trading.domain.Transaction.Transaction;
 
 import java.time.Instant;
 import java.util.UUID;

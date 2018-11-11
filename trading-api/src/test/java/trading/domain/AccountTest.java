@@ -10,9 +10,9 @@ import trading.domain.Account.AccountNumber;
 import trading.domain.Account.NotEnoughCreditsException;
 import trading.domain.Account.NotEnoughCreditsForFeesException;
 import trading.domain.Credits.Credits;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionSell;
+import trading.domain.Transaction.TransactionBuy;
+import trading.domain.Transaction.TransactionNumber;
+import trading.domain.Transaction.TransactionSell;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
