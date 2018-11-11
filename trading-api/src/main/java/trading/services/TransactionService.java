@@ -49,7 +49,7 @@ public class TransactionService {
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
-        if (this.marketService.isMarketOpen(market)) {
+        if (this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
             throw new MarketClosedException(market);
         }
     }
