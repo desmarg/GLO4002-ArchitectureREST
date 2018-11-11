@@ -77,7 +77,7 @@ public class Credits implements Comparable<Credits> {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Credits) {
-            return this.amount.equals(((Credits) obj).getAmount());
+            return this.amount.compareTo(((Credits) obj).getAmount()) == 0;
         }
         return false;
     }

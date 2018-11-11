@@ -32,7 +32,7 @@ public class StockService {
         return this.getPriceFromDateTime(stockApiDTO, dateTime);
     }
 
-    public Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
+    private Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
         Instant queryInstant = dateTime.toInstant().truncatedTo(ChronoUnit.DAYS);
         for (StockPriceResponseDTO priceInfo : stockDto.prices) {
 
