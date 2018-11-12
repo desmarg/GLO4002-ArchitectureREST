@@ -4,10 +4,7 @@ public enum ReportType {
     DAILY;
 
     public static ReportType fromString(String typeToTest) {
-        if (typeToTest == null) {
-            throw new MissingReportTypeException();
-        }
-        if (typeToTest.equals("")) {
+        if (typeToTest == null || typeToTest.equals("")) {
             throw new MissingReportTypeException();
         }
         for (ReportType type : values()) {

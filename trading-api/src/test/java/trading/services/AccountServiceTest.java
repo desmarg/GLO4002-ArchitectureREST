@@ -39,16 +39,16 @@ public class AccountServiceTest {
         this.accountNumber = ACCOUNT_NUMBER;
     }
 
-//    @Test
-//    public void givenAccountPostRequestDto_whenSave_thenValidateAccountDoesNotExistsCalled() {
-//        this.accountPostRequestDto.credits = CREDITS;
-//        this.accountPostRequestDto.investorId = INVESTOR_ID;
-//        this.accountPostRequestDto.investorName = INVESTOR_NAME;
-//
-//        this.accountService.save(this.accountPostRequestDto);
-//
-//        verify(this.accountRepository).validateAccountDoesNotExists(any());
-//    }
+    @Test
+    public void givenAccountPostRequestDto_whenSave_thenValidateAccountDoesNotExistsCalled() {
+        this.accountPostRequestDto.credits = CREDITS;
+        this.accountPostRequestDto.investorId = INVESTOR_ID;
+        this.accountPostRequestDto.investorName = INVESTOR_NAME;
+
+        this.accountService.save(this.accountPostRequestDto);
+
+        verify(this.accountRepository).validateAccountDoesNotExists(any());
+    }
 
     @Test
     public void givenAccount_whenUpdate_thenAccountRepositoryCalled() {

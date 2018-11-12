@@ -1,12 +1,14 @@
 package trading.domain.Account;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.AccountPostRequestDTO;
 
 import java.math.BigDecimal;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AccountAssemblerTest {
-
     private final AccountPostRequestDTO accountPostRequestDTO = new AccountPostRequestDTO();
 
     private AccountNumber accountNumber;

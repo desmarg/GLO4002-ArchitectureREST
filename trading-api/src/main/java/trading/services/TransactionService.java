@@ -7,7 +7,13 @@ import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Report.Report;
 import trading.domain.Report.ReportType;
-import trading.domain.transaction.*;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionBuyAssembler;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionRepository;
+import trading.domain.transaction.TransactionSell;
+import trading.domain.transaction.TransactionSellAssembler;
 import trading.external.response.Market.MarketClosedException;
 
 import java.util.List;
@@ -34,6 +40,7 @@ public class TransactionService {
         account.buyTransaction(transactionBuy);
         this.accountService.update(account);
         this.transactionRepository.save(transactionBuy);
+
         return transactionBuy;
     }
 
@@ -46,6 +53,7 @@ public class TransactionService {
         account.sellTransaction(transactionSell, referredTransaction);
         this.accountService.update(account);
         this.transactionRepository.save(transactionSell);
+
         return transactionSell;
     }
 
