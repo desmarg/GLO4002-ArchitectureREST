@@ -9,22 +9,15 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class AccountRepositoryInMemory implements AccountRepository {
-    private final Session session;
     private final AtomicLong ACCOUNT_NUMBER_COUNTER = new AtomicLong();
-
-    public AccountRepositoryInMemory() {
-        this.session = buildSessionFactory().openSession();
-    }
-
-    private static SessionFactory buildSessionFactory() {
-        return new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
-    }
+    private final SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
 
     public void save(Account account) {
+        Session session = this.sessionFactory.getCurrentSession();
         AccountHibernateDTO accountHibernateDTO = AccountHydrator.toHibernateDto(account);
-        this.session.beginTransaction();
-        this.session.saveOrUpdate(accountHibernateDTO);
-        this.session.getTransaction().commit();
+        session.beginTransaction();
+        session.saveOrUpdate(accountHibernateDTO);
+        session.getTransaction().commit();
         this.incrementCounter();
     }
 
@@ -34,8 +27,12 @@ public class AccountRepositoryInMemory implements AccountRepository {
 
     public Account findByAccountNumber(AccountNumber accountNumber)
             throws AccountNotFoundException {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
         String accountNumberAsString = accountNumber.getId();
-        AccountHibernateDTO accountHibernateDTO = this.session.get(AccountHibernateDTO.class, accountNumberAsString);
+        AccountHibernateDTO accountHibernateDTO = session.get(AccountHibernateDTO.class, accountNumberAsString);
+
+        session.getTransaction().commit();
         if (accountHibernateDTO == null) {
             throw new AccountNotFoundException(accountNumber);
         }
@@ -43,7 +40,11 @@ public class AccountRepositoryInMemory implements AccountRepository {
     }
 
     public void validateAccountDoesNotExists(Long investorId) {
-        List<Object> sameInvestorIdAccounts = this.session.createSQLQuery("select * from ACCOUNTS where investorId = :investorId").setParameter("investorId", investorId).list();
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<Object> sameInvestorIdAccounts = session.createSQLQuery("select * from ACCOUNTS where investorId = :investorId").
+                setParameter("investorId", investorId).list();
+        session.getTransaction().commit();
 
         if (!sameInvestorIdAccounts.isEmpty()) {
             throw new AccountAlreadyExistsException(investorId);
