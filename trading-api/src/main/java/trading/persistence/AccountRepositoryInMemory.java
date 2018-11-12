@@ -3,10 +3,7 @@ package trading.persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNotFoundException;
-import trading.domain.Account.AccountNumber;
-import trading.domain.Account.AccountRepository;
+import trading.domain.Account.*;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,7 +22,9 @@ public class AccountRepositoryInMemory implements AccountRepository {
 
     public void save(Account account) {
         AccountHibernateDTO accountHibernateDTO = AccountHydrator.toHibernateDto(account);
+        this.session.beginTransaction();
         this.session.saveOrUpdate(accountHibernateDTO);
+        this.session.getTransaction().commit();
         this.incrementCounter();
     }
 
@@ -44,28 +43,10 @@ public class AccountRepositoryInMemory implements AccountRepository {
     }
 
     public void validateAccountDoesNotExists(Long investorId) {
-//        Query query = this.session.createQuery("from AccountHibernateDTO where investorId = :investorId");
-//        query.setParameter("investorId", investorId);
-//        List list = ((org.hibernate.query.Query) query).list();
-//        AccountHibernateDTO accountHibernateDTO = this.session.get(AccountHibernateDTO.class, investorId);
-//        Query query = this.session.createSQLQuery("SELECT count(*) from ACCOUNTS where investorId = :investorId");
-//        query.setParameter("investorId", investorId);
-//        List list = query.list();
-//        if (!(list.get(0)).equals(BigInteger.ZERO)) {
-//            throw new AccountAlreadyExistsException(investorId);
-//        }
-//        Query query = this.session.
-//                createQuery("from AccountHibernateDTO t where t.investorId = :investorId");
-//        query.setParameter("investorId", investorId);
-//        Object object = query.uniqueResult();
-//        String hello = "hello";
-//        List list = this.session.createCriteria(AccountHibernateDTO.class).list();
-//        String ok = "ok";
+        List<Object> sameInvestorIdAccounts = this.session.createSQLQuery("select * from ACCOUNTS where investorId = :investorId").setParameter("investorId", investorId).list();
 
-        List<Object> salut = this.session.createQuery("select table_name from all_tables").list();
-
-        for (Object allo : salut) {
-            System.out.println(allo);
+        if (!sameInvestorIdAccounts.isEmpty()) {
+            throw new AccountAlreadyExistsException(investorId);
         }
     }
 
