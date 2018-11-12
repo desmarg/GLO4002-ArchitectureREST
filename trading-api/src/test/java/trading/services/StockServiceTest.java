@@ -5,11 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import trading.api.request.StockDTO;
 import trading.application.JerseyClient;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
-import trading.domain.Stock;
 import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
@@ -34,7 +34,7 @@ public class StockServiceTest {
     private final DateTime VALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2000-08-04T05:00:00"), ZoneOffset.of("+00:00")));
     private final DateTime INVALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2001-08-04T05:00:00"), ZoneOffset.of("+00:00")));
     private StockService stockService;
-    private Stock stock;
+    private StockDTO stock;
     private StockApiDTO stockApiDTO;
     @Mock
     private JerseyClient jerseyClient;
@@ -42,7 +42,9 @@ public class StockServiceTest {
     @Before
     public void setup() {
         this.stockService = new StockService(this.jerseyClient);
-        this.stock = new Stock(A_MARKET, A_SYMBOL);
+        this.stock = new StockDTO();
+        this.stock.market = A_MARKET;
+        this.stock.symbol = A_SYMBOL;
         this.stockApiDTO = new StockApiDTO();
         this.stockApiDTO.id = NORMAL_ID;
         this.stockApiDTO.market = A_MARKET;
@@ -58,9 +60,8 @@ public class StockServiceTest {
 
     @Test(expected = StockNotFoundException.class)
     public void givenInvalidStockAndDateTime_whenRetrieveStockPrice_thenStockNotFoundException() {
-        Stock stock = new Stock(A_MARKET, A_SYMBOL);
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(null);
-        this.stockService.retrieveStockPrice(stock, this.VALID_DATETIME);
+        this.stockService.retrieveStockPrice(this.stock, this.VALID_DATETIME);
     }
 
     @Test
