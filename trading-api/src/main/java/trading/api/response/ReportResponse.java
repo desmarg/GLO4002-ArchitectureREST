@@ -12,7 +12,7 @@ public class ReportResponse {
     public final List<TransactionResponse> transactions;
 
     public ReportResponse(Report report) {
-        this.date = report.date.toInstant().toString();
+        this.date = report.date.toString();
 
         this.transactions = new ArrayList<>();
         for (Transaction transaction : report.transactions) {
