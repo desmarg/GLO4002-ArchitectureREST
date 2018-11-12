@@ -3,6 +3,7 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
+import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Report.Report;
 import trading.domain.Report.ReportType;
@@ -27,7 +28,8 @@ public class TransactionService {
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
+        Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
+        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
         this.accountService.update(account);
@@ -37,7 +39,8 @@ public class TransactionService {
 
     public Transaction executeTransactionSell(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
         Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
+        Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
+        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionSell);
         TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
         account.sellTransaction(transactionSell, referredTransaction);

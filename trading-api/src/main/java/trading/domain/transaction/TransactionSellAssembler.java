@@ -5,13 +5,12 @@ import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.services.StockService;
 
 public class TransactionSellAssembler {
 
     public static TransactionSell fromDTO(TransactionPostRequestDTO transactionPostRequestDTO,
                                           AccountNumber accountNumber,
-                                          StockService stockService) {
+                                          Credits stockPrice) {
         DateTime dateTime = new DateTime(transactionPostRequestDTO.date);
         Stock stock = new Stock(transactionPostRequestDTO.stock.market, transactionPostRequestDTO.stock.symbol);
 
@@ -20,7 +19,6 @@ public class TransactionSellAssembler {
             throw new InvalidQuantityException();
         }
         TransactionNumber referredTransactionNumber = new TransactionNumber(transactionPostRequestDTO.transactionNumber);
-        Credits stockPrice = stockService.retrieveStockPrice(stock, dateTime);
 
         return new TransactionSell(quantity, dateTime, stock, stockPrice, referredTransactionNumber, accountNumber);
     }

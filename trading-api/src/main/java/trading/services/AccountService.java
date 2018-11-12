@@ -16,7 +16,7 @@ public class AccountService {
     public AccountNumber save(AccountPostRequestDTO accountPostRequestDTO) {
         AccountNumber accountNumber = new AccountNumber(accountPostRequestDTO.investorName, this.accountRepository.getCurrentAccountNumber() + 1);
         Account account = AccountAssembler.create(accountPostRequestDTO, accountNumber);
-        this.accountRepository.validateAccountDoesNotExists(account.getInvestorId());
+        this.accountRepository.validateAccountDoesNotExists(accountPostRequestDTO.investorId);
         this.accountRepository.save(account);
 
         return account.getAccountNumber();
