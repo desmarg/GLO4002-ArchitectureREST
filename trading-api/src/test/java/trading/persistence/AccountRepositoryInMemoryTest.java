@@ -1,5 +1,6 @@
 //package trading.persistence;
 //
+//import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;
@@ -21,19 +22,21 @@
 //    private static final Credits CREDITS = Credits.fromDouble(1.1);
 //    private static final Long NON_EXISTING_INVESTOR_ID = 456L;
 //    private static final AccountNumber NON_EXISTING_ACCOUNT_NUMBER = new AccountNumber("TA-456");
+//    private static final AccountNumber EXISTING_ACCOUNT_NUMBER = new AccountNumber("AL-420");
 //
 //    private Account account;
 //    private AccountRepositoryInMemory accountRepositoryInMemory;
 //
-////    @Before
-////    public void setUp() {
-////        this.accountRepositoryInMemory = new AccountRepositoryInMemory();
-////        this.account = new Account(
-////                INVESTOR_ID,
-////                INVESTOR_NAME,
-////                CREDITS
-////        );
-////    }
+//    @Before
+//    public void setUp() {
+//        this.accountRepositoryInMemory = new AccountRepositoryInMemory();
+//        this.account = new Account(
+//                INVESTOR_ID,
+//                INVESTOR_NAME,
+//                CREDITS,
+//                EXISTING_ACCOUNT_NUMBER
+//        );
+//    }
 //
 //    @Test(expected = AccountNotFoundException.class)
 //    public void givenNonexistentAccount_whenFindingAccount_thenThrowAccountNotFoundException() {
