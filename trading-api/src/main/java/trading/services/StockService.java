@@ -1,10 +1,10 @@
 package trading.services;
 
+import trading.api.request.StockDTO;
 import trading.application.JerseyClient;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
-import trading.domain.Stock;
 import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
@@ -20,13 +20,13 @@ public class StockService {
         this.jerseyClient = jerseyClient;
     }
 
-    public Credits retrieveStockPrice(Stock stock, DateTime dateTime) {
-        String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
+    public Credits retrieveStockPrice(StockDTO stock, DateTime dateTime) {
+        String url = "/stocks/" + stock.market + "/" + stock.symbol;
         StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
             throw new StockNotFoundException(
-                    stock.getSymbol(),
-                    stock.getMarket()
+                    stock.symbol,
+                    stock.market
             );
         }
         return this.getPriceFromDateTime(stockApiDTO, dateTime);
