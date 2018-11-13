@@ -1,32 +1,48 @@
 package trading.persistence;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import trading.domain.Account.AccountNumber;
 import trading.domain.DateTime.DateTime;
-import trading.domain.transaction.*;
+import trading.domain.transaction.InvalidTransactionNumberException;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionNotFoundException;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TransactionRepositoryInMemory implements TransactionRepository {
-
-    private final Map<TransactionNumber, Transaction> transactionMap = new HashMap<>();
+    private final SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
 
     public void save(Transaction transaction) {
-        this.transactionMap.put(transaction.getTransactionNumber(), transaction);
+        Session session = this.sessionFactory.getCurrentSession();
+        TransactionHibernateDTO transactionHibernateDTO = TransactionHydrator.toHibernateDto
+                (transaction);
+        session.beginTransaction();
+        session.saveOrUpdate(transactionHibernateDTO);
+        session.getTransaction().commit();
     }
 
     public Transaction findByTransactionNumber(TransactionNumber transactionNumber) {
-        Transaction retrievedTransaction = this.transactionMap.get(transactionNumber);
-        if (retrievedTransaction != null) {
-            return retrievedTransaction;
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        String transactionNumberAsString = transactionNumber.getStringUUID();
+        TransactionHibernateDTO transactionHibernateDTO = session.get(TransactionHibernateDTO
+                .class, transactionNumberAsString);
+        session.getTransaction().commit();
+
+        if (transactionHibernateDTO == null) {
+            throw new TransactionNotFoundException(transactionNumber);
         }
-        throw new TransactionNotFoundException(transactionNumber);
+        return TransactionHydrator.toTransaction(transactionHibernateDTO);
     }
 
     public TransactionBuy findReferredTransaction(TransactionNumber transactionNumber) {
-        Transaction retrievedTransaction = this.transactionMap.get(transactionNumber);
+        Transaction retrievedTransaction = this.findByTransactionNumber(transactionNumber);
         if (!(retrievedTransaction instanceof TransactionBuy)) {
             throw new InvalidTransactionNumberException(transactionNumber);
         }
@@ -37,13 +53,20 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
     }
 
     public List<Transaction> findAllTransactionFromDate(AccountNumber accountNumber, DateTime date) {
-        List<Transaction> returnTransactionMap = new ArrayList<>();
-        for (Transaction transaction : this.transactionMap.values()) {
-            if (transaction.getAccountNumber() == accountNumber && transaction.getDateTime().toInstant().compareTo(date.toInstant()) <= 0) {
-                returnTransactionMap.add(transaction);
-            }
+        String accountNumberAsString = accountNumber.getId();
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery("select * from " +
+                "TRANSACTIONS WHERE accountNumber= :accountNumber AND dateTime= :dateTime")
+                .setParameter
+                        ("accountNumber", accountNumberAsString).setParameter("dateTime", date
+                        .toDate()).list();
+
+        List<Transaction> transactions = new ArrayList<>();
+        for (TransactionHibernateDTO transactionHibernateDTO : transactionHibernateDTOS) {
+            transactions.add(TransactionHydrator.toTransaction(transactionHibernateDTO));
         }
-        return returnTransactionMap;
+        return transactions;
     }
 }
 

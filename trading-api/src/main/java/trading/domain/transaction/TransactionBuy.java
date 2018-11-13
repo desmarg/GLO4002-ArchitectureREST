@@ -18,6 +18,18 @@ public class TransactionBuy extends Transaction {
         this.transactionType = TransactionType.BUY;
     }
 
+    public TransactionBuy(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice,
+            AccountNumber accountNumber,
+            TransactionNumber transactionNumber
+    ) {
+        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionNumber);
+        this.transactionType = TransactionType.BUY;
+    }
+
     public Credits getValueWithFees() {
         Credits totalPrice = new Credits();
         totalPrice.add(this.value);

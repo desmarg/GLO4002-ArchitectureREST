@@ -21,6 +21,20 @@ public class TransactionSell extends Transaction {
         this.referredTransactionNumber = referredTransactionNumber;
     }
 
+    public TransactionSell(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice,
+            TransactionNumber referredTransactionNumber,
+            AccountNumber accountNumber,
+            TransactionNumber transactionNumber
+    ) {
+        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionNumber);
+        this.transactionType = TransactionType.SELL;
+        this.referredTransactionNumber = referredTransactionNumber;
+    }
+
     public TransactionNumber getReferredTransactionNumber() {
         return this.referredTransactionNumber;
     }

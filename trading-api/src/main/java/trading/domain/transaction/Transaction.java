@@ -34,6 +34,24 @@ public abstract class Transaction {
         this.fees = this.calculateFees();
     }
 
+    protected Transaction(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice,
+            AccountNumber accountNumber,
+            TransactionNumber transactionNumber
+    ) {
+        this.transactionNumber = transactionNumber;
+        this.quantity = quantity;
+        this.dateTime = dateTime;
+        this.stock = stock;
+        this.stockPrice = stockPrice;
+        this.accountNumber = accountNumber;
+        this.value = this.calculateValue();
+        this.fees = this.calculateFees();
+    }
+
     private Credits calculateValue() {
         Credits transactionPrice = new Credits(this.stockPrice);
         transactionPrice.multiply(this.quantity);

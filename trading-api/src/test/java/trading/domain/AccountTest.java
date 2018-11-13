@@ -43,12 +43,15 @@ public class AccountTest {
 
     private Account basicAccount;
     private Account notEnoughCreditsAccount;
+    private Stock STOCK1 = new Stock("mrkt", "symbl");
 
     @Before
     public void setup() {
         REMAINING_STOCKS_MAP.put(A_TRANSACTION_NUMBER, QUANTITY);
         this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE, ACCOUNT_NUMBER, INVESTOR_PROFILE, REMAINING_STOCKS_MAP);
         this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS, ACCOUNT_NUMBER, INVESTOR_PROFILE, REMAINING_STOCKS_MAP);
+        when(this.transactionSell.getStock()).thenReturn(this.STOCK1);
+        when(this.transactionBuy.getStock()).thenReturn(this.STOCK1);
     }
 
     @Test

@@ -3,7 +3,12 @@ package trading.domain.Account;
 import trading.domain.Credits.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
-import trading.domain.transaction.*;
+import trading.domain.transaction.InvalidTransactionNumberException;
+import trading.domain.transaction.NotEnoughStockException;
+import trading.domain.transaction.StockParametersDontMatchException;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionSell;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +64,12 @@ public class Account {
         this.remainingStocksMap.put(transactionBuy.getTransactionNumber(), transactionBuy.getQuantity());
     }
 
-    public void sellTransaction(TransactionSell transactionSell, TransactionBuy referredTransaction) {
+    public void sellTransaction(TransactionSell transactionSell, TransactionBuy
+            referredTransaction) {
+        if (!transactionSell.getStock().equals(referredTransaction.getStock())) {
+            throw new StockParametersDontMatchException();
+        }
+
         this.deduceStocks(referredTransaction, transactionSell.getQuantity());
         if (this.credits.compareTo(transactionSell.getFees()) < 0) {
             throw new NotEnoughCreditsForFeesException();

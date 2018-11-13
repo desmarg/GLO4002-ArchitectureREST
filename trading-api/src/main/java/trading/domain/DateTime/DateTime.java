@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 public class DateTime {
 
@@ -31,5 +32,9 @@ public class DateTime {
 
     public Instant toInstant() {
         return this.instant;
+    }
+
+    public Date toDate() {
+        return Date.from(this.instant);
     }
 }
