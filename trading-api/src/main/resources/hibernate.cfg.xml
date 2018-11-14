@@ -5,3 +5,4 @@
         <mapping class="trading.persistence.TransactionHibernateDTO"/>
     </session-factory>
 </hibernate-configuration>
+

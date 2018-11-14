@@ -1,6 +1,5 @@
 package trading.domain.Account;
 
-import trading.domain.Account.AccountNumber;
 import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
