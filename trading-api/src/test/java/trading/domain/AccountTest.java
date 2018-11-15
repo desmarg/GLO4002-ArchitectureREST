@@ -47,8 +47,8 @@ public class AccountTest {
     @Before
     public void setup() {
         REMAINING_STOCKS_MAP.put(A_TRANSACTION_NUMBER, QUANTITY);
-        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
-        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
+        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
+        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
         when(this.transactionSell.getStock()).thenReturn(this.STOCK1);
         when(this.transactionBuy.getStock()).thenReturn(this.STOCK1);
     }

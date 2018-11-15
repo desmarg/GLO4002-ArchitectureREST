@@ -13,6 +13,10 @@ public interface TransactionRepository {
 
     TransactionBuy findReferredTransaction(TransactionNumber transactionNumber);
 
-    List<Transaction> findAllTransactionFromDate(AccountNumber accountNumber, DateTime date);
+    List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber, DateTime date);
+
+    List<TransactionBuy> findTransactionBuyBeforeDate(AccountNumber accountNumber, DateTime dateTime);
+
+    List<TransactionSell> findTransactionSellBeforeDate(AccountNumber accountNumber, DateTime dateTime);
 
 }

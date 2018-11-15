@@ -10,6 +10,9 @@ public class ReportResponse {
 
     public final String date;
     public final List<TransactionResponse> transactions;
+    public final Float credits;
+    public final Float portfolioValue;
+
 
     public ReportResponse(Report report) {
         this.date = report.date.toInstant().toString();
@@ -18,5 +21,7 @@ public class ReportResponse {
         for (Transaction transaction : report.transactions) {
             this.transactions.add(TransactionResponseFactory.createTransactionResponse(transaction));
         }
+        this.credits = report.credits.valueToFloat();
+        this.portfolioValue = report.portfolioValue.valueToFloat();
     }
 }

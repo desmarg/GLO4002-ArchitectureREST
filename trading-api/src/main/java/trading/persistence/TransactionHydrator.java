@@ -62,4 +62,43 @@ public class TransactionHydrator {
             );
         }
     }
+
+    public static TransactionBuy toTransactionBuy(TransactionHibernateDTO transactionHibernateDTO) {
+        AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
+        TransactionNumber transactionNumber = new TransactionNumber(transactionHibernateDTO.transactionNumber);
+        Long quantity = transactionHibernateDTO.quantity;
+        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
+        Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
+        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
+
+        return new TransactionBuy(
+                quantity,
+                dateTime,
+                stock,
+                stockPrice,
+                accountNumber,
+                transactionNumber
+        );
+    }
+
+    public static TransactionSell toTransactionSell(TransactionHibernateDTO transactionHibernateDTO) {
+        AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
+        TransactionNumber transactionNumber = new TransactionNumber(transactionHibernateDTO.transactionNumber);
+        Long quantity = transactionHibernateDTO.quantity;
+        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
+        Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
+        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
+
+        TransactionNumber referredTransactionNumber = new TransactionNumber
+                (transactionHibernateDTO.referredTransactionNumber);
+        return new TransactionSell(
+                quantity,
+                dateTime,
+                stock,
+                stockPrice,
+                referredTransactionNumber,
+                accountNumber,
+                transactionNumber
+        );
+    }
 }

@@ -7,7 +7,7 @@ public class TransactionBuyResponse extends TransactionResponse {
 
     public TransactionBuyResponse(Transaction transaction) {
         super(transaction);
-        this.setPurchasedPrice(transaction.getValue().valueToFloat());
+        this.setPurchasedPrice(transaction.getStockPrice().valueToFloat());
     }
 
     public Float getPurchasedPrice() {

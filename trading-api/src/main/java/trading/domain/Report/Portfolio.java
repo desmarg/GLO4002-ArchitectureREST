@@ -1,27 +1,21 @@
 package trading.domain.Report;
 
 import trading.domain.Credits.Credits;
-import trading.domain.DateTime.DateTime;
-
-import java.util.List;
 
 public class Portfolio {
-    public DateTime date;
-    private List<StockPortfolio> stocks;
+    private final Credits portfolioValue;
+    private final Credits accountValue;
 
-    public Portfolio(DateTime date, List<StockPortfolio> stocks) {
-        this.date = date;
-        this.stocks = stocks;
+    public Portfolio(Credits portfolioValue, Credits accountValue) {
+        this.portfolioValue = portfolioValue;
+        this.accountValue = accountValue;
     }
 
-
-    public Credits portfolioValue() {
-        Credits portfolioValue = new Credits();
-        for (StockPortfolio stockPortfolio : this.stocks) {
-            portfolioValue.add(stockPortfolio.value());
-        }
-        return portfolioValue;
+    public Credits getPortfolioValue() {
+        return this.portfolioValue;
     }
 
-
+    public Credits getAccountValue() {
+        return this.accountValue;
+    }
 }

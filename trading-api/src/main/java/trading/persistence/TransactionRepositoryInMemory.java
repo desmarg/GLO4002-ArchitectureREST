@@ -51,7 +51,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         return (TransactionBuy) retrievedTransaction;
     }
 
-    public List<Transaction> findAllTransactionFromDate(AccountNumber accountNumber, DateTime reportDateTime) {
+    public List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber, DateTime reportDateTime) {
         LocalDateTime time = LocalDateTime.ofInstant(reportDateTime.toInstant(), ZoneOffset.ofHours(0));
         time = time.minus(1, ChronoUnit.DAYS);
         Instant reportDateInstantMinusOneDay = time.atZone(ZoneOffset.ofHours(0)).toInstant();
@@ -59,8 +59,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         String accountNumberAsString = accountNumber.getString();
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery("select * from " +
-                "TRANSACTIONS WHERE accountNumber= :accountNumber AND instant<= :reportDateInstant AND instant> :reportDateInstantMinusOneDay ")
+        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery("select * from TRANSACTIONS WHERE accountNumber= :accountNumber AND instant<= :reportDateInstant AND instant> :reportDateInstantMinusOneDay ")
                 .setParameter("accountNumber", accountNumberAsString)
                 .setParameter("reportDateInstant", reportDateTime.toInstant())
                 .setParameter("reportDateInstantMinusOneDay", reportDateInstantMinusOneDay
@@ -73,6 +72,47 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         }
         return transactions;
     }
-}
 
+    public List<TransactionBuy> findTransactionBuyBeforeDate(AccountNumber accountNumber, DateTime reportDateInstant) {
+        String accountNumberAsString = accountNumber.getString();
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery(
+                "select * from TRANSACTIONS WHERE accountNumber= :accountNumber AND instant < :reportDateInstant AND transactionType= :myTransactionType")
+                .setParameter("accountNumber", accountNumberAsString)
+                .setParameter("reportDateInstant", reportDateInstant.toInstant())
+                .setParameter("myTransactionType", TransactionType.BUY.toString()
+                ).addEntity(TransactionHibernateDTO.class).list();
+        session.getTransaction().commit();
+
+        List<TransactionBuy> transactions = new ArrayList<>();
+        for (TransactionHibernateDTO transactionHibernateDTO : transactionHibernateDTOS) {
+            transactions.add(TransactionHydrator.toTransactionBuy(transactionHibernateDTO));
+        }
+        return transactions;
+    }
+
+    public List<TransactionSell> findTransactionSellBeforeDate(AccountNumber accountNumber, DateTime reportDateInstant) {
+        String accountNumberAsString = accountNumber.getString();
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery(
+                "select * from TRANSACTIONS " +
+                        "WHERE accountNumber= :accountNumber " +
+                        "AND instant < :reportDateInstant " +
+                        "AND transactionType= :transactionType")
+                .setParameter("accountNumber", accountNumberAsString)
+                .setParameter("reportDateInstant", reportDateInstant.toInstant())
+                .setParameter("transactionType", TransactionType.SELL.toString()
+                ).addEntity(TransactionHibernateDTO.class).list();
+        session.getTransaction().commit();
+
+        List<TransactionSell> transactions = new ArrayList<>();
+        for (TransactionHibernateDTO transactionHibernateDTO : transactionHibernateDTOS) {
+            transactions.add(TransactionHydrator.toTransactionSell(transactionHibernateDTO));
+        }
+        return transactions;
+    }
+
+}
 

@@ -5,6 +5,7 @@ import trading.application.JerseyClient;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
+import trading.domain.Stock;
 import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
@@ -27,6 +28,18 @@ public class StockService {
             throw new StockNotFoundException(
                     stock.symbol,
                     stock.market
+            );
+        }
+        return this.getPriceFromDateTime(stockApiDTO, dateTime);
+    }
+
+    public Credits retrieveStockPrice(Stock stock, DateTime dateTime) {
+        String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
+        StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
+        if (stockApiDTO == null) {
+            throw new StockNotFoundException(
+                    stock.getSymbol(),
+                    stock.getMarket()
             );
         }
         return this.getPriceFromDateTime(stockApiDTO, dateTime);

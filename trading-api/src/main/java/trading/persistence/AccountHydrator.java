@@ -18,9 +18,10 @@ public class AccountHydrator {
         Long investorId = accountHibernateDTO.investorId;
         String investorName = accountHibernateDTO.investorName;
         Credits credits = new Credits(accountHibernateDTO.credits);
+        Credits initialCredits = new Credits(accountHibernateDTO.initialCredits);
         int id = accountHibernateDTO.Id;
 
-        Account account = new Account(investorId, investorName, credits, investorProfile, remainingStocksMap, id);
+        Account account = new Account(investorId, investorName, credits, initialCredits, investorProfile, remainingStocksMap, id);
 
         return account;
     }
@@ -33,6 +34,7 @@ public class AccountHydrator {
         accountHibernateDTO.focusAreas = account.getInvestorProfile().getFocusAreas();
         accountHibernateDTO.investorName = account.getInvestorName();
         accountHibernateDTO.credits = account.getCredits().getAmount();
+        accountHibernateDTO.initialCredits = account.getInitialCredits().getAmount();
         accountHibernateDTO.remainingStocksMap = AccountHydrator.dehydrateRemainingStocksMap(account.getRemainingStocksMap());
 
         return accountHibernateDTO;

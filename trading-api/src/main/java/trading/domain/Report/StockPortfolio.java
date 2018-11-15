@@ -1,27 +1,25 @@
 package trading.domain.Report;
 
 import trading.domain.Credits.Credits;
-import trading.domain.Stock;
 
 public class StockPortfolio {
-    private Stock stock;
-    private Credits price;
-    private Long amount;
+    private final Credits actualPrice;
+    private Long quantity;
 
-    public StockPortfolio(Stock stock, Credits price, Long amount) {
-        this.stock = stock;
-        this.price = price;
-        this.amount = amount;
+    public StockPortfolio(Credits actualPrice, Long quantity) {
+        this.actualPrice = actualPrice;
+        this.quantity = quantity;
     }
 
-    public void deduct(Long amount) {
-        this.amount = this.amount - amount;
+    public void substract(Long quantity) {
+        this.quantity -= quantity;
     }
 
-    public Credits value() {
+    public Credits getValue() {
         Credits value = new Credits();
+        value.add(this.actualPrice);
+        value.multiply(this.quantity);
         return value;
     }
-
 }
 

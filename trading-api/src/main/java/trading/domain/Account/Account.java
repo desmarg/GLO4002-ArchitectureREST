@@ -16,6 +16,7 @@ public class Account {
     private final InvestorProfile investorProfile;
     private final String investorName;
     private final Credits credits;
+    private final Credits initialCredits;
     private final Map<TransactionNumber, Long> remainingStocksMap;
 
     public Account(
@@ -27,6 +28,7 @@ public class Account {
         this.investorId = investorId;
         this.investorName = investorName;
         this.credits = credits;
+        this.initialCredits = credits;
         this.investorProfile = new InvestorProfile(
                 ProfileType.CONSERVATIVE,
                 new ArrayList<>()
@@ -39,6 +41,7 @@ public class Account {
             Long investorId,
             String investorName,
             Credits credits,
+            Credits initialCredits,
             InvestorProfile investorProfile,
             Map<TransactionNumber, Long> remainingStocksMap,
             int id
@@ -46,6 +49,7 @@ public class Account {
         this.investorId = investorId;
         this.investorName = investorName;
         this.credits = credits;
+        this.initialCredits = initialCredits;
         this.investorProfile = investorProfile;
         this.remainingStocksMap = remainingStocksMap;
         this.id = id;
@@ -110,5 +114,9 @@ public class Account {
 
     public int getId() {
         return this.id;
+    }
+
+    public Credits getInitialCredits() {
+        return this.initialCredits;
     }
 }

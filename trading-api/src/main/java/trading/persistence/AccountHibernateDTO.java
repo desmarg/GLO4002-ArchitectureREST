@@ -23,6 +23,8 @@ public class AccountHibernateDTO implements Serializable {
     public String investorName;
     @Column
     public BigDecimal credits;
+    @Column
+    public BigDecimal initialCredits;
     @ElementCollection(fetch = FetchType.EAGER)
     public Map<UUID, Long> remainingStocksMap;
 
