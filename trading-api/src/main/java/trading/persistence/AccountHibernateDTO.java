@@ -1,11 +1,6 @@
 package trading.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,9 +10,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "ACCOUNTS")
 public class AccountHibernateDTO implements Serializable {
+
     @Id
-    public String accountNumber;
-    @Column
+    public int Id;
+    @Column(unique = true)
     public Long investorId;
     @Column
     public String profileType;

@@ -2,18 +2,11 @@ package trading.services;
 
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Report.Report;
 import trading.domain.Report.ReportType;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionBuyAssembler;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionRepository;
-import trading.domain.transaction.TransactionSell;
-import trading.domain.transaction.TransactionSellAssembler;
+import trading.domain.transaction.*;
 import trading.external.response.Market.MarketClosedException;
 
 import java.util.List;
@@ -33,7 +26,7 @@ public class TransactionService {
     }
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Account account = this.accountService.findByAccountNumber(accountNumber);
         Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
         TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionBuy);
@@ -45,7 +38,7 @@ public class TransactionService {
     }
 
     public Transaction executeTransactionSell(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Account account = this.accountService.findByAccountNumber(accountNumber);
         Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
         TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionSell);

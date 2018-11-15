@@ -14,9 +14,8 @@ public class AccountService {
     }
 
     public AccountNumber save(AccountPostRequestDTO accountPostRequestDTO) {
-        AccountNumber accountNumber = new AccountNumber(accountPostRequestDTO.investorName, this.accountRepository.getCurrentAccountNumber() + 1);
-        Account account = AccountAssembler.create(accountPostRequestDTO, accountNumber);
-        this.accountRepository.validateAccountDoesNotExists(accountPostRequestDTO.investorId);
+        int id = this.accountRepository.getCurrentAccountId() + 1;
+        Account account = AccountAssembler.create(accountPostRequestDTO, id);
         this.accountRepository.save(account);
 
         return account.getAccountNumber();
@@ -26,7 +25,8 @@ public class AccountService {
         this.accountRepository.update(account);
     }
 
-    public Account findByAccountNumber(AccountNumber accountNumber) {
+    public Account findByAccountNumber(String accountNumberString) {
+        AccountNumber accountNumber = new AccountNumber(accountNumberString);
         return this.accountRepository.findByAccountNumber(accountNumber);
     }
 }

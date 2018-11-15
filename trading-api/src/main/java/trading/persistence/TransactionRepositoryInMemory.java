@@ -5,13 +5,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import trading.domain.Account.AccountNumber;
 import trading.domain.DateTime.DateTime;
-import trading.domain.transaction.InvalidTransactionNumberException;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNotFoundException;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionRepository;
+import trading.domain.transaction.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,15 +51,21 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         return (TransactionBuy) retrievedTransaction;
     }
 
-    public List<Transaction> findAllTransactionFromDate(AccountNumber accountNumber, DateTime date) {
-        String accountNumberAsString = accountNumber.getId();
+    public List<Transaction> findAllTransactionFromDate(AccountNumber accountNumber, DateTime reportDateTime) {
+        LocalDateTime time = LocalDateTime.ofInstant(reportDateTime.toInstant(), ZoneOffset.ofHours(0));
+        time = time.minus(1, ChronoUnit.DAYS);
+        Instant reportDateInstantMinusOneDay = time.atZone(ZoneOffset.ofHours(0)).toInstant();
+
+        String accountNumberAsString = accountNumber.getString();
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
         List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery("select * from " +
-                "TRANSACTIONS WHERE accountNumber= :accountNumber AND dateTime= :dateTime")
-                .setParameter
-                        ("accountNumber", accountNumberAsString).setParameter("dateTime", date
-                        .toDate()).list();
+                "TRANSACTIONS WHERE accountNumber= :accountNumber AND instant<= :reportDateInstant AND instant> :reportDateInstantMinusOneDay ")
+                .setParameter("accountNumber", accountNumberAsString)
+                .setParameter("reportDateInstant", reportDateTime.toInstant())
+                .setParameter("reportDateInstantMinusOneDay", reportDateInstantMinusOneDay
+                ).addEntity(TransactionHibernateDTO.class).list();
+        session.getTransaction().commit();
 
         List<Transaction> transactions = new ArrayList<>();
         for (TransactionHibernateDTO transactionHibernateDTO : transactionHibernateDTOS) {

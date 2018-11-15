@@ -1,15 +1,12 @@
 package trading.persistence;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "TRANSACTIONS")
@@ -23,10 +20,7 @@ public class TransactionHibernateDTO implements Serializable {
     @Column
     Long quantity;
     @Column
-    Instant dateTime;
-    @Column
-    @Type(type = "date")
-    Date date;
+    Timestamp instant;
     @Column
     String market;
     @Column

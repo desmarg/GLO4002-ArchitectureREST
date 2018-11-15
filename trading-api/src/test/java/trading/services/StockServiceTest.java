@@ -52,7 +52,7 @@ public class StockServiceTest {
         this.stockApiDTO.type = A_TYPE;
         this.stockApiDTO.prices = new ArrayList<>();
         StockPriceResponseDTO stockPriceResponseDTO = new StockPriceResponseDTO();
-        stockPriceResponseDTO.date = this.VALID_DATETIME.truncateTime();
+        stockPriceResponseDTO.date = this.VALID_DATETIME.toDate();
         stockPriceResponseDTO.price = new BigDecimal(CREDIT_VALUE);
         this.stockApiDTO.prices.add(stockPriceResponseDTO);
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(this.stockApiDTO);

@@ -3,30 +3,26 @@ package trading.domain.Account;
 import trading.domain.Credits.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
-import trading.domain.transaction.InvalidTransactionNumberException;
-import trading.domain.transaction.NotEnoughStockException;
-import trading.domain.transaction.StockParametersDontMatchException;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionSell;
+import trading.domain.transaction.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Account {
+
+    private final int id;
     private final Long investorId;
     private final InvestorProfile investorProfile;
     private final String investorName;
     private final Credits credits;
-    private final AccountNumber accountNumber;
     private final Map<TransactionNumber, Long> remainingStocksMap;
 
     public Account(
             Long investorId,
             String investorName,
             Credits credits,
-            AccountNumber accountNumber
+            int id
     ) {
         this.investorId = investorId;
         this.investorName = investorName;
@@ -35,24 +31,24 @@ public class Account {
                 ProfileType.CONSERVATIVE,
                 new ArrayList<>()
         );
-        this.accountNumber = accountNumber;
         this.remainingStocksMap = new HashMap<>();
+        this.id = id;
     }
 
     public Account(
             Long investorId,
             String investorName,
             Credits credits,
-            AccountNumber accountNumber,
             InvestorProfile investorProfile,
-            Map<TransactionNumber, Long> remainingStocksMap
+            Map<TransactionNumber, Long> remainingStocksMap,
+            int id
     ) {
         this.investorId = investorId;
         this.investorName = investorName;
         this.credits = credits;
-        this.accountNumber = accountNumber;
         this.investorProfile = investorProfile;
         this.remainingStocksMap = remainingStocksMap;
+        this.id = id;
     }
 
     public void buyTransaction(TransactionBuy transactionBuy) {
@@ -89,11 +85,7 @@ public class Account {
     }
 
     public AccountNumber getAccountNumber() {
-        return this.accountNumber;
-    }
-
-    public String getStringAccountNumber() {
-        return this.accountNumber.getId();
+        return new AccountNumber(this.investorName, this.id);
     }
 
     public InvestorProfile getInvestorProfile() {
@@ -114,5 +106,9 @@ public class Account {
 
     public Map<TransactionNumber, Long> getRemainingStocksMap() {
         return this.remainingStocksMap;
+    }
+
+    public int getId() {
+        return this.id;
     }
 }

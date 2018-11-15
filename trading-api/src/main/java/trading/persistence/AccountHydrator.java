@@ -1,7 +1,6 @@
 package trading.persistence;
 
 import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
@@ -13,22 +12,22 @@ import java.util.UUID;
 
 public class AccountHydrator {
 
-    public static Account toAccount(AccountHibernateDTO accountHibernateDTO){
+    public static Account toAccount(AccountHibernateDTO accountHibernateDTO) {
         InvestorProfile investorProfile = new InvestorProfile(ProfileType.valueOf(accountHibernateDTO.profileType), accountHibernateDTO.focusAreas);
-        Map<TransactionNumber, Long> modifiedRemainingStocksMap = AccountHydrator.hydrateRemainingStocksMap(accountHibernateDTO.remainingStocksMap);
+        Map<TransactionNumber, Long> remainingStocksMap = AccountHydrator.hydrateRemainingStocksMap(accountHibernateDTO.remainingStocksMap);
         Long investorId = accountHibernateDTO.investorId;
         String investorName = accountHibernateDTO.investorName;
         Credits credits = new Credits(accountHibernateDTO.credits);
-        AccountNumber accountNumber = new AccountNumber(accountHibernateDTO.accountNumber);
+        int id = accountHibernateDTO.Id;
 
-        Account account = new Account(investorId, investorName, credits, accountNumber, investorProfile, modifiedRemainingStocksMap);
+        Account account = new Account(investorId, investorName, credits, investorProfile, remainingStocksMap, id);
 
         return account;
     }
 
     public static AccountHibernateDTO toHibernateDto(Account account) {
         AccountHibernateDTO accountHibernateDTO = new AccountHibernateDTO();
-        accountHibernateDTO.accountNumber = account.getAccountNumber().getId();
+        accountHibernateDTO.Id = account.getId();
         accountHibernateDTO.investorId = account.getInvestorId();
         accountHibernateDTO.profileType = account.getInvestorProfile().getProfileType().toString();
         accountHibernateDTO.focusAreas = account.getInvestorProfile().getFocusAreas();

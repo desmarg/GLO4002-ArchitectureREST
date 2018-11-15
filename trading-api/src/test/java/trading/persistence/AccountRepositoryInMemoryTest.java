@@ -48,7 +48,7 @@
 //        Account savedAccount = this.accountRepositoryInMemory.save(this.account);
 //
 //        Account inMemoryAccount = this.accountRepositoryInMemory.findByAccountNumber(
-//                savedAccount.getAccountNumber()
+//                savedAccount.getString()
 //        );
 //
 //        assertEquals(savedAccount, inMemoryAccount);
@@ -56,10 +56,10 @@
 //
 //    @Test
 //    public void whenSave_thenCounterIsDifferentThanInitial() {
-//        Long initialCounter = this.accountRepositoryInMemory.getCurrentAccountNumber();
+//        Long initialCounter = this.accountRepositoryInMemory.getCurrentAccountId();
 //        this.accountRepositoryInMemory.save(this.account);
 //
-//        assertNotEquals(initialCounter, this.accountRepositoryInMemory.getCurrentAccountNumber());
+//        assertNotEquals(initialCounter, this.accountRepositoryInMemory.getCurrentAccountId());
 //    }
 //
 //    @Test

@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class DateTime {
 
@@ -22,7 +21,7 @@ public class DateTime {
         return new DateTime(OffsetDateTime.ofInstant(instant, ZoneId.of("UTC")));
     }
 
-    public Instant truncateTime() {
+    public Instant toDate() {
         return this.instant.truncatedTo((ChronoUnit.DAYS));
     }
 
@@ -34,7 +33,4 @@ public class DateTime {
         return this.instant;
     }
 
-    public Date toDate() {
-        return Date.from(this.instant);
-    }
 }

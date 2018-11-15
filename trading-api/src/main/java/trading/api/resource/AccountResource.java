@@ -32,7 +32,7 @@ public class AccountResource {
     public Response ReportResponse(@PathParam("accountNumber") String accountNumber,
                                    @QueryParam("type") String reportType,
                                    @QueryParam("date") String date) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Account account = this.accountService.findByAccountNumber(accountNumber);
         DateTime reportDate = DateTimeParser.createFromReportDate(date);
         Report report = this.transactionService.getReportFromDate(account, reportDate, reportType);
         return Response.status(Response.Status.OK).entity(new ReportResponse(report)).build();
@@ -42,7 +42,7 @@ public class AccountResource {
     @Path("/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") String accountNumber) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
+        Account account = this.accountService.findByAccountNumber(accountNumber);
         return Response.status(Response.Status.OK).entity(new AccountResponse(account)).build();
     }
 
@@ -52,7 +52,7 @@ public class AccountResource {
         AccountNumber accountNumber = this.accountService.save(accountPostRequestDto);
         return Response.status(Response.Status.CREATED).header(
                 "Location",
-                "accounts/" + accountNumber.getId()
+                "accounts/" + accountNumber.getString()
         ).build();
     }
 }

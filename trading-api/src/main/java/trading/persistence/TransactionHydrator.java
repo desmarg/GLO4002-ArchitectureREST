@@ -4,21 +4,18 @@ import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionSell;
-import trading.domain.transaction.TransactionType;
+import trading.domain.transaction.*;
+
+import java.sql.Timestamp;
 
 public class TransactionHydrator {
     public static TransactionHibernateDTO toHibernateDto(Transaction transaction) {
         TransactionHibernateDTO transactionHibernateDTO = new TransactionHibernateDTO();
         transactionHibernateDTO.transactionNumber = transaction.getTransactionNumber().getStringUUID();
-        transactionHibernateDTO.accountNumber = transaction.getAccountNumber().getId();
+        transactionHibernateDTO.accountNumber = transaction.getAccountNumber().getString();
         transactionHibernateDTO.transactionType = transaction.getTransactionType().toString();
         transactionHibernateDTO.quantity = transaction.getQuantity();
-        transactionHibernateDTO.dateTime = transaction.getDateTime().toInstant();
-        transactionHibernateDTO.date = transaction.getDateTime().toDate();
+        transactionHibernateDTO.instant = Timestamp.from(transaction.getDateTime().toInstant());
         transactionHibernateDTO.market = transaction.getStock().getMarket();
         transactionHibernateDTO.symbol = transaction.getStock().getSymbol();
         transactionHibernateDTO.stockPrice = transaction.getStockPrice().getAmount();
@@ -38,7 +35,7 @@ public class TransactionHydrator {
         TransactionType transactionType = TransactionType.valueOf(transactionHibernateDTO
                 .transactionType);
         Long quantity = transactionHibernateDTO.quantity;
-        DateTime dateTime = new DateTime(transactionHibernateDTO.dateTime);
+        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
 

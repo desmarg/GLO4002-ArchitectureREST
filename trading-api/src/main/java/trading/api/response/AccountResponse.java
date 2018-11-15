@@ -12,7 +12,7 @@ public class AccountResponse {
 
     public AccountResponse(Account account) {
         this.investorProfile = account.getInvestorProfile();
-        this.accountNumber = account.getAccountNumber().getId();
+        this.accountNumber = account.getAccountNumber().getString();
         this.investorId = account.getInvestorId();
         this.credits = account.getCredits().valueToFloat();
     }

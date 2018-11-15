@@ -7,7 +7,5 @@ public interface AccountRepository {
 
     Account findByAccountNumber(AccountNumber accountNumber);
 
-    void validateAccountDoesNotExists(Long investorId);
-
-    Long getCurrentAccountNumber();
+    int getCurrentAccountId();
 }

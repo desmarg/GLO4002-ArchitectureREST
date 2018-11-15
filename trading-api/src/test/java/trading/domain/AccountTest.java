@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
 import trading.domain.Account.NotEnoughCreditsException;
 import trading.domain.Account.NotEnoughCreditsForFeesException;
 import trading.domain.Credits.Credits;
@@ -26,7 +25,7 @@ public class AccountTest {
     private static final Long VALID_INVESTOR_ID = 1L;
     private static final Long QUANTITY = 2L;
     private static final String VALID_INVESTOR_NAME = "FirstName LastName";
-    private static final AccountNumber ACCOUNT_NUMBER = new AccountNumber("FL-0001");
+    private static final int ACCOUNT_ID = 1;
     private static final Credits AN_ACCOUNT_BALANCE = Credits.fromDouble(1000);
     private static final Credits NOT_ENOUGH_CREDITS = Credits.fromDouble(0);
     private static final Credits TOO_MANY_FEES = Credits.fromDouble(10000);
@@ -43,13 +42,13 @@ public class AccountTest {
 
     private Account basicAccount;
     private Account notEnoughCreditsAccount;
-    private Stock STOCK1 = new Stock("mrkt", "symbl");
+    private final Stock STOCK1 = new Stock("mrkt", "symbl");
 
     @Before
     public void setup() {
         REMAINING_STOCKS_MAP.put(A_TRANSACTION_NUMBER, QUANTITY);
-        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE, ACCOUNT_NUMBER, INVESTOR_PROFILE, REMAINING_STOCKS_MAP);
-        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS, ACCOUNT_NUMBER, INVESTOR_PROFILE, REMAINING_STOCKS_MAP);
+        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
+        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
         when(this.transactionSell.getStock()).thenReturn(this.STOCK1);
         when(this.transactionBuy.getStock()).thenReturn(this.STOCK1);
     }
