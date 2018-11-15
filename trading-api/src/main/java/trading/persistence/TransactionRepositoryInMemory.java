@@ -5,7 +5,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import trading.domain.Account.AccountNumber;
 import trading.domain.DateTime.DateTime;
-import trading.domain.transaction.*;
+import trading.domain.transaction.InvalidTransactionNumberException;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionNotFoundException;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionRepository;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,6 +18,7 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TransactionRepositoryInMemory implements TransactionRepository {
     private final SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
@@ -29,9 +35,9 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
     public Transaction findByTransactionNumber(TransactionNumber transactionNumber) {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        String transactionNumberAsString = transactionNumber.getStringUUID();
+        UUID transactionNumberUUID = transactionNumber.getId();
         TransactionHibernateDTO transactionHibernateDTO = session.get(TransactionHibernateDTO
-                .class, transactionNumberAsString);
+                .class, transactionNumberUUID);
         session.getTransaction().commit();
 
         if (transactionHibernateDTO == null) {
