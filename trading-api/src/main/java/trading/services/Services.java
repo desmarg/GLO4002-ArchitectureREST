@@ -7,12 +7,18 @@ import trading.persistence.TransactionRepositoryInMemory;
 public class Services {
     private final TransactionService transactionService;
     private final AccountService accountService;
+    private final StockService stockService;
+    private final MarketService marketService;
+    private final PortfolioService portfolioService;
     private final JerseyClient jerseyClient;
 
     public Services() {
         this.jerseyClient = new JerseyClient();
         this.accountService = new AccountService(new AccountRepositoryInMemory());
-        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), new StockService(this.jerseyClient), new MarketService(this.jerseyClient), this.accountService);
+        this.stockService = new StockService(this.jerseyClient);
+        this.marketService = new MarketService(this.jerseyClient);
+        this.portfolioService = new PortfolioService(this.stockService);
+        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), this.stockService, this.marketService, this.accountService, this.portfolioService);
     }
 
     public TransactionService getTransactionService() {
@@ -22,4 +28,5 @@ public class Services {
     public AccountService getAccountService() {
         return this.accountService;
     }
+
 }
