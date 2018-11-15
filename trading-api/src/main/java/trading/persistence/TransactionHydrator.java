@@ -4,14 +4,18 @@ import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.domain.transaction.*;
+import trading.domain.transaction.Transaction;
+import trading.domain.transaction.TransactionBuy;
+import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionSell;
+import trading.domain.transaction.TransactionType;
 
 import java.sql.Timestamp;
 
 public class TransactionHydrator {
     public static TransactionHibernateDTO toHibernateDto(Transaction transaction) {
         TransactionHibernateDTO transactionHibernateDTO = new TransactionHibernateDTO();
-        transactionHibernateDTO.transactionNumber = transaction.getTransactionNumber().getStringUUID();
+        transactionHibernateDTO.transactionNumber = transaction.getTransactionNumber().getId();
         transactionHibernateDTO.accountNumber = transaction.getAccountNumber().getString();
         transactionHibernateDTO.transactionType = transaction.getTransactionType().toString();
         transactionHibernateDTO.quantity = transaction.getQuantity();

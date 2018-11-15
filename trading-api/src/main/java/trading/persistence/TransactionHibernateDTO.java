@@ -7,12 +7,13 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table(name = "TRANSACTIONS")
 public class TransactionHibernateDTO implements Serializable {
     @Id
-    String transactionNumber;
+    UUID transactionNumber;
     @Column
     String accountNumber;
     @Column
