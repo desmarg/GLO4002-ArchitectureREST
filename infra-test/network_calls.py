@@ -3,12 +3,12 @@ from Exceptions import *
 
 def valid_response_verify(r, expected_http_code):
 	if not r.status_code == expected_http_code:
-		content = json.loads(r.content)
+		content = json.loads(r.content.decode('utf-8'))
 		if 'error' in content:
 			raise HTTP_ERROR('Error in call : %s' % content)
 
 def verify_error_type(r, error_type):
-	content = json.loads(r.content)
+	content = json.loads(r.content.decode('utf-8'))
 	if content['error'] != error_type:
 		raise Exception('%s error not thrown.' % error_type)
 
@@ -207,7 +207,7 @@ def test_getTransactionBuy(transaction_url):
 
 	r = requests.get(transaction_url, headers=headers)
 	valid_response_verify(r, 200)
-	return json.loads(r.content)
+	return json.loads(r.content.decode('utf-8'))
 
 def test_postTransactionSellValid(url_account, transaction_number):
 	headers = {
@@ -289,7 +289,7 @@ def test_getTransactionSell(url_transaction):
 
 	r = requests.get(url_transaction, headers=headers)
 	valid_response_verify(r, 200)
-	return json.loads(r.content)
+	return json.loads(r.content.decode('utf-8'))
 
 def test_postTransactionSellStockParamNotMatching(url_account, transaction_number):
 	rs = {
