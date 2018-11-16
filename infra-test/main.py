@@ -4,7 +4,7 @@ from Exceptions import *
 import time
 
 investor_ids = []
-WAIT_SERVER_START_DURATION = 20
+WAIT_SERVER_START_DURATION = 60
 
 def get_investor_id():
 	investor_id = None
