@@ -2,7 +2,6 @@ import requests, json
 from Exceptions import *
 
 def valid_response_verify(r, expected_http_code):
-	print(r.status_code)
 	if not r.status_code == expected_http_code:
 		content = json.loads(r.content)
 		if 'error' in content:
@@ -277,7 +276,6 @@ def test_postTransactionSellInvalidNotEnoughCredits(url_account, transaction_num
 	data = '{\n  "type": "SELL",\n  "date": "2015-01-01T05:00:00.000Z",\n  "stock": {\n    "market": "NASDAQ",\n    "symbol": "MSFT"\n  },\n  "transactionNumber": "%s",\n  "quantity": 1\n}' % transaction_number
 
 	r = requests.post('%s/transactions/' % url_account, headers=headers, data=data)
-	print(r.content)
 
 def test_getTransactionSell(url_transaction):
 	headers = {

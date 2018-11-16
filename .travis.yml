@@ -7,4 +7,6 @@ script:
 - mvn verify -B
 - mvn checkstyle:check -pl trading-api
 - mvn checkstyle:check -pl application
+- mvn clean install
+- mvn exec:java -pl application & > logs.txt
 - python3 infra-test/main.py 

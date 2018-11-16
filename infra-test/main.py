@@ -1,8 +1,11 @@
 from network_calls import *
 from random import randint
 from Exceptions import *
+import time
 
 investor_ids = []
+WAIT_SERVER_START_DURATION = 20
+
 def get_investor_id():
 	investor_id = None
 	while investor_id == None:
@@ -13,6 +16,9 @@ def get_investor_id():
 	return investor_id
 
 def main_test():
+	print('Waiting %s seconds for server to start...' % WAIT_SERVER_START_DURATION )
+	time.sleep(WAIT_SERVER_START_DURATION)
+	print('Waiting done.')
 	investor_id = get_investor_id()
 	account_response = test_postAccountValid(investor_id, 5000)
 
@@ -47,7 +53,6 @@ def main_test():
 	url_transaction_sell = response_sell.headers['Location']
 	data = test_getTransactionSell(url_transaction_sell)
 	sell_valid_transaction_number = data['transactionNumber']
-	print('sell_valid_transaction_number', sell_valid_transaction_number)
 	#test_postTransactionSellStockParamNotMatching(url_account, transaction_number)
 	test_postTransactionSellInvalidQuantity(url_account, transaction_number)
 	#response_sell = test_postTransactionSellValid(url_account, sell_valid_transaction_number)
