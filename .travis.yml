@@ -8,6 +8,8 @@ matrix:
     - language: python
       python: 
         - 3.4
+      install: 
+        - pip install requests
       before_install:
         - cd infra-test/
       script:
