@@ -18,14 +18,14 @@ public class TransactionService {
     private final StockService stockService;
     private final MarketService marketService;
     private final AccountService accountService;
-    private final PortfolioService portfolioService;
+    private final ReportService reportService;
 
-    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService, AccountService accountService, PortfolioService portfolioService) {
+    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService, AccountService accountService, ReportService reportService) {
         this.transactionRepository = transactionRepository;
         this.stockService = stockService;
         this.marketService = marketService;
         this.accountService = accountService;
-        this.portfolioService = portfolioService;
+        this.reportService = reportService;
     }
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
@@ -72,7 +72,7 @@ public class TransactionService {
         List<TransactionBuy> transactionBuyHistory = this.transactionRepository.findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
         List<TransactionSell> transactionSellHistory = this.transactionRepository.findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
         List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
-        Portfolio portfolio = this.portfolioService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
+        Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
         return new Report(reportDate, transactionList, portfolio.getAccountValue(), portfolio.getPortfolioValue());
     }
 }
