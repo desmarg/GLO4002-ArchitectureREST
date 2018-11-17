@@ -14,12 +14,12 @@ import java.time.Instant;
 public class TransactionBuyAssemblerTest {
 
     public static final Long INVALID_QUANTITY = 0L;
-    private final AccountNumber accountNumber = new AccountNumber("TD-0000");
     private static final Instant INSTANT = Instant.parse("2015-01-01T05:00:00.000Z");
     private static final StockDTO VALID_STOCKDTO = new StockDTO();
     private static final String MARKET = "bla";
     private static final String SYMBOL = "bla";
     private static final Credits CREDITS = Credits.ZERO;
+    private final AccountNumber accountNumber = new AccountNumber("TD-0000");
 
     @Test(expected = InvalidQuantityException.class)
     public void givenBuyQuantitySmallerThanOne_whenMakingTransaction_thenThrowInvalidQuantityException() {

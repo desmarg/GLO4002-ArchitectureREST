@@ -14,7 +14,6 @@ import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;

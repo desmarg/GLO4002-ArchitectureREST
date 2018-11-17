@@ -21,6 +21,7 @@ public class TransactionNumber {
         this.id = UUID.fromString(text);
     }
 
+    @Override
     @JsonValue
     public String toString() {
         return this.id.toString();

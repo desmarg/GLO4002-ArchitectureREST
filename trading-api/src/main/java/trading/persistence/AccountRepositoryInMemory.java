@@ -12,11 +12,13 @@ import java.util.List;
 public class AccountRepositoryInMemory implements AccountRepository {
     private final SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
 
+    @Override
     public void save(Account account) {
         this.validateAccountDoesNotExists(account.getInvestorId());
         this.update(account);
     }
 
+    @Override
     public void update(Account account) {
         Session session = this.sessionFactory.getCurrentSession();
         AccountHibernateDTO accountHibernateDTO = AccountHydrator.toHibernateDto(account);
@@ -25,6 +27,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         session.getTransaction().commit();
     }
 
+    @Override
     public Account findByAccountNumber(AccountNumber accountNumber)
             throws AccountNotFoundException {
         Session session = this.sessionFactory.getCurrentSession();
@@ -51,6 +54,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         }
     }
 
+    @Override
     public Integer getCurrentAccountId() {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();

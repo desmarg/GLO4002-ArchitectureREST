@@ -15,8 +15,6 @@ import static io.restassured.RestAssured.given;
 
 public class IntegrationTest {
 
-    private final AtomicLong accountNumber = new AtomicLong(1000);
-
     private static final Logger LOGGER = Logger.getLogger(
             TradingServer.class.getName()
     );
@@ -24,6 +22,7 @@ public class IntegrationTest {
     private static final Integer PORT = 8181;
     private static final String BASE_PATH = "/";
     private static final String BASE_URL = BASE_URI + ":" + String.valueOf(PORT);
+    private final AtomicLong accountNumber = new AtomicLong(1000);
 
     @BeforeClass
     public static void setupClass() {
@@ -51,7 +50,7 @@ public class IntegrationTest {
     public void whenPostAccountValid_thenReturnCreated() {
 
         given().contentType("application/json")
-                .body(this.getAccountWithId(1))
+                .body(this.getAccountWithId(1l))
                 .when().post("/accounts").then()
                 .statusCode(201)
                 .header("Location", BASE_URL + "/accounts/TD-0001");
@@ -60,7 +59,7 @@ public class IntegrationTest {
     @Test
     public void whenPostExistingAccount_thenThrowAccountAlreadyExistsException() {
         given().contentType("application/json")
-                .body(this.getAccountWithId(1))
+                .body(this.getAccountWithId(1l))
                 .when().post("/accounts").then()
                 .statusCode(400);
     }
