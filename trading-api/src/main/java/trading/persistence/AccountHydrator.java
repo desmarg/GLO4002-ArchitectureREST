@@ -1,9 +1,9 @@
 package trading.persistence;
 
-import trading.domain.account.Account;
 import trading.domain.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
+import trading.domain.account.Account;
 import trading.domain.transaction.TransactionNumber;
 
 import java.util.HashMap;

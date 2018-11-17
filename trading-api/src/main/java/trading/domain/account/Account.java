@@ -16,8 +16,8 @@ public class Account {
     private final InvestorProfile investorProfile;
     private final String investorName;
     private final Map<TransactionNumber, Long> remainingStocksMap;
-    private Credits credits;
     private final Credits initialCredits;
+    private Credits credits;
 
     public Account(
             Long investorId,

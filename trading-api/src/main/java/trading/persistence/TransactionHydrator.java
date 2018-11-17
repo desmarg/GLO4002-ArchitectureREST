@@ -1,9 +1,9 @@
 package trading.persistence;
 
-import trading.domain.account.AccountNumber;
 import trading.domain.Credits;
-import trading.domain.datetime.DateTime;
 import trading.domain.Stock;
+import trading.domain.account.AccountNumber;
+import trading.domain.datetime.DateTime;
 import trading.domain.transaction.*;
 
 import java.sql.Timestamp;

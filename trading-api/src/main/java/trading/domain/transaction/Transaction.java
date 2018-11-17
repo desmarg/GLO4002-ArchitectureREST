@@ -1,9 +1,9 @@
 package trading.domain.transaction;
 
-import trading.domain.account.AccountNumber;
 import trading.domain.Credits;
-import trading.domain.datetime.DateTime;
 import trading.domain.Stock;
+import trading.domain.account.AccountNumber;
+import trading.domain.datetime.DateTime;
 
 public abstract class Transaction {
     public static final Credits FEE_OVER_OR_EQ_100 = Credits.fromString("0.25");
@@ -12,13 +12,13 @@ public abstract class Transaction {
 
     protected final AccountNumber accountNumber;
     protected final TransactionNumber transactionNumber;
-    protected TransactionType transactionType;
     protected final Long quantity;
     protected final DateTime dateTime;
     protected final Stock stock;
     protected final Credits stockPrice;
     protected final Credits value;
     protected final Credits fees;
+    protected TransactionType transactionType;
 
 
     protected Transaction(

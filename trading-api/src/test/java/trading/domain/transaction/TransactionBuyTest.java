@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.domain.account.AccountNumber;
 import trading.domain.Credits;
-import trading.domain.datetime.DateTime;
 import trading.domain.Stock;
+import trading.domain.account.AccountNumber;
+import trading.domain.datetime.DateTime;
 
 import java.math.BigDecimal;
 import java.time.Instant;
