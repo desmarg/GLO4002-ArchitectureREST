@@ -14,9 +14,7 @@ import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -30,8 +28,8 @@ public class StockServiceTest {
     private static final String A_TYPE = "TYPE";
     private static final Credits CREDITS = Credits.fromInteger(10);
     private static final Long NORMAL_ID = 1L;
-    private final DateTime VALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2000-08-04T05:00:00"), ZoneOffset.of("+00:00")));
-    private final DateTime INVALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2001-08-04T05:00:00"), ZoneOffset.of("+00:00")));
+    private final DateTime VALID_DATETIME = new DateTime(Instant.parse("2000-08-04T05:00:00Z"));
+    private final DateTime INVALID_DATETIME = new DateTime(Instant.parse("2001-08-04T05:00:00Z"));
     private StockService stockService;
     private StockDTO stock;
     private StockApiDTO stockApiDTO;
@@ -51,7 +49,7 @@ public class StockServiceTest {
         this.stockApiDTO.type = A_TYPE;
         this.stockApiDTO.prices = new ArrayList<>();
         StockPriceResponseDTO stockPriceResponseDTO = new StockPriceResponseDTO();
-        stockPriceResponseDTO.date = this.VALID_DATETIME.toDate();
+        stockPriceResponseDTO.date = this.VALID_DATETIME.toInstantTruncatedToDay();
         stockPriceResponseDTO.price = CREDITS.toBigDecimal();
         this.stockApiDTO.prices.add(stockPriceResponseDTO);
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(this.stockApiDTO);

@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class TransactionTest {
     private final Long VALID_QUANTITY_SMALLER_THAN_HUNDRED = 10L;
     private final Long VALID_QUANTITY_BIGGER_THAN_HUNDRED = 200L;
-    private final DateTime VALID_DATE = DateTime.fromInstant(Instant.parse("2018-08-21T15:23:20.142Z"));
+    private final DateTime VALID_DATE = new DateTime(Instant.parse("2018-08-21T15:23:20.142Z"));
     private final Credits SMALL_STOCK_PRICE = new Credits(new BigDecimal(10));
     private final Credits LARGE_STOCK_PRICE = new Credits(new BigDecimal(10000));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");

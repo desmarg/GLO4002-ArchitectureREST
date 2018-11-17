@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionBuyTest {
-    private final DateTime VALID_DATE = DateTime.fromInstant(Instant.parse("2018-08-21T15:23:20.142Z"));
+    private final DateTime VALID_DATE = new DateTime(Instant.parse("2018-08-21T15:23:20.142Z"));
     private final Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
     private final Credits PRICE_WITH_FEE = new Credits(new BigDecimal(123.25));

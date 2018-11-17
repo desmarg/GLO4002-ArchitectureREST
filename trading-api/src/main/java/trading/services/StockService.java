@@ -46,7 +46,7 @@ public class StockService {
     }
 
     private Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
-        Instant queryInstant = dateTime.toDate();
+        Instant queryInstant = dateTime.toInstantTruncatedToDay();
         for (StockPriceResponseDTO priceInfo : stockDto.prices) {
             Instant priceInfoInstant = priceInfo.date.truncatedTo(ChronoUnit.DAYS);
             if (priceInfoInstant.equals(queryInstant)) {

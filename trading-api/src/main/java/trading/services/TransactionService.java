@@ -4,13 +4,21 @@ import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.account.Account;
 import trading.domain.Credits;
 import trading.domain.datetime.DateTime;
+import trading.domain.datetime.InvalidDateException;
+import trading.domain.datetime.MissingDateException;
 import trading.domain.report.Portfolio;
 import trading.domain.report.Report;
 import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.Market.MarketClosedException;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.TimeZone;
 
 public class TransactionService {
 
@@ -67,12 +75,36 @@ public class TransactionService {
 
     public Report getReportFromDate(String accountNumber, String date, String reportType) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        DateTime reportDate = new DateTime(date);
+        DateTime reportDate = new DateTime(stringToInstantParser(date));
         ReportType.fromString(reportType);
         List<TransactionBuy> transactionBuyHistory = this.transactionRepository.findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
         List<TransactionSell> transactionSellHistory = this.transactionRepository.findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
         List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
         Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
         return new Report(reportDate, transactionList, portfolio.accountValue, portfolio.portfolioValue);
+    }
+
+    private Instant stringToInstantParser(String date) {
+        if (date == null) {
+            throw new MissingDateException();
+        }
+        TimeZone timeZone = TimeZone.getDefault();
+        String instantString = date.concat(" 23:59:59.999");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime localDateTime = parseDate(instantString, dateTimeFormatter);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(timeZone.toZoneId());
+        Instant instant = zonedDateTime.toInstant();
+        if ((instant.truncatedTo(ChronoUnit.DAYS)).compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) >= 0) {
+            throw new InvalidDateException();
+        }
+        return instant;
+    }
+
+    private LocalDateTime parseDate(String instantString, DateTimeFormatter dateTimeFormatter) {
+        try {
+            return LocalDateTime.parse(instantString, dateTimeFormatter);
+        } catch (Exception e) {
+            throw new InvalidDateException();
+        }
     }
 }

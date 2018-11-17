@@ -9,6 +9,7 @@ import trading.application.JerseyClient;
 import trading.domain.datetime.DateTime;
 import trading.external.response.Market.MarketDTO;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -23,10 +24,10 @@ import static org.mockito.Mockito.when;
 public class MarketServiceTest {
     private final String ZERO_TIMEZONE = "UTC+00:00";
     private final String VALID_TIMEZONE = "UTC+02:00";
-    private final DateTime OPENED_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2018-08-04T10:00:00"), ZoneOffset.of("+00:00")));
-    private final DateTime CLOSED_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2018-08-04T18:00:00"), ZoneOffset.of("+00:00")));
-    private final DateTime OPENED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2018-08-04T05:00:00"), ZoneOffset.of("+00:00")));
-    private final DateTime CLOSED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2018-08-04T16:00:00"), ZoneOffset.of("+00:00")));
+    private final DateTime OPENED_DATETIME = new DateTime(Instant.parse("2018-08-04T10:00:00Z"));
+    private final DateTime CLOSED_DATETIME = new DateTime(Instant.parse("2018-08-04T18:00:00Z"));
+    private final DateTime OPENED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(Instant.parse("2018-08-04T05:00:00Z"));
+    private final DateTime CLOSED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(Instant.parse("2018-08-04T16:00:00Z"));
     private final String MORNING_HOURS = "6:00-12:00";
     private final String PM_HOURS = "13:00-17:00";
     private final String MARKET_SYMBOL = "NASDAQ";
