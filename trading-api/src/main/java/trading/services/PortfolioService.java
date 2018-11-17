@@ -41,7 +41,7 @@ public class PortfolioService {
             accountValue.subtract(transaction.getFees());
             accountValue.add(transaction.getValue());
             StockPortfolio stockPortfolio = stockPortfoliosMap.get(transaction.getReferredTransactionNumber());
-            stockPortfolio.substract(quantity);
+            stockPortfolio.subtract(quantity);
             stockPortfoliosMap.put(transaction.getTransactionNumber(), stockPortfolio);
         }
         for (StockPortfolio stockPortfolio : stockPortfoliosMap.values()) {

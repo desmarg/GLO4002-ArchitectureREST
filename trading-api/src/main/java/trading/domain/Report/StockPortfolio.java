@@ -11,7 +11,7 @@ public class StockPortfolio {
         this.quantity = quantity;
     }
 
-    public void substract(Long quantity) {
+    public void subtract(Long quantity) {
         this.quantity -= quantity;
     }
 

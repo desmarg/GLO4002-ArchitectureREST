@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class AccountAssemblerTest {
     private final AccountPostRequestDTO accountPostRequestDTO = new AccountPostRequestDTO();
 
-    private int accountId;
+    private final int AN_ACCOUNT_ID = 0;
 
     @Test(expected = InvalidCreditsAmountException.class)
     public void givenInvalidCreditsAmount_whenValidating_thenThrowInvalidCreditsAmountException() {
@@ -20,6 +20,6 @@ public class AccountAssemblerTest {
         this.accountPostRequestDTO.investorId = 1L;
         this.accountPostRequestDTO.email = "t@g";
 
-        AccountAssembler.create(this.accountPostRequestDTO, this.accountId);
+        AccountAssembler.create(this.accountPostRequestDTO, this.AN_ACCOUNT_ID);
     }
 }

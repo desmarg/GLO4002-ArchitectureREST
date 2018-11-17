@@ -21,7 +21,7 @@ public class AccountResponse {
         return this.investorProfile;
     }
 
-    public void setInvestorProfile(InvestorProfile investorProfile) {
+    public void setInvestorPrAofile(InvestorProfile investorProfile) {
         this.investorProfile = investorProfile;
     }
 

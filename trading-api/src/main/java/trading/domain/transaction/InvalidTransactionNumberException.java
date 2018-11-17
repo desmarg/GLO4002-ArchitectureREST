@@ -1,13 +1,12 @@
 package trading.domain.transaction;
 
-import trading.domain.transaction.TransactionNumber;
 import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class InvalidTransactionNumberException extends MappedException {
-    private UUID transactionNumber;
+    private final UUID transactionNumber;
 
     public InvalidTransactionNumberException(TransactionNumber transactionNumber) {
         super(
