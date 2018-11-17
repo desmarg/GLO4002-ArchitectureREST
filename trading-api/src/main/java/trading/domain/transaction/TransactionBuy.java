@@ -31,10 +31,6 @@ public class TransactionBuy extends Transaction {
     }
 
     public Credits getValueWithFees() {
-        Credits totalPrice = new Credits();
-        totalPrice.add(this.value);
-        totalPrice.add(this.fees);
-
-        return totalPrice;
+        return Credits.zero().add(this.value).add(this.fees);
     }
 }

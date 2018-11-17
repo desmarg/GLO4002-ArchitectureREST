@@ -33,8 +33,8 @@ public class AccountHydrator {
         accountHibernateDTO.profileType = account.getInvestorProfile().getProfileType().toString();
         accountHibernateDTO.focusAreas = account.getInvestorProfile().getFocusAreas();
         accountHibernateDTO.investorName = account.getInvestorName();
-        accountHibernateDTO.credits = account.getCredits().getAmount();
-        accountHibernateDTO.initialCredits = account.getInitialCredits().getAmount();
+        accountHibernateDTO.credits = account.getCredits().toBigDecimal();
+        accountHibernateDTO.initialCredits = account.getInitialCredits().toBigDecimal();
         accountHibernateDTO.remainingStocksMap = AccountHydrator.dehydrateRemainingStocksMap(account.getRemainingStocksMap());
 
         return accountHibernateDTO;

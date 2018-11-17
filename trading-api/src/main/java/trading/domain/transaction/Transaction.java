@@ -6,6 +6,10 @@ import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
 public abstract class Transaction {
+    static final Credits FEE_OVER_OR_EQ_100 = Credits.fromDouble(0.25);
+    static final Credits FEE_UNDER_100 = Credits.fromDouble(0.20);
+    static final Credits FEE_OVER_5000 = Credits.fromDouble(0.03);
+
     protected AccountNumber accountNumber;
     protected TransactionNumber transactionNumber;
     protected TransactionType transactionType;
@@ -53,32 +57,19 @@ public abstract class Transaction {
     }
 
     private Credits calculateValue() {
-        Credits transactionPrice = new Credits(this.stockPrice);
-        transactionPrice.multiply(this.quantity);
-
-        return transactionPrice;
+        return this.stockPrice.multiply(Credits.fromLong(this.quantity));
     }
 
     private Credits calculateFees() {
-        Credits fees = new Credits();
+        Credits fees = Credits.zero();
         if (this.quantity <= 100) {
-            double feeFor100orMoreTransactions = 0.25;
-            Credits baseFee = Credits.fromDouble(feeFor100orMoreTransactions);
-            fees.add(baseFee);
-            fees.multiply(this.quantity);
+            fees = fees.add(FEE_OVER_OR_EQ_100).multiply(Credits.fromLong(this.quantity));
         } else {
-            double feeUnder100Transactions = 0.20;
-            Credits baseFee = Credits.fromDouble(feeUnder100Transactions);
-            fees.add(baseFee);
-            fees.multiply(this.quantity);
+            fees = fees.add(FEE_UNDER_100).multiply(Credits.fromLong(this.quantity));
         }
-        if (this.value.compareTo(Credits.fromDouble(5000)) > 0) {
-            Credits additionalFees = new Credits(this.value);
-            double additionalPercentFeeOver5000 = 0.03;
-            additionalFees.multiply(additionalPercentFeeOver5000);
-            fees.add(additionalFees);
+        if (this.value.isGreaterThan(Credits.fromInteger(5000))) {
+            fees = fees.add(this.value.multiply(FEE_OVER_5000));
         }
-
         return fees;
     }
 

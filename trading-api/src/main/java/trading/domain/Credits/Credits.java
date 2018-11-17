@@ -9,50 +9,73 @@ import java.text.DecimalFormatSymbols;
 public class Credits implements Comparable<Credits> {
     private BigDecimal amount;
 
-    public Credits() {
-        this.amount = new BigDecimal(0);
-    }
-
     public Credits(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public Credits(Credits credits) {
-        this.amount = credits.amount;
+    public static Credits fromInteger(Integer amount) {
+        return new Credits(new BigDecimal(amount));
     }
 
-    public Credits(Integer amount) {
-        this(new BigDecimal(amount));
+    public static Credits fromLong(Long amount) {
+        return new Credits(new BigDecimal(amount));
     }
 
-    public Credits(double amount) {
-        this(fromDouble(amount));
+    public static Credits fromDouble(Double amount) {
+        return new Credits(new BigDecimal(amount));
     }
 
-    public static Credits fromDouble(double amount) {
-        BigDecimal bigDecimalAmount = BigDecimal.valueOf(amount);
-        return new Credits(bigDecimalAmount);
+    public static Credits zero() {
+        return new Credits(new BigDecimal(0));
     }
 
-    public void add(Credits amount) {
-        this.amount = this.amount.add(amount.amount);
+    public Credits add(Credits other) {
+        return new Credits(this.amount.add(other.amount));
     }
 
-    public void subtract(Credits amount) {
-        this.amount = this.amount.subtract(amount.amount);
+    public Credits subtract(Credits other) {
+        return new Credits(this.amount.subtract(other.amount));
     }
 
-    public void multiply(Long quantity) {
-        BigDecimal rhs = new BigDecimal(quantity);
-        this.amount = this.amount.multiply(rhs);
+    public Credits multiply(Credits other) {
+        return new Credits(this.amount.multiply(other.amount));
     }
 
-    public void multiply(double quantity) {
-        BigDecimal rhs = new BigDecimal(quantity);
-        this.amount = this.amount.multiply(rhs);
+    public Float amountToFloat() {
+        BigDecimal scaledDecimal = this.amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return scaledDecimal.floatValue();
     }
 
-    @JsonValue
+    public BigDecimal toBigDecimal() {
+        return this.amount;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Credits) {
+            return this.amount.compareTo(((Credits) obj).toBigDecimal()) == 0;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.amount.multiply(new BigDecimal(27))).intValue();
+    }
+
+    @Override
+    public int compareTo(Credits credits) {
+        return this.amount.compareTo(credits.toBigDecimal());
+    }
+
+    public boolean isGreaterThan(Credits other) {
+        return this.compareTo(other) > 0;
+    }
+
+    public boolean isSmallerThan(Credits other) {
+        return this.compareTo(other) < 0;
+    }
+
     public String toString() {
         DecimalFormatSymbols symbolsFormat = new DecimalFormatSymbols();
         symbolsFormat.setDecimalSeparator('.');
@@ -65,30 +88,4 @@ public class Credits implements Comparable<Credits> {
         return decimalFormat.format(this.amount);
     }
 
-    public Float valueToFloat() {
-        BigDecimal scaledDecimal = this.amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-        return scaledDecimal.floatValue();
-    }
-
-    public BigDecimal getAmount() {
-        return this.amount;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Credits) {
-            return this.amount.compareTo(((Credits) obj).getAmount()) == 0;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return (this.amount.multiply(new BigDecimal(1000))).intValue();
-    }
-
-    @Override
-    public int compareTo(Credits credits) {
-        return this.amount.compareTo(credits.getAmount());
-    }
 }
