@@ -8,7 +8,7 @@ public class Credits implements Comparable<Credits> {
 
     private final BigDecimal amount;
 
-    public Credits(@NotNull BigDecimal amount) {
+    public Credits(BigDecimal amount) {
         this.amount = amount;
     }
 
