@@ -1,10 +1,11 @@
 package trading.services;
 
+import trading.api.request.StockDTO;
 import trading.application.JerseyClient;
-import trading.domain.Credits.Credits;
-import trading.domain.DateTime.DateTime;
-import trading.domain.DateTime.InvalidDateException;
+import trading.domain.Credits;
 import trading.domain.Stock;
+import trading.domain.datetime.DateTime;
+import trading.domain.datetime.InvalidDateException;
 import trading.domain.transaction.StockNotFoundException;
 import trading.external.response.StockApiDTO;
 import trading.external.response.StockPriceResponseDTO;
@@ -14,9 +15,27 @@ import java.time.temporal.ChronoUnit;
 
 public class StockService {
 
+    private final JerseyClient jerseyClient;
+
+    public StockService(JerseyClient jerseyClient) {
+        this.jerseyClient = jerseyClient;
+    }
+
+    public Credits retrieveStockPrice(StockDTO stock, DateTime dateTime) {
+        String url = "/stocks/" + stock.market + "/" + stock.symbol;
+        StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
+        if (stockApiDTO == null) {
+            throw new StockNotFoundException(
+                    stock.symbol,
+                    stock.market
+            );
+        }
+        return this.getPriceFromDateTime(stockApiDTO, dateTime);
+    }
+
     public Credits retrieveStockPrice(Stock stock, DateTime dateTime) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
-        StockApiDTO stockApiDTO = JerseyClient.getInstance().getRequest(url, StockApiDTO.class);
+        StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
             throw new StockNotFoundException(
                     stock.getSymbol(),
@@ -26,10 +45,9 @@ public class StockService {
         return this.getPriceFromDateTime(stockApiDTO, dateTime);
     }
 
-    public Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
-        Instant queryInstant = dateTime.toInstant().truncatedTo(ChronoUnit.DAYS);
+    private Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
+        Instant queryInstant = dateTime.toInstantTruncatedToDay();
         for (StockPriceResponseDTO priceInfo : stockDto.prices) {
-
             Instant priceInfoInstant = priceInfo.date.truncatedTo(ChronoUnit.DAYS);
             if (priceInfoInstant.equals(queryInstant)) {
                 return new Credits(priceInfo.price);

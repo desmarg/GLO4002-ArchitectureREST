@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="trading.persistence.AccountHibernateDTO"/>
+        <mapping class="trading.persistence.TransactionHibernateDTO"/>
+    </session-factory>
+</hibernate-configuration>
+

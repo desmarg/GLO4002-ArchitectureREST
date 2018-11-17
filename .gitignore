@@ -23,5 +23,7 @@ dependency-reduced-pom.xml
 # node
 node_modules
 /.metadata/
-
 tags
+__pycache__/
+*.pyc
+*.log*

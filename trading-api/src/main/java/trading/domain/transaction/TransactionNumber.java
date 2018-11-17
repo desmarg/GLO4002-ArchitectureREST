@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.UUID;
 
 public class TransactionNumber {
-    private UUID id;
-    private final int FIRST_ODD_NUMBER = 17;
-    private final int SECOND_ODD_NUMBER = 31;
+    private final UUID id;
 
     public TransactionNumber() {
         this.id = UUID.randomUUID();
@@ -21,6 +19,7 @@ public class TransactionNumber {
         this.id = UUID.fromString(text);
     }
 
+    @Override
     @JsonValue
     public String toString() {
         return this.id.toString();
@@ -45,6 +44,8 @@ public class TransactionNumber {
 
     @Override
     public int hashCode() {
-        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.id.hashCode();
+        Integer SECOND_ODD_NUMBER = 31;
+        Integer FIRST_ODD_NUMBER = 17;
+        return FIRST_ODD_NUMBER * SECOND_ODD_NUMBER + this.id.hashCode();
     }
 }

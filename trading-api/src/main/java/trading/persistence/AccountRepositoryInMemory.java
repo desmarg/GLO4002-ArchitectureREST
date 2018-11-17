@@ -1,43 +1,69 @@
 package trading.persistence;
 
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
-import trading.domain.Account.AccountNotFoundException;
-import trading.domain.Account.AccountRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import trading.domain.account.Account;
+import trading.domain.account.AccountNumber;
+import trading.domain.account.AccountRepository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class AccountRepositoryInMemory implements AccountRepository {
-    private static Long ACCOUNT_NUMBER_COUNTER = 0L;
-    private Map<Long, AccountNumber> investorIdByAccountNumber = new HashMap<>();
-    private Map<AccountNumber, Account> accountMap = new HashMap<>();
+    private final SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
 
-    public Account save(Account account) {
-        System.out.println(account);
-        AccountNumber accountNumber = new AccountNumber(
-                account.getInvestorName(), ACCOUNT_NUMBER_COUNTER++
-        );
-        account.setAccountNumber(accountNumber);
-        this.investorIdByAccountNumber.put(account.getInvestorId(), account.getAccountNumber());
-        this.accountMap.put(account.getAccountNumber(), account);
-        return account;
+    @Override
+    public void save(Account account) {
+        this.validateAccountDoesNotExists(account.getInvestorId());
+        this.update(account);
     }
 
+    @Override
+    public void update(Account account) {
+        Session session = this.sessionFactory.getCurrentSession();
+        AccountHibernateDTO accountHibernateDTO = AccountHydrator.toHibernateDto(account);
+        session.beginTransaction();
+        session.saveOrUpdate(accountHibernateDTO);
+        session.getTransaction().commit();
+    }
+
+    @Override
     public Account findByAccountNumber(AccountNumber accountNumber)
             throws AccountNotFoundException {
-        Account account = this.accountMap.get(accountNumber);
-        if (account != null) {
-            return account;
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        Integer accountId = accountNumber.getId();
+        AccountHibernateDTO accountHibernateDTO = session.get(AccountHibernateDTO.class, accountId);
+
+        session.getTransaction().commit();
+        if (accountHibernateDTO == null) {
+            throw new AccountNotFoundException(accountNumber);
         }
-        throw new AccountNotFoundException(accountNumber);
+        return AccountHydrator.toAccount(accountHibernateDTO);
     }
 
-    public boolean accountAlreadyExists(Long investorId) {
-        return this.investorIdByAccountNumber.containsKey(investorId);
+    private void validateAccountDoesNotExists(Long investorId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<Object> sameInvestorIdAccounts = session.createSQLQuery("select * from ACCOUNTS where investorId = :investorId").
+                setParameter("investorId", investorId).list();
+        session.getTransaction().commit();
+
+        if (!sameInvestorIdAccounts.isEmpty()) {
+            throw new AccountAlreadyExistsException(investorId);
+        }
     }
 
-    public Long getCounter() {
-        return this.ACCOUNT_NUMBER_COUNTER;
+    @Override
+    public Integer getCurrentAccountId() {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<Object> latestAccountNumber = session.createSQLQuery("SELECT MAX(id) from ACCOUNTS").list();
+        session.getTransaction().commit();
+        if (latestAccountNumber.get(0) == null) {
+            latestAccountNumber.set(0, 0);
+        }
+        return (Integer) latestAccountNumber.get(0);
     }
+
 }

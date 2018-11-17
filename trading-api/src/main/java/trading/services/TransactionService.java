@@ -1,10 +1,24 @@
 package trading.services;
 
 import trading.api.request.TransactionPostRequestDTO;
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
+import trading.domain.Credits;
+import trading.domain.account.Account;
+import trading.domain.datetime.DateTime;
+import trading.domain.datetime.InvalidDateException;
+import trading.domain.datetime.MissingDateException;
+import trading.domain.report.Portfolio;
+import trading.domain.report.Report;
+import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.Market.MarketClosedException;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.TimeZone;
 
 public class TransactionService {
 
@@ -12,51 +26,45 @@ public class TransactionService {
     private final StockService stockService;
     private final MarketService marketService;
     private final AccountService accountService;
+    private final ReportService reportService;
 
-    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService, AccountService accountService) {
+    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService, AccountService accountService, ReportService reportService) {
         this.transactionRepository = transactionRepository;
         this.stockService = stockService;
         this.marketService = marketService;
         this.accountService = accountService;
+        this.reportService = reportService;
     }
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
+        Account account = this.accountService.findByAccountNumber(accountNumber);
+        Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
+        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
+        this.accountService.update(account);
         this.transactionRepository.save(transactionBuy);
+
         return transactionBuy;
     }
 
     public Transaction executeTransactionSell(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
-        Account account = this.accountService.findByAccountNumber(new AccountNumber(accountNumber));
-        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), this.stockService);
+        Account account = this.accountService.findByAccountNumber(accountNumber);
+        Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
+        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionSell);
-        TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
-        this.validateStockIsFromAccount(account, referredTransaction);
-        this.validateEnoughStock(referredTransaction, transactionSell);
-        account.sellTransaction(transactionSell);
-        this.deduceReferredTransactionStocks(referredTransaction, transactionSell);
+        TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionSell.getReferredTransactionNumber());
+        account.sellTransaction(transactionSell, referredTransaction);
+        this.accountService.update(account);
         this.transactionRepository.save(transactionSell);
+
         return transactionSell;
     }
 
-    private void validateEnoughStock(TransactionBuy referredTransaction, TransactionSell transactionSell) {
-        if (referredTransaction.getRemainingStocks() < transactionSell.getQuantity()) {
-            throw new NotEnoughStockException(transactionSell.getStock());
-        }
-    }
-
-    private void validateStockIsFromAccount(Account account, TransactionBuy referredTransaction) {
-        if (referredTransaction.getAccountNumber() != account.getAccountNumber()) {
-            throw new RuntimeException("The account does not possess this stock...");
-        }
-    }
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
-        if (this.marketService.isMarketOpen(market)) {
+        if (this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
             throw new MarketClosedException(market);
         }
     }
@@ -65,14 +73,38 @@ public class TransactionService {
         return this.transactionRepository.findByTransactionNumber(transactionNumber);
     }
 
-
-    private TransactionBuy getReferredTransaction(TransactionNumber transactionNumber) {
-        TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionNumber);
-        return referredTransaction;
+    public Report getReportFromDate(String accountNumber, String date, String reportType) {
+        Account account = this.accountService.findByAccountNumber(accountNumber);
+        DateTime reportDate = new DateTime(stringToInstantParser(date));
+        ReportType.fromString(reportType);
+        List<TransactionBuy> transactionBuyHistory = this.transactionRepository.findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
+        List<TransactionSell> transactionSellHistory = this.transactionRepository.findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
+        List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
+        Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
+        return new Report(reportDate, transactionList, portfolio.accountValue, portfolio.portfolioValue);
     }
 
-    public void deduceReferredTransactionStocks(TransactionBuy referredTransaction, TransactionSell transactionSell) {
-        referredTransaction.deduceStock(transactionSell.getQuantity());
-        this.transactionRepository.save(referredTransaction);
+    private Instant stringToInstantParser(String date) {
+        if (date == null) {
+            throw new MissingDateException();
+        }
+        TimeZone timeZone = TimeZone.getDefault();
+        String instantString = date.concat(" 23:59:59.999");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime localDateTime = parseDate(instantString, dateTimeFormatter);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(timeZone.toZoneId());
+        Instant instant = zonedDateTime.toInstant();
+        if ((instant.truncatedTo(ChronoUnit.DAYS)).compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) >= 0) {
+            throw new InvalidDateException();
+        }
+        return instant;
+    }
+
+    private LocalDateTime parseDate(String instantString, DateTimeFormatter dateTimeFormatter) {
+        try {
+            return LocalDateTime.parse(instantString, dateTimeFormatter);
+        } catch (Exception e) {
+            throw new InvalidDateException();
+        }
     }
 }

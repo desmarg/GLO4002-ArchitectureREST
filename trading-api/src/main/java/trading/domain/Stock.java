@@ -1,8 +1,8 @@
 package trading.domain;
 
 public class Stock {
-    private String market;
-    private String symbol;
+    private final String market;
+    private final String symbol;
 
     public Stock(String market, String symbol) {
         this.market = market;

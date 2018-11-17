@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.domain.Account.AccountNumber;
+import trading.domain.account.AccountNumber;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountNumberTest {
@@ -19,7 +19,7 @@ public class AccountNumberTest {
     private AccountNumber accountNumber;
 
     @Before
-    public void setUp() {
+    public void setup() {
         this.accountNumber = new AccountNumber(AN_ACCOUNT_NUMBER);
     }
 
@@ -27,18 +27,18 @@ public class AccountNumberTest {
     public void givenTwoIdenticalAccountNumbers_whenEqualsAccountNumbers_thenReturnTrue() {
         AccountNumber similarAccountNumber = new AccountNumber(EQUAL_ACCOUNT_NUMBER);
 
-        assertEquals(true, accountNumber.equals(similarAccountNumber));
+        assertTrue(this.accountNumber.equals(similarAccountNumber));
     }
 
     @Test
     public void givenTwoDifferentAccountNumbers_whenEqualsAccountNumbers_thenReturnFalse() {
         AccountNumber differentAccountNumber = new AccountNumber(DIFFERENT_ACCOUNT_NUMBER);
 
-        assertEquals(false, accountNumber.equals(differentAccountNumber));
+        assertFalse(this.accountNumber.equals(differentAccountNumber));
     }
 
     @Test
     public void givenName_whenMakingInitials_thenReturnGoodInitials() {
-        assertEquals(INITIALS, accountNumber.makeInitials(A_NAME));
+        assertEquals(INITIALS, this.accountNumber.makeInitials(A_NAME));
     }
 }

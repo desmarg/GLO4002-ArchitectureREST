@@ -1,13 +1,11 @@
 package trading.domain.transaction;
 
-import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
-import trading.domain.DateTime.DateTime;
+import trading.domain.Credits;
 import trading.domain.Stock;
+import trading.domain.account.AccountNumber;
+import trading.domain.datetime.DateTime;
 
 public class TransactionBuy extends Transaction {
-
-    private Long remainingStocks;
 
     public TransactionBuy(
             Long quantity,
@@ -18,29 +16,21 @@ public class TransactionBuy extends Transaction {
     ) {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.BUY;
-        this.remainingStocks = quantity;
     }
 
-    public void deduceStock(Long soldQuantity) {
-        if (this.remainingStocks < soldQuantity) {
-            throw new NotEnoughStockException(this.stock);
-        }
-        this.remainingStocks -= soldQuantity;
+    public TransactionBuy(
+            Long quantity,
+            DateTime dateTime,
+            Stock stock,
+            Credits stockPrice,
+            AccountNumber accountNumber,
+            TransactionNumber transactionNumber
+    ) {
+        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionNumber);
+        this.transactionType = TransactionType.BUY;
     }
 
-    public boolean hasEnoughStock(Long soldQuantity) {
-        return this.remainingStocks >= soldQuantity;
-    }
-
-    public Long getRemainingStocks() {
-        return this.remainingStocks;
-    }
-
-    public Credits getPriceWithFees() {
-        Credits totalPrice = new Credits();
-        totalPrice.add(this.price);
-        totalPrice.add(this.fees);
-
-        return totalPrice;
+    public Credits getValueWithFees() {
+        return Credits.ZERO.add(this.value).add(this.fees);
     }
 }

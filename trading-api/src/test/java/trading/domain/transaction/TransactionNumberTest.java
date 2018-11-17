@@ -1,12 +1,15 @@
 package trading.domain.transaction;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TransactionNumberTest {
 
     private static final TransactionNumber A_TRANSACTION_NUMBER = new TransactionNumber();
@@ -14,7 +17,7 @@ public class TransactionNumberTest {
 
     @Test
     public void givenTwoDifferentTransactionNumber_whenCheckingIfEquals_thenReturnsFalse() {
-        assertFalse(A_TRANSACTION_NUMBER.equals(ANOTHER_TRANSACTION_NUMBER));
+        assertNotEquals(A_TRANSACTION_NUMBER, ANOTHER_TRANSACTION_NUMBER);
     }
 
     @Test
@@ -23,7 +26,7 @@ public class TransactionNumberTest {
         UUID firstTransactionNumberAsUuid = A_TRANSACTION_NUMBER.getId();
         TransactionNumber secondTransaction = new TransactionNumber(firstTransactionNumberAsUuid);
 
-        assertTrue(A_TRANSACTION_NUMBER.equals(secondTransaction));
+        assertEquals(A_TRANSACTION_NUMBER, secondTransaction);
     }
 
     @Test
@@ -31,6 +34,6 @@ public class TransactionNumberTest {
             () {
         UUID transactionNumberAsUuid = A_TRANSACTION_NUMBER.getId();
 
-        assertFalse(A_TRANSACTION_NUMBER.equals(transactionNumberAsUuid));
+        assertNotEquals(A_TRANSACTION_NUMBER, transactionNumberAsUuid);
     }
 }

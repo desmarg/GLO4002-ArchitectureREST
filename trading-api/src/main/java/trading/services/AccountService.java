@@ -1,7 +1,10 @@
 package trading.services;
 
 import trading.api.request.AccountPostRequestDTO;
-import trading.domain.Account.*;
+import trading.domain.account.Account;
+import trading.domain.account.AccountAssembler;
+import trading.domain.account.AccountNumber;
+import trading.domain.account.AccountRepository;
 
 public class AccountService {
     private final AccountRepository accountRepository;
@@ -10,19 +13,20 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account save(AccountPostRequestDTO accountPostRequestDTO) {
-        Account account = AccountAssembler.create(accountPostRequestDTO);
-        this.checkIfAccountAlreadyExists(account.getInvestorId());
-        return this.accountRepository.save(account);
+    public AccountNumber save(AccountPostRequestDTO accountPostRequestDTO) {
+        Integer id = this.accountRepository.getCurrentAccountId() + 1;
+        Account account = AccountAssembler.create(accountPostRequestDTO, id);
+        this.accountRepository.save(account);
+
+        return account.getAccountNumber();
     }
 
-    public Account findByAccountNumber(AccountNumber accountNumber) {
+    public void update(Account account) {
+        this.accountRepository.update(account);
+    }
+
+    public Account findByAccountNumber(String accountNumberString) {
+        AccountNumber accountNumber = new AccountNumber(accountNumberString);
         return this.accountRepository.findByAccountNumber(accountNumber);
-    }
-
-    private void checkIfAccountAlreadyExists(Long investorId) {
-        if (this.accountRepository.accountAlreadyExists(investorId)) {
-            throw new AccountAlreadyExistsException(investorId);
-        }
     }
 }

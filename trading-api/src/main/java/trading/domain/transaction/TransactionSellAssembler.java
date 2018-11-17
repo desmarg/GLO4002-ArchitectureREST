@@ -1,18 +1,17 @@
 package trading.domain.transaction;
 
 import trading.api.request.TransactionPostRequestDTO;
-import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
-import trading.domain.DateTime.DateTime;
+import trading.domain.Credits;
 import trading.domain.Stock;
-import trading.services.StockService;
+import trading.domain.account.AccountNumber;
+import trading.domain.datetime.DateTime;
 
 public class TransactionSellAssembler {
 
     public static TransactionSell fromDTO(TransactionPostRequestDTO transactionPostRequestDTO,
                                           AccountNumber accountNumber,
-                                          StockService stockService) {
-        DateTime dateTime = DateTime.fromInstant(transactionPostRequestDTO.date);
+                                          Credits stockPrice) {
+        DateTime dateTime = new DateTime(transactionPostRequestDTO.date);
         Stock stock = new Stock(transactionPostRequestDTO.stock.market, transactionPostRequestDTO.stock.symbol);
 
         Long quantity = transactionPostRequestDTO.quantity;
@@ -20,7 +19,6 @@ public class TransactionSellAssembler {
             throw new InvalidQuantityException();
         }
         TransactionNumber referredTransactionNumber = new TransactionNumber(transactionPostRequestDTO.transactionNumber);
-        Credits stockPrice = stockService.retrieveStockPrice(stock, dateTime);
 
         return new TransactionSell(quantity, dateTime, stock, stockPrice, referredTransactionNumber, accountNumber);
     }
