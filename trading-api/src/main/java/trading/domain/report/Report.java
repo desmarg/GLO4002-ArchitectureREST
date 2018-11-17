@@ -1,6 +1,6 @@
 package trading.domain.Report;
 
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.transaction.Transaction;
 

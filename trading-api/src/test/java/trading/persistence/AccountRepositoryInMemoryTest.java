@@ -7,7 +7,7 @@
 //import trading.domain.Account.Account;
 //import trading.persistence.AccountNotFoundException;
 //import trading.domain.Account.AccountNumber;
-//import trading.domain.Credits.Credits;
+//import trading.domain.Credits;
 //
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertFalse;

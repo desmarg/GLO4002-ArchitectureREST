@@ -1,7 +1,7 @@
 package trading.persistence;
 
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 import trading.domain.transaction.*;
@@ -18,7 +18,7 @@ public class TransactionHydrator {
         transactionHibernateDTO.instant = Timestamp.from(transaction.getDateTime().toInstant());
         transactionHibernateDTO.market = transaction.getStock().getMarket();
         transactionHibernateDTO.symbol = transaction.getStock().getSymbol();
-        transactionHibernateDTO.stockPrice = transaction.getStockPrice().getAmount();
+        transactionHibernateDTO.stockPrice = transaction.getStockPrice().toBigDecimal();
         transactionHibernateDTO.referredTransactionNumber = null;
 
         if (transaction instanceof TransactionSell) {

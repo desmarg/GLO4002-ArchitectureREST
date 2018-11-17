@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 

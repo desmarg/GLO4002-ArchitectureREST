@@ -1,7 +1,7 @@
 package trading.domain.transaction;
 
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
@@ -31,6 +31,6 @@ public class TransactionBuy extends Transaction {
     }
 
     public Credits getValueWithFees() {
-        return Credits.zero().add(this.value).add(this.fees);
+        return Credits.ZERO.add(this.value).add(this.fees);
     }
 }

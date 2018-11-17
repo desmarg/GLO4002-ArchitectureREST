@@ -1,8 +1,8 @@
 package trading.api.resource;
 
 import trading.api.request.TransactionPostRequestDTO;
-import trading.api.response.TransactionResponse;
-import trading.api.response.TransactionResponseFactory;
+import trading.api.response.TransactionResponseDTO;
+import trading.api.response.TransactionResponseDTOFactory;
 import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.domain.transaction.TransactionType;
@@ -31,9 +31,9 @@ public class TransactionResource {
     ) {
         TransactionNumber transactionNumber = new TransactionNumber(transactionNumberParam);
         Transaction transaction = this.transactionService.getTransaction(transactionNumber);
-        TransactionResponse transactionResponse = TransactionResponseFactory.createTransactionResponse(transaction);
+        TransactionResponseDTO transactionResponseDTO = TransactionResponseDTOFactory.createTransactionResponse(transaction);
 
-        return Response.status(Response.Status.OK).entity(transactionResponse).build();
+        return Response.status(Response.Status.OK).entity(transactionResponseDTO).build();
     }
 
     @POST

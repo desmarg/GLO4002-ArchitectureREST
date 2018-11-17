@@ -360,7 +360,7 @@ def test_postTransactionSellInvalidNotEnoughCreditsForSells_makingTRANSACTIONBUY
 	r = requests.post('%s/transactions' % url_account, headers=headers, data=data)
 	valid_response_verify(r, 201)
 
-	def test_postTransactionSellValid(url_account, transaction_number):
+def test_postTransactionSellValid(url_account, transaction_number):
 	headers = {
 	    'Content-Type': 'application/json',
 	    'cache-control': 'no-cache',

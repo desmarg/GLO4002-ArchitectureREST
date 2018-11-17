@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
@@ -17,8 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionTest {
-    private final double FEE_FOR_100_OR_MORE_TRANSACTIONS = 0.25;
-    private final double FEE_UNDER_100_TRANSACTIONS = 0.20;
     private final Long VALID_QUANTITY_SMALLER_THAN_HUNDRED = 10L;
     private final Long VALID_QUANTITY_BIGGER_THAN_HUNDRED = 200L;
     private final DateTime VALID_DATE = DateTime.fromInstant(Instant.parse("2018-08-21T15:23:20.142Z"));
@@ -40,8 +38,8 @@ public class TransactionTest {
         Credits transactionPrice = this.transaction.getValue();
 
         BigDecimal expectedTransactionPrice = new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply
-                (this.SMALL_STOCK_PRICE.getAmount());
-        assertEquals(expectedTransactionPrice, transactionPrice.getAmount());
+                (this.SMALL_STOCK_PRICE.toBigDecimal());
+        assertEquals(expectedTransactionPrice, transactionPrice.toBigDecimal());
     }
 
     @Test
@@ -49,9 +47,9 @@ public class TransactionTest {
     givenTotalLessThan5000AndQuantitySmallerThan100_whenCalculatingFees_thenQuarterRateFees() {
         Credits transactionFees = this.transaction.getFees();
 
-        Credits expectedFees = Credits.fromDouble(this.FEE_FOR_100_OR_MORE_TRANSACTIONS);
-        expectedFees.multiply(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED);
-        assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
+        Credits expectedFees = Transaction.FEE_OVER_OR_EQ_100
+                .multiply(Credits.fromLong(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED));
+        assertEquals(expectedFees.toBigDecimal(), transactionFees.toBigDecimal());
     }
 
     @Test
@@ -61,9 +59,9 @@ public class TransactionTest {
                 this.VALID_DATE, this.stock, this.SMALL_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
         Credits transactionFees = this.transaction.getFees();
 
-        Credits expectedFees = Credits.fromDouble(this.FEE_UNDER_100_TRANSACTIONS);
-        expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
-        assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
+        Credits expectedFees = Transaction.FEE_UNDER_100
+                .multiply(Credits.fromLong(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED));
+        assertEquals(expectedFees.toBigDecimal(), transactionFees.toBigDecimal());
     }
 
     @Test
@@ -72,11 +70,11 @@ public class TransactionTest {
                 this.VALID_DATE, this.stock, this.LARGE_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
         Credits transactionFees = this.transaction.getFees();
 
-        Credits expectedFees = Credits.fromDouble(this.FEE_UNDER_100_TRANSACTIONS);
-        expectedFees.multiply(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED);
-        Credits additionalFees = new Credits(this.transaction.getValue());
-        additionalFees.multiply(0.03);
-        expectedFees.add(additionalFees);
-        assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
+        Credits additionalFees = this.transaction.getValue()
+                .multiply(Transaction.FEE_OVER_5000);
+        Credits expectedFees = Transaction.FEE_UNDER_100
+                .multiply(Credits.fromLong(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED))
+                .add(additionalFees);
+        assertEquals(expectedFees, transactionFees);
     }
 }

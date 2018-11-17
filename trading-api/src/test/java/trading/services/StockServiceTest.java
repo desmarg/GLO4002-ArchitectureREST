@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.StockDTO;
 import trading.application.JerseyClient;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
 import trading.domain.transaction.StockNotFoundException;
@@ -29,7 +29,7 @@ public class StockServiceTest {
     private static final String A_MARKET = "HELLO";
     private static final String A_SYMBOL = "WORLD";
     private static final String A_TYPE = "TYPE";
-    private static final int CREDIT_VALUE = 10;
+    private static final Credits CREDITS = Credits.fromInteger(10);
     private static final long NORMAL_ID = 1L;
     private final DateTime VALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2000-08-04T05:00:00"), ZoneOffset.of("+00:00")));
     private final DateTime INVALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2001-08-04T05:00:00"), ZoneOffset.of("+00:00")));
@@ -53,7 +53,7 @@ public class StockServiceTest {
         this.stockApiDTO.prices = new ArrayList<>();
         StockPriceResponseDTO stockPriceResponseDTO = new StockPriceResponseDTO();
         stockPriceResponseDTO.date = this.VALID_DATETIME.toDate();
-        stockPriceResponseDTO.price = new BigDecimal(CREDIT_VALUE);
+        stockPriceResponseDTO.price = CREDITS.toBigDecimal();
         this.stockApiDTO.prices.add(stockPriceResponseDTO);
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(this.stockApiDTO);
     }
@@ -67,7 +67,7 @@ public class StockServiceTest {
     @Test
     public void givenValidDateTime_whenGetPriceFromDateTime_thenReturnCredits() {
         Credits returning = this.stockService.retrieveStockPrice(this.stock, this.VALID_DATETIME);
-        assertEquals(returning, new Credits(CREDIT_VALUE));
+        assertEquals(returning, CREDITS);
     }
 
     @Test(expected = InvalidDateException.class)

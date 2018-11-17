@@ -1,6 +1,6 @@
 package trading.domain.Account;
 
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
 import trading.domain.transaction.*;
@@ -15,9 +15,9 @@ public class Account {
     private final Long investorId;
     private final InvestorProfile investorProfile;
     private final String investorName;
-    private final Credits credits;
-    private final Credits initialCredits;
     private final Map<TransactionNumber, Long> remainingStocksMap;
+    private Credits credits;
+    private Credits initialCredits;
 
     public Account(
             Long investorId,
@@ -25,16 +25,15 @@ public class Account {
             Credits credits,
             int id
     ) {
-        this.investorId = investorId;
-        this.investorName = investorName;
-        this.credits = credits;
-        this.initialCredits = credits;
-        this.investorProfile = new InvestorProfile(
-                ProfileType.CONSERVATIVE,
-                new ArrayList<>()
+        this(
+                investorId,
+                investorName,
+                credits,
+                credits,
+                new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>()),
+                new HashMap<>(),
+                id
         );
-        this.remainingStocksMap = new HashMap<>();
-        this.id = id;
     }
 
     public Account(
@@ -57,10 +56,10 @@ public class Account {
 
     public void buyTransaction(TransactionBuy transactionBuy) {
         Credits totalPrice = transactionBuy.getValueWithFees();
-        if (this.credits.compareTo(totalPrice) < 0) {
+        if (this.credits.isSmaller(totalPrice)) {
             throw new NotEnoughCreditsException(transactionBuy.getTransactionNumber());
         }
-        this.credits.subtract(totalPrice);
+        this.credits = this.credits.subtract(totalPrice);
         this.remainingStocksMap.put(transactionBuy.getTransactionNumber(), transactionBuy.getQuantity());
     }
 
@@ -71,11 +70,10 @@ public class Account {
         }
 
         this.deduceStocks(referredTransaction, transactionSell.getQuantity());
-        if (this.credits.compareTo(transactionSell.getFees()) < 0) {
+        if (this.credits.isSmaller(transactionSell.getFees())) {
             throw new NotEnoughCreditsForFeesException();
         }
-        this.credits.subtract(transactionSell.getFees());
-        this.credits.add(transactionSell.getValue());
+        this.credits = this.credits.subtract(transactionSell.getFees()).add(transactionSell.getValue());
     }
 
     private void deduceStocks(TransactionBuy transactionBuy, Long quantity) {

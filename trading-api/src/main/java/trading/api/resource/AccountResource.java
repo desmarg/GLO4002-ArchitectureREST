@@ -1,8 +1,8 @@
 package trading.api.resource;
 
 import trading.api.request.AccountPostRequestDTO;
-import trading.api.response.AccountResponse;
-import trading.api.response.ReportResponse;
+import trading.api.response.AccountResponseDTO;
+import trading.api.response.ReportResponseDTO;
 import trading.domain.Account.Account;
 import trading.domain.Account.AccountNumber;
 import trading.domain.Report.Report;
@@ -31,7 +31,7 @@ public class AccountResource {
                                    @QueryParam("type") String reportType,
                                    @QueryParam("date") String date) {
         Report report = this.transactionService.getReportFromDate(accountNumber, date, reportType);
-        return Response.status(Response.Status.OK).entity(new ReportResponse(report)).build();
+        return Response.status(Response.Status.OK).entity(new ReportResponseDTO(report)).build();
     }
 
     @GET
@@ -39,7 +39,7 @@ public class AccountResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") String accountNumber) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        return Response.status(Response.Status.OK).entity(new AccountResponse(account)).build();
+        return Response.status(Response.Status.OK).entity(new AccountResponseDTO(account)).build();
     }
 
     @POST

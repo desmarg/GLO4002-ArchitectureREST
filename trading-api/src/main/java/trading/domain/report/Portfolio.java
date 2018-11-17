@@ -1,6 +1,6 @@
 package trading.domain.Report;
 
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 
 public class Portfolio {
     private final Credits portfolioValue;

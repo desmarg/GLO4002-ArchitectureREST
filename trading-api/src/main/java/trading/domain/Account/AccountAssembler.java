@@ -1,14 +1,14 @@
 package trading.domain.Account;
 
 import trading.api.request.AccountPostRequestDTO;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 
 public class AccountAssembler {
     public static Account create(AccountPostRequestDTO accountPostRequestDto, int id) {
 
         Credits credits = new Credits(accountPostRequestDto.credits);
-        Credits nullCredits = new Credits();
-        if (credits.compareTo(nullCredits) <= 0) {
+        Credits nullCredits = Credits.ZERO;
+        if (credits.isSmallerOrEqual(nullCredits)) {
             throw new InvalidCreditsAmountException();
         }
 

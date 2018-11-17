@@ -1,7 +1,7 @@
 package trading.persistence;
 
 import trading.domain.Account.Account;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
 import trading.domain.transaction.TransactionNumber;

@@ -2,7 +2,7 @@ package trading.services;
 
 import trading.api.request.StockDTO;
 import trading.application.JerseyClient;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.DateTime.InvalidDateException;
 import trading.domain.Stock;

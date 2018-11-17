@@ -1,13 +1,12 @@
-package trading.domain.Credits;
-
-import com.fasterxml.jackson.annotation.JsonValue;
+package trading.domain;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 public class Credits implements Comparable<Credits> {
-    public static final ZERO = new Credits(new BigDecimal(0));
+    public static final Credits ZERO = new Credits(new BigDecimal(0));
+
     private BigDecimal amount;
 
     public Credits(BigDecimal amount) {
@@ -22,9 +21,7 @@ public class Credits implements Comparable<Credits> {
         return new Credits(new BigDecimal(amount));
     }
 
-    public static Credits fromDouble(Double amount) {
-        return new Credits(new BigDecimal(amount));
-    }
+    public static Credits fromString(String text) { return new Credits(new BigDecimal(text)); }
 
     public Credits add(Credits other) {
         return new Credits(this.amount.add(other.amount));
@@ -36,11 +33,6 @@ public class Credits implements Comparable<Credits> {
 
     public Credits multiply(Credits other) {
         return new Credits(this.amount.multiply(other.amount));
-    }
-
-    public Float amountToFloat() {
-        BigDecimal scaledDecimal = this.amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-        return scaledDecimal.floatValue();
     }
 
     public BigDecimal toBigDecimal() {
@@ -65,24 +57,24 @@ public class Credits implements Comparable<Credits> {
         return this.amount.compareTo(credits.toBigDecimal());
     }
 
-    public boolean isGreaterThan(Credits other) {
+    @Override
+    public String toString() {
+        return this.amount.setScale(2).toString();
+    }
+
+    public boolean isGreater(Credits other) {
         return this.compareTo(other) > 0;
     }
 
-    public boolean isSmallerThan(Credits other) {
+    public boolean isGreaterOrEqual(Credits other) {
+        return this.compareTo(other) >= 0;
+    }
+
+    public boolean isSmaller(Credits other) {
         return this.compareTo(other) < 0;
     }
 
-    public String toString() {
-        DecimalFormatSymbols symbolsFormat = new DecimalFormatSymbols();
-        symbolsFormat.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat();
-        decimalFormat.setDecimalFormatSymbols(symbolsFormat);
-        decimalFormat.setMaximumFractionDigits(2);
-        decimalFormat.setMinimumFractionDigits(2);
-        decimalFormat.setGroupingUsed(false);
-
-        return decimalFormat.format(this.amount);
+    public boolean isSmallerOrEqual(Credits other) {
+        return this.compareTo(other) <= 0;
     }
-
 }

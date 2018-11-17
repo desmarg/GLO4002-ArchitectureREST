@@ -8,13 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.Account;
 import trading.domain.Account.NotEnoughCreditsException;
 import trading.domain.Account.NotEnoughCreditsForFeesException;
-import trading.domain.Credits.Credits;
-import trading.domain.transaction.InvalidTransactionNumberException;
-import trading.domain.transaction.NotEnoughStockException;
-import trading.domain.transaction.StockParametersDontMatchException;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionSell;
+import trading.domain.transaction.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,12 +24,12 @@ public class AccountTest {
     private static final Long QUANTITY = 2L;
     private static final String VALID_INVESTOR_NAME = "FirstName LastName";
     private static final int ACCOUNT_ID = 1;
-    private static final Credits AN_ACCOUNT_BALANCE = Credits.fromDouble(1000);
-    private static final Credits NOT_ENOUGH_CREDITS = Credits.fromDouble(0);
-    private static final Credits TOO_MANY_FEES = Credits.fromDouble(10000);
-    private static final Credits PRICE_TOO_HIGH = Credits.fromDouble(10000);
-    private static final Credits FEES = Credits.fromDouble(100);
-    private static final Credits PRICE = Credits.fromDouble(100);
+    private static final Credits AN_ACCOUNT_BALANCE = Credits.fromInteger(1000);
+    private static final Credits NOT_ENOUGH_CREDITS = Credits.ZERO;
+    private static final Credits TOO_MANY_FEES = Credits.fromInteger(10000);
+    private static final Credits PRICE_TOO_HIGH = Credits.fromInteger(10000);
+    private static final Credits FEES = Credits.fromInteger(100);
+    private static final Credits PRICE = Credits.fromInteger(100);
     private static final InvestorProfile INVESTOR_PROFILE = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
     private static final Map<TransactionNumber, Long> REMAINING_STOCKS_MAP = new HashMap<>();
     private static final TransactionNumber A_TRANSACTION_NUMBER = new TransactionNumber();
@@ -76,7 +70,7 @@ public class AccountTest {
         when(this.transactionBuy.getTransactionNumber()).thenReturn(new TransactionNumber());
         Credits remainingCredits = this.basicAccount.getCredits();
         Credits totalPrice = this.transactionBuy.getValueWithFees();
-        remainingCredits.subtract(totalPrice);
+        remainingCredits = remainingCredits.subtract(totalPrice);
         this.basicAccount.buyTransaction(this.transactionBuy);
         assertEquals(this.basicAccount.getCredits(), remainingCredits);
     }
@@ -112,9 +106,9 @@ public class AccountTest {
         when(this.transactionSell.getValue()).thenReturn(PRICE);
         when(this.transactionSell.getFees()).thenReturn(FEES);
         when(this.transactionBuy.getTransactionNumber()).thenReturn(A_TRANSACTION_NUMBER);
-        Credits remainingCredits = this.basicAccount.getCredits();
-        remainingCredits.subtract(this.transactionSell.getFees());
-        remainingCredits.add(this.transactionSell.getValue());
+        Credits remainingCredits = this.basicAccount.getCredits()
+                .subtract(this.transactionSell.getFees())
+                .add(this.transactionSell.getValue());
         this.basicAccount.sellTransaction(this.transactionSell, this.transactionBuy);
         assertEquals(this.basicAccount.getCredits(), remainingCredits);
     }

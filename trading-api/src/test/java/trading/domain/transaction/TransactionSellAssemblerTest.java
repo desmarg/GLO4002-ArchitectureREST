@@ -6,13 +6,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.StockDTO;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionSellAssemblerTest {
     public static final long INVALID_QUANTITY = 0L;
     private static final StockDTO VALID_STOCK_DTO = new StockDTO();
-    private static final Credits CREDITS = new Credits();
+    private static final Credits CREDITS = Credits.ZERO;
     private final AccountNumber AN_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
 
     @Test(expected = InvalidQuantityException.class)

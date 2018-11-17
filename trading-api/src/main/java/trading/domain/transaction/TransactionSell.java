@@ -1,7 +1,7 @@
 package trading.domain.transaction;
 
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 

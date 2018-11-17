@@ -1,14 +1,14 @@
 package trading.domain.transaction;
 
 import trading.domain.Account.AccountNumber;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
 
 public abstract class Transaction {
-    static final Credits FEE_OVER_OR_EQ_100 = Credits.fromDouble(0.25);
-    static final Credits FEE_UNDER_100 = Credits.fromDouble(0.20);
-    static final Credits FEE_OVER_5000 = Credits.fromDouble(0.03);
+    public static final Credits FEE_OVER_OR_EQ_100 = Credits.fromString("0.25");
+    public static final Credits FEE_UNDER_100 = Credits.fromString("0.20");
+    public static final Credits FEE_OVER_5000 = Credits.fromString("0.03");
 
     protected AccountNumber accountNumber;
     protected TransactionNumber transactionNumber;
@@ -61,13 +61,13 @@ public abstract class Transaction {
     }
 
     private Credits calculateFees() {
-        Credits fees = Credits.zero();
+        Credits fees = Credits.ZERO;
         if (this.quantity <= 100) {
             fees = fees.add(FEE_OVER_OR_EQ_100).multiply(Credits.fromLong(this.quantity));
         } else {
             fees = fees.add(FEE_UNDER_100).multiply(Credits.fromLong(this.quantity));
         }
-        if (this.value.isGreaterThan(Credits.fromInteger(5000))) {
+        if (this.value.isGreater(Credits.fromInteger(5000))) {
             fees = fees.add(this.value.multiply(FEE_OVER_5000));
         }
         return fees;

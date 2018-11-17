@@ -5,12 +5,12 @@ import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;
 import trading.domain.transaction.UnsupportedTransactionTypeException;
 
-public class TransactionResponseFactory {
-    public static TransactionResponse createTransactionResponse(Transaction transaction) {
+public class TransactionResponseDTOFactory {
+    public static TransactionResponseDTO createTransactionResponse(Transaction transaction) {
         if (transaction instanceof TransactionBuy) {
-            return new TransactionBuyResponse(transaction);
+            return new TransactionBuyResponseDTO(transaction);
         } else if (transaction instanceof TransactionSell) {
-            return new TransactionSellResponse(transaction);
+            return new TransactionSellResponseDTO(transaction);
         }
 
         throw new UnsupportedTransactionTypeException(transaction.getTransactionType().toString());

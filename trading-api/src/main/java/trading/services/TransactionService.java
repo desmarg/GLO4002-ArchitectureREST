@@ -2,7 +2,7 @@ package trading.services;
 
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
-import trading.domain.Credits.Credits;
+import trading.domain.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Report.Portfolio;
 import trading.domain.Report.Report;
