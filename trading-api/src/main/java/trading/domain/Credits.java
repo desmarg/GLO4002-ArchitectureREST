@@ -1,8 +1,6 @@
 package trading.domain;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 
 public class Credits implements Comparable<Credits> {
     public static final Credits ZERO = new Credits(new BigDecimal(0));
@@ -21,7 +19,9 @@ public class Credits implements Comparable<Credits> {
         return new Credits(new BigDecimal(amount));
     }
 
-    public static Credits fromString(String text) { return new Credits(new BigDecimal(text)); }
+    public static Credits fromString(String text) {
+        return new Credits(new BigDecimal(text));
+    }
 
     public Credits add(Credits other) {
         return new Credits(this.amount.add(other.amount));

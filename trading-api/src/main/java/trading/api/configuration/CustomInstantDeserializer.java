@@ -29,7 +29,7 @@ public class CustomInstantDeserializer extends StdDeserializer<Instant> {
             throws IOException {
         String date = jsonParser.getText();
         try {
-            OffsetDateTime offsetDateTime = OffsetDateTime.parse(date, this.formatter);
+            OffsetDateTime offsetDateTime = OffsetDateTime.parse(date, formatter);
             return offsetDateTime.toInstant();
         } catch (DateTimeParseException e) {
             throw new RuntimeException(e);

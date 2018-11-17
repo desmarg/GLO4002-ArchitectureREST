@@ -3,7 +3,9 @@ package trading.persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import trading.domain.Account.*;
+import trading.domain.Account.Account;
+import trading.domain.Account.AccountNumber;
+import trading.domain.Account.AccountRepository;
 
 import java.util.List;
 

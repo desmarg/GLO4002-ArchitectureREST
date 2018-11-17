@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.UUID;
 
 public class TransactionNumber {
-    private UUID id;
     private final Integer FIRST_ODD_NUMBER = 17;
     private final Integer SECOND_ODD_NUMBER = 31;
+    private UUID id;
 
     public TransactionNumber() {
         this.id = UUID.randomUUID();

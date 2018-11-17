@@ -39,7 +39,7 @@ public class AccountNumber {
 
     @Override
     public int hashCode() {
-        return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.accountNumber.hashCode();
+        return FIRST_ODD_NUMBER * SECOND_ODD_NUMBER + this.accountNumber.hashCode();
     }
 
     private String makeId(String name, Integer accountId) {
