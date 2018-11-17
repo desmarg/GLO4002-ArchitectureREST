@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 public class Credits implements Comparable<Credits> {
+    public static final ZERO = new Credits(new BigDecimal(0));
     private BigDecimal amount;
 
     public Credits(BigDecimal amount) {
@@ -23,10 +24,6 @@ public class Credits implements Comparable<Credits> {
 
     public static Credits fromDouble(Double amount) {
         return new Credits(new BigDecimal(amount));
-    }
-
-    public static Credits zero() {
-        return new Credits(new BigDecimal(0));
     }
 
     public Credits add(Credits other) {

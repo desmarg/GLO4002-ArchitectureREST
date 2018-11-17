@@ -9,7 +9,7 @@ public class Services {
     private final AccountService accountService;
     private final StockService stockService;
     private final MarketService marketService;
-    private final PortfolioService portfolioService;
+    private final ReportService reportService;
     private final JerseyClient jerseyClient;
 
     public Services() {
@@ -17,8 +17,8 @@ public class Services {
         this.accountService = new AccountService(new AccountRepositoryInMemory());
         this.stockService = new StockService(this.jerseyClient);
         this.marketService = new MarketService(this.jerseyClient);
-        this.portfolioService = new PortfolioService(this.stockService);
-        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), this.stockService, this.marketService, this.accountService, this.portfolioService);
+        this.reportService = new ReportService(this.stockService);
+        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), this.stockService, this.marketService, this.accountService, this.reportService);
     }
 
     public TransactionService getTransactionService() {

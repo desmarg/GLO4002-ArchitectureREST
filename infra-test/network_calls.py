@@ -325,3 +325,57 @@ def test_postTransactionSellInvalidQuantity(url_account, transaction_number):
 	r = requests.post('%s/transactions/' % url_account, headers=headers, data=data)
 	verify_error_type(r, "INVALID_QUANTITY")
 
+def test_postTransactionSellInvalidNotEnoughCreditsForSells_makingAccount(investor_id, credits):
+	headers = {
+	    'Content-Type': 'application/json',
+	    'cache-control': 'no-cache',
+	    'Postman-Token': 'ed1fb611-ad99-4b2f-8b55-6deadcbe6f8d',
+	    'User-Agent': 'PostmanRuntime/7.3.0',
+	    'Accept': '*/*',
+	    'Host': 'localhost:8181',
+	    'accept-encoding': 'gzip, deflate',
+	    'content-length': '101',
+	}
+
+	data = '{\n  "investorId":"%s",\n  "investorName": "tom Drouin",\n  "email":"bob@gmail.com",\n  "credits": %s\n}' % (investor_id2, credits)
+
+	r = requests.post('http://localhost:8181/accounts', headers=headers, data=data)
+	valid_response_verify(r, 201)
+	return r
+
+def test_postTransactionSellInvalidNotEnoughCreditsForSells_makingTRANSACTIONBUY(url_account):
+	headers = {
+	    'Content-Type': 'application/json',
+	    'cache-control': 'no-cache',
+	    'Postman-Token': '78d96a48-86f9-4731-9c67-aa0fbc989266',
+	    'User-Agent': 'PostmanRuntime/7.3.0',
+	    'Accept': '*/*',
+	    'Host': 'localhost:8181',
+	    'accept-encoding': 'gzip, deflate',
+	    'content-length': '137',
+	}
+
+	data = '{\n  "type": "BUY",\n  "date": "2015-01-01T05:00:00.142Z",\n  "stock": {\n    "market": "NASDAQ",\n    "symbol": "MSFT"\n  },\n  "quantity": 4\n}'
+
+	r = requests.post('%s/transactions' % url_account, headers=headers, data=data)
+	valid_response_verify(r, 201)
+
+	def test_postTransactionSellValid(url_account, transaction_number):
+	headers = {
+	    'Content-Type': 'application/json',
+	    'cache-control': 'no-cache',
+	    'Postman-Token': '5bfdf41e-29b6-4864-9d88-cc4a78a609ee',
+	    'User-Agent': 'PostmanRuntime/7.3.0',
+	    'Accept': '*/*',
+	    'Host': 'localhost:8181',
+	    'accept-encoding': 'gzip, deflate',
+	    'content-length': '201',
+	}
+
+	data = '{\n  "type": "SELL",\n  "date": "2015-01-01T05:00:00.000Z",\n  "stock": {\n    "market": "NASDAQ",\n    "symbol": "MSFT"\n  },\n  "transactionNumber": "%s",\n  "quantity": 1\n}' % transaction_number
+
+	r = requests.post('%s/transactions/' % url_account, headers=headers, data=data)
+	valid_response_verify(r, 201)
+	return r
+
+
