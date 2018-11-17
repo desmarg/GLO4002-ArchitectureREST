@@ -4,7 +4,7 @@ import trading.api.request.AccountPostRequestDTO;
 import trading.domain.Credits;
 
 public class AccountAssembler {
-    public static Account create(AccountPostRequestDTO accountPostRequestDto, int id) {
+    public static Account create(AccountPostRequestDTO accountPostRequestDto, Integer id) {
 
         Credits credits = new Credits(accountPostRequestDto.credits);
         Credits nullCredits = Credits.ZERO;

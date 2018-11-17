@@ -21,7 +21,7 @@ public class IntegrationTest {
             TradingServer.class.getName()
     );
     private static final String BASE_URI = "http://localhost";
-    private static final int PORT = 8181;
+    private static final Integer PORT = 8181;
     private static final String BASE_PATH = "/";
     private static final String BASE_URL = BASE_URI + ":" + String.valueOf(PORT);
 
@@ -82,7 +82,7 @@ public class IntegrationTest {
         return account;
     }
 
-    private Map<String, String> getAccountWithId(long id) {
+    private Map<String, String> getAccountWithId(Long id) {
         Map<String, String> account = new HashMap<>();
         account.put("investorId", String.valueOf(id));
         account.put("investorName", "Tom Drou");
@@ -91,7 +91,7 @@ public class IntegrationTest {
         return account;
     }
 
-    private Map<String, String> getAccountWithMoney(long initialCredits) {
+    private Map<String, String> getAccountWithMoney(Long initialCredits) {
         Map<String, String> account = new HashMap<>();
         account.put("investorId", String.valueOf(this.accountNumber.incrementAndGet()));
         account.put("investorName", "Tom Drou");

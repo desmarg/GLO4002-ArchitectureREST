@@ -10,7 +10,7 @@ import trading.domain.Credits;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionSellAssemblerTest {
-    public static final long INVALID_QUANTITY = 0L;
+    public static final Long INVALID_QUANTITY = 0L;
     private static final StockDTO VALID_STOCK_DTO = new StockDTO();
     private static final Credits CREDITS = Credits.ZERO;
     private final AccountNumber AN_ACCOUNT_NUMBER = new AccountNumber("TD-0000");

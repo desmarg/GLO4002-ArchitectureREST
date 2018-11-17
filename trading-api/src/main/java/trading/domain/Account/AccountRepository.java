@@ -7,5 +7,5 @@ public interface AccountRepository {
 
     Account findByAccountNumber(AccountNumber accountNumber);
 
-    int getCurrentAccountId();
+    Integer getCurrentAccountId();
 }

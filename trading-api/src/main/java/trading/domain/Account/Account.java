@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Account {
 
-    private final int id;
+    private final Integer id;
     private final Long investorId;
     private final InvestorProfile investorProfile;
     private final String investorName;
@@ -23,7 +23,7 @@ public class Account {
             Long investorId,
             String investorName,
             Credits credits,
-            int id
+            Integer id
     ) {
         this(
                 investorId,
@@ -43,7 +43,7 @@ public class Account {
             Credits initialCredits,
             InvestorProfile investorProfile,
             Map<TransactionNumber, Long> remainingStocksMap,
-            int id
+            Integer id
     ) {
         this.investorId = investorId;
         this.investorName = investorName;
@@ -110,7 +110,7 @@ public class Account {
         return this.remainingStocksMap;
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 

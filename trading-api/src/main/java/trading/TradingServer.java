@@ -59,7 +59,7 @@ public class TradingServer implements Runnable {
     @Override
     public void run() {
         String portStr = System.getenv("TRADING_API_PORT");
-        int port = 8181;
+        Integer port = 8181;
         if (portStr != null) {
             port = Integer.parseInt(portStr);
             LOGGER.info("Using port " + port);

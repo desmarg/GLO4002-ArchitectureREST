@@ -30,7 +30,7 @@ public class StockServiceTest {
     private static final String A_SYMBOL = "WORLD";
     private static final String A_TYPE = "TYPE";
     private static final Credits CREDITS = Credits.fromInteger(10);
-    private static final long NORMAL_ID = 1L;
+    private static final Long NORMAL_ID = 1L;
     private final DateTime VALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2000-08-04T05:00:00"), ZoneOffset.of("+00:00")));
     private final DateTime INVALID_DATETIME = new DateTime(OffsetDateTime.of(LocalDateTime.parse("2001-08-04T05:00:00"), ZoneOffset.of("+00:00")));
     private StockService stockService;

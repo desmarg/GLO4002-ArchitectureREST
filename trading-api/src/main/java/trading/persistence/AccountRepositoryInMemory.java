@@ -27,7 +27,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
             throws AccountNotFoundException {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        int accountId = accountNumber.getId();
+        Integer accountId = accountNumber.getId();
         AccountHibernateDTO accountHibernateDTO = session.get(AccountHibernateDTO.class, accountId);
 
         session.getTransaction().commit();
@@ -49,7 +49,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
         }
     }
 
-    public int getCurrentAccountId() {
+    public Integer getCurrentAccountId() {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
         List<Object> latestAccountNumber = session.createSQLQuery("SELECT MAX(id) from ACCOUNTS").list();

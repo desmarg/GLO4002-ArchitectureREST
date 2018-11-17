@@ -19,7 +19,7 @@ public class AccountHydrator {
         String investorName = accountHibernateDTO.investorName;
         Credits credits = new Credits(accountHibernateDTO.credits);
         Credits initialCredits = new Credits(accountHibernateDTO.initialCredits);
-        int id = accountHibernateDTO.Id;
+        Integer id = accountHibernateDTO.Id;
 
         Account account = new Account(investorId, investorName, credits, initialCredits, investorProfile, remainingStocksMap, id);
 

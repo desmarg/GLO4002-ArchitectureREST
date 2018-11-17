@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CreditsTest {
 
-    private static final long LONG_QUANTITY = 2;
+    private static final Long LONG_QUANTITY = 2l;
 
     @Test
     public void givenCredits_whenDefaultConstructor_thenValueIsZero() {

@@ -19,11 +19,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
-    public static final long MORE_QUANTITY_WANTED_THEN_REMAINING_STOCKS = 3L;
+    public static final Long MORE_QUANTITY_WANTED_THEN_REMAINING_STOCKS = 3L;
     private static final Long VALID_INVESTOR_ID = 1L;
     private static final Long QUANTITY = 2L;
     private static final String VALID_INVESTOR_NAME = "FirstName LastName";
-    private static final int ACCOUNT_ID = 1;
+    private static final Integer ACCOUNT_ID = 1;
     private static final Credits AN_ACCOUNT_BALANCE = Credits.fromInteger(1000);
     private static final Credits NOT_ENOUGH_CREDITS = Credits.ZERO;
     private static final Credits TOO_MANY_FEES = Credits.fromInteger(10000);

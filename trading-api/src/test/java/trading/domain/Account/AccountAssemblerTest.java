@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class AccountAssemblerTest {
     private final AccountPostRequestDTO accountPostRequestDTO = new AccountPostRequestDTO();
 
-    private final int AN_ACCOUNT_ID = 0;
+    private final Integer AN_ACCOUNT_ID = 0;
 
     @Test(expected = InvalidCreditsAmountException.class)
     public void givenInvalidCreditsAmount_whenValidating_thenThrowInvalidCreditsAmountException() {

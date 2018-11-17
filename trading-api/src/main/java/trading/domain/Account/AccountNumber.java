@@ -1,11 +1,11 @@
 package trading.domain.Account;
 
 public class AccountNumber {
-    private static final int FIRST_ODD_NUMBER = 13;
-    private static final int SECOND_ODD_NUMBER = 17;
+    private static final Integer FIRST_ODD_NUMBER = 13;
+    private static final Integer SECOND_ODD_NUMBER = 17;
     private final String accountNumber;
 
-    public AccountNumber(String name, int accoundId) {
+    public AccountNumber(String name, Integer accoundId) {
         this.accountNumber = this.makeId(name, accoundId);
     }
 
@@ -21,7 +21,7 @@ public class AccountNumber {
         return this.accountNumber;
     }
 
-    public int getId() {
+    public Integer getId() {
         String[] words = this.accountNumber.split("-");
         return Integer.parseInt(words[1]);
 
@@ -42,7 +42,7 @@ public class AccountNumber {
         return this.FIRST_ODD_NUMBER * this.SECOND_ODD_NUMBER + this.accountNumber.hashCode();
     }
 
-    private String makeId(String name, int accountId) {
+    private String makeId(String name, Integer accountId) {
         return this.makeInitials(name) + "-" + String.format("%04d", accountId);
     }
 }

@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class TransactionNumber {
     private UUID id;
-    private final int FIRST_ODD_NUMBER = 17;
-    private final int SECOND_ODD_NUMBER = 31;
+    private final Integer FIRST_ODD_NUMBER = 17;
+    private final Integer SECOND_ODD_NUMBER = 31;
 
     public TransactionNumber() {
         this.id = UUID.randomUUID();
