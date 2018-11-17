@@ -42,7 +42,7 @@ public class MarketService {
         return marketDto;
     }
 
-    private List<List<OffsetTime>> parseMarketHours(MarketDTO marketDto) {
+    private List parseMarketHours(MarketDTO marketDto) {
         List<String> hours = marketDto.openHours;
         ZoneOffset zoneOffset = ZoneOffset.of(marketDto.timezone.substring(3));
         List marketHours = new ArrayList<ArrayList<DateTime>>();

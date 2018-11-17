@@ -33,12 +33,7 @@ public class ReportService {
         for (TransactionBuy transaction : transactionBuyHistory) {
             creditsInAccount = creditsInAccount.subtract(transaction.getValueWithFees());
             Stock stock = transaction.getStock();
-            Long quantity = quantityByStock.get(stock);
-            if (quantity == null) {
-                quantityByStock.put(stock, transaction.getQuantity());
-            } else {
-                quantityByStock.put(stock, transaction.getQuantity() + quantity);
-            }
+            quantityByStock.merge(stock, transaction.getQuantity(), (a, b) -> b + a);
         }
         for (TransactionSell transaction : transactionSellHistory) {
             creditsInAccount = creditsInAccount.subtract(transaction.getFees()).add(transaction.getValue());

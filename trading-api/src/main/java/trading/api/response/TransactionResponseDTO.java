@@ -8,12 +8,12 @@ import java.time.Instant;
 import java.util.UUID;
 
 public abstract class TransactionResponseDTO {
-    public String type;
-    public Instant date;
-    public Stock stock;
-    public UUID transactionNumber;
-    public Long quantity;
-    public BigDecimal fees;
+    public final String type;
+    public final Instant date;
+    public final Stock stock;
+    public final UUID transactionNumber;
+    public final Long quantity;
+    public final BigDecimal fees;
 
     public TransactionResponseDTO(Transaction transaction) {
         this.type = transaction.getTransactionType().toString();

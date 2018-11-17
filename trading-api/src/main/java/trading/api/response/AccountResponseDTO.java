@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 
 public class AccountResponseDTO {
-    public InvestorProfile investorProfile;
-    public String accountNumber;
-    public Long investorId;
-    public BigDecimal credits;
+    public final InvestorProfile investorProfile;
+    public final String accountNumber;
+    public final Long investorId;
+    public final BigDecimal credits;
 
     public AccountResponseDTO(Account account) {
         this.investorProfile = account.getInvestorProfile();

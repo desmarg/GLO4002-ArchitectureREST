@@ -50,7 +50,7 @@ public class IntegrationTest {
     public void whenPostAccountValid_thenReturnCreated() {
 
         given().contentType("application/json")
-                .body(this.getAccountWithId(1l))
+                .body(this.getAccountWithId(1L))
                 .when().post("/accounts").then()
                 .statusCode(201)
                 .header("Location", BASE_URL + "/accounts/TD-0001");
@@ -59,7 +59,7 @@ public class IntegrationTest {
     @Test
     public void whenPostExistingAccount_thenThrowAccountAlreadyExistsException() {
         given().contentType("application/json")
-                .body(this.getAccountWithId(1l))
+                .body(this.getAccountWithId(1L))
                 .when().post("/accounts").then()
                 .statusCode(400);
     }

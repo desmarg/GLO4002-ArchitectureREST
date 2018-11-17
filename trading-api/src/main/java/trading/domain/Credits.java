@@ -1,13 +1,14 @@
 package trading.domain;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Credits implements Comparable<Credits> {
     public static final Credits ZERO = new Credits(new BigDecimal(0));
 
-    private BigDecimal amount;
+    private final BigDecimal amount;
 
-    public Credits(BigDecimal amount) {
+    public Credits(@NotNull BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -53,13 +54,13 @@ public class Credits implements Comparable<Credits> {
     }
 
     @Override
-    public int compareTo(Credits credits) {
+    public int compareTo(@NotNull Credits credits) {
         return this.amount.compareTo(credits.toBigDecimal());
     }
 
     @Override
     public String toString() {
-        return this.amount.setScale(2).toString();
+        return this.amount.setScale(2, BigDecimal.ROUND_HALF_DOWN).toString();
     }
 
     public boolean isGreater(Credits other) {

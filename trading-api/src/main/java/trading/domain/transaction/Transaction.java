@@ -10,15 +10,15 @@ public abstract class Transaction {
     public static final Credits FEE_UNDER_100 = Credits.fromString("0.20");
     public static final Credits FEE_OVER_5000 = Credits.fromString("0.03");
 
-    protected AccountNumber accountNumber;
-    protected TransactionNumber transactionNumber;
+    protected final AccountNumber accountNumber;
+    protected final TransactionNumber transactionNumber;
     protected TransactionType transactionType;
-    protected Long quantity;
-    protected DateTime dateTime;
-    protected Stock stock;
-    protected Credits stockPrice;
-    protected Credits value;
-    protected Credits fees;
+    protected final Long quantity;
+    protected final DateTime dateTime;
+    protected final Stock stock;
+    protected final Credits stockPrice;
+    protected final Credits value;
+    protected final Credits fees;
 
 
     protected Transaction(

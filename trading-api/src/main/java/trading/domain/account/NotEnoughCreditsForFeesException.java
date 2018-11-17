@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response.Status;
 import java.util.UUID;
 
 public class NotEnoughCreditsForFeesException extends MappedException {
-    private UUID transactionNumber;
+    private final UUID transactionNumber;
 
     public NotEnoughCreditsForFeesException() {
         super(

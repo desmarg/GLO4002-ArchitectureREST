@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CreditsTest {
 
-    private static final Long LONG_QUANTITY = 2l;
+    private static final Long LONG_QUANTITY = 2L;
 
     @Test
     public void givenCredits_whenDefaultConstructor_thenValueIsZero() {
@@ -24,9 +24,8 @@ public class CreditsTest {
     @Test
     public void givenCreatedCredits_whenCopyingWithConstructor_thenNewCreditsWithSameValue() {
         Credits credits = Credits.fromString("0.1");
-        Credits creditsCopy = credits;
 
-        assertEquals(credits.toString(), creditsCopy.toString());
+        assertEquals(credits.toString(), credits.toString());
     }
 
     @Test

@@ -5,7 +5,7 @@ import trading.domain.transaction.Transaction;
 import java.math.BigDecimal;
 
 public class TransactionSellResponseDTO extends TransactionResponseDTO {
-    public BigDecimal priceSold;
+    public final BigDecimal priceSold;
 
     public TransactionSellResponseDTO(Transaction transaction) {
         super(transaction);

@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionBuyTest {
-    private final Long VALID_QUANTITY = 1L;
     private final DateTime VALID_DATE = DateTime.fromInstant(Instant.parse("2018-08-21T15:23:20.142Z"));
     private final Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
@@ -26,7 +25,8 @@ public class TransactionBuyTest {
 
     @Before
     public void initialize() {
-        this.transactionBuy = new TransactionBuy(this.VALID_QUANTITY, this.VALID_DATE, this.stock,
+        Long VALID_QUANTITY = 1L;
+        this.transactionBuy = new TransactionBuy(VALID_QUANTITY, this.VALID_DATE, this.stock,
                 this.SOME_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
     }
 

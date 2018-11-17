@@ -21,9 +21,7 @@ public class AccountHydrator {
         Credits initialCredits = new Credits(accountHibernateDTO.initialCredits);
         Integer id = accountHibernateDTO.Id;
 
-        Account account = new Account(investorId, investorName, credits, initialCredits, investorProfile, remainingStocksMap, id);
-
-        return account;
+        return new Account(investorId, investorName, credits, initialCredits, investorProfile, remainingStocksMap, id);
     }
 
     public static AccountHibernateDTO toHibernateDto(Account account) {
