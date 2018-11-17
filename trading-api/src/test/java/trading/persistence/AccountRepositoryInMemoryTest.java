@@ -5,7 +5,7 @@
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;
 //import trading.domain.Account.Account;
-//import trading.domain.Account.AccountNotFoundException;
+//import trading.persistence.AccountNotFoundException;
 //import trading.domain.Account.AccountNumber;
 //import trading.domain.Credits.Credits;
 //

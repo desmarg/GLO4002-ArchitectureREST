@@ -28,13 +28,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
     }
 
     public Transaction findByTransactionNumber(TransactionNumber transactionNumber) {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        UUID transactionNumberUUID = transactionNumber.getId();
-        TransactionHibernateDTO transactionHibernateDTO = session.get(TransactionHibernateDTO
-                .class, transactionNumberUUID);
-        session.getTransaction().commit();
-
+        TransactionHibernateDTO transactionHibernateDTO = this.findTransactionDTO(transactionNumber);
         if (transactionHibernateDTO == null) {
             throw new TransactionNotFoundException(transactionNumber);
         }
@@ -42,14 +36,22 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
     }
 
     public TransactionBuy findReferredTransaction(TransactionNumber transactionNumber) {
-        Transaction retrievedTransaction = this.findByTransactionNumber(transactionNumber);
-        if (!(retrievedTransaction instanceof TransactionBuy)) {
+        TransactionHibernateDTO transactionHibernateDTO = this.findTransactionDTO(transactionNumber);
+        if (transactionHibernateDTO == null) {
             throw new InvalidTransactionNumberException(transactionNumber);
         }
-        if (retrievedTransaction == null) {
-            throw new InvalidTransactionNumberException(transactionNumber);
-        }
-        return (TransactionBuy) retrievedTransaction;
+        return TransactionHydrator.toTransactionBuy(transactionHibernateDTO);
+    }
+
+    private TransactionHibernateDTO findTransactionDTO(TransactionNumber transactionNumber) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        UUID transactionNumberUUID = transactionNumber.getId();
+        TransactionHibernateDTO transactionHibernateDTO = session.get(TransactionHibernateDTO
+                .class, transactionNumberUUID);
+        session.getTransaction().commit();
+
+        return transactionHibernateDTO;
     }
 
     public List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber, DateTime reportDateTime) {
@@ -60,7 +62,11 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         String accountNumberAsString = accountNumber.getString();
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery("select * from TRANSACTIONS WHERE accountNumber= :accountNumber AND instant<= :reportDateInstant AND instant> :reportDateInstantMinusOneDay ")
+        List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery(
+                "select * from TRANSACTIONS " +
+                        "WHERE accountNumber= :accountNumber " +
+                        "AND instant<= :reportDateInstant " +
+                        "AND instant> :reportDateInstantMinusOneDay ")
                 .setParameter("accountNumber", accountNumberAsString)
                 .setParameter("reportDateInstant", reportDateTime.toInstant())
                 .setParameter("reportDateInstantMinusOneDay", reportDateInstantMinusOneDay
@@ -79,7 +85,10 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
         List<TransactionHibernateDTO> transactionHibernateDTOS = session.createSQLQuery(
-                "select * from TRANSACTIONS WHERE accountNumber= :accountNumber AND instant < :reportDateInstant AND transactionType= :myTransactionType")
+                "select * from TRANSACTIONS " +
+                        "WHERE accountNumber= :accountNumber " +
+                        "AND instant < :reportDateInstant " +
+                        "AND transactionType= :myTransactionType")
                 .setParameter("accountNumber", accountNumberAsString)
                 .setParameter("reportDateInstant", reportDateInstant.toInstant())
                 .setParameter("myTransactionType", TransactionType.BUY.toString()

@@ -1,4 +1,4 @@
-package trading.domain.Account;
+package trading.persistence;
 
 import trading.exception.MappedException;
 

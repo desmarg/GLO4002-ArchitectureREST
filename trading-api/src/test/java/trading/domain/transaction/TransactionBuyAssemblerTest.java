@@ -2,13 +2,11 @@ package trading.domain.transaction;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.StockDTO;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
-import trading.services.StockService;
 
 import java.time.Instant;
 
@@ -22,10 +20,6 @@ public class TransactionBuyAssemblerTest {
     private static final String MARKET = "bla";
     private static final String SYMBOL = "bla";
     private static final Credits CREDITS = new Credits();
-
-
-    @Mock
-    StockService stockService;
 
     @Test(expected = InvalidQuantityException.class)
     public void givenBuyQuantitySmallerThanOne_whenMakingTransaction_thenThrowInvalidQuantityException() {
