@@ -9,11 +9,8 @@ public class StockParametersDontMatchException extends MappedException {
     private final UUID transactionNumber;
 
     public StockParametersDontMatchException() {
-        super(
-                "STOCK_PARAMETERS_DONT_MATCH",
-                "stock parameters don't match existing ones",
-                Status.BAD_REQUEST
-        );
+        super("STOCK_PARAMETERS_DONT_MATCH", "stock parameters don't match existing ones",
+                Status.BAD_REQUEST);
         this.transactionNumber = new TransactionNumber().getId();
     }
 

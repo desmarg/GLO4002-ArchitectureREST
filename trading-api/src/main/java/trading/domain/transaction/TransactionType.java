@@ -1,8 +1,7 @@
 package trading.domain.transaction;
 
 public enum TransactionType {
-    BUY,
-    SELL;
+    BUY, SELL;
 
 
     public static TransactionType fromString(String typeToTest) {

@@ -7,11 +7,7 @@ import javax.ws.rs.core.Response.Status;
 public class InvalidQuantityException extends MappedException {
 
     public InvalidQuantityException() {
-        super(
-                "INVALID_QUANTITY",
-                "quantity is invalid",
-                Status.BAD_REQUEST
-        );
+        super("INVALID_QUANTITY", "quantity is invalid", Status.BAD_REQUEST);
     }
 
 }

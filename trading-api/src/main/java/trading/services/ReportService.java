@@ -19,12 +19,9 @@ public class ReportService {
         this.stockService = stockService;
     }
 
-    public Portfolio getPortfolio(
-            Credits initialCredits,
-            DateTime dateTime,
-            List<TransactionBuy> transactionBuyHistory,
-            List<TransactionSell> transactionSellHistory
-    ) {
+    public Portfolio getPortfolio(Credits initialCredits, DateTime dateTime,
+                                  List<TransactionBuy> transactionBuyHistory,
+                                  List<TransactionSell> transactionSellHistory) {
 
         Credits portfolioValue = Credits.ZERO;
         Map<Stock, Long> quantityByStock = new HashMap<>();
@@ -36,15 +33,16 @@ public class ReportService {
             quantityByStock.merge(stock, transaction.getQuantity(), (a, b) -> b + a);
         }
         for (TransactionSell transaction : transactionSellHistory) {
-            creditsInAccount = creditsInAccount.subtract(transaction.getFees()).add(transaction.getValue());
+            creditsInAccount =
+                    creditsInAccount.subtract(transaction.getFees()).add(transaction.getValue());
             Stock stock = transaction.getStock();
             Long quantity = quantityByStock.get(stock);
             quantityByStock.put(stock, quantity - transaction.getQuantity());
         }
         for (Map.Entry<Stock, Long> entry : quantityByStock.entrySet()) {
-            portfolioValue = portfolioValue.add(
-                    this.stockService.retrieveStockPrice(entry.getKey(), dateTime)
-                            .multiply(Credits.fromLong(entry.getValue())));
+            portfolioValue =
+                    portfolioValue.add(this.stockService.retrieveStockPrice(entry.getKey(),
+                            dateTime).multiply(Credits.fromLong(entry.getValue())));
         }
         return new Portfolio(portfolioValue, creditsInAccount);
     }

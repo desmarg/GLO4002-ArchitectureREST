@@ -19,12 +19,7 @@ public class Account {
     private final Credits initialCredits;
     private Credits credits;
 
-    public Account(
-            Long investorId,
-            String investorName,
-            Credits credits,
-            Integer id
-    ) {
+    public Account(Long investorId, String investorName, Credits credits, Integer id) {
         this(
                 investorId,
                 investorName,
@@ -36,15 +31,9 @@ public class Account {
         );
     }
 
-    public Account(
-            Long investorId,
-            String investorName,
-            Credits credits,
-            Credits initialCredits,
-            InvestorProfile investorProfile,
-            Map<TransactionNumber, Long> remainingStocksMap,
-            Integer id
-    ) {
+    public Account(Long investorId, String investorName, Credits credits, Credits initialCredits,
+                   InvestorProfile investorProfile,
+                   Map<TransactionNumber, Long> remainingStocksMap, Integer id) {
         this.investorId = investorId;
         this.investorName = investorName;
         this.credits = credits;
@@ -60,11 +49,12 @@ public class Account {
             throw new NotEnoughCreditsException(transactionBuy.getTransactionNumber());
         }
         this.credits = this.credits.subtract(totalPrice);
-        this.remainingStocksMap.put(transactionBuy.getTransactionNumber(), transactionBuy.getQuantity());
+        this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
+                transactionBuy.getQuantity());
     }
 
-    public void sellTransaction(TransactionSell transactionSell, TransactionBuy
-            referredTransaction) {
+    public void sellTransaction(TransactionSell transactionSell,
+                                TransactionBuy referredTransaction) {
         if (!transactionSell.getStock().equals(referredTransaction.getStock())) {
             throw new StockParametersDontMatchException();
         }
@@ -73,7 +63,8 @@ public class Account {
         if (this.credits.isSmaller(transactionSell.getFees())) {
             throw new NotEnoughCreditsForFeesException();
         }
-        this.credits = this.credits.subtract(transactionSell.getFees()).add(transactionSell.getValue());
+        this.credits =
+                this.credits.subtract(transactionSell.getFees()).add(transactionSell.getValue());
     }
 
     private void deduceStocks(TransactionBuy transactionBuy, Long quantity) {
@@ -83,7 +74,8 @@ public class Account {
         } else if (remainingStocks < quantity) {
             throw new NotEnoughStockException(transactionBuy.getStock());
         }
-        this.remainingStocksMap.put(transactionBuy.getTransactionNumber(), remainingStocks - quantity);
+        this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
+                remainingStocks - quantity);
     }
 
     public AccountNumber getAccountNumber() {

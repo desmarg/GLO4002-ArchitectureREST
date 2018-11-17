@@ -20,6 +20,7 @@ public class TransactionSellAssemblerTest {
         TransactionPostRequestDTO transactionPostRequestDTO = new TransactionPostRequestDTO();
         transactionPostRequestDTO.quantity = INVALID_QUANTITY;
         transactionPostRequestDTO.stock = VALID_STOCK_DTO;
-        TransactionSellAssembler.fromDTO(transactionPostRequestDTO, this.AN_ACCOUNT_NUMBER, CREDITS);
+        TransactionSellAssembler.fromDTO(transactionPostRequestDTO, this.AN_ACCOUNT_NUMBER,
+                CREDITS);
     }
 }

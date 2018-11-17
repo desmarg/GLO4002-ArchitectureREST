@@ -1,4 +1,4 @@
-package trading.external.response.Market;
+package trading.external.response.market;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

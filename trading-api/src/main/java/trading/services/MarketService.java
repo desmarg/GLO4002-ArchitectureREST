@@ -2,8 +2,8 @@ package trading.services;
 
 import trading.application.JerseyClient;
 import trading.domain.datetime.DateTime;
-import trading.external.response.Market.MarketDTO;
-import trading.external.response.Market.MarketNotFoundException;
+import trading.external.response.market.MarketDTO;
+import trading.external.response.market.MarketNotFoundException;
 
 import java.time.LocalTime;
 import java.time.OffsetTime;
@@ -49,12 +49,13 @@ public class MarketService {
         for (String hour : hours) {
             List openCloseOffsetTimes = new ArrayList();
             String[] splitTime = hour.split("-");
-            OffsetTime beginTime = OffsetTime.of(LocalTime.parse(
-                    this.conditionalLeftPad(splitTime[0]), this.formatter),
-                    zoneOffset
-            );
+            OffsetTime beginTime =
+                    OffsetTime.of(LocalTime.parse(this.conditionalLeftPad(splitTime[0]),
+                            this.formatter), zoneOffset);
             openCloseOffsetTimes.add(beginTime);
-            OffsetTime endTime = OffsetTime.of(LocalTime.parse(this.conditionalLeftPad(splitTime[1]), this.formatter), zoneOffset);
+            OffsetTime endTime =
+                    OffsetTime.of(LocalTime.parse(this.conditionalLeftPad(splitTime[1]),
+                            this.formatter), zoneOffset);
             openCloseOffsetTimes.add(endTime);
             marketHours.add(openCloseOffsetTimes);
         }

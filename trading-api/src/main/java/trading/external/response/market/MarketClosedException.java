@@ -1,4 +1,4 @@
-package trading.external.response.Market;
+package trading.external.response.market;
 
 import trading.exception.MappedException;
 
@@ -6,10 +6,6 @@ import javax.ws.rs.core.Response;
 
 public class MarketClosedException extends MappedException {
     public MarketClosedException(String market) {
-        super(
-                "MARKET_CLOSED",
-                "market '" + market + "' is closed",
-                Response.Status.BAD_REQUEST
-        );
+        super("MARKET_CLOSED", "market '" + market + "' is closed", Response.Status.BAD_REQUEST);
     }
 }

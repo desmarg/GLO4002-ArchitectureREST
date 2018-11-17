@@ -25,13 +25,12 @@ public class TransactionResource {
     @GET
     @Path("/{transactionNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTransaction(
-            @PathParam("accountNumber") String accountNumber,
-            @PathParam("transactionNumber") String transactionNumberParam
-    ) {
+    public Response getTransaction(@PathParam("accountNumber") String accountNumber, @PathParam(
+            "transactionNumber") String transactionNumberParam) {
         TransactionNumber transactionNumber = new TransactionNumber(transactionNumberParam);
         Transaction transaction = this.transactionService.getTransaction(transactionNumber);
-        TransactionResponseDTO transactionResponseDTO = TransactionResponseDTOFactory.createTransactionResponse(transaction);
+        TransactionResponseDTO transactionResponseDTO =
+                TransactionResponseDTOFactory.createTransactionResponse(transaction);
 
         return Response.status(Response.Status.OK).entity(transactionResponseDTO).build();
     }
@@ -39,21 +38,20 @@ public class TransactionResource {
     @POST
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response makeTransaction(
-            @PathParam("accountNumber") String accountNumber,
-            TransactionPostRequestDTO transactionPostDto
-    ) {
+    public Response makeTransaction(@PathParam("accountNumber") String accountNumber,
+                                    TransactionPostRequestDTO transactionPostDto) {
         Transaction transaction;
         if (TransactionType.fromString(transactionPostDto.type) == TransactionType.BUY) {
-            transaction = this.transactionService.executeTransactionBuy(accountNumber, transactionPostDto);
+            transaction = this.transactionService.executeTransactionBuy(accountNumber,
+                    transactionPostDto);
         } else if (TransactionType.fromString(transactionPostDto.type) == TransactionType.SELL) {
-            transaction = this.transactionService.executeTransactionSell(accountNumber, transactionPostDto);
+            transaction = this.transactionService.executeTransactionSell(accountNumber,
+                    transactionPostDto);
         } else {
             throw new UnsupportedTransactionTypeException(transactionPostDto.type);
         }
-        return Response.status(Response.Status.CREATED).header(
-                "Location",
-                "accounts/" + accountNumber + "/transactions/" + transaction.getStringTransactionId()
-        ).build();
+        return Response.status(Response.Status.CREATED)
+                .header("Location", "accounts/" + accountNumber
+                        + "/transactions/" + transaction.getStringTransactionId()).build();
     }
 }

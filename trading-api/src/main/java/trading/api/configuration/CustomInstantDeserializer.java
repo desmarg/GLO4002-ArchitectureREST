@@ -23,9 +23,7 @@ public class CustomInstantDeserializer extends StdDeserializer<Instant> {
     }
 
     @Override
-    public Instant deserialize(
-            JsonParser jsonParser,
-            DeserializationContext context)
+    public Instant deserialize(JsonParser jsonParser, DeserializationContext context)
             throws IOException {
         String date = jsonParser.getText();
         try {

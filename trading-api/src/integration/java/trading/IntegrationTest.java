@@ -15,9 +15,7 @@ import static io.restassured.RestAssured.given;
 
 public class IntegrationTest {
 
-    private static final Logger LOGGER = Logger.getLogger(
-            TradingServer.class.getName()
-    );
+    private static final Logger LOGGER = Logger.getLogger(TradingServer.class.getName());
     private static final String BASE_URI = "http://localhost";
     private static final Integer PORT = 8181;
     private static final String BASE_PATH = "/";
@@ -49,27 +47,21 @@ public class IntegrationTest {
     @Test
     public void whenPostAccountValid_thenReturnCreated() {
 
-        given().contentType("application/json")
-                .body(this.getAccountWithId(1L))
-                .when().post("/accounts").then()
-                .statusCode(201)
-                .header("Location", BASE_URL + "/accounts/TD-0001");
+        given().contentType("application/json").body(this.getAccountWithId(1L)).when().post(
+                "/accounts").then().statusCode(201).header("Location", BASE_URL + "/accounts/TD" +
+                "-0001");
     }
 
     @Test
     public void whenPostExistingAccount_thenThrowAccountAlreadyExistsException() {
-        given().contentType("application/json")
-                .body(this.getAccountWithId(1L))
-                .when().post("/accounts").then()
-                .statusCode(400);
+        given().contentType("application/json").body(this.getAccountWithId(1L)).when().post(
+                "/accounts").then().statusCode(400);
     }
 
     @Test
     public void whenPostAccountWithInvalidCredits_thenThrowInvalidCredits() {
-        given().contentType("application/json")
-                .body(this.getNewAccount())
-                .when().post("/accounts").then()
-                .statusCode(201);
+        given().contentType("application/json").body(this.getNewAccount()).when().post("/accounts"
+        ).then().statusCode(201);
     }
 
     private Map<String, String> getNewAccount() {

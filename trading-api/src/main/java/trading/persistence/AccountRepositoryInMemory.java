@@ -10,7 +10,9 @@ import trading.domain.account.AccountRepository;
 import java.util.List;
 
 public class AccountRepositoryInMemory implements AccountRepository {
-    private final SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
+    private final SessionFactory sessionFactory = new Configuration()
+            .configure("hibernate.cfg.xml")
+            .addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
 
     @Override
     public void save(Account account) {
@@ -45,8 +47,9 @@ public class AccountRepositoryInMemory implements AccountRepository {
     private void validateAccountDoesNotExists(Long investorId) {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        List<Object> sameInvestorIdAccounts = session.createSQLQuery("select * from ACCOUNTS where investorId = :investorId").
-                setParameter("investorId", investorId).list();
+        List<Object> sameInvestorIdAccounts = session
+                .createSQLQuery("select * from ACCOUNTS where investorId = :investorId")
+                .setParameter("investorId", investorId).list();
         session.getTransaction().commit();
 
         if (!sameInvestorIdAccounts.isEmpty()) {
@@ -58,7 +61,8 @@ public class AccountRepositoryInMemory implements AccountRepository {
     public Integer getCurrentAccountId() {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        List<Object> latestAccountNumber = session.createSQLQuery("SELECT MAX(id) from ACCOUNTS").list();
+        List<Object> latestAccountNumber =
+                session.createSQLQuery("SELECT MAX(id) from ACCOUNTS").list();
         session.getTransaction().commit();
         if (latestAccountNumber.get(0) == null) {
             latestAccountNumber.set(0, 0);

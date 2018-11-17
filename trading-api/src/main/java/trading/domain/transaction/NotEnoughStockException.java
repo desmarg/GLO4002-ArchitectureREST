@@ -10,11 +10,9 @@ public class NotEnoughStockException extends MappedException {
     private final UUID transactionNumber;
 
     public NotEnoughStockException(Stock stock) {
-        super(
-                "NOT_ENOUGH_STOCK",
+        super("NOT_ENOUGH_STOCK",
                 "not enough stock '" + stock.getSymbol() + ":" + stock.getMarket() + "'",
-                Status.BAD_REQUEST
-        );
+                Status.BAD_REQUEST);
         this.transactionNumber = new TransactionNumber().getId();
     }
 

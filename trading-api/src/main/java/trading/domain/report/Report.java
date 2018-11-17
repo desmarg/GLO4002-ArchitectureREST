@@ -13,7 +13,8 @@ public class Report {
     public final Credits credits;
     public final Credits portfolioValue;
 
-    public Report(DateTime date, List<Transaction> transactionList, Credits credits, Credits portfolioValue) {
+    public Report(DateTime date, List<Transaction> transactionList, Credits credits,
+                  Credits portfolioValue) {
         this.date = date;
         this.transactions = transactionList;
         this.credits = credits;

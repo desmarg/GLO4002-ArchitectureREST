@@ -30,7 +30,8 @@ public class AccountTest {
     private static final Credits PRICE_TOO_HIGH = Credits.fromInteger(10000);
     private static final Credits FEES = Credits.fromInteger(100);
     private static final Credits PRICE = Credits.fromInteger(100);
-    private static final InvestorProfile INVESTOR_PROFILE = new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
+    private static final InvestorProfile INVESTOR_PROFILE =
+            new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>());
     private static final Map<TransactionNumber, Long> REMAINING_STOCKS_MAP = new HashMap<>();
     private static final TransactionNumber A_TRANSACTION_NUMBER = new TransactionNumber();
     private final Stock STOCK1 = new Stock("mrkt", "symbl");
@@ -46,15 +47,20 @@ public class AccountTest {
     @Before
     public void setup() {
         REMAINING_STOCKS_MAP.put(A_TRANSACTION_NUMBER, QUANTITY);
-        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, AN_ACCOUNT_BALANCE, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
-        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME, NOT_ENOUGH_CREDITS, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP, ACCOUNT_ID);
+        this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME,
+                AN_ACCOUNT_BALANCE, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP,
+                ACCOUNT_ID);
+        this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME,
+                NOT_ENOUGH_CREDITS, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP,
+                ACCOUNT_ID);
         when(this.transactionSell.getStock()).thenReturn(this.STOCK1);
         when(this.transactionBuy.getStock()).thenReturn(this.STOCK1);
     }
 
     @Test
     public void whenCreatingNewAccount_thenProfileTypeIsConservative() {
-        assertEquals(ProfileType.CONSERVATIVE, this.basicAccount.getInvestorProfile().getProfileType());
+        assertEquals(ProfileType.CONSERVATIVE,
+                this.basicAccount.getInvestorProfile().getProfileType());
     }
 
     @Test(expected = NotEnoughCreditsException.class)
@@ -106,9 +112,8 @@ public class AccountTest {
         when(this.transactionSell.getValue()).thenReturn(PRICE);
         when(this.transactionSell.getFees()).thenReturn(FEES);
         when(this.transactionBuy.getTransactionNumber()).thenReturn(A_TRANSACTION_NUMBER);
-        Credits remainingCredits = this.basicAccount.getCredits()
-                .subtract(this.transactionSell.getFees())
-                .add(this.transactionSell.getValue());
+        Credits remainingCredits =
+                this.basicAccount.getCredits().subtract(this.transactionSell.getFees()).add(this.transactionSell.getValue());
         this.basicAccount.sellTransaction(this.transactionSell, this.transactionBuy);
         assertEquals(this.basicAccount.getCredits(), remainingCredits);
     }

@@ -27,9 +27,8 @@ public class AccountResource {
     @GET
     @Path("/{accountNumber}/reports")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response ReportResponse(@PathParam("accountNumber") String accountNumber,
-                                   @QueryParam("type") String reportType,
-                                   @QueryParam("date") String date) {
+    public Response reportResponse(@PathParam("accountNumber") String accountNumber, @QueryParam(
+            "type") String reportType, @QueryParam("date") String date) {
         Report report = this.transactionService.getReportFromDate(accountNumber, date, reportType);
         return Response.status(Response.Status.OK).entity(new ReportResponseDTO(report)).build();
     }
@@ -46,9 +45,7 @@ public class AccountResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountPostRequestDTO accountPostRequestDto) {
         AccountNumber accountNumber = this.accountService.save(accountPostRequestDto);
-        return Response.status(Response.Status.CREATED).header(
-                "Location",
-                "accounts/" + accountNumber.getString()
-        ).build();
+        return Response.status(Response.Status.CREATED).header("Location",
+                "accounts/" + accountNumber.getString()).build();
     }
 }

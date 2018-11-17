@@ -25,10 +25,7 @@ public class StockService {
         String url = "/stocks/" + stock.market + "/" + stock.symbol;
         StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
-            throw new StockNotFoundException(
-                    stock.symbol,
-                    stock.market
-            );
+            throw new StockNotFoundException(stock.symbol, stock.market);
         }
         return this.getPriceFromDateTime(stockApiDTO, dateTime);
     }
@@ -37,10 +34,7 @@ public class StockService {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
         StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
-            throw new StockNotFoundException(
-                    stock.getSymbol(),
-                    stock.getMarket()
-            );
+            throw new StockNotFoundException(stock.getSymbol(), stock.getMarket());
         }
         return this.getPriceFromDateTime(stockApiDTO, dateTime);
     }

@@ -12,12 +12,8 @@ public class AccountAssembler {
             throw new InvalidCreditsAmountException();
         }
 
-        return new Account(
-                accountPostRequestDto.investorId,
-                accountPostRequestDto.investorName,
-                new Credits(accountPostRequestDto.credits),
-                id
-        );
+        return new Account(accountPostRequestDto.investorId, accountPostRequestDto.investorName,
+                new Credits(accountPostRequestDto.credits), id);
     }
 }
 

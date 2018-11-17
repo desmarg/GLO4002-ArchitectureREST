@@ -9,11 +9,8 @@ public class InvalidTransactionNumberException extends MappedException {
     private final UUID transactionNumber;
 
     public InvalidTransactionNumberException(TransactionNumber transactionNumber) {
-        super(
-                "INVALID_TRANSACTION_NUMBER",
-                "the transaction number is invalid",
-                Status.BAD_REQUEST
-        );
+        super("INVALID_TRANSACTION_NUMBER", "the transaction number is invalid",
+                Status.BAD_REQUEST);
         this.transactionNumber = transactionNumber.getId();
     }
 

@@ -14,7 +14,8 @@ public class Services {
         StockService stockService = new StockService(jerseyClient);
         MarketService marketService = new MarketService(jerseyClient);
         ReportService reportService = new ReportService(stockService);
-        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(), stockService, marketService, this.accountService, reportService);
+        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(),
+                stockService, marketService, this.accountService, reportService);
     }
 
     public TransactionService getTransactionService() {

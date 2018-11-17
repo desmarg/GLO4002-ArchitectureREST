@@ -17,9 +17,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class TradingServer implements Runnable {
-    private static final Logger LOGGER = Logger.getLogger(
-            TradingServer.class.getName()
-    );
+    private static final Logger LOGGER = Logger.getLogger(TradingServer.class.getName());
 
     private static final String EXCEPTION_MAPPERS_PATH = "trading.exception";
 
@@ -39,14 +37,12 @@ public class TradingServer implements Runnable {
     }
 
     private ResourceConfig createResourceConfiguration() {
-        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(
-                new Application() {
-                    @Override
-                    public Set<Object> getSingletons() {
-                        return getContextResources();
-                    }
-                }
-        );
+        ResourceConfig resourceConfiguration = ResourceConfig.forApplication(new Application() {
+            @Override
+            public Set<Object> getSingletons() {
+                return getContextResources();
+            }
+        });
 
         // Enable exception mapper.
         resourceConfiguration.packages(EXCEPTION_MAPPERS_PATH);

@@ -15,8 +15,10 @@ public interface TransactionRepository {
 
     List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber, DateTime date);
 
-    List<TransactionBuy> findTransactionBuyBeforeDate(AccountNumber accountNumber, DateTime dateTime);
+    List<TransactionBuy> findTransactionBuyBeforeDate(AccountNumber accountNumber,
+                                                      DateTime dateTime);
 
-    List<TransactionSell> findTransactionSellBeforeDate(AccountNumber accountNumber, DateTime dateTime);
+    List<TransactionSell> findTransactionSellBeforeDate(AccountNumber accountNumber,
+                                                        DateTime dateTime);
 
 }

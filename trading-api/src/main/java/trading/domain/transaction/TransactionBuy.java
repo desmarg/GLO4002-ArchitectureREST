@@ -7,25 +7,14 @@ import trading.domain.datetime.DateTime;
 
 public class TransactionBuy extends Transaction {
 
-    public TransactionBuy(
-            Long quantity,
-            DateTime dateTime,
-            Stock stock,
-            Credits stockPrice,
-            AccountNumber accountNumber
-    ) {
+    public TransactionBuy(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
+                          AccountNumber accountNumber) {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.BUY;
     }
 
-    public TransactionBuy(
-            Long quantity,
-            DateTime dateTime,
-            Stock stock,
-            Credits stockPrice,
-            AccountNumber accountNumber,
-            TransactionNumber transactionNumber
-    ) {
+    public TransactionBuy(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
+                          AccountNumber accountNumber, TransactionNumber transactionNumber) {
         super(quantity, dateTime, stock, stockPrice, accountNumber, transactionNumber);
         this.transactionType = TransactionType.BUY;
     }

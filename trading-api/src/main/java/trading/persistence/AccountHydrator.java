@@ -13,15 +13,19 @@ import java.util.UUID;
 public class AccountHydrator {
 
     public static Account toAccount(AccountHibernateDTO accountHibernateDTO) {
-        InvestorProfile investorProfile = new InvestorProfile(ProfileType.valueOf(accountHibernateDTO.profileType), accountHibernateDTO.focusAreas);
-        Map<TransactionNumber, Long> remainingStocksMap = AccountHydrator.hydrateRemainingStocksMap(accountHibernateDTO.remainingStocksMap);
+        InvestorProfile investorProfile =
+                new InvestorProfile(ProfileType.valueOf(accountHibernateDTO.profileType),
+                        accountHibernateDTO.focusAreas);
+        Map<TransactionNumber, Long> remainingStocksMap =
+                AccountHydrator.hydrateRemainingStocksMap(accountHibernateDTO.remainingStocksMap);
         Long investorId = accountHibernateDTO.investorId;
         String investorName = accountHibernateDTO.investorName;
         Credits credits = new Credits(accountHibernateDTO.credits);
         Credits initialCredits = new Credits(accountHibernateDTO.initialCredits);
         Integer id = accountHibernateDTO.Id;
 
-        return new Account(investorId, investorName, credits, initialCredits, investorProfile, remainingStocksMap, id);
+        return new Account(investorId, investorName, credits, initialCredits, investorProfile,
+                remainingStocksMap, id);
     }
 
     public static AccountHibernateDTO toHibernateDto(Account account) {
@@ -33,12 +37,15 @@ public class AccountHydrator {
         accountHibernateDTO.investorName = account.getInvestorName();
         accountHibernateDTO.credits = account.getCredits().toBigDecimal();
         accountHibernateDTO.initialCredits = account.getInitialCredits().toBigDecimal();
-        accountHibernateDTO.remainingStocksMap = AccountHydrator.dehydrateRemainingStocksMap(account.getRemainingStocksMap());
+        accountHibernateDTO.remainingStocksMap =
+                AccountHydrator.dehydrateRemainingStocksMap(account.getRemainingStocksMap());
 
         return accountHibernateDTO;
     }
 
-    private static Map<UUID, Long> dehydrateRemainingStocksMap(Map<TransactionNumber, Long> remainingStocksMap) {
+    private static Map<UUID, Long> dehydrateRemainingStocksMap(
+            Map<TransactionNumber, Long> remainingStocksMap
+    ) {
         Map<UUID, Long> modifiedRemainingStocksMap = new HashMap<>();
 
         for (Map.Entry<TransactionNumber, Long> entry : remainingStocksMap.entrySet()) {
@@ -50,7 +57,9 @@ public class AccountHydrator {
         return modifiedRemainingStocksMap;
     }
 
-    private static Map<TransactionNumber, Long> hydrateRemainingStocksMap(Map<UUID, Long> remainingStocksMap) {
+    private static Map<TransactionNumber, Long> hydrateRemainingStocksMap(
+            Map<UUID, Long> remainingStocksMap
+    ) {
         Map<TransactionNumber, Long> modifiedRemainingStocksMap = new HashMap<>();
 
         for (Map.Entry<UUID, Long> entry : remainingStocksMap.entrySet()) {

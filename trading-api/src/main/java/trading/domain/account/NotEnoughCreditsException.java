@@ -10,11 +10,7 @@ public class NotEnoughCreditsException extends MappedException {
     private final UUID transactionNumber;
 
     public NotEnoughCreditsException(TransactionNumber transactionNumber) {
-        super(
-                "NOT_ENOUGH_CREDITS",
-                "not enough credits in wallet",
-                Status.BAD_REQUEST
-        );
+        super("NOT_ENOUGH_CREDITS", "not enough credits in wallet", Status.BAD_REQUEST);
         this.transactionNumber = transactionNumber.getId();
     }
 

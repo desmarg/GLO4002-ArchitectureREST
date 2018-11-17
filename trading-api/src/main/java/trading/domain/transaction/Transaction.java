@@ -21,13 +21,8 @@ public abstract class Transaction {
     protected TransactionType transactionType;
 
 
-    protected Transaction(
-            Long quantity,
-            DateTime dateTime,
-            Stock stock,
-            Credits stockPrice,
-            AccountNumber accountNumber
-    ) {
+    protected Transaction(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
+                          AccountNumber accountNumber) {
         this.transactionNumber = new TransactionNumber();
         this.quantity = quantity;
         this.dateTime = dateTime;
@@ -38,14 +33,8 @@ public abstract class Transaction {
         this.fees = this.calculateFees();
     }
 
-    protected Transaction(
-            Long quantity,
-            DateTime dateTime,
-            Stock stock,
-            Credits stockPrice,
-            AccountNumber accountNumber,
-            TransactionNumber transactionNumber
-    ) {
+    protected Transaction(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
+                          AccountNumber accountNumber, TransactionNumber transactionNumber) {
         this.transactionNumber = transactionNumber;
         this.quantity = quantity;
         this.dateTime = dateTime;

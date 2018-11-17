@@ -21,8 +21,7 @@ public class TransactionNumberTest {
     }
 
     @Test
-    public void
-    givenTwoTransactionsWithEqualTransactionNumbers_whenCheckingIfEquals_thenReturnsTrue() {
+    public void givenTwoTransactionsWithEqualTransactionNumbers_whenCheckingIfEquals_thenReturnsTrue() {
         UUID firstTransactionNumberAsUuid = A_TRANSACTION_NUMBER.getId();
         TransactionNumber secondTransaction = new TransactionNumber(firstTransactionNumberAsUuid);
 
@@ -30,8 +29,7 @@ public class TransactionNumberTest {
     }
 
     @Test
-    public void givenObjectThatIsNotOfTypeTransactionNumber_whenCheckingIfEquals_thenReturnsFalse
-            () {
+    public void givenObjectThatIsNotOfTypeTransactionNumber_whenCheckingIfEquals_thenReturnsFalse() {
         UUID transactionNumberAsUuid = A_TRANSACTION_NUMBER.getId();
 
         assertNotEquals(A_TRANSACTION_NUMBER, transactionNumberAsUuid);

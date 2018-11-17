@@ -10,7 +10,7 @@ import trading.domain.report.Portfolio;
 import trading.domain.report.Report;
 import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
-import trading.external.response.Market.MarketClosedException;
+import trading.external.response.market.MarketClosedException;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -28,7 +28,9 @@ public class TransactionService {
     private final AccountService accountService;
     private final ReportService reportService;
 
-    public TransactionService(TransactionRepository transactionRepository, StockService stockService, MarketService marketService, AccountService accountService, ReportService reportService) {
+    public TransactionService(TransactionRepository transactionRepository,
+                              StockService stockService, MarketService marketService,
+                              AccountService accountService, ReportService reportService) {
         this.transactionRepository = transactionRepository;
         this.stockService = stockService;
         this.marketService = marketService;
@@ -36,10 +38,18 @@ public class TransactionService {
         this.reportService = reportService;
     }
 
-    public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
+    public Transaction executeTransactionBuy(String accountNumber,
+                                             TransactionPostRequestDTO transactionPostRequestDTO) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
-        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
+        Credits stockPrice = this.stockService.retrieveStockPrice(
+                transactionPostRequestDTO.stock,
+                new DateTime(transactionPostRequestDTO.date)
+        );
+        TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(
+                transactionPostRequestDTO,
+                account.getAccountNumber(),
+                stockPrice
+        );
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
         this.accountService.update(account);
@@ -48,12 +58,21 @@ public class TransactionService {
         return transactionBuy;
     }
 
-    public Transaction executeTransactionSell(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
+    public Transaction executeTransactionSell(
+            String accountNumber,
+            TransactionPostRequestDTO transactionPostRequestDTO
+    ) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
-        TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
+        Credits stockPrice = this.stockService.retrieveStockPrice(
+                transactionPostRequestDTO.stock,
+                new DateTime(transactionPostRequestDTO.date)
+        );
+        TransactionSell transactionSell =
+                TransactionSellAssembler.fromDTO(transactionPostRequestDTO,
+                        account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionSell);
-        TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionSell.getReferredTransactionNumber());
+        TransactionBuy referredTransaction = this.transactionRepository
+                .findReferredTransaction(transactionSell.getReferredTransactionNumber());
         account.sellTransaction(transactionSell, referredTransaction);
         this.accountService.update(account);
         this.transactionRepository.save(transactionSell);
@@ -77,11 +96,20 @@ public class TransactionService {
         Account account = this.accountService.findByAccountNumber(accountNumber);
         DateTime reportDate = new DateTime(stringToInstantParser(date));
         ReportType.fromString(reportType);
-        List<TransactionBuy> transactionBuyHistory = this.transactionRepository.findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
-        List<TransactionSell> transactionSellHistory = this.transactionRepository.findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
-        List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
-        Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
-        return new Report(reportDate, transactionList, portfolio.accountValue, portfolio.portfolioValue);
+        List<TransactionBuy> transactionBuyHistory = this.transactionRepository
+                .findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
+        List<TransactionSell> transactionSellHistory = this.transactionRepository
+                .findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
+        List<Transaction> transactionList = this.transactionRepository
+                .findAllTransactionAtDate(account.getAccountNumber(), reportDate);
+        Portfolio portfolio = this.reportService.getPortfolio(
+                account.getInitialCredits(),
+                reportDate,
+                transactionBuyHistory,
+                transactionSellHistory
+        );
+        return new Report(reportDate, transactionList, portfolio.accountValue,
+                portfolio.portfolioValue);
     }
 
     private Instant stringToInstantParser(String date) {
@@ -90,11 +118,13 @@ public class TransactionService {
         }
         TimeZone timeZone = TimeZone.getDefault();
         String instantString = date.concat(" 23:59:59.999");
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        DateTimeFormatter dateTimeFormatter
+                = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         LocalDateTime localDateTime = parseDate(instantString, dateTimeFormatter);
         ZonedDateTime zonedDateTime = localDateTime.atZone(timeZone.toZoneId());
         Instant instant = zonedDateTime.toInstant();
-        if ((instant.truncatedTo(ChronoUnit.DAYS)).compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) >= 0) {
+        if ((instant.truncatedTo(ChronoUnit.DAYS))
+                .compareTo(Instant.now().truncatedTo(ChronoUnit.DAYS)) >= 0) {
             throw new InvalidDateException();
         }
         return instant;

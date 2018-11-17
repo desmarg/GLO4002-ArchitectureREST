@@ -64,7 +64,8 @@
 //
 //    @Test
 //    public void givenAccountNotInRepository_whenCheckingIfAccountExists_thenReturnsFalse() {
-//        assertFalse(this.accountRepositoryInMemory.validateAccountDoesNotExists(NON_EXISTING_INVESTOR_ID));
+//        assertFalse(this.accountRepositoryInMemory.validateAccountDoesNotExists
+//        (NON_EXISTING_INVESTOR_ID));
 //    }
 //
 //    @Test

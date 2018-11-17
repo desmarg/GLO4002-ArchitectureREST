@@ -10,11 +10,8 @@ public class NotEnoughCreditsForFeesException extends MappedException {
     private final UUID transactionNumber;
 
     public NotEnoughCreditsForFeesException() {
-        super(
-                "NOT_ENOUGH_CREDITS",
-                "not enough credits to pay the transaction fee",
-                Status.BAD_REQUEST
-        );
+        super("NOT_ENOUGH_CREDITS", "not enough credits to pay the transaction fee",
+                Status.BAD_REQUEST);
         this.transactionNumber = new TransactionNumber().getId();
     }
 
