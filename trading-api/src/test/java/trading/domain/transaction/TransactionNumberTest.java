@@ -1,12 +1,15 @@
 package trading.domain.transaction;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TransactionNumberTest {
 
     private static final TransactionNumber A_TRANSACTION_NUMBER = new TransactionNumber();

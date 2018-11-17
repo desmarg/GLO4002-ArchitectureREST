@@ -13,7 +13,7 @@ import java.time.format.DateTimeParseException;
 public class CustomInstantDeserializer extends StdDeserializer<Instant> {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
-    //TODO wtf is this Maxence...
+    //Implement default constructor
     public CustomInstantDeserializer() {
         this(null);
     }

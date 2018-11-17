@@ -2,7 +2,9 @@ package trading.domain.transaction;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
@@ -13,6 +15,7 @@ import java.time.Instant;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TransactionTest {
     private final double FEE_FOR_100_OR_MORE_TRANSACTIONS = 0.25;
     private final double FEE_UNDER_100_TRANSACTIONS = 0.20;
