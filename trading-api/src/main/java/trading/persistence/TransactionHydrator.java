@@ -4,11 +4,7 @@ import trading.domain.Account.AccountNumber;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
 import trading.domain.Stock;
-import trading.domain.transaction.Transaction;
-import trading.domain.transaction.TransactionBuy;
-import trading.domain.transaction.TransactionNumber;
-import trading.domain.transaction.TransactionSell;
-import trading.domain.transaction.TransactionType;
+import trading.domain.transaction.*;
 
 import java.sql.Timestamp;
 
@@ -68,6 +64,9 @@ public class TransactionHydrator {
     }
 
     public static TransactionBuy toTransactionBuy(TransactionHibernateDTO transactionHibernateDTO) {
+        if (transactionHibernateDTO.transactionType != TransactionType.BUY.toString()) {
+            throw new InvalidTransactionNumberException(new TransactionNumber(transactionHibernateDTO.transactionNumber));
+        }
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
         TransactionNumber transactionNumber = new TransactionNumber(transactionHibernateDTO.transactionNumber);
         Long quantity = transactionHibernateDTO.quantity;
@@ -86,13 +85,15 @@ public class TransactionHydrator {
     }
 
     public static TransactionSell toTransactionSell(TransactionHibernateDTO transactionHibernateDTO) {
+        if (transactionHibernateDTO.transactionType != TransactionType.SELL.toString()) {
+            throw new InvalidTransactionNumberException(new TransactionNumber(transactionHibernateDTO.transactionNumber));
+        }
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
         TransactionNumber transactionNumber = new TransactionNumber(transactionHibernateDTO.transactionNumber);
         Long quantity = transactionHibernateDTO.quantity;
         DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
-
         TransactionNumber referredTransactionNumber = new TransactionNumber
                 (transactionHibernateDTO.referredTransactionNumber);
         return new TransactionSell(

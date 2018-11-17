@@ -4,7 +4,6 @@ import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Account.Account;
 import trading.domain.Credits.Credits;
 import trading.domain.DateTime.DateTime;
-import trading.domain.DateTime.DateTimeParser;
 import trading.domain.Report.Portfolio;
 import trading.domain.Report.Report;
 import trading.domain.Report.ReportType;
@@ -46,7 +45,7 @@ public class TransactionService {
         Credits stockPrice = this.stockService.retrieveStockPrice(transactionPostRequestDTO.stock, new DateTime(transactionPostRequestDTO.date));
         TransactionSell transactionSell = TransactionSellAssembler.fromDTO(transactionPostRequestDTO, account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionSell);
-        TransactionBuy referredTransaction = this.getReferredTransaction(transactionSell.getReferredTransactionNumber());
+        TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionSell.getReferredTransactionNumber());
         account.sellTransaction(transactionSell, referredTransaction);
         this.accountService.update(account);
         this.transactionRepository.save(transactionSell);
@@ -66,20 +65,14 @@ public class TransactionService {
         return this.transactionRepository.findByTransactionNumber(transactionNumber);
     }
 
-    private TransactionBuy getReferredTransaction(TransactionNumber transactionNumber) {
-        TransactionBuy referredTransaction = this.transactionRepository.findReferredTransaction(transactionNumber);
-        return referredTransaction;
-    }
-
     public Report getReportFromDate(String accountNumber, String date, String reportType) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        DateTime reportDate = DateTimeParser.createFromReportDate(date);
+        DateTime reportDate = new DateTime(date);
         ReportType.fromString(reportType);
-        List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
         List<TransactionBuy> transactionBuyHistory = this.transactionRepository.findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
         List<TransactionSell> transactionSellHistory = this.transactionRepository.findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
-        Portfolio portfolio = this.portfolioService.getPortfolioValue(account, reportDate, transactionBuyHistory, transactionSellHistory);
-        Report report = new Report(reportDate, transactionList, portfolio.getAccountValue(), portfolio.getPortfolioValue());
-        return report;
+        List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
+        Portfolio portfolio = this.portfolioService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
+        return new Report(reportDate, transactionList, portfolio.getAccountValue(), portfolio.getPortfolioValue());
     }
 }

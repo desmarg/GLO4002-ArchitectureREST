@@ -7,26 +7,19 @@ import trading.domain.transaction.Transaction;
 import trading.domain.transaction.TransactionNumber;
 import trading.domain.transaction.TransactionType;
 import trading.domain.transaction.UnsupportedTransactionTypeException;
-import trading.services.AccountService;
 import trading.services.Services;
 import trading.services.TransactionService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/accounts/{accountNumber}/transactions")
 public class TransactionResource {
     private final TransactionService transactionService;
-    private final AccountService accountService;
 
     public TransactionResource(Services services) {
         this.transactionService = services.getTransactionService();
-        this.accountService = services.getAccountService();
     }
 
     @GET
@@ -37,7 +30,6 @@ public class TransactionResource {
             @PathParam("transactionNumber") String transactionNumberParam
     ) {
         TransactionNumber transactionNumber = new TransactionNumber(transactionNumberParam);
-
         Transaction transaction = this.transactionService.getTransaction(transactionNumber);
         TransactionResponse transactionResponse = TransactionResponseFactory.createTransactionResponse(transaction);
 
