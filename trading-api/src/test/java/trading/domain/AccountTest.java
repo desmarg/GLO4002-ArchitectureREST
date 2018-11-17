@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.domain.Account.Account;
-import trading.domain.Account.NotEnoughCreditsException;
-import trading.domain.Account.NotEnoughCreditsForFeesException;
+import trading.domain.account.Account;
+import trading.domain.account.NotEnoughCreditsException;
+import trading.domain.account.NotEnoughCreditsForFeesException;
 import trading.domain.transaction.*;
 
 import java.util.ArrayList;

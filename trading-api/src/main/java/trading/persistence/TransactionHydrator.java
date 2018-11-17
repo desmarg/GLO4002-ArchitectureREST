@@ -1,8 +1,8 @@
 package trading.persistence;
 
-import trading.domain.Account.AccountNumber;
+import trading.domain.account.AccountNumber;
 import trading.domain.Credits;
-import trading.domain.DateTime.DateTime;
+import trading.domain.datetime.DateTime;
 import trading.domain.Stock;
 import trading.domain.transaction.*;
 

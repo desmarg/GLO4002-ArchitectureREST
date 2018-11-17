@@ -1,7 +1,7 @@
 package trading.services;
 
 import trading.application.JerseyClient;
-import trading.domain.DateTime.DateTime;
+import trading.domain.datetime.DateTime;
 import trading.external.response.Market.MarketDTO;
 import trading.external.response.Market.MarketNotFoundException;
 

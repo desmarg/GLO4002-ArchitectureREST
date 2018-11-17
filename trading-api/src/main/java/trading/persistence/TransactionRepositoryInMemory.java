@@ -3,8 +3,8 @@ package trading.persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import trading.domain.Account.AccountNumber;
-import trading.domain.DateTime.DateTime;
+import trading.domain.account.AccountNumber;
+import trading.domain.datetime.DateTime;
 import trading.domain.transaction.*;
 
 import java.time.Instant;

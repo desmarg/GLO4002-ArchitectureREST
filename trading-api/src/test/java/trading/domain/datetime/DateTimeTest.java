@@ -1,4 +1,4 @@
-package trading.domain.DateTime;
+package trading.domain.datetime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

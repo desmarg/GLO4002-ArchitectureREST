@@ -6,9 +6,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.AccountPostRequestDTO;
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountNumber;
-import trading.domain.Account.AccountRepository;
+import trading.domain.account.Account;
+import trading.domain.account.AccountNumber;
+import trading.domain.account.AccountRepository;
 
 import java.math.BigDecimal;
 

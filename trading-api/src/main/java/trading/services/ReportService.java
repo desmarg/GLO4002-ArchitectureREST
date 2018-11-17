@@ -1,8 +1,8 @@
 package trading.services;
 
 import trading.domain.Credits;
-import trading.domain.DateTime.DateTime;
-import trading.domain.Report.Portfolio;
+import trading.domain.datetime.DateTime;
+import trading.domain.report.Portfolio;
 import trading.domain.Stock;
 import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;

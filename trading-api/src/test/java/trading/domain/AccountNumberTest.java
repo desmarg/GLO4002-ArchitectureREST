@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.domain.Account.AccountNumber;
+import trading.domain.account.AccountNumber;
 
 import static org.junit.Assert.assertEquals;
 

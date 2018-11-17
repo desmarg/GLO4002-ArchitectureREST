@@ -1,4 +1,4 @@
-package trading.domain.Report;
+package trading.domain.report;
 
 public enum ReportType {
     DAILY;

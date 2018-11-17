@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.application.JerseyClient;
-import trading.domain.DateTime.DateTime;
+import trading.domain.datetime.DateTime;
 import trading.external.response.Market.MarketDTO;
 
 import java.time.LocalDateTime;

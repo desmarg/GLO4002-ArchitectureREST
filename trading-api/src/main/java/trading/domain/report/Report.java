@@ -1,7 +1,7 @@
-package trading.domain.Report;
+package trading.domain.report;
 
 import trading.domain.Credits;
-import trading.domain.DateTime.DateTime;
+import trading.domain.datetime.DateTime;
 import trading.domain.transaction.Transaction;
 
 import java.util.List;

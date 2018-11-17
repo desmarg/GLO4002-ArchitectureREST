@@ -1,12 +1,12 @@
 package trading.services;
 
 import trading.api.request.TransactionPostRequestDTO;
-import trading.domain.Account.Account;
+import trading.domain.account.Account;
 import trading.domain.Credits;
-import trading.domain.DateTime.DateTime;
-import trading.domain.Report.Portfolio;
-import trading.domain.Report.Report;
-import trading.domain.Report.ReportType;
+import trading.domain.datetime.DateTime;
+import trading.domain.report.Portfolio;
+import trading.domain.report.Report;
+import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.Market.MarketClosedException;
 
@@ -73,6 +73,6 @@ public class TransactionService {
         List<TransactionSell> transactionSellHistory = this.transactionRepository.findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
         List<Transaction> transactionList = this.transactionRepository.findAllTransactionAtDate(account.getAccountNumber(), reportDate);
         Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory);
-        return new Report(reportDate, transactionList, portfolio.getAccountValue(), portfolio.getPortfolioValue());
+        return new Report(reportDate, transactionList, portfolio.accountValue, portfolio.portfolioValue);
     }
 }

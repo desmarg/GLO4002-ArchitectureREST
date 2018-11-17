@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.StockDTO;
 import trading.api.request.TransactionPostRequestDTO;
-import trading.domain.Account.AccountNumber;
+import trading.domain.account.AccountNumber;
 import trading.domain.Credits;
 
 import java.time.Instant;

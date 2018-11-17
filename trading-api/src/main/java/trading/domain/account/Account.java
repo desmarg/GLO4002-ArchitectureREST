@@ -1,4 +1,4 @@
-package trading.domain.Account;
+package trading.domain.account;
 
 import trading.domain.Credits;
 import trading.domain.InvestorProfile;

@@ -4,9 +4,9 @@
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;
-//import trading.domain.Account.Account;
+//import trading.domain.account.account;
 //import trading.persistence.AccountNotFoundException;
-//import trading.domain.Account.AccountNumber;
+//import trading.domain.account.AccountNumber;
 //import trading.domain.Credits;
 //
 //import static org.junit.Assert.assertEquals;
@@ -24,13 +24,13 @@
 //    private static final AccountNumber NON_EXISTING_ACCOUNT_NUMBER = new AccountNumber("TA-456");
 //    private static final AccountNumber EXISTING_ACCOUNT_NUMBER = new AccountNumber("AL-420");
 //
-//    private Account account;
+//    private account account;
 //    private AccountRepositoryInMemory accountRepositoryInMemory;
 //
 //    @Before
 //    public void setUp() {
 //        this.accountRepositoryInMemory = new AccountRepositoryInMemory();
-//        this.account = new Account(
+//        this.account = new account(
 //                INVESTOR_ID,
 //                INVESTOR_NAME,
 //                CREDITS,
@@ -45,9 +45,9 @@
 //
 //    @Test
 //    public void whenSave_thenRightAccountIsSaved() {
-//        Account savedAccount = this.accountRepositoryInMemory.save(this.account);
+//        account savedAccount = this.accountRepositoryInMemory.save(this.account);
 //
-//        Account inMemoryAccount = this.accountRepositoryInMemory.findByAccountNumber(
+//        account inMemoryAccount = this.accountRepositoryInMemory.findByAccountNumber(
 //                savedAccount.getString()
 //        );
 //

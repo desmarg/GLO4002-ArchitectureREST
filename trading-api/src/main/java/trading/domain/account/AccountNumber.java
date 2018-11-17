@@ -1,4 +1,4 @@
-package trading.domain.Account;
+package trading.domain.account;
 
 public class AccountNumber {
     private static final Integer FIRST_ODD_NUMBER = 13;

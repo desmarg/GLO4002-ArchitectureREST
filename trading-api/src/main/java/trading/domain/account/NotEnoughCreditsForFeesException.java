@@ -1,4 +1,4 @@
-package trading.domain.Account;
+package trading.domain.account;
 
 import trading.domain.transaction.TransactionNumber;
 import trading.exception.MappedException;

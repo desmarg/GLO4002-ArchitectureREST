@@ -1,4 +1,4 @@
-package trading.domain.Report;
+package trading.domain.report;
 
 import trading.exception.MappedException;
 

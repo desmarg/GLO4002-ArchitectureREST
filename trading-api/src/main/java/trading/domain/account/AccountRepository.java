@@ -1,4 +1,4 @@
-package trading.domain.Account;
+package trading.domain.account;
 
 public interface AccountRepository {
     void save(Account account);

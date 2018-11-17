@@ -1,10 +1,10 @@
 package trading.services;
 
 import trading.api.request.AccountPostRequestDTO;
-import trading.domain.Account.Account;
-import trading.domain.Account.AccountAssembler;
-import trading.domain.Account.AccountNumber;
-import trading.domain.Account.AccountRepository;
+import trading.domain.account.Account;
+import trading.domain.account.AccountAssembler;
+import trading.domain.account.AccountNumber;
+import trading.domain.account.AccountRepository;
 
 public class AccountService {
     private final AccountRepository accountRepository;

@@ -1,6 +1,6 @@
 package trading.api.response;
 
-import trading.domain.Report.Report;
+import trading.domain.report.Report;
 import trading.domain.transaction.Transaction;
 
 import java.math.BigDecimal;

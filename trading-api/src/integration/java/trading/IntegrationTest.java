@@ -21,7 +21,7 @@ public class IntegrationTest {
     private static final String BASE_URI = "http://localhost";
     private static final Integer PORT = 8181;
     private static final String BASE_PATH = "/";
-    private static final String BASE_URL = BASE_URI + ":" + String.valueOf(PORT);
+    private static final String BASE_URL = BASE_URI + ":" + PORT;
     private final AtomicLong accountNumber = new AtomicLong(1000);
 
     @BeforeClass

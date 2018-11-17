@@ -1,4 +1,4 @@
-package trading.domain.Account;
+package trading.domain.account;
 
 import trading.api.request.AccountPostRequestDTO;
 import trading.domain.Credits;

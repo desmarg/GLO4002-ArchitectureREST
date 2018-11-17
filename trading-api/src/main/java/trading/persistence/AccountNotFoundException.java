@@ -1,6 +1,6 @@
 package trading.persistence;
 
-import trading.domain.Account.AccountNumber;
+import trading.domain.account.AccountNumber;
 import trading.exception.MappedException;
 
 import javax.ws.rs.core.Response.Status;

@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import trading.domain.Account.AccountNumber;
+import trading.domain.account.AccountNumber;
 import trading.domain.Credits;
-import trading.domain.DateTime.DateTime;
+import trading.domain.datetime.DateTime;
 import trading.domain.Stock;
 
 import java.math.BigDecimal;
