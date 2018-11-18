@@ -23,6 +23,14 @@ public abstract class MappedException extends RuntimeException {
         this.status = status;
     }
 
+    public String getError() {
+        return this.error;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
     public Status getStatus() {
         return this.status;
     }
