@@ -67,10 +67,6 @@ public class Credits implements Comparable<Credits> {
         return this.compareTo(other) > 0;
     }
 
-    public boolean isGreaterOrEqual(Credits other) {
-        return this.compareTo(other) >= 0;
-    }
-
     public boolean isSmaller(Credits other) {
         return this.compareTo(other) < 0;
     }
