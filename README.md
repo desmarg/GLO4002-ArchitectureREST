@@ -8,7 +8,6 @@
 | Guillaume | Desmarais-de Grandpré |  GUDED1  | 111 022 887 |
 |   Thomas  |   Drouin  |  THDRO15 | 111 007 979 |
 |  Raphael  | Gaudrealt |  RAGAU72 | 111 129 495 |
-|   Daniel  |   Lavoie  | DALAV162 | 111 103 095 |
 |  Antoine  |   Somma   |  ANSOM2  | 111 105 700 |
 
 ## PROJECT STATUS
@@ -18,9 +17,9 @@
 | TXAC - Effectuer un achat                                                 | COMPLETE |
 | TXVE - Effectuer une vente                                                | COMPLETE |
 | TXFR - Appliquer des frais de transaction                                 | COMPLETE |
-| TXHO - Refuser les transactions en dehors des heures d’ouverture          | PENDING PR |
-| RTHI - Lister l’historique des transactions                               | PENDING PR |
-| RTBA - Calculer la valeur du portefeuille                                 | TODO     |
+| TXHO - Refuser les transactions en dehors des heures d’ouverture          | COMPLETE |
+| RTHI - Lister l’historique des transactions                               | COMPLETE |
+| RTBA - Calculer la valeur du portefeuille                                 | COMPLETE |
 | EVDI - Traiter l’émission d’un dividende                                  | TODO     |
 | RTPO - Afficher le rapport trimestriel                                    | TODO     |
 | TXHF - Supporter les transactions faites en dehors des heures d’ouverture | TODO     |
