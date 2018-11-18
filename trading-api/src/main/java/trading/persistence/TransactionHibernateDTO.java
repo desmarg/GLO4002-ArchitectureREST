@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +22,7 @@ public class TransactionHibernateDTO implements Serializable {
     @Column
     Long quantity;
     @Column
-    Timestamp instant;
+    Instant instant;
     @Column
     String market;
     @Column

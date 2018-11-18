@@ -28,4 +28,9 @@ public class Stock {
 
         return (stock.getMarket().equals(this.market) && stock.getSymbol().equals(this.symbol));
     }
+
+    @Override
+    public int hashCode() {
+        return this.market.hashCode() + this.symbol.hashCode();
+    }
 }

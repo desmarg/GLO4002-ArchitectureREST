@@ -61,10 +61,8 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
 
     public List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber,
                                                       DateTime reportDateTime) {
-        LocalDateTime time = LocalDateTime.ofInstant(reportDateTime.toInstant(),
-                ZoneOffset.ofHours(0));
-        time = time.minus(1, ChronoUnit.DAYS);
-        Instant reportDateInstantMinusOneDay = time.atZone(ZoneOffset.ofHours(0)).toInstant();
+        Instant beginningOfDay = reportDateTime.toInstantTruncatedToDay();
+        Instant beginningOfNextDay = beginningOfDay.plus(1, ChronoUnit.DAYS);
 
         String accountNumberAsString = accountNumber.getString();
         Session session = this.sessionFactory.getCurrentSession();
@@ -72,11 +70,11 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         List<TransactionHibernateDTO> transactionHibernateDTOS = session
                 .createSQLQuery("select * from TRANSACTIONS "
                         + "WHERE accountNumber= :accountNumber "
-                        + "AND instant<= :reportDateInstant "
-                        + "AND instant> :reportDateInstantMinusOneDay ")
+                        + "AND instant< :beginningOfNextDay "
+                        + "AND instant>= :beginningOfDay ")
                 .setParameter("accountNumber", accountNumberAsString)
-                .setParameter("reportDateInstant", reportDateTime.toInstant())
-                .setParameter("reportDateInstantMinusOneDay", reportDateInstantMinusOneDay)
+                .setParameter("beginningOfDay", beginningOfDay)
+                .setParameter("beginningOfNextDay", beginningOfNextDay)
                 .addEntity(TransactionHibernateDTO.class).list();
         session.getTransaction().commit();
 
@@ -88,7 +86,9 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
     }
 
     public List<TransactionBuy> findTransactionBuyBeforeDate(AccountNumber accountNumber,
-                                                             DateTime reportDateInstant) {
+                                                             DateTime reportDateTime) {
+        Instant beginningOfDay = reportDateTime.toInstantTruncatedToDay();
+        Instant beginningOfNextDay = beginningOfDay.plus(1, ChronoUnit.DAYS);
         String accountNumberAsString = accountNumber.getString();
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -98,7 +98,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
                         + "AND instant < :reportDateInstant "
                         + "AND transactionType= :myTransactionType")
                 .setParameter("accountNumber", accountNumberAsString)
-                .setParameter("reportDateInstant", reportDateInstant.toInstant())
+                .setParameter("reportDateInstant", beginningOfNextDay)
                 .setParameter("myTransactionType", TransactionType.BUY.toString())
                 .addEntity(TransactionHibernateDTO.class).list();
         session.getTransaction().commit();
@@ -111,7 +111,9 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
     }
 
     public List<TransactionSell> findTransactionSellBeforeDate(AccountNumber accountNumber,
-                                                               DateTime reportDateInstant) {
+                                                               DateTime reportDateTime) {
+        Instant beginningOfDay = reportDateTime.toInstantTruncatedToDay();
+        Instant beginningOfNextDay = beginningOfDay.plus(1, ChronoUnit.DAYS);
         String accountNumberAsString = accountNumber.getString();
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -121,7 +123,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
                         + "AND instant < :reportDateInstant "
                         + "AND transactionType= :transactionType")
                 .setParameter("accountNumber", accountNumberAsString)
-                .setParameter("reportDateInstant", reportDateInstant.toInstant())
+                .setParameter("reportDateInstant", beginningOfNextDay)
                 .setParameter("transactionType", TransactionType.SELL.toString())
                 .addEntity(TransactionHibernateDTO.class).list();
         session.getTransaction().commit();

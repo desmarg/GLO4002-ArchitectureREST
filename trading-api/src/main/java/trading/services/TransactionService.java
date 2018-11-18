@@ -14,6 +14,7 @@ import trading.external.response.market.MarketClosedException;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -116,7 +117,7 @@ public class TransactionService {
         if (date == null) {
             throw new MissingDateException();
         }
-        TimeZone timeZone = TimeZone.getDefault();
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
         String instantString = date.concat(" 23:59:59.999");
         DateTimeFormatter dateTimeFormatter
                 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");

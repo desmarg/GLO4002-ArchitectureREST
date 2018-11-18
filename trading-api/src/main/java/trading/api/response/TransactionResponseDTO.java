@@ -1,5 +1,6 @@
 package trading.api.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import trading.domain.Stock;
 import trading.domain.transaction.Transaction;
 
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 public abstract class TransactionResponseDTO {
     public final String type;
-    public final Instant date;
+    public final String date;
     public final Stock stock;
     public final UUID transactionNumber;
     public final Long quantity;
@@ -17,7 +18,7 @@ public abstract class TransactionResponseDTO {
 
     public TransactionResponseDTO(Transaction transaction) {
         this.type = transaction.getTransactionType().toString();
-        this.date = transaction.getDateTime().toInstant();
+        this.date = transaction.getDateTime().toInstant().toString();
         this.stock = transaction.getStock();
         this.transactionNumber = transaction.getTransactionNumber().getId();
         this.quantity = transaction.getQuantity();
