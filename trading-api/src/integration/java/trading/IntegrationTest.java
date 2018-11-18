@@ -1,7 +1,9 @@
 package trading;
 
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import static io.restassured.RestAssured.given;
-
+import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
 
@@ -21,6 +23,13 @@ public class IntegrationTest {
     private static final String BASE_PATH = "/";
     private static final String BASE_URL = BASE_URI + ":" + PORT;
     private final AtomicLong accountNumber = new AtomicLong(1000);
+    private final long AN_ACCOUNT_ID = 1l;
+    private final long EXISTING_ACCOUNT_ID = 1l;
+    private final String CREDITS_AMOUNT = "1000";
+    private final String NAME = "Tom Drou";
+    private final String EMAIL = "bob@hot.com";
+    private final String ACCOUNT_NUMBER = "TD-0001";
+    private Map<String, String> ACCOUNT;
 
     @BeforeClass
     public static void setupClass() {
@@ -47,47 +56,111 @@ public class IntegrationTest {
     @Test
     public void whenPostAccountValid_thenReturnCreated() {
 
-        given().contentType("application/json").body(this.getAccountWithId(1L)).when().post(
-                "/accounts").then().statusCode(201).header("Location", BASE_URL + "/accounts/TD" +
-                "-0001");
+        given()
+                .contentType("application/json")
+                .body(this.getAccountWithId(this.AN_ACCOUNT_ID))
+                .when()
+                .post("/accounts")
+                .then()
+                .statusCode(201)
+                .header("Location", BASE_URL + "/accounts/" + this.ACCOUNT_NUMBER);
     }
 
     @Test
     public void whenPostExistingAccount_thenThrowAccountAlreadyExistsException() {
-        given().contentType("application/json").body(this.getAccountWithId(1L)).when().post(
-                "/accounts").then().statusCode(400);
+        given()
+                .contentType("application/json")
+                .body(this.getAccountWithId(this.EXISTING_ACCOUNT_ID))
+                .when()
+                .post("/accounts")
+                .then()
+                .statusCode(400)
+                .body("error", Matchers.equalTo("ACCOUNT_ALREADY_OPEN"))
+                .body("description", Matchers.equalTo("account already open for investor " + this.EXISTING_ACCOUNT_ID));
+
     }
 
     @Test
     public void whenPostAccountWithInvalidCredits_thenThrowInvalidCredits() {
-        given().contentType("application/json").body(this.getNewAccount()).when().post("/accounts"
-        ).then().statusCode(201);
+        given()
+                .contentType("application/json")
+                .body(this.getNewAccountWithCredits(0l))
+                .when()
+                .post("/accounts")
+                .then()
+                .statusCode(400)
+                .body("error", Matchers.equalTo("INVALID_AMOUNT"))
+                .body("description", Matchers.equalTo("credit amount cannot be lower than or equal to zero"));
+    }
+
+    @Test
+    public void whenGetExistingAccount_thenReturnAccount() {
+        JsonPath account =
+
+                given()
+                        .body(this.getAccountWithId(this.EXISTING_ACCOUNT_ID))
+                        .pathParam("accountNumber", this.ACCOUNT_NUMBER)
+                        .contentType("application/json")
+                        .when()
+                        .get("/accounts/{accountNumber}")
+                        .then()
+                        .statusCode(200)
+                        .extract()
+                        .jsonPath();
+
+        assertEquals(account.get("accountNumber"), "TD-0001");
+    }
+
+    @Test
+    public void givenValidAccount_whenPostValidBuyTransaction_thenReturnCreated() {
+        Map<String, String> transaction = this.getNewAccount();
+
+        given()
+                .contentType("application/json")
+                .body(account)
+                .then()
+                .post("/accounts/" + this.ACCOUNT_NUMBER + "/transactions")
+                .statusCode(201)
+                .header("Location", BASE_URL + "/accounts/" + account.get(this.ACCOUNT_NUMBER));
     }
 
     private Map<String, String> getNewAccount() {
         Map<String, String> account = new HashMap<>();
         account.put("investorId", String.valueOf(this.accountNumber.incrementAndGet()));
-        account.put("investorName", "Tom Drou");
-        account.put("email", "pute@hot.com");
-        account.put("credits", "1000");
+        account.put("investorName", this.NAME);
+        account.put("email", this.EMAIL);
+        account.put("credits", this.CREDITS_AMOUNT);
         return account;
     }
 
     private Map<String, String> getAccountWithId(Long id) {
         Map<String, String> account = new HashMap<>();
         account.put("investorId", String.valueOf(id));
-        account.put("investorName", "Tom Drou");
-        account.put("email", "pute@hot.com");
-        account.put("credits", "1000");
+        account.put("investorName", this.NAME);
+        account.put("email", this.EMAIL);
+        account.put("credits", this.CREDITS_AMOUNT);
         return account;
     }
 
-    private Map<String, String> getAccountWithMoney(Long initialCredits) {
+    private Map<String, String> getNewAccountWithCredits(Long initialCredits) {
         Map<String, String> account = new HashMap<>();
         account.put("investorId", String.valueOf(this.accountNumber.incrementAndGet()));
-        account.put("investorName", "Tom Drou");
-        account.put("email", "pute@hot.com");
+        account.put("investorName", this.NAME);
+        account.put("email", this.EMAIL);
         account.put("credits", String.valueOf(initialCredits));
         return account;
+    }
+
+    private Map<String, String> getNewValidTransaction() {
+        Map<String, String> stock = new HashMap<>();
+        stock.put("symbol", "MSFT");
+        stock.put("market", "NASDAQ");
+
+        Map<String, String> transaction = new HashMap<>();
+        transaction.put("type", String.valueOf(this.accountNumber.incrementAndGet()));
+        transaction.put("date", this.NAME);
+        transaction.put("stock", this.EMAIL);
+        transaction.put("credits", this.CREDITS_AMOUNT);
+        return transaction;
     }
 }
