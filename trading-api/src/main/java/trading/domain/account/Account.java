@@ -46,7 +46,7 @@ public class Account {
     public void buyTransaction(TransactionBuy transactionBuy) {
         Credits totalPrice = transactionBuy.getValueWithFees();
         if (this.credits.isSmaller(totalPrice)) {
-            throw new NotEnoughCreditsException(transactionBuy.getTransactionNumber());
+            throw new NotEnoughCreditsException();
         }
         this.credits = this.credits.subtract(totalPrice);
         this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
@@ -70,7 +70,7 @@ public class Account {
     private void deduceStocks(TransactionBuy transactionBuy, Long quantity) {
         Long remainingStocks = this.remainingStocksMap.get(transactionBuy.getTransactionNumber());
         if (remainingStocks == null) {
-            throw new InvalidTransactionNumberException(transactionBuy.getTransactionNumber());
+            throw new InvalidTransactionNumberException();
         } else if (remainingStocks < quantity) {
             throw new NotEnoughStockException(transactionBuy.getStock());
         }
