@@ -20,13 +20,13 @@ public class TransactionBuyTest {
     private final Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
     private final Credits PRICE_WITH_FEE = new Credits(new BigDecimal(123.25));
-    private Stock stock;
+    private Stock EMPTY_STOCK = new Stock("","");
     private TransactionBuy transactionBuy;
 
     @Before
     public void initialize() {
         Long VALID_QUANTITY = 1L;
-        this.transactionBuy = new TransactionBuy(VALID_QUANTITY, this.VALID_DATE, this.stock,
+        this.transactionBuy = new TransactionBuy(VALID_QUANTITY, this.VALID_DATE, this.EMPTY_STOCK,
                 this.SOME_STOCK_PRICE, this.VALID_ACCOUNT_NUMBER);
     }
 

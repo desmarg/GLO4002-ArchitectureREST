@@ -43,7 +43,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
         TransactionHibernateDTO transactionHibernateDTO =
                 this.findTransactionDTO(transactionNumber);
         if (transactionHibernateDTO == null) {
-            throw new InvalidTransactionNumberException(transactionNumber);
+            throw new InvalidTransactionNumberException();
         }
         return TransactionHydrator.toTransactionBuy(transactionHibernateDTO);
     }

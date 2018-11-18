@@ -53,9 +53,7 @@ public class TransactionHydrator {
 
     public static TransactionBuy toTransactionBuy(TransactionHibernateDTO transactionHibernateDTO) {
         if (!transactionHibernateDTO.transactionType.equals(TransactionType.BUY.toString())) {
-            throw new InvalidTransactionNumberException(
-                    new TransactionNumber(transactionHibernateDTO.transactionNumber)
-            );
+            throw new InvalidTransactionNumberException();
         }
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
         TransactionNumber transactionNumber =
@@ -73,9 +71,7 @@ public class TransactionHydrator {
             TransactionHibernateDTO transactionHibernateDTO
     ) {
         if (!transactionHibernateDTO.transactionType.equals(TransactionType.SELL.toString())) {
-            throw new InvalidTransactionNumberException(
-                    new TransactionNumber(transactionHibernateDTO.transactionNumber)
-            );
+            throw new InvalidTransactionNumberException();
         }
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
         TransactionNumber transactionNumber =
