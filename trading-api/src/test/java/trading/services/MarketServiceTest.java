@@ -26,6 +26,7 @@ public class MarketServiceTest {
     private final DateTime CLOSED_DATETIME = new DateTime(Instant.parse("2018-11-19T18:00:00Z"));
     private final DateTime OPENING_DATETIME = new DateTime(Instant.parse("2018-11-19T06:00:00Z"));
     private final DateTime CLOSING_DATETIME = new DateTime(Instant.parse("2018-11-19T17:00:00Z"));
+    private final DateTime OPENED_DATETIME_WEEKEND = new DateTime(Instant.parse("2018-11-18T10:00:00Z"));
     private final DateTime OPENED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(Instant.parse("2018" +
             "-11-19T05:00:00Z"));
     private final DateTime CLOSED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(Instant.parse("2018" +
@@ -55,6 +56,18 @@ public class MarketServiceTest {
     }
 
     @Test
+    public void givenOpenedTime_whenCheckingIfMarketOpenedDuringWeekend_thenReturnFalse() {
+        ArrayList<String> hours = new ArrayList<>();
+        hours.add(this.MORNING_HOURS);
+        hours.add(this.PM_HOURS);
+        MarketDTO marketDTO = new MarketDTO();
+        marketDTO.openHours = hours;
+        marketDTO.timezone = this.ZERO_TIMEZONE;
+        when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
+        assertFalse(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENED_DATETIME_WEEKEND));
+    }
+
+    @Test
     public void givenOpenedDateTime_whenCheckingIfMarketOpenedAtTheOpeningTime_thenReturnTrue() {
         ArrayList<String> hours = new ArrayList<>();
         hours.add(this.MORNING_HOURS);
@@ -67,7 +80,7 @@ public class MarketServiceTest {
     }
 
     @Test
-    public void givenOpenedDateTimeAndEmptyTimeZone_whenCheckingIfMarketClosedAtTheClosingTime_thenReturnFalse() {
+    public void givenOpenedDateTime_whenCheckingIfMarketClosedAtTheClosingTime_thenReturnFalse() {
         ArrayList<String> hours = new ArrayList<>();
         hours.add(this.MORNING_HOURS);
         hours.add(this.PM_HOURS);
