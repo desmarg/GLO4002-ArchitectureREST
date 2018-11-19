@@ -84,7 +84,7 @@ public class TransactionService {
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
         if (!this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
-            throw new MarketClosedException(market);
+            throw new MarketClosedException(transaction);
         }
     }
 
