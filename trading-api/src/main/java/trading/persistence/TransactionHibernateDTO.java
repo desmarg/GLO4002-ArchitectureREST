@@ -22,7 +22,7 @@ public class TransactionHibernateDTO implements Serializable {
     @Column
     Long quantity;
     @Column
-    Instant instant;
+    Timestamp instant;
     @Column
     String market;
     @Column
