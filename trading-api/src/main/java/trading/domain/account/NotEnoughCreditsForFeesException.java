@@ -1,6 +1,7 @@
 package trading.domain.account;
 
 import trading.exception.MappedException;
+
 import javax.ws.rs.core.Response.Status;
 
 public class NotEnoughCreditsForFeesException extends MappedException {

@@ -15,7 +15,7 @@ public class TransactionHydrator {
         transactionHibernateDTO.accountNumber = transaction.getAccountNumber().getString();
         transactionHibernateDTO.transactionType = transaction.getTransactionType().toString();
         transactionHibernateDTO.quantity = transaction.getQuantity();
-        transactionHibernateDTO.instant = Timestamp.from(transaction.getDateTime().toInstant());;
+        transactionHibernateDTO.instant = Timestamp.from(transaction.getDateTime().toInstant());
         transactionHibernateDTO.market = transaction.getStock().getMarket();
         transactionHibernateDTO.symbol = transaction.getStock().getSymbol();
         transactionHibernateDTO.stockPrice = transaction.getStockPrice().toBigDecimal();
@@ -36,7 +36,7 @@ public class TransactionHydrator {
         TransactionType transactionType =
                 TransactionType.valueOf(transactionHibernateDTO.transactionType);
         Long quantity = transactionHibernateDTO.quantity;
-        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());;
+        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
 
@@ -59,7 +59,7 @@ public class TransactionHydrator {
         TransactionNumber transactionNumber =
                 new TransactionNumber(transactionHibernateDTO.transactionNumber);
         Long quantity = transactionHibernateDTO.quantity;
-        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());;
+        DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
 

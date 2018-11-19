@@ -61,7 +61,7 @@ public class TransactionRepositoryInMemory implements TransactionRepository {
 
     public List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber,
                                                       DateTime reportDateTime) {
-        LocalDateTime time = LocalDateTime.ofInstant(reportDateTime.toInstant(),ZoneOffset.ofHours(0));
+        LocalDateTime time = LocalDateTime.ofInstant(reportDateTime.toInstant(), ZoneOffset.ofHours(0));
         time = time.minus(1, ChronoUnit.DAYS);
         Instant reportDateInstantMinusOneDay = time.atZone(ZoneOffset.ofHours(0)).toInstant();
 

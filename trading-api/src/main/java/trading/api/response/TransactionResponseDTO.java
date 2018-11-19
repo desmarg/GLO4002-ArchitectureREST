@@ -1,11 +1,9 @@
 package trading.api.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import trading.domain.Stock;
 import trading.domain.transaction.Transaction;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.UUID;
 
 public abstract class TransactionResponseDTO {

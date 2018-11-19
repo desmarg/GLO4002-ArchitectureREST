@@ -13,7 +13,7 @@ import trading.domain.datetime.DateTime;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionTest {

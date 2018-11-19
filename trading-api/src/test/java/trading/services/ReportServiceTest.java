@@ -4,9 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.Credits;
 import trading.domain.Stock;
@@ -19,6 +16,10 @@ import trading.domain.transaction.TransactionSell;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportServiceTest {
@@ -38,13 +39,14 @@ public class ReportServiceTest {
     private ReportService reportService;
     @Mock
     private StockService stockService;
+
     @Before
     public void setup() {
         reportService = new ReportService(stockService);
     }
 
     @Test
-    public void givenNoTransactions_whenCalculatingPortfolio_returnEmptyPortfolio(){
+    public void givenNoTransactions_whenCalculatingPortfolio_returnEmptyPortfolio() {
         List<TransactionBuy> transactionBuys = new ArrayList<>();
         List<TransactionSell> transactionSells = new ArrayList<>();
 
@@ -54,7 +56,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void givenBuysAndNoSells_whenCalculatingPortfolio_returnPortfolioWithGoodValue(){
+    public void givenBuysAndNoSells_whenCalculatingPortfolio_returnPortfolioWithGoodValue() {
         when(this.stockService.retrieveStockPrice(any(Stock.class), any())).thenReturn(STOCK_VALUE_CREDITS);
 
         List<TransactionBuy> transactionBuys = new ArrayList<>();
@@ -70,7 +72,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void givenBuysAndSells_whenCalculating_returnPortfolioWithGoodValue(){
+    public void givenBuysAndSells_whenCalculating_returnPortfolioWithGoodValue() {
         when(this.stockService.retrieveStockPrice(any(Stock.class), any())).thenReturn(STOCK_VALUE_CREDITS);
 
         List<TransactionBuy> transactionBuys = new ArrayList<>();
@@ -79,7 +81,7 @@ public class ReportServiceTest {
         transactionBuys.add(t1);
         transactionBuys.add(new TransactionBuy(NUMBER_STOCK, VALID_DATETIME, stock, STOCK_VALUE_CREDITS, accountNumber));
         List<TransactionSell> transactionSells = new ArrayList<>();
-        transactionSells.add(new TransactionSell(NUMBER_STOCK_SOLD, VALID_DATETIME, stock, STOCK_VALUE_CREDITS,t1.getTransactionNumber(), accountNumber));
+        transactionSells.add(new TransactionSell(NUMBER_STOCK_SOLD, VALID_DATETIME, stock, STOCK_VALUE_CREDITS, t1.getTransactionNumber(), accountNumber));
 
         Portfolio portfolio = reportService.getPortfolio(INITIAL_CREDITS, VALID_DATETIME, transactionBuys, transactionSells);
         System.out.println(portfolio);

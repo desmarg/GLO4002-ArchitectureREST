@@ -12,7 +12,7 @@ import trading.domain.datetime.DateTime;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionBuyTest {
@@ -20,7 +20,7 @@ public class TransactionBuyTest {
     private final Credits SOME_STOCK_PRICE = new Credits(new BigDecimal(123));
     private final AccountNumber VALID_ACCOUNT_NUMBER = new AccountNumber("TD-0000");
     private final Credits PRICE_WITH_FEE = new Credits(new BigDecimal(123.25));
-    private Stock EMPTY_STOCK = new Stock("","");
+    private Stock EMPTY_STOCK = new Stock("", "");
     private TransactionBuy transactionBuy;
 
     @Before
