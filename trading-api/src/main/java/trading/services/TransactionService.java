@@ -116,7 +116,7 @@ public class TransactionService {
         if (date == null) {
             throw new MissingDateException();
         }
-        TimeZone timeZone = TimeZone.getTimeZone("UTC");
+        TimeZone timeZone = TimeZone.getDefault();
         String instantString = date.concat(" 23:59:59.999");
         DateTimeFormatter dateTimeFormatter
                 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
