@@ -14,7 +14,6 @@ import trading.external.response.market.MarketClosedException;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -84,7 +83,7 @@ public class TransactionService {
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
-        if (this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
+        if (!this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
             throw new MarketClosedException(market);
         }
     }
@@ -95,7 +94,7 @@ public class TransactionService {
 
     public Report getReportFromDate(String accountNumber, String date, String reportType) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        DateTime reportDate = new DateTime(stringToInstantParser(date));
+        DateTime reportDate = new DateTime(this.stringToInstantParser(date));
         ReportType.fromString(reportType);
         List<TransactionBuy> transactionBuyHistory = this.transactionRepository
                 .findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
@@ -121,7 +120,7 @@ public class TransactionService {
         String instantString = date.concat(" 23:59:59.999");
         DateTimeFormatter dateTimeFormatter
                 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime localDateTime = parseDate(instantString, dateTimeFormatter);
+        LocalDateTime localDateTime = this.parseDate(instantString, dateTimeFormatter);
         ZonedDateTime zonedDateTime = localDateTime.atZone(timeZone.toZoneId());
         Instant instant = zonedDateTime.toInstant();
         if ((instant.truncatedTo(ChronoUnit.DAYS))

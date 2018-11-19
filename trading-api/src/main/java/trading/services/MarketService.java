@@ -26,7 +26,7 @@ public class MarketService {
         List<List<OffsetTime>> marketHours = this.parseMarketHours(marketDto);
         for (List<OffsetTime> openCloseOffsetTimes : marketHours) {
             if (transactionTime.compareTo(openCloseOffsetTimes.get(0)) >= 0
-                    && transactionTime.compareTo(openCloseOffsetTimes.get(1)) <= 0) {
+                    && transactionTime.compareTo(openCloseOffsetTimes.get(1)) < 0) {
                 return true;
             }
         }
