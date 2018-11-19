@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import trading.application.JerseyClient;
 import trading.domain.datetime.DateTime;
 import trading.external.response.market.MarketDTO;
+import trading.external.response.market.MarketNotFoundException;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -88,5 +89,17 @@ public class MarketServiceTest {
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
         assertFalse(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL,
                 this.CLOSED_DATETIME_IN_OTHER_TIMEZONE));
+    }
+
+    @Test(expected = MarketNotFoundException.class)
+    public void givenInvalidMarket_whenCheckingIfMarketOpened_thenThrowMarketNotFoundException() {
+        ArrayList<String> hours = new ArrayList<>();
+        hours.add(this.MORNING_HOURS);
+        hours.add(this.PM_HOURS);
+        MarketDTO marketDTO = new MarketDTO();
+        marketDTO.openHours = hours;
+        marketDTO.timezone = this.VALID_TIMEZONE;
+        when(this.jerseyClient.getRequest(any(), any())).thenReturn(null);
+        this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.CLOSED_DATETIME_IN_OTHER_TIMEZONE);
     }
 }
