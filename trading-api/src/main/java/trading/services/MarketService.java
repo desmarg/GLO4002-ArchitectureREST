@@ -5,6 +5,7 @@ import trading.domain.datetime.DateTime;
 import trading.external.response.market.MarketDTO;
 import trading.external.response.market.MarketNotFoundException;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
@@ -20,8 +21,12 @@ public class MarketService {
         this.jerseyClient = jerseyClient;
     }
 
-    public boolean isMarketOpenAtHour(String market, DateTime currentDateTime) {
-        OffsetTime transactionTime = currentDateTime.toOffsetDateTime().toOffsetTime();
+    public boolean isMarketOpenAtHour(String market, DateTime transactionDateTime) {
+        if (transactionDateTime.toOffsetDateTime().getDayOfWeek() == DayOfWeek.SATURDAY
+                || (transactionDateTime.toOffsetDateTime().getDayOfWeek() == DayOfWeek.SUNDAY)) {
+            return false;
+        }
+        OffsetTime transactionTime = transactionDateTime.toOffsetDateTime().toOffsetTime();
         MarketDTO marketDto = this.getMarketDto(market);
         List<List<OffsetTime>> marketHours = this.parseMarketHours(marketDto);
         for (List<OffsetTime> openCloseOffsetTimes : marketHours) {

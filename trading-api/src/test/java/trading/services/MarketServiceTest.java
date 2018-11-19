@@ -22,12 +22,12 @@ import static org.mockito.Mockito.when;
 public class MarketServiceTest {
     private final String ZERO_TIMEZONE = "UTC+00:00";
     private final String VALID_TIMEZONE = "UTC+02:00";
-    private final DateTime OPENED_DATETIME = new DateTime(Instant.parse("2018-08-04T10:00:00Z"));
-    private final DateTime CLOSED_DATETIME = new DateTime(Instant.parse("2018-08-04T18:00:00Z"));
+    private final DateTime OPENED_DATETIME = new DateTime(Instant.parse("2018-11-19T10:00:00Z"));
+    private final DateTime CLOSED_DATETIME = new DateTime(Instant.parse("2018-11-19T18:00:00Z"));
     private final DateTime OPENED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(Instant.parse("2018" +
-            "-08-04T05:00:00Z"));
+            "-11-19T05:00:00Z"));
     private final DateTime CLOSED_DATETIME_IN_OTHER_TIMEZONE = new DateTime(Instant.parse("2018" +
-            "-08-04T16:00:00Z"));
+            "-11-19T16:00:00Z"));
     private final String MORNING_HOURS = "6:00-12:00";
     private final String PM_HOURS = "13:00-17:00";
     private final String MARKET_SYMBOL = "NASDAQ";
@@ -41,7 +41,7 @@ public class MarketServiceTest {
     }
 
     @Test
-    public void givenOpenedDateTimeAndEmptyTimeZone_whenCheckingIfMarketOpened_thenReturnTrue() {
+    public void givenOpenedDateTime_whenCheckingIfMarketOpened_thenReturnTrue() {
         ArrayList<String> hours = new ArrayList<>();
         hours.add(this.MORNING_HOURS);
         hours.add(this.PM_HOURS);
@@ -53,7 +53,7 @@ public class MarketServiceTest {
     }
 
     @Test
-    public void givenClosedDateTimeAndEmptyTimeZone_whenCheckingIfMarketOpened_thenReturnTrue() {
+    public void givenClosedDateTime_whenCheckingIfMarketOpened_thenReturnTrue() {
         ArrayList<String> hours = new ArrayList<>();
         hours.add(this.MORNING_HOURS);
         hours.add(this.PM_HOURS);
