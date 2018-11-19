@@ -54,7 +54,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void givenTransactions_whenCalculatingPortfolio_returnPortfolioWithGoodValue(){
+    public void givenBuysAndNoSells_whenCalculatingPortfolio_returnPortfolioWithGoodValue(){
         when(this.stockService.retrieveStockPrice(any(Stock.class), any())).thenReturn(STOCK_VALUE_CREDITS);
 
         List<TransactionBuy> transactionBuys = new ArrayList<>();
@@ -70,7 +70,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void givenTransactions_whenCalculatingPortfolioWithSells_returnPortfolioWithGoodValue(){
+    public void givenBuysAndSells_whenCalculating_returnPortfolioWithGoodValue(){
         when(this.stockService.retrieveStockPrice(any(Stock.class), any())).thenReturn(STOCK_VALUE_CREDITS);
 
         List<TransactionBuy> transactionBuys = new ArrayList<>();
