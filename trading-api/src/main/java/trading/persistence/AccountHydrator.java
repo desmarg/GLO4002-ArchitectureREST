@@ -4,6 +4,7 @@ import trading.domain.Credits;
 import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
 import trading.domain.account.Account;
+import trading.domain.account.AccountNumber;
 import trading.domain.transaction.TransactionNumber;
 
 import java.util.HashMap;
@@ -22,15 +23,15 @@ public class AccountHydrator {
         String investorName = accountHibernateDTO.investorName;
         Credits credits = new Credits(accountHibernateDTO.credits);
         Credits initialCredits = new Credits(accountHibernateDTO.initialCredits);
-        Integer id = accountHibernateDTO.Id;
+        AccountNumber accountNumber = new AccountNumber(accountHibernateDTO.accountNumber);
 
         return new Account(investorId, investorName, credits, initialCredits, investorProfile,
-                remainingStocksMap, id);
+                remainingStocksMap, accountNumber);
     }
 
     public static AccountHibernateDTO toHibernateDto(Account account) {
         AccountHibernateDTO accountHibernateDTO = new AccountHibernateDTO();
-        accountHibernateDTO.Id = account.getId();
+        accountHibernateDTO.accountNumber = account.getAccountNumber().getString();
         accountHibernateDTO.investorId = account.getInvestorId();
         accountHibernateDTO.profileType = account.getInvestorProfile().getProfileType().toString();
         accountHibernateDTO.focusAreas = account.getInvestorProfile().getFocusAreas();

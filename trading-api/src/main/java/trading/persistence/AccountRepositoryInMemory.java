@@ -7,6 +7,7 @@ import trading.domain.account.Account;
 import trading.domain.account.AccountNumber;
 import trading.domain.account.AccountRepository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class AccountRepositoryInMemory implements AccountRepository {
@@ -34,8 +35,7 @@ public class AccountRepositoryInMemory implements AccountRepository {
             throws AccountNotFoundException {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        Integer accountId = accountNumber.getId();
-        AccountHibernateDTO accountHibernateDTO = session.get(AccountHibernateDTO.class, accountId);
+        AccountHibernateDTO accountHibernateDTO = session.get(AccountHibernateDTO.class, accountNumber.getString());
 
         session.getTransaction().commit();
         if (accountHibernateDTO == null) {
@@ -57,17 +57,16 @@ public class AccountRepositoryInMemory implements AccountRepository {
         }
     }
 
-    @Override
-    public Integer getCurrentAccountId() {
+    public Integer getNumberOfAccounts() {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
         List<Object> latestAccountNumber =
-                session.createSQLQuery("SELECT MAX(id) from ACCOUNTS").list();
+                session.createSQLQuery("SELECT COUNT(accountNumber) from ACCOUNTS").list();
         session.getTransaction().commit();
         if (latestAccountNumber.get(0) == null) {
             latestAccountNumber.set(0, 0);
         }
-        return (Integer) latestAccountNumber.get(0);
+        return new Integer(((BigInteger) latestAccountNumber.get(0)).intValue());
     }
 
 }

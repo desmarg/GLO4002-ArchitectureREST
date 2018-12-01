@@ -6,6 +6,8 @@ import trading.domain.account.AccountAssembler;
 import trading.domain.account.AccountNumber;
 import trading.domain.account.AccountRepository;
 
+import java.math.BigInteger;
+
 public class AccountService {
     private final AccountRepository accountRepository;
 
@@ -14,7 +16,7 @@ public class AccountService {
     }
 
     public AccountNumber save(AccountPostRequestDTO accountPostRequestDTO) {
-        Integer id = this.accountRepository.getCurrentAccountId() + 1;
+        Integer id = this.accountRepository.getNumberOfAccounts() + 1;
         Account account = AccountAssembler.create(accountPostRequestDTO, id);
         this.accountRepository.save(account);
 

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Account {
 
-    private final Integer id;
+    private final AccountNumber accountNumber;
     private final Long investorId;
     private final InvestorProfile investorProfile;
     private final String investorName;
@@ -27,20 +27,32 @@ public class Account {
                 credits,
                 new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>()),
                 new HashMap<>(),
-                id
+                new AccountNumber(investorName, id)
         );
     }
 
+//    public Account(Long investorId, String investorName, Credits credits, Credits initialCredits,
+//                   InvestorProfile investorProfile,
+//                   Map<TransactionNumber, Long> remainingStocksMap, Integer id) {
+//        this.investorId = investorId;
+//        this.investorName = investorName;
+//        this.credits = credits;
+//        this.initialCredits = initialCredits;
+//        this.investorProfile = investorProfile;
+//        this.remainingStocksMap = remainingStocksMap;
+//        this.accountNumber = this.buildAccountNumberFromId(id);
+//    }
+
     public Account(Long investorId, String investorName, Credits credits, Credits initialCredits,
                    InvestorProfile investorProfile,
-                   Map<TransactionNumber, Long> remainingStocksMap, Integer id) {
+                   Map<TransactionNumber, Long> remainingStocksMap, AccountNumber accountNumber) {
         this.investorId = investorId;
         this.investorName = investorName;
         this.credits = credits;
         this.initialCredits = initialCredits;
         this.investorProfile = investorProfile;
         this.remainingStocksMap = remainingStocksMap;
-        this.id = id;
+        this.accountNumber = accountNumber;
     }
 
     public void buyTransaction(TransactionBuy transactionBuy) {
@@ -79,7 +91,7 @@ public class Account {
     }
 
     public AccountNumber getAccountNumber() {
-        return new AccountNumber(this.investorName, this.id);
+        return this.accountNumber;
     }
 
     public InvestorProfile getInvestorProfile() {
@@ -102,11 +114,11 @@ public class Account {
         return this.remainingStocksMap;
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
     public Credits getInitialCredits() {
         return this.initialCredits;
+    }
+
+    private AccountNumber buildAccountNumberFromNameAndId(String investorName, Integer id) {
+        return new AccountNumber(investorName, id);
     }
 }

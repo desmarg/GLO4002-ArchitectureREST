@@ -12,7 +12,7 @@ import java.util.UUID;
 public class AccountHibernateDTO implements Serializable {
 
     @Id
-    public Integer Id;
+    public String accountNumber;
     @Column(unique = true)
     public Long investorId;
     @Column

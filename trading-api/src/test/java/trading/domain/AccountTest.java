@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import trading.domain.account.Account;
+import trading.domain.account.AccountNumber;
 import trading.domain.account.NotEnoughCreditsException;
 import trading.domain.account.NotEnoughCreditsForFeesException;
 import trading.domain.transaction.*;
@@ -46,13 +47,15 @@ public class AccountTest {
 
     @Before
     public void setup() {
+        AccountNumber validAccountNumber = new AccountNumber(VALID_INVESTOR_NAME, ACCOUNT_ID);
+
         REMAINING_STOCKS_MAP.put(A_TRANSACTION_NUMBER, QUANTITY);
         this.basicAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME,
                 AN_ACCOUNT_BALANCE, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP,
-                ACCOUNT_ID);
+                validAccountNumber);
         this.notEnoughCreditsAccount = new Account(VALID_INVESTOR_ID, VALID_INVESTOR_NAME,
                 NOT_ENOUGH_CREDITS, AN_ACCOUNT_BALANCE, INVESTOR_PROFILE, REMAINING_STOCKS_MAP,
-                ACCOUNT_ID);
+                validAccountNumber);
         when(this.transactionSell.getStock()).thenReturn(this.STOCK1);
         when(this.transactionBuy.getStock()).thenReturn(this.STOCK1);
     }

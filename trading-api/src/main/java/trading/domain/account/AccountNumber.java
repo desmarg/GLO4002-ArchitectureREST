@@ -43,6 +43,7 @@ public class AccountNumber {
     }
 
     private String makeId(String name, Integer accountId) {
-        return this.makeInitials(name) + "-" + String.format("%04d", accountId);
+        String id = accountId <= 9999 ? String.format("%04d", accountId) : accountId.toString();
+        return this.makeInitials(name) + "-" + id;
     }
 }
