@@ -26,11 +26,7 @@ public class CustomInstantDeserializer extends StdDeserializer<Instant> {
     public Instant deserialize(JsonParser jsonParser, DeserializationContext context)
             throws IOException {
         String date = jsonParser.getText();
-        try {
-            OffsetDateTime offsetDateTime = OffsetDateTime.parse(date, formatter);
-            return offsetDateTime.toInstant();
-        } catch (DateTimeParseException e) {
-            throw new RuntimeException(e);
-        }
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(date, formatter);
+        return offsetDateTime.toInstant();
     }
 }
