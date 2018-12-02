@@ -25,6 +25,14 @@ public class BasicForexRates implements ForeignExchangeRepository {
         return totalCreditsInCAD;
     }
 
+    public Credits convertToCAD(Credits credits) {
+        Currency creditCurrency = credits.getCurrency();
+        HashMap<Currency, BigDecimal> ratesToCAD = getRatesToCAD();
+        BigDecimal rateMultiplier = ratesToCAD.get(creditCurrency);
+        BigDecimal convertedAmount = credits.getAmount().multiply(rateMultiplier);
+        return new Credits(convertedAmount, Currency.CAD);
+    }
+
     private HashMap<Currency, BigDecimal> getRatesToCAD() {
          HashMap<Currency, BigDecimal> rates = new HashMap<>();
         rates.put(Currency.USD, new BigDecimal("1.31"));

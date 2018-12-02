@@ -2,12 +2,14 @@ package trading.services;
 
 import trading.domain.Credits;
 import trading.domain.Currency;
+import trading.domain.ForeignExchangeRepository;
 import trading.domain.Stock;
 import trading.domain.datetime.DateTime;
 import trading.domain.report.Portfolio;
 import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,32 +22,37 @@ public class ReportService {
         this.stockService = stockService;
     }
 
-    public Portfolio getPortfolio(Credits initialCredits, DateTime dateTime,
+    public Portfolio getPortfolio(HashMap<Currency, Credits> initialCredits, DateTime dateTime,
                                   List<TransactionBuy> transactionBuyHistory,
-                                  List<TransactionSell> transactionSellHistory) {
+                                  List<TransactionSell> transactionSellHistory, ForeignExchangeRepository forexRepo) {
 
         Credits portfolioValue = Credits.getZeroCredits(Currency.CAD);
         Map<Stock, Long> quantityByStock = new HashMap<>();
-        Credits creditsInAccount = initialCredits;
+        HashMap<Currency, Credits> creditsInAccount = initialCredits;
 
         for (TransactionBuy transaction : transactionBuyHistory) {
-            creditsInAccount = creditsInAccount.subtract(transaction.getValueWithFees());
+            Credits transactionValueWithFees = transaction.getValueWithFees();
+            Currency transactionCurrency = transactionValueWithFees.getCurrency();
+            creditsInAccount.merge(transactionCurrency, transactionValueWithFees, Credits::subtract);
             Stock stock = transaction.getStock();
             quantityByStock.merge(stock, transaction.getQuantity(), (a, b) -> b + a);
         }
         for (TransactionSell transaction : transactionSellHistory) {
-            creditsInAccount =
-                    creditsInAccount.subtract(transaction.getFees()).add(transaction.getValue());
+            Credits transactionFees = transaction.getFees();
+            Credits transactionValue = transaction.getValue();
+            Currency transactionCurrency = transactionValue.getCurrency();
+            creditsInAccount.merge(transactionCurrency, transactionFees, Credits::subtract);
+            creditsInAccount.merge(transactionCurrency, transactionValue, Credits::add);
             Stock stock = transaction.getStock();
-            Long quantity = quantityByStock.get(stock);
-            quantityByStock.put(stock, quantity - transaction.getQuantity());
+            quantityByStock.merge(stock, transaction.getQuantity(), (a, b) -> a - b);
         }
-        for (Map.Entry<Stock, Long> entry : quantityByStock.entrySet()) {
-            portfolioValue =
-                    portfolioValue.add(this.stockService.retrieveStockPrice(entry.getKey(),
-                            dateTime).multiply(Credits.fromLong(entry.getValue(), Currency.XXX))); // TODO
+        for (Stock stock : quantityByStock.keySet()) {
+            Long stockQuantity = quantityByStock.get(stock);
+            Credits stockPrice = this.stockService.retrieveStockPrice(stock, dateTime);
+            Credits stockValue = stockPrice.multiply(Credits.fromLong(stockQuantity, stockPrice.getCurrency()));
+            Credits convertedStockValue = forexRepo.convertToCAD(stockValue);
+            portfolioValue = portfolioValue.add(convertedStockValue);
         }
         return new Portfolio(portfolioValue, creditsInAccount);
     }
-
 }

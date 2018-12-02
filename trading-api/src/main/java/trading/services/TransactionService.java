@@ -3,6 +3,7 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Credits;
 import trading.domain.Currency;
+import trading.domain.ForeignExchangeRepository;
 import trading.domain.account.Account;
 import trading.domain.datetime.DateTime;
 import trading.domain.datetime.InvalidDateException;
@@ -29,15 +30,17 @@ public class TransactionService {
     private final MarketService marketService;
     private final AccountService accountService;
     private final ReportService reportService;
+    private final ForeignExchangeRepository forexRepo;
 
     public TransactionService(TransactionRepository transactionRepository,
                               StockService stockService, MarketService marketService,
-                              AccountService accountService, ReportService reportService) {
+                              AccountService accountService, ReportService reportService, ForeignExchangeRepository forexRepo) {
         this.transactionRepository = transactionRepository;
         this.stockService = stockService;
         this.marketService = marketService;
         this.accountService = accountService;
         this.reportService = reportService;
+        this.forexRepo = forexRepo;
     }
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
@@ -103,19 +106,8 @@ public class TransactionService {
                 .findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
         List<Transaction> transactionList = this.transactionRepository
                 .findAllTransactionAtDate(account.getAccountNumber(), reportDate);
-//        Portfolio portfolio = this.reportService.getPortfolio(
-//                account.getInitialCredits(),
-//                reportDate,
-//                transactionBuyHistory,
-//                transactionSellHistory
-//        );
-        Portfolio portfolio = this.reportService.getPortfolio(
-                Credits.getZeroCredits(Currency.XXX),
-                reportDate,
-                transactionBuyHistory,
-                transactionSellHistory
-        );
-        return new Report(reportDate, transactionList, portfolio.accountValue,
+        Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory, this.forexRepo);
+        return new Report(reportDate, transactionList, portfolio.accountCredits,
                 portfolio.portfolioValue);
     }
 

@@ -2,6 +2,7 @@ package trading.api.resource;
 
 import trading.api.request.AccountPostRequestDTO;
 import trading.api.response.AccountResponseDTO;
+import trading.api.response.ReportResponseAssembler;
 import trading.api.response.ReportResponseDTO;
 import trading.domain.account.Account;
 import trading.domain.account.AccountAssembler;
@@ -32,7 +33,8 @@ public class AccountResource {
     public Response reportResponse(@PathParam("accountNumber") String accountNumber, @QueryParam(
             "type") String reportType, @QueryParam("date") String date) {
         Report report = this.transactionService.getReportFromDate(accountNumber, date, reportType);
-        return Response.status(Response.Status.OK).entity(new ReportResponseDTO(report)).build();
+        ReportResponseDTO reportResponseDTO = ReportResponseAssembler.toReportResponseDTO(report);
+        return Response.status(Response.Status.OK).entity(reportResponseDTO).build();
     }
 
     @GET
