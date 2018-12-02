@@ -4,7 +4,9 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Credits implements Comparable<Credits> {
-    public static final Credits ZERO = new Credits(new BigDecimal(0), Currency.XXX);
+    public static Credits getZeroCredits(Currency currency) {
+        return new Credits(new BigDecimal(0), currency);
+    }
 
     private final BigDecimal amount;
     private final Currency currency;

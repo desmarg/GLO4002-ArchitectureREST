@@ -4,6 +4,7 @@ import trading.domain.Stock;
 import trading.domain.transaction.Transaction;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 
 public abstract class TransactionResponseDTO {
@@ -20,6 +21,6 @@ public abstract class TransactionResponseDTO {
         this.stock = transaction.getStock();
         this.transactionNumber = transaction.getTransactionNumber().getId();
         this.quantity = transaction.getQuantity();
-        this.fees = transaction.getFees().getAmount();
+        this.fees = transaction.getFees().getAmount().setScale(2, RoundingMode.HALF_UP);
     }
 }

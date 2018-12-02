@@ -1,8 +1,8 @@
 package trading.domain;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ForeignExchangeRepository {
-    public BigDecimal calculateCreditSumInCAD(ArrayList<Credits> creditList);
+    BigDecimal calculateCreditSumInCAD(HashMap<Currency, Credits> creditList);
 }

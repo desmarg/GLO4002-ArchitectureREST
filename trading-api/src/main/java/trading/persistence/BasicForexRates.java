@@ -5,19 +5,18 @@ import trading.domain.Currency;
 import trading.domain.ForeignExchangeRepository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BasicForexRates implements ForeignExchangeRepository {
     @Override
-    public BigDecimal calculateCreditSumInCAD(ArrayList<Credits> creditList) {
+    public BigDecimal calculateCreditSumInCAD(HashMap<Currency, Credits> creditMap) {
         BigDecimal totalCreditsInCAD = BigDecimal.ZERO;
         HashMap<Currency, BigDecimal> ratesToCAD = getRatesToCAD();
 
-        for (Credits credits : creditList) {
-            Currency creditCurrency = credits.getCurrency();
-            if (ratesToCAD.containsKey(creditCurrency)) {
-                BigDecimal rateMultiplier = ratesToCAD.get(creditCurrency);
+        for (Currency currency : creditMap.keySet()) {
+            if (ratesToCAD.containsKey(currency)) {
+                Credits credits = creditMap.get(currency);
+                BigDecimal rateMultiplier = ratesToCAD.get(currency);
                 rateMultiplier = rateMultiplier.multiply(credits.getAmount());
                 totalCreditsInCAD = totalCreditsInCAD.add(rateMultiplier);
             }

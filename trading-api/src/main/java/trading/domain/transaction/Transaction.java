@@ -21,6 +21,7 @@ public abstract class Transaction {
     protected final Credits stockPrice;
     protected final Credits value;
     protected final Credits fees;
+    protected final Currency currency;
     protected TransactionType transactionType;
 
 
@@ -31,6 +32,7 @@ public abstract class Transaction {
         this.dateTime = dateTime;
         this.stock = stock;
         this.stockPrice = stockPrice;
+        this.currency = stockPrice.getCurrency();
         this.accountNumber = accountNumber;
         this.value = this.calculateValue();
         this.fees = this.calculateFees();
@@ -43,23 +45,24 @@ public abstract class Transaction {
         this.dateTime = dateTime;
         this.stock = stock;
         this.stockPrice = stockPrice;
+        this.currency = stockPrice.getCurrency();
         this.accountNumber = accountNumber;
         this.value = this.calculateValue();
         this.fees = this.calculateFees();
     }
 
     private Credits calculateValue() {
-        return this.stockPrice.multiply(Credits.fromLong(this.quantity, Currency.XXX));
+        return this.stockPrice.multiply(Credits.fromLong(this.quantity, this.currency));
     }
 
     private Credits calculateFees() {
-        Credits fees = new Credits(new BigDecimal("0"), this.stockPrice.getCurrency());
+        Credits fees = new Credits(new BigDecimal("0"), this.currency);
         if (this.quantity <= 100) {
-            fees = fees.add(Credits.fromLong(this.quantity, Currency.XXX)).multiply(FEE_UNDER_OR_EQ_100);
+            fees = fees.add(Credits.fromLong(this.quantity, this.currency)).multiply(FEE_UNDER_OR_EQ_100);
         } else {
-            fees = fees.add(Credits.fromLong(this.quantity, Currency.XXX)).multiply(FEE_OVER_100);
+            fees = fees.add(Credits.fromLong(this.quantity, this.currency)).multiply(FEE_OVER_100);
         }
-        if (this.value.isGreater(Credits.fromInteger(5000, Currency.XXX))) {
+        if (this.value.isGreater(Credits.fromInteger(5000, this.currency))) {
             fees = fees.add(this.value.multiply(FEE_OVER_5000));
         }
         return fees;

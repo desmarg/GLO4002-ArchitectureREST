@@ -5,6 +5,8 @@ import trading.domain.Stock;
 import trading.domain.account.AccountNumber;
 import trading.domain.datetime.DateTime;
 
+import java.math.BigDecimal;
+
 public class TransactionBuy extends Transaction {
 
     public TransactionBuy(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
@@ -20,6 +22,7 @@ public class TransactionBuy extends Transaction {
     }
 
     public Credits getValueWithFees() {
-        return Credits.ZERO.add(this.value).add(this.fees);
+        Credits valueWithFees = Credits.getZeroCredits(this.currency);
+        return valueWithFees.add(this.value).add(this.fees);
     }
 }

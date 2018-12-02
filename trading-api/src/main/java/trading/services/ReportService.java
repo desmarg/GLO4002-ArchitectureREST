@@ -24,7 +24,7 @@ public class ReportService {
                                   List<TransactionBuy> transactionBuyHistory,
                                   List<TransactionSell> transactionSellHistory) {
 
-        Credits portfolioValue = Credits.ZERO;
+        Credits portfolioValue = Credits.getZeroCredits(Currency.CAD);
         Map<Stock, Long> quantityByStock = new HashMap<>();
         Credits creditsInAccount = initialCredits;
 

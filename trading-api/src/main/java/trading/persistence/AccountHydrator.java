@@ -9,7 +9,6 @@ import trading.domain.account.AccountNumber;
 import trading.domain.transaction.TransactionNumber;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -24,8 +23,8 @@ public class AccountHydrator {
                 AccountHydrator.hydrateRemainingStocksMap(accountHibernateDTO.remainingStocksMap);
         Long investorId = accountHibernateDTO.investorId;
         String investorName = accountHibernateDTO.investorName;
-        ArrayList<Credits> credits = hydrateCreditList(accountHibernateDTO.creditList);
-        ArrayList<Credits> initialCredits = hydrateCreditList(accountHibernateDTO.initialCredits);
+        HashMap<Currency, Credits> credits = hydrateCreditMap(accountHibernateDTO.creditList);
+        HashMap<Currency, Credits> initialCredits = hydrateCreditMap(accountHibernateDTO.initialCredits);
         AccountNumber accountNumber = new AccountNumber(accountHibernateDTO.accountNumber);
 
         return new Account(investorId, investorName, credits, initialCredits, investorProfile,
@@ -39,28 +38,29 @@ public class AccountHydrator {
         accountHibernateDTO.profileType = account.getInvestorProfile().getType().toString();
         accountHibernateDTO.focusAreas = account.getInvestorProfile().getFocusAreas();
         accountHibernateDTO.investorName = account.getInvestorName();
-        accountHibernateDTO.creditList = dehydrateCreditList(account.getCredits());
-        accountHibernateDTO.initialCredits = dehydrateCreditList(account.getInitialCredits());
+        accountHibernateDTO.creditList = dehydrateCreditMap(account.getCredits());
+        accountHibernateDTO.initialCredits = dehydrateCreditMap(account.getInitialCredits());
         accountHibernateDTO.remainingStocksMap =
                 AccountHydrator.dehydrateRemainingStocksMap(account.getRemainingStocksMap());
 
         return accountHibernateDTO;
     }
 
-    private static Map<String, BigDecimal> dehydrateCreditList(ArrayList<Credits> creditList) {
+    private static Map<String, BigDecimal> dehydrateCreditMap(HashMap<Currency, Credits> creditMap) {
         Map<String, BigDecimal> dehydratedCredits = new HashMap<>();
 
-        for (Credits credits : creditList) {
-            dehydratedCredits.merge(credits.getCurrency().toString(), credits.getAmount(), BigDecimal::add);
+        for (Currency currency : creditMap.keySet()) {
+            dehydratedCredits.merge(currency.toString(), creditMap.get(currency).getAmount(), BigDecimal::add);
         }
         return dehydratedCredits;
     }
 
-    private static ArrayList<Credits> hydrateCreditList(Map<String, BigDecimal> dehydratedCredits) {
-        ArrayList<Credits> hydratedCredits = new ArrayList<>();
+    private static HashMap<Currency, Credits> hydrateCreditMap(Map<String, BigDecimal> dehydratedCredits) {
+        HashMap<Currency, Credits> hydratedCredits = new HashMap<>();
 
         for (String currency : dehydratedCredits.keySet()) {
-            hydratedCredits.add(new Credits(dehydratedCredits.get(currency), Currency.valueOf(currency)));
+            BigDecimal amount = dehydratedCredits.get(currency);
+            hydratedCredits.put(Currency.valueOf(currency), new Credits(amount, Currency.valueOf(currency)));
         }
         return hydratedCredits;
     }

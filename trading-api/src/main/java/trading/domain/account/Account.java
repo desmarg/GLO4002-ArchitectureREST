@@ -15,27 +15,27 @@ public class Account {
     private final InvestorProfile investorProfile;
     private final String investorName;
     private final Map<TransactionNumber, Long> remainingStocksMap;
-    private final ArrayList<Credits> initialCredits;
-    private ArrayList<Credits> creditList;
+    private final HashMap<Currency, Credits> initialCredits;
+    private HashMap<Currency, Credits> creditMap;
 
-    public Account(Long investorId, String investorName, ArrayList<Credits> creditList, Integer id) {
+    public Account(Long investorId, String investorName, HashMap<Currency, Credits> creditMap, Integer id) {
         this(
                 investorId,
                 investorName,
-                creditList,
-                creditList,
+                creditMap,
+                creditMap,
                 new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>()),
                 new HashMap<>(),
                 new AccountNumber(investorName, id)
         );
     }
 
-    public Account(Long investorId, String investorName, ArrayList<Credits> creditList, ArrayList<Credits> initialCredits,
+    public Account(Long investorId, String investorName, HashMap<Currency, Credits> creditMap, HashMap<Currency, Credits> initialCredits,
                    InvestorProfile investorProfile,
                    Map<TransactionNumber, Long> remainingStocksMap, AccountNumber accountNumber) {
         this.investorId = investorId;
         this.investorName = investorName;
-        this.creditList = creditList;
+        this.creditMap = creditMap;
         this.initialCredits = initialCredits;
         this.investorProfile = investorProfile;
         this.remainingStocksMap = remainingStocksMap;
@@ -44,26 +44,22 @@ public class Account {
 
     public void buyTransaction(TransactionBuy transactionBuy) {
         Credits totalPrice = transactionBuy.getValueWithFees();
-//        if (this.credits.isSmaller(totalPrice)) {
-//            throw new NotEnoughCreditsException();
-//        }
-//        this.credits = this.credits.subtract(totalPrice);
+        this.subtractCreditsIfHasEnough(totalPrice);
         this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
                 transactionBuy.getQuantity());
     }
 
-    public void sellTransaction(TransactionSell transactionSell,
-                                TransactionBuy referredTransaction) {
+    public void sellTransaction(TransactionSell transactionSell, TransactionBuy referredTransaction) {
         if (!transactionSell.getStock().equals(referredTransaction.getStock())) {
             throw new StockParametersDontMatchException();
         }
 
         this.deduceStocks(referredTransaction, transactionSell.getQuantity());
-//        if (this.credits.isSmaller(transactionSell.getFees())) {
-//            throw new NotEnoughCreditsForFeesException();
-//        }
-//        this.credits =
-//                this.credits.subtract(transactionSell.getFees()).add(transactionSell.getValue());
+        Credits transactionFees = transactionSell.getFees();
+        Credits transactionValue = transactionSell.getValue();
+
+        this.subtractCreditsIfHasEnough(transactionFees);
+        this.addCredits(transactionValue);
     }
 
     private void deduceStocks(TransactionBuy transactionBuy, Long quantity) {
@@ -89,8 +85,8 @@ public class Account {
         return this.investorId;
     }
 
-    public ArrayList<Credits> getCredits() {
-        return this.creditList;
+    public HashMap<Currency, Credits> getCredits() {
+        return this.creditMap;
     }
 
     public String getInvestorName() {
@@ -101,11 +97,36 @@ public class Account {
         return this.remainingStocksMap;
     }
 
-    public ArrayList<Credits> getInitialCredits() {
+    public HashMap<Currency, Credits> getInitialCredits() {
         return this.initialCredits;
     }
 
     public BigDecimal getTotalCreditsInCAD(ForeignExchangeRepository forexRepo) {
-        return forexRepo.calculateCreditSumInCAD(this.creditList);
+        return forexRepo.calculateCreditSumInCAD(this.creditMap);
+    }
+
+    private boolean hasEnoughCreditsOfCurrency(Credits creditsToCompare) {
+        Currency creditCurrency = creditsToCompare.getCurrency();
+        if (!this.creditMap.containsKey(creditCurrency)) {
+            return false;
+        }
+        Credits ownedCredits = this.creditMap.get(creditCurrency);
+        if (ownedCredits.isSmaller(creditsToCompare)) {
+            return false;
+        }
+        return true;
+    }
+
+    private void subtractCreditsIfHasEnough(Credits creditsToSubtract) {
+        if (!this.hasEnoughCreditsOfCurrency(creditsToSubtract)) {
+            throw new NotEnoughCreditsException();
+        }
+        Currency creditCurrency = creditsToSubtract.getCurrency();
+        this.creditMap.merge(creditCurrency, creditsToSubtract, Credits::subtract);
+    }
+
+    private void addCredits(Credits creditsToAdd) {
+        Currency creditCurrency = creditsToAdd.getCurrency();
+        this.creditMap.merge(creditCurrency, creditsToAdd, Credits::add);
     }
 }

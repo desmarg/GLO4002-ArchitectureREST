@@ -2,6 +2,7 @@ package trading.services;
 
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Credits;
+import trading.domain.Currency;
 import trading.domain.account.Account;
 import trading.domain.datetime.DateTime;
 import trading.domain.datetime.InvalidDateException;
@@ -39,8 +40,7 @@ public class TransactionService {
         this.reportService = reportService;
     }
 
-    public Transaction executeTransactionBuy(String accountNumber,
-                                             TransactionPostRequestDTO transactionPostRequestDTO) {
+    public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
         Credits stockPrice = this.stockService.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
@@ -110,7 +110,7 @@ public class TransactionService {
 //                transactionSellHistory
 //        );
         Portfolio portfolio = this.reportService.getPortfolio(
-                Credits.ZERO,
+                Credits.getZeroCredits(Currency.XXX),
                 reportDate,
                 transactionBuyHistory,
                 transactionSellHistory
