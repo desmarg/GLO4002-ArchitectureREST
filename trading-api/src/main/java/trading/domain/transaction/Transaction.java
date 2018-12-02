@@ -1,14 +1,17 @@
 package trading.domain.transaction;
 
 import trading.domain.Credits;
+import trading.domain.Currency;
 import trading.domain.Stock;
 import trading.domain.account.AccountNumber;
 import trading.domain.datetime.DateTime;
 
+import java.math.BigDecimal;
+
 public abstract class Transaction {
-    public static final Credits FEE_OVER_OR_EQ_100 = Credits.fromString("0.25");
-    public static final Credits FEE_UNDER_100 = Credits.fromString("0.20");
-    public static final Credits FEE_OVER_5000 = Credits.fromString("0.03");
+    public static final BigDecimal FEE_UNDER_OR_EQ_100 = new BigDecimal("0.25");
+    public static final BigDecimal FEE_OVER_100 = new BigDecimal("0.20");
+    public static final BigDecimal FEE_OVER_5000 = new BigDecimal("0.03");
 
     protected final AccountNumber accountNumber;
     protected final TransactionNumber transactionNumber;
@@ -46,17 +49,17 @@ public abstract class Transaction {
     }
 
     private Credits calculateValue() {
-        return this.stockPrice.multiply(Credits.fromLong(this.quantity));
+        return this.stockPrice.multiply(Credits.fromLong(this.quantity, Currency.XXX));
     }
 
     private Credits calculateFees() {
-        Credits fees = Credits.ZERO;
+        Credits fees = new Credits(new BigDecimal("0"), this.stockPrice.getCurrency());
         if (this.quantity <= 100) {
-            fees = fees.add(FEE_OVER_OR_EQ_100).multiply(Credits.fromLong(this.quantity));
+            fees = fees.add(Credits.fromLong(this.quantity, Currency.XXX)).multiply(FEE_UNDER_OR_EQ_100);
         } else {
-            fees = fees.add(FEE_UNDER_100).multiply(Credits.fromLong(this.quantity));
+            fees = fees.add(Credits.fromLong(this.quantity, Currency.XXX)).multiply(FEE_OVER_100);
         }
-        if (this.value.isGreater(Credits.fromInteger(5000))) {
+        if (this.value.isGreater(Credits.fromInteger(5000, Currency.XXX))) {
             fees = fees.add(this.value.multiply(FEE_OVER_5000));
         }
         return fees;

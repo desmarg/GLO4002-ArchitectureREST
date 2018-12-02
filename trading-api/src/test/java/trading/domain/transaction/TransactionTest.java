@@ -38,8 +38,8 @@ public class TransactionTest {
         Credits transactionPrice = this.transaction.getValue();
 
         BigDecimal expectedTransactionPrice =
-                new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply(this.SMALL_STOCK_PRICE.toBigDecimal());
-        assertEquals(expectedTransactionPrice, transactionPrice.toBigDecimal());
+                new BigDecimal(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED).multiply(this.SMALL_STOCK_PRICE.getAmount());
+        assertEquals(expectedTransactionPrice, transactionPrice.getAmount());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class TransactionTest {
 
         Credits expectedFees =
                 Transaction.FEE_OVER_OR_EQ_100.multiply(Credits.fromLong(this.VALID_QUANTITY_SMALLER_THAN_HUNDRED));
-        assertEquals(expectedFees.toBigDecimal(), transactionFees.toBigDecimal());
+        assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TransactionTest {
 
         Credits expectedFees =
                 Transaction.FEE_UNDER_100.multiply(Credits.fromLong(this.VALID_QUANTITY_BIGGER_THAN_HUNDRED));
-        assertEquals(expectedFees.toBigDecimal(), transactionFees.toBigDecimal());
+        assertEquals(expectedFees.getAmount(), transactionFees.getAmount());
     }
 
     @Test

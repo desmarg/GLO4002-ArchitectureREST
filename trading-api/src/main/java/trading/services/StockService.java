@@ -3,6 +3,7 @@ package trading.services;
 import trading.api.request.StockDTO;
 import trading.application.JerseyClient;
 import trading.domain.Credits;
+import trading.domain.Currency;
 import trading.domain.Stock;
 import trading.domain.datetime.DateTime;
 import trading.domain.datetime.InvalidDateException;
@@ -12,13 +13,20 @@ import trading.external.response.StockPriceResponseDTO;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 
 public class StockService {
 
     private final JerseyClient jerseyClient;
+    private final HashMap<String, Currency> marketCurrency;
 
     public StockService(JerseyClient jerseyClient) {
         this.jerseyClient = jerseyClient;
+        this.marketCurrency = new HashMap<>();
+        this.marketCurrency.put("NASDAQ", Currency.USD);
+        this.marketCurrency.put("XTKS", Currency.JPY);
+        this.marketCurrency.put("XSWX", Currency.CHF);
+        this.marketCurrency.put("NYSE", Currency.USD);
     }
 
     public Credits retrieveStockPrice(StockDTO stock, DateTime dateTime) {
@@ -44,9 +52,16 @@ public class StockService {
         for (StockPriceResponseDTO priceInfo : stockDto.prices) {
             Instant priceInfoInstant = priceInfo.date.truncatedTo(ChronoUnit.DAYS);
             if (priceInfoInstant.equals(queryInstant)) {
-                return new Credits(priceInfo.price);
+                return new Credits(priceInfo.price, getStockCurrency(stockDto.market));
             }
         }
         throw new InvalidDateException();
+    }
+
+    private Currency getStockCurrency(String market) {
+        if (this.marketCurrency.containsKey(market)) {
+            return this.marketCurrency.get(market);
+        }
+        return Currency.XXX;
     }
 }

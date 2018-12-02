@@ -1,6 +1,7 @@
 package trading.persistence;
 
 import trading.domain.Credits;
+import trading.domain.Currency;
 import trading.domain.Stock;
 import trading.domain.account.AccountNumber;
 import trading.domain.datetime.DateTime;
@@ -18,7 +19,8 @@ public class TransactionHydrator {
         transactionHibernateDTO.instant = Timestamp.from(transaction.getDateTime().toInstant());
         transactionHibernateDTO.market = transaction.getStock().getMarket();
         transactionHibernateDTO.symbol = transaction.getStock().getSymbol();
-        transactionHibernateDTO.stockPrice = transaction.getStockPrice().toBigDecimal();
+        transactionHibernateDTO.stockPrice = transaction.getStockPrice().getAmount();
+        transactionHibernateDTO.stockCurrency = transaction.getStockPrice().getCurrency().toString();
         transactionHibernateDTO.referredTransactionNumber = null;
 
         if (transaction instanceof TransactionSell) {
@@ -38,7 +40,7 @@ public class TransactionHydrator {
         Long quantity = transactionHibernateDTO.quantity;
         DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
-        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
+        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice, Currency.valueOf(transactionHibernateDTO.stockCurrency));
 
         if (transactionType.equals(TransactionType.SELL)) {
             TransactionNumber referredTransactionNumber =
@@ -61,7 +63,7 @@ public class TransactionHydrator {
         Long quantity = transactionHibernateDTO.quantity;
         DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
-        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
+        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice, Currency.valueOf(transactionHibernateDTO.stockCurrency));
 
         return new TransactionBuy(quantity, dateTime, stock, stockPrice, accountNumber,
                 transactionNumber);
@@ -79,7 +81,7 @@ public class TransactionHydrator {
         Long quantity = transactionHibernateDTO.quantity;
         DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
-        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice);
+        Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice, Currency.valueOf(transactionHibernateDTO.stockCurrency));
         TransactionNumber referredTransactionNumber =
                 new TransactionNumber(transactionHibernateDTO.referredTransactionNumber);
         return new TransactionSell(quantity, dateTime, stock, stockPrice,

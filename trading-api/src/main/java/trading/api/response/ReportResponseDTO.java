@@ -23,7 +23,7 @@ public class ReportResponseDTO {
                     .createTransactionResponse(transaction)
             );
         }
-        this.credits = report.credits.toBigDecimal();
-        this.portfolioValue = report.portfolioValue.toBigDecimal();
+        this.credits = report.credits.getAmount();
+        this.portfolioValue = report.portfolioValue.getAmount();
     }
 }

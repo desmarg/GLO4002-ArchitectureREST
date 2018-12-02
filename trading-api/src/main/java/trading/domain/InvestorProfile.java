@@ -3,16 +3,16 @@ package trading.domain;
 import java.util.List;
 
 public class InvestorProfile {
-    private final ProfileType profileType;
+    private final ProfileType type;
     private final List<String> focusAreas;
 
-    public InvestorProfile(final ProfileType profileType, final List<String> focusAreas) {
-        this.profileType = profileType;
+    public InvestorProfile(final ProfileType type, final List<String> focusAreas) {
+        this.type = type;
         this.focusAreas = focusAreas;
     }
 
-    public ProfileType getProfileType() {
-        return this.profileType;
+    public ProfileType getType() {
+        return this.type;
     }
 
     public List<String> getFocusAreas() {

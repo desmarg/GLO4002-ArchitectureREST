@@ -1,6 +1,7 @@
 package trading.services;
 
 import trading.domain.Credits;
+import trading.domain.Currency;
 import trading.domain.Stock;
 import trading.domain.datetime.DateTime;
 import trading.domain.report.Portfolio;
@@ -42,7 +43,7 @@ public class ReportService {
         for (Map.Entry<Stock, Long> entry : quantityByStock.entrySet()) {
             portfolioValue =
                     portfolioValue.add(this.stockService.retrieveStockPrice(entry.getKey(),
-                            dateTime).multiply(Credits.fromLong(entry.getValue())));
+                            dateTime).multiply(Credits.fromLong(entry.getValue(), Currency.XXX))); // TODO
         }
         return new Portfolio(portfolioValue, creditsInAccount);
     }

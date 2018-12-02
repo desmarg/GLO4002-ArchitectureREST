@@ -16,39 +16,27 @@ public class Account {
     private final InvestorProfile investorProfile;
     private final String investorName;
     private final Map<TransactionNumber, Long> remainingStocksMap;
-    private final Credits initialCredits;
-    private Credits credits;
+    private final ArrayList<Credits> initialCredits;
+    private ArrayList<Credits> creditList;
 
-    public Account(Long investorId, String investorName, Credits credits, Integer id) {
+    public Account(Long investorId, String investorName, ArrayList<Credits> creditList, Integer id) {
         this(
                 investorId,
                 investorName,
-                credits,
-                credits,
+                creditList,
+                creditList,
                 new InvestorProfile(ProfileType.CONSERVATIVE, new ArrayList<>()),
                 new HashMap<>(),
                 new AccountNumber(investorName, id)
         );
     }
 
-//    public Account(Long investorId, String investorName, Credits credits, Credits initialCredits,
-//                   InvestorProfile investorProfile,
-//                   Map<TransactionNumber, Long> remainingStocksMap, Integer id) {
-//        this.investorId = investorId;
-//        this.investorName = investorName;
-//        this.credits = credits;
-//        this.initialCredits = initialCredits;
-//        this.investorProfile = investorProfile;
-//        this.remainingStocksMap = remainingStocksMap;
-//        this.accountNumber = this.buildAccountNumberFromId(id);
-//    }
-
-    public Account(Long investorId, String investorName, Credits credits, Credits initialCredits,
+    public Account(Long investorId, String investorName, ArrayList<Credits> creditList, ArrayList<Credits> initialCredits,
                    InvestorProfile investorProfile,
                    Map<TransactionNumber, Long> remainingStocksMap, AccountNumber accountNumber) {
         this.investorId = investorId;
         this.investorName = investorName;
-        this.credits = credits;
+        this.creditList = creditList;
         this.initialCredits = initialCredits;
         this.investorProfile = investorProfile;
         this.remainingStocksMap = remainingStocksMap;
@@ -57,10 +45,10 @@ public class Account {
 
     public void buyTransaction(TransactionBuy transactionBuy) {
         Credits totalPrice = transactionBuy.getValueWithFees();
-        if (this.credits.isSmaller(totalPrice)) {
-            throw new NotEnoughCreditsException();
-        }
-        this.credits = this.credits.subtract(totalPrice);
+//        if (this.credits.isSmaller(totalPrice)) {
+//            throw new NotEnoughCreditsException();
+//        }
+//        this.credits = this.credits.subtract(totalPrice);
         this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
                 transactionBuy.getQuantity());
     }
@@ -72,11 +60,11 @@ public class Account {
         }
 
         this.deduceStocks(referredTransaction, transactionSell.getQuantity());
-        if (this.credits.isSmaller(transactionSell.getFees())) {
-            throw new NotEnoughCreditsForFeesException();
-        }
-        this.credits =
-                this.credits.subtract(transactionSell.getFees()).add(transactionSell.getValue());
+//        if (this.credits.isSmaller(transactionSell.getFees())) {
+//            throw new NotEnoughCreditsForFeesException();
+//        }
+//        this.credits =
+//                this.credits.subtract(transactionSell.getFees()).add(transactionSell.getValue());
     }
 
     private void deduceStocks(TransactionBuy transactionBuy, Long quantity) {
@@ -102,8 +90,8 @@ public class Account {
         return this.investorId;
     }
 
-    public Credits getCredits() {
-        return this.credits;
+    public ArrayList<Credits> getCredits() {
+        return this.creditList;
     }
 
     public String getInvestorName() {
@@ -114,11 +102,7 @@ public class Account {
         return this.remainingStocksMap;
     }
 
-    public Credits getInitialCredits() {
+    public ArrayList<Credits> getInitialCredits() {
         return this.initialCredits;
-    }
-
-    private AccountNumber buildAccountNumberFromNameAndId(String investorName, Integer id) {
-        return new AccountNumber(investorName, id);
     }
 }

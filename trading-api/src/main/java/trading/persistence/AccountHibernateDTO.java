@@ -1,8 +1,11 @@
 package trading.persistence;
 
+import trading.domain.Credits;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,10 +24,10 @@ public class AccountHibernateDTO implements Serializable {
     public List<String> focusAreas;
     @Column
     public String investorName;
-    @Column
-    public BigDecimal credits;
-    @Column
-    public BigDecimal initialCredits;
+    @ElementCollection(fetch = FetchType.EAGER)
+    public Map<String, BigDecimal> creditList;
+    @ElementCollection(fetch = FetchType.EAGER)
+    public Map<String, BigDecimal> initialCredits;
     @ElementCollection(fetch = FetchType.EAGER)
     public Map<UUID, Long> remainingStocksMap;
 

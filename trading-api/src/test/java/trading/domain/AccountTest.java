@@ -63,7 +63,7 @@ public class AccountTest {
     @Test
     public void whenCreatingNewAccount_thenProfileTypeIsConservative() {
         assertEquals(ProfileType.CONSERVATIVE,
-                this.basicAccount.getInvestorProfile().getProfileType());
+                this.basicAccount.getInvestorProfile().getType());
     }
 
     @Test(expected = NotEnoughCreditsException.class)

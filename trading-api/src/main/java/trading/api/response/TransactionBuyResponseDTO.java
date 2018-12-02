@@ -9,6 +9,6 @@ public class TransactionBuyResponseDTO extends TransactionResponseDTO {
 
     public TransactionBuyResponseDTO(Transaction transaction) {
         super(transaction);
-        this.purchasedPrice = transaction.getStockPrice().toBigDecimal();
+        this.purchasedPrice = transaction.getStockPrice().getAmount();
     }
 }

@@ -29,5 +29,7 @@ public class TransactionHibernateDTO implements Serializable {
     @Column
     BigDecimal stockPrice;
     @Column
+    String stockCurrency;
+    @Column
     String referredTransactionNumber;
 }

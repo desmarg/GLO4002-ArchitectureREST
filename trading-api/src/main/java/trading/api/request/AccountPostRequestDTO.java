@@ -2,6 +2,7 @@ package trading.api.request;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class AccountPostRequestDTO {
     @NotNull
@@ -9,7 +10,7 @@ public class AccountPostRequestDTO {
     @NotNull
     public Long investorId;
     @NotNull
-    public BigDecimal credits;
+    public ArrayList<CreditsDTO> credits;
     @NotNull
     public String email;
 }

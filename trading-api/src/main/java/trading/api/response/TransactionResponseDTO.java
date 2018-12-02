@@ -20,6 +20,6 @@ public abstract class TransactionResponseDTO {
         this.stock = transaction.getStock();
         this.transactionNumber = transaction.getTransactionNumber().getId();
         this.quantity = transaction.getQuantity();
-        this.fees = transaction.getFees().toBigDecimal();
+        this.fees = transaction.getFees().getAmount();
     }
 }

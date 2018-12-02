@@ -12,6 +12,7 @@ import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.market.MarketClosedException;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -102,8 +103,14 @@ public class TransactionService {
                 .findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
         List<Transaction> transactionList = this.transactionRepository
                 .findAllTransactionAtDate(account.getAccountNumber(), reportDate);
+//        Portfolio portfolio = this.reportService.getPortfolio(
+//                account.getInitialCredits(),
+//                reportDate,
+//                transactionBuyHistory,
+//                transactionSellHistory
+//        );
         Portfolio portfolio = this.reportService.getPortfolio(
-                account.getInitialCredits(),
+                Credits.ZERO,
                 reportDate,
                 transactionBuyHistory,
                 transactionSellHistory
