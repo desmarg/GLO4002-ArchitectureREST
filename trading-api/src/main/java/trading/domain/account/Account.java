@@ -1,10 +1,9 @@
 package trading.domain.account;
 
-import trading.domain.Credits;
-import trading.domain.InvestorProfile;
-import trading.domain.ProfileType;
+import trading.domain.*;
 import trading.domain.transaction.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,5 +103,9 @@ public class Account {
 
     public ArrayList<Credits> getInitialCredits() {
         return this.initialCredits;
+    }
+
+    public BigDecimal getTotalCreditsInCAD(ForeignExchangeRepository forexRepo) {
+        return forexRepo.calculateCreditSumInCAD(this.creditList);
     }
 }

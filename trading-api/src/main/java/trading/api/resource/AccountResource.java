@@ -4,8 +4,10 @@ import trading.api.request.AccountPostRequestDTO;
 import trading.api.response.AccountResponseDTO;
 import trading.api.response.ReportResponseDTO;
 import trading.domain.account.Account;
+import trading.domain.account.AccountAssembler;
 import trading.domain.account.AccountNumber;
 import trading.domain.report.Report;
+import trading.persistence.BasicForexRates;
 import trading.services.AccountService;
 import trading.services.Services;
 import trading.services.TransactionService;
@@ -38,7 +40,8 @@ public class AccountResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") String accountNumber) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        return Response.status(Response.Status.OK).entity(new AccountResponseDTO(account)).build();
+        AccountResponseDTO accountResponseDTO = AccountAssembler.toAccountResponseDTO(account, new BasicForexRates());
+        return Response.status(Response.Status.OK).entity(accountResponseDTO).build();
     }
 
     @POST

@@ -1,4 +1,4 @@
-package trading.domain;
+package trading.domain.account;
 
 import org.junit.Before;
 import org.junit.Test;

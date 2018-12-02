@@ -51,7 +51,7 @@ public class AccountHydrator {
         Map<String, BigDecimal> dehydratedCredits = new HashMap<>();
 
         for (Credits credits : creditList) {
-            dehydratedCredits.put(credits.getCurrency().toString(), credits.getAmount());
+            dehydratedCredits.merge(credits.getCurrency().toString(), credits.getAmount(), BigDecimal::add);
         }
         return dehydratedCredits;
     }

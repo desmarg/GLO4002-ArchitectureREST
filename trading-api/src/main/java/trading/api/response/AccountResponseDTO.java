@@ -9,15 +9,9 @@ import java.util.ArrayList;
 
 
 public class AccountResponseDTO {
-    public final InvestorProfile investorProfile;
-    public final String accountNumber;
-    public final Long investorId;
-    public final ArrayList<Credits> credits;
-
-    public AccountResponseDTO(Account account) {
-        this.investorProfile = account.getInvestorProfile();
-        this.accountNumber = account.getAccountNumber().getString();
-        this.investorId = account.getInvestorId();
-        this.credits = account.getCredits();
-    }
+    public InvestorProfile investorProfile;
+    public String accountNumber;
+    public Long investorId;
+    public ArrayList<Credits> credits;
+    public BigDecimal total;
 }

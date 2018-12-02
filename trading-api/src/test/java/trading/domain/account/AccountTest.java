@@ -1,10 +1,14 @@
-package trading.domain;
+package trading.domain.account;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import trading.domain.Credits;
+import trading.domain.InvestorProfile;
+import trading.domain.ProfileType;
+import trading.domain.Stock;
 import trading.domain.account.Account;
 import trading.domain.account.AccountNumber;
 import trading.domain.account.NotEnoughCreditsException;
