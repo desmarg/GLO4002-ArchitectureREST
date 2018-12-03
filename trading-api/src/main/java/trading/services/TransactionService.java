@@ -47,7 +47,8 @@ public class TransactionService {
         Account account = this.accountService.findByAccountNumber(accountNumber);
         Credits stockPrice = this.stockService.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
-                new DateTime(transactionPostRequestDTO.date)
+                new DateTime(transactionPostRequestDTO.date),
+                false
         );
         TransactionBuy transactionBuy = TransactionBuyAssembler.fromDTO(
                 transactionPostRequestDTO,
@@ -69,7 +70,8 @@ public class TransactionService {
         Account account = this.accountService.findByAccountNumber(accountNumber);
         Credits stockPrice = this.stockService.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
-                new DateTime(transactionPostRequestDTO.date)
+                new DateTime(transactionPostRequestDTO.date),
+                false
         );
         TransactionSell transactionSell =
                 TransactionSellAssembler.fromDTO(transactionPostRequestDTO,

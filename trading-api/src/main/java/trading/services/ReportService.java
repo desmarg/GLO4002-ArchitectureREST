@@ -48,7 +48,7 @@ public class ReportService {
         }
         for (Stock stock : quantityByStock.keySet()) {
             Long stockQuantity = quantityByStock.get(stock);
-            Credits stockPrice = this.stockService.retrieveStockPrice(stock, dateTime);
+            Credits stockPrice = this.stockService.retrieveStockPrice(stock, dateTime, true);
             Credits stockValue = stockPrice.multiply(Credits.fromLong(stockQuantity, stockPrice.getCurrency()));
             Credits convertedStockValue = forexRepo.convertToCAD(stockValue);
             portfolioValue = portfolioValue.add(convertedStockValue);

@@ -29,27 +29,29 @@ public class StockService {
         this.marketCurrency.put("NYSE", Currency.USD);
     }
 
-    public Credits retrieveStockPrice(StockDTO stock, DateTime dateTime) {
+    public Credits retrieveStockPrice(StockDTO stock, DateTime dateTime, boolean fromReport) {
         String url = "/stocks/" + stock.market + "/" + stock.symbol;
         StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
             throw new StockNotFoundException(stock.symbol, stock.market);
         }
-        return this.getPriceFromDateTime(stockApiDTO, dateTime);
+        return this.getPriceFromDateTime(stockApiDTO, dateTime, fromReport);
     }
 
-    public Credits retrieveStockPrice(Stock stock, DateTime dateTime) {
+    public Credits retrieveStockPrice(Stock stock, DateTime dateTime, boolean fromReport) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
         StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {
             throw new StockNotFoundException(stock.getSymbol(), stock.getMarket());
         }
-        return this.getPriceFromDateTime(stockApiDTO, dateTime);
+        return this.getPriceFromDateTime(stockApiDTO, dateTime, fromReport);
     }
 
-    private Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime) {
+    private Credits getPriceFromDateTime(StockApiDTO stockDto, DateTime dateTime, boolean fromReport) {
         Instant queryInstant = dateTime.toInstant();
-        queryInstant = queryInstant.minus(1, ChronoUnit.DAYS);
+        if (fromReport) {
+            queryInstant = queryInstant.minus(1, ChronoUnit.DAYS);
+        }
         queryInstant = queryInstant.truncatedTo(ChronoUnit.DAYS);
         for (StockPriceResponseDTO priceInfo : stockDto.prices) {
             Instant priceInfoInstant = priceInfo.date.truncatedTo(ChronoUnit.DAYS);
