@@ -5,6 +5,7 @@ import trading.domain.Currency;
 import trading.domain.report.Report;
 import trading.domain.transaction.Transaction;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ public class ReportResponseAssembler {
             );
         }
         reportResponseDTO.credits = createCreditListFromMap(report.credits);
-        reportResponseDTO.portfolioValue = report.portfolioValue.getAmount();
+        reportResponseDTO.portfolioValue = report.portfolioValue.getAmount().setScale(2, RoundingMode.HALF_UP);
 
         return reportResponseDTO;
     }
