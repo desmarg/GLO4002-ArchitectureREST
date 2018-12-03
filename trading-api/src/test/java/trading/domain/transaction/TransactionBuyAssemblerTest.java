@@ -6,6 +6,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import trading.api.request.StockDTO;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Credits;
+import trading.domain.Currency;
 import trading.domain.account.AccountNumber;
 
 import java.time.Instant;
@@ -18,7 +19,7 @@ public class TransactionBuyAssemblerTest {
     private static final StockDTO VALID_STOCKDTO = new StockDTO();
     private static final String MARKET = "bla";
     private static final String SYMBOL = "bla";
-    private static final Credits CREDITS = Credits.ZERO;
+    private static final Credits CREDITS = Credits.getZeroCredits(Currency.XXX);
     private final AccountNumber accountNumber = new AccountNumber("TD-0000");
 
     @Test(expected = InvalidQuantityException.class)
