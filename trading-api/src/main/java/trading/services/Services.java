@@ -12,9 +12,10 @@ public class Services {
 
     public Services() {
         JerseyClient jerseyClient = new JerseyClient();
-        this.accountService = new AccountService(new AccountRepositoryInMemory());
         StockAPIRepository stockAPIRepository = new StockAPIRepository(jerseyClient);
         MarketAPIRepository marketAPIRepository = new MarketAPIRepository(jerseyClient);
+
+        this.accountService = new AccountService(new AccountRepositoryInMemory());
         ReportService reportService = new ReportService(stockAPIRepository);
         this.transactionService = new TransactionService(new TransactionRepositoryInMemory(),
                 stockAPIRepository, marketAPIRepository, this.accountService, reportService, new BasicForexRates());

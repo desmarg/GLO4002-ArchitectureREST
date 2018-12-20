@@ -43,26 +43,35 @@ public class Account {
     }
 
     public void buyTransaction(TransactionBuy transactionBuy) {
-        Credits totalPrice = transactionBuy.getValueWithFees();
-        this.subtractCreditsIfHasEnough(totalPrice);
+        this.payTransactionFees(transactionBuy.getValueWithFees());
         this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
                 transactionBuy.getQuantity());
     }
 
     public void sellTransaction(TransactionSell transactionSell, TransactionBuy referredTransaction) {
-        if (!transactionSell.getStock().equals(referredTransaction.getStock())) {
-            throw new StockParametersDontMatchException();
-        }
+        this.validateStockParameter(transactionSell, referredTransaction);
+        this.sellStocksIfAccountHasEnough(referredTransaction, transactionSell.getQuantity());
+        this.payTransactionFees(transactionSell.getFees());
+        this.gainTransactionValue(transactionSell);
+    }
 
-        this.deduceStocks(referredTransaction, transactionSell.getQuantity());
-        Credits transactionFees = transactionSell.getFees();
+    private void gainTransactionValue(TransactionSell transactionSell) {
         Credits transactionValue = transactionSell.getValue();
-
-        this.subtractCreditsIfHasEnough(transactionFees);
         this.addCredits(transactionValue);
     }
 
-    private void deduceStocks(TransactionBuy transactionBuy, Long quantity) {
+    private void payTransactionFees(Credits fees) {
+        Credits transactionFees = fees;
+        this.subtractCreditsIfHasEnough(transactionFees);
+    }
+
+    private void validateStockParameter(TransactionSell transactionSell, TransactionBuy referredTransaction) {
+        if (!transactionSell.getStock().equals(referredTransaction.getStock())) {
+            throw new StockParametersDontMatchException();
+        }
+    }
+
+    private void sellStocksIfAccountHasEnough(TransactionBuy transactionBuy, Long quantity) {
         Long remainingStocks = this.remainingStocksMap.get(transactionBuy.getTransactionNumber());
         if (remainingStocks == null) {
             throw new InvalidTransactionNumberException();
