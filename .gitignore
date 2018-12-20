@@ -27,3 +27,4 @@ tags
 __pycache__/
 *.pyc
 *.log*
+tests_AVEC_DVET/
