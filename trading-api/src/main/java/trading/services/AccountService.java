@@ -15,7 +15,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public AccountNumber save(AccountPostRequestDTO accountPostRequestDTO) {
+    public AccountNumber createAccount(AccountPostRequestDTO accountPostRequestDTO) {
         Integer id = this.accountRepository.getNumberOfAccounts() + 1;
         Account account = AccountAssembler.create(accountPostRequestDTO, id);
         this.accountRepository.save(account);

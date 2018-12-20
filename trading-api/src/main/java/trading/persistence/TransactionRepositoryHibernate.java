@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TransactionRepositoryInMemory implements TransactionRepository {
+public class TransactionRepositoryHibernate implements TransactionRepository {
     private final SessionFactory sessionFactory = new Configuration()
             .configure("hibernate.cfg.xml")
             .addAnnotatedClass(AccountHibernateDTO.class)

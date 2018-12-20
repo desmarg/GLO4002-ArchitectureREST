@@ -8,6 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import trading.api.configuration.CustomJsonProvider;
 import trading.api.resource.AccountResource;
+import trading.api.resource.ReportResource;
 import trading.api.resource.TransactionResource;
 import trading.services.Services;
 
@@ -30,8 +31,10 @@ public class TradingServer implements Runnable {
         Services services = new Services();
         AccountResource accountResource = new AccountResource(services);
         TransactionResource transactionResource = new TransactionResource(services);
+        ReportResource reportResource = new ReportResource(services);
         resources.add(accountResource);
         resources.add(transactionResource);
+        resources.add(reportResource);
 
         return resources;
     }

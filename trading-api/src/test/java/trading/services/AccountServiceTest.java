@@ -52,9 +52,9 @@
 //        this.accountPostRequestDto.investorId = INVESTOR_ID;
 //        this.accountPostRequestDto.investorName = INVESTOR_NAME;
 //
-//        this.accountService.save(this.accountPostRequestDto);
+//        this.accountService.createAccount(this.accountPostRequestDto);
 //
-//        verify(this.accountRepository).save(any());
+//        verify(this.accountRepository).createAccount(any());
 //    }
 //
 //    @Test

@@ -2,12 +2,9 @@ package trading.api.resource;
 
 import trading.api.request.AccountPostRequestDTO;
 import trading.api.response.AccountResponseDTO;
-import trading.api.response.ReportResponseAssembler;
-import trading.api.response.ReportResponseDTO;
 import trading.domain.account.Account;
 import trading.domain.account.AccountAssembler;
 import trading.domain.account.AccountNumber;
-import trading.domain.report.Report;
 import trading.persistence.BasicForexRates;
 import trading.services.AccountService;
 import trading.services.Services;
@@ -28,16 +25,6 @@ public class AccountResource {
     }
 
     @GET
-    @Path("/{accountNumber}/reports")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response reportResponse(@PathParam("accountNumber") String accountNumber, @QueryParam(
-            "type") String reportType, @QueryParam("date") String date) {
-        Report report = this.transactionService.getReportFromDate(accountNumber, date, reportType);
-        ReportResponseDTO reportResponseDTO = ReportResponseAssembler.toReportResponseDTO(report);
-        return Response.status(Response.Status.OK).entity(reportResponseDTO).build();
-    }
-
-    @GET
     @Path("/{accountNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccountByAccountNumber(@PathParam("accountNumber") String accountNumber) {
@@ -49,7 +36,7 @@ public class AccountResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountPostRequestDTO accountPostRequestDto) {
-        AccountNumber accountNumber = this.accountService.save(accountPostRequestDto);
+        AccountNumber accountNumber = this.accountService.createAccount(accountPostRequestDto);
         return Response.status(Response.Status.CREATED).header("Location",
                 "accounts/" + accountNumber.getString()).build();
     }

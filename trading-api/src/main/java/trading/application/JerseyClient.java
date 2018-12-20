@@ -6,10 +6,11 @@ import javax.ws.rs.client.WebTarget;
 
 public class JerseyClient {
 
+    private final String localServerUrl = "http://localhost:8080";
+
     public <T> T getRequest(String uri, Class<T> responseType) {
         Client client = ClientBuilder.newClient();
-        String url = "http://localhost:8080";
-        WebTarget target = client.target(url + uri);
+        WebTarget target = client.target(localServerUrl + uri);
         return target.request().get(responseType);
     }
 }

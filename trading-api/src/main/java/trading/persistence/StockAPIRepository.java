@@ -1,4 +1,4 @@
-package trading.services;
+package trading.persistence;
 
 import trading.api.request.StockDTO;
 import trading.application.JerseyClient;

@@ -8,6 +8,7 @@ import trading.domain.datetime.DateTime;
 import trading.domain.report.Portfolio;
 import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;
+import trading.persistence.StockAPIRepository;
 
 import java.util.HashMap;
 import java.util.List;

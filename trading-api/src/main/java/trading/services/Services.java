@@ -1,10 +1,7 @@
 package trading.services;
 
 import trading.application.JerseyClient;
-import trading.persistence.AccountRepositoryInMemory;
-import trading.persistence.BasicForexRates;
-import trading.persistence.MarketAPIRepository;
-import trading.persistence.TransactionRepositoryInMemory;
+import trading.persistence.*;
 
 public class Services {
     private final TransactionService transactionService;
@@ -15,9 +12,9 @@ public class Services {
         StockAPIRepository stockAPIRepository = new StockAPIRepository(jerseyClient);
         MarketAPIRepository marketAPIRepository = new MarketAPIRepository(jerseyClient);
 
-        this.accountService = new AccountService(new AccountRepositoryInMemory());
+        this.accountService = new AccountService(new AccountRepositoryHibernate());
         ReportService reportService = new ReportService(stockAPIRepository);
-        this.transactionService = new TransactionService(new TransactionRepositoryInMemory(),
+        this.transactionService = new TransactionService(new TransactionRepositoryHibernate(),
                 stockAPIRepository, marketAPIRepository, this.accountService, reportService, new BasicForexRates());
     }
 

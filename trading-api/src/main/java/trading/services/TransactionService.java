@@ -13,6 +13,7 @@ import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.market.MarketClosedException;
 import trading.persistence.MarketAPIRepository;
+import trading.persistence.StockAPIRepository;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

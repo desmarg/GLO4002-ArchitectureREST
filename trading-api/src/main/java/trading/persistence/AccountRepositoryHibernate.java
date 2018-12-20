@@ -10,7 +10,7 @@ import trading.domain.account.AccountRepository;
 import java.math.BigInteger;
 import java.util.List;
 
-public class AccountRepositoryInMemory implements AccountRepository {
+public class AccountRepositoryHibernate implements AccountRepository {
     private final SessionFactory sessionFactory = new Configuration()
             .configure("hibernate.cfg.xml")
             .addAnnotatedClass(AccountHibernateDTO.class).buildSessionFactory();
