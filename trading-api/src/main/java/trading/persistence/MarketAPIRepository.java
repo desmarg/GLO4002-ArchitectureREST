@@ -1,7 +1,8 @@
-package trading.services;
+package trading.persistence;
 
 import trading.application.JerseyClient;
 import trading.domain.Currency;
+import trading.domain.MarketRepository;
 import trading.domain.datetime.DateTime;
 import trading.external.response.market.MarketDTO;
 import trading.external.response.market.MarketNotFoundException;
@@ -14,11 +15,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarketService {
+public class MarketAPIRepository implements MarketRepository {
     private final JerseyClient jerseyClient;
     private final DateTimeFormatter formatter = DateTimeFormatter.ISO_TIME;
 
-    public MarketService(JerseyClient jerseyClient) {
+    public MarketAPIRepository(JerseyClient jerseyClient) {
         this.jerseyClient = jerseyClient;
     }
 
@@ -39,7 +40,7 @@ public class MarketService {
         return false;
     }
 
-    public MarketDTO getMarketDto(String market) {
+    private MarketDTO getMarketDto(String market) {
         String url = "/markets/" + market;
         MarketDTO marketDto = this.jerseyClient.getRequest(url, MarketDTO.class);
         if (marketDto == null) {

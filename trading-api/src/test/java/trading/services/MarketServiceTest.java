@@ -9,6 +9,7 @@ import trading.application.JerseyClient;
 import trading.domain.datetime.DateTime;
 import trading.external.response.market.MarketDTO;
 import trading.external.response.market.MarketNotFoundException;
+import trading.persistence.MarketAPIRepository;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -33,13 +34,13 @@ public class MarketServiceTest {
     private final String MORNING_HOURS = "6:00-12:00";
     private final String PM_HOURS = "13:00-17:00";
     private final String MARKET_SYMBOL = "NASDAQ";
-    private MarketService marketService;
+    private MarketAPIRepository marketAPIRepository;
     @Mock
     private JerseyClient jerseyClient;
 
     @Before
     public void setup() {
-        this.marketService = new MarketService(this.jerseyClient);
+        this.marketAPIRepository = new MarketAPIRepository(this.jerseyClient);
     }
 
     @Test
@@ -51,7 +52,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.ZERO_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertTrue(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENED_DATETIME));
+        assertTrue(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENED_DATETIME));
     }
 
     @Test
@@ -63,7 +64,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.ZERO_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertFalse(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENED_DATETIME_WEEKEND));
+        assertFalse(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENED_DATETIME_WEEKEND));
     }
 
     @Test
@@ -75,7 +76,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.ZERO_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertTrue(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENING_DATETIME));
+        assertTrue(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL, this.OPENING_DATETIME));
     }
 
     @Test
@@ -87,7 +88,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.ZERO_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertFalse(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.CLOSING_DATETIME));
+        assertFalse(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL, this.CLOSING_DATETIME));
     }
 
     @Test
@@ -99,7 +100,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.ZERO_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertFalse(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL,
+        assertFalse(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL,
                 this.CLOSED_DATETIME));
     }
 
@@ -112,7 +113,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.VALID_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertTrue(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL,
+        assertTrue(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL,
                 this.OPENED_DATETIME_IN_OTHER_TIMEZONE));
     }
 
@@ -125,7 +126,7 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.VALID_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(marketDTO);
-        assertFalse(this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL,
+        assertFalse(this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL,
                 this.CLOSED_DATETIME_IN_OTHER_TIMEZONE));
     }
 
@@ -138,6 +139,6 @@ public class MarketServiceTest {
         marketDTO.openHours = hours;
         marketDTO.timezone = this.VALID_TIMEZONE;
         when(this.jerseyClient.getRequest(any(), any())).thenReturn(null);
-        this.marketService.isMarketOpenAtHour(this.MARKET_SYMBOL, this.CLOSED_DATETIME_IN_OTHER_TIMEZONE);
+        this.marketAPIRepository.isMarketOpenAtHour(this.MARKET_SYMBOL, this.CLOSED_DATETIME_IN_OTHER_TIMEZONE);
     }
 }

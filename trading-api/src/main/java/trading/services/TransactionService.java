@@ -2,7 +2,6 @@ package trading.services;
 
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Credits;
-import trading.domain.Currency;
 import trading.domain.ForeignExchangeRepository;
 import trading.domain.account.Account;
 import trading.domain.datetime.DateTime;
@@ -13,8 +12,8 @@ import trading.domain.report.Report;
 import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.market.MarketClosedException;
+import trading.persistence.MarketAPIRepository;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -27,17 +26,17 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final StockService stockService;
-    private final MarketService marketService;
+    private final MarketAPIRepository marketAPIRepository;
     private final AccountService accountService;
     private final ReportService reportService;
     private final ForeignExchangeRepository forexRepo;
 
     public TransactionService(TransactionRepository transactionRepository,
-                              StockService stockService, MarketService marketService,
+                              StockService stockService, MarketAPIRepository marketAPIRepository,
                               AccountService accountService, ReportService reportService, ForeignExchangeRepository forexRepo) {
         this.transactionRepository = transactionRepository;
         this.stockService = stockService;
-        this.marketService = marketService;
+        this.marketAPIRepository = marketAPIRepository;
         this.accountService = accountService;
         this.reportService = reportService;
         this.forexRepo = forexRepo;
@@ -89,7 +88,7 @@ public class TransactionService {
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
-        if (!this.marketService.isMarketOpenAtHour(market, transaction.getDateTime())) {
+        if (!this.marketAPIRepository.isMarketOpenAtHour(market, transaction.getDateTime())) {
             throw new MarketClosedException(transaction);
         }
     }
