@@ -5,8 +5,6 @@ import trading.domain.Stock;
 import trading.domain.account.AccountNumber;
 import trading.domain.datetime.DateTime;
 
-import java.math.BigDecimal;
-
 public class TransactionBuy extends Transaction {
 
     public TransactionBuy(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,

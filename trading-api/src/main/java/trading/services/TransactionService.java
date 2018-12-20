@@ -25,17 +25,17 @@ import java.util.TimeZone;
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
-    private final StockService stockService;
+    private final StockAPIRepository stockAPIRepository;
     private final MarketAPIRepository marketAPIRepository;
     private final AccountService accountService;
     private final ReportService reportService;
     private final ForeignExchangeRepository forexRepo;
 
     public TransactionService(TransactionRepository transactionRepository,
-                              StockService stockService, MarketAPIRepository marketAPIRepository,
+                              StockAPIRepository stockAPIRepository, MarketAPIRepository marketAPIRepository,
                               AccountService accountService, ReportService reportService, ForeignExchangeRepository forexRepo) {
         this.transactionRepository = transactionRepository;
-        this.stockService = stockService;
+        this.stockAPIRepository = stockAPIRepository;
         this.marketAPIRepository = marketAPIRepository;
         this.accountService = accountService;
         this.reportService = reportService;
@@ -44,7 +44,7 @@ public class TransactionService {
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        Credits stockPrice = this.stockService.retrieveStockPrice(
+        Credits stockPrice = this.stockAPIRepository.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
                 new DateTime(transactionPostRequestDTO.date),
                 false
@@ -67,7 +67,7 @@ public class TransactionService {
             TransactionPostRequestDTO transactionPostRequestDTO
     ) {
         Account account = this.accountService.findByAccountNumber(accountNumber);
-        Credits stockPrice = this.stockService.retrieveStockPrice(
+        Credits stockPrice = this.stockAPIRepository.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
                 new DateTime(transactionPostRequestDTO.date),
                 false

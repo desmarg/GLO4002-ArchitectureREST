@@ -38,7 +38,7 @@
 //
 //    private ReportService reportService;
 //    @Mock
-//    private StockService stockService;
+//    private StockAPIRepository stockService;
 //
 //    @Before
 //    public void setup() {

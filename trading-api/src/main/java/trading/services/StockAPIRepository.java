@@ -5,6 +5,7 @@ import trading.application.JerseyClient;
 import trading.domain.Credits;
 import trading.domain.Currency;
 import trading.domain.Stock;
+import trading.domain.StockRepository;
 import trading.domain.datetime.DateTime;
 import trading.domain.datetime.InvalidDateException;
 import trading.domain.transaction.StockNotFoundException;
@@ -15,12 +16,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
-public class StockService {
+public class StockAPIRepository implements StockRepository {
 
     private final JerseyClient jerseyClient;
     private final HashMap<String, Currency> marketCurrency;
 
-    public StockService(JerseyClient jerseyClient) {
+    public StockAPIRepository(JerseyClient jerseyClient) {
         this.jerseyClient = jerseyClient;
         this.marketCurrency = new HashMap<>();
         this.marketCurrency.put("NASDAQ", Currency.USD);

@@ -9,17 +9,16 @@ import trading.domain.report.Portfolio;
 import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ReportService {
 
-    private final StockService stockService;
+    private final StockAPIRepository stockAPIRepository;
 
-    public ReportService(StockService stockService) {
-        this.stockService = stockService;
+    public ReportService(StockAPIRepository stockAPIRepository) {
+        this.stockAPIRepository = stockAPIRepository;
     }
 
     public Portfolio getPortfolio(HashMap<Currency, Credits> initialCredits, DateTime dateTime,
@@ -48,7 +47,7 @@ public class ReportService {
         }
         for (Stock stock : quantityByStock.keySet()) {
             Long stockQuantity = quantityByStock.get(stock);
-            Credits stockPrice = this.stockService.retrieveStockPrice(stock, dateTime, true);
+            Credits stockPrice = this.stockAPIRepository.retrieveStockPrice(stock, dateTime, true);
             Credits stockValue = stockPrice.multiply(Credits.fromLong(stockQuantity, stockPrice.getCurrency()));
             Credits convertedStockValue = forexRepo.convertToCAD(stockValue);
             portfolioValue = portfolioValue.add(convertedStockValue);

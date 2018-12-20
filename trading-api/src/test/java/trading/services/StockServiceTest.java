@@ -30,7 +30,7 @@
 //    private static final Long NORMAL_ID = 1L;
 //    private final DateTime VALID_DATETIME = new DateTime(Instant.parse("2000-08-04T05:00:00Z"));
 //    private final DateTime INVALID_DATETIME = new DateTime(Instant.parse("2001-08-04T05:00:00Z"));
-//    private StockService stockService;
+//    private StockAPIRepository stockService;
 //    private StockDTO stock;
 //    private StockApiDTO stockApiDTO;
 //    @Mock
@@ -38,7 +38,7 @@
 //
 //    @Before
 //    public void setup() {
-//        this.stockService = new StockService(this.jerseyClient);
+//        this.stockService = new StockAPIRepository(this.jerseyClient);
 //        this.stock = new StockDTO();
 //        this.stock.market = A_MARKET;
 //        this.stock.symbol = A_SYMBOL;

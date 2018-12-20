@@ -13,11 +13,11 @@ public class Services {
     public Services() {
         JerseyClient jerseyClient = new JerseyClient();
         this.accountService = new AccountService(new AccountRepositoryInMemory());
-        StockService stockService = new StockService(jerseyClient);
+        StockAPIRepository stockAPIRepository = new StockAPIRepository(jerseyClient);
         MarketAPIRepository marketAPIRepository = new MarketAPIRepository(jerseyClient);
-        ReportService reportService = new ReportService(stockService);
+        ReportService reportService = new ReportService(stockAPIRepository);
         this.transactionService = new TransactionService(new TransactionRepositoryInMemory(),
-                stockService, marketAPIRepository, this.accountService, reportService, new BasicForexRates());
+                stockAPIRepository, marketAPIRepository, this.accountService, reportService, new BasicForexRates());
     }
 
     public TransactionService getTransactionService() {
