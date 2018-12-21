@@ -3,17 +3,18 @@ package trading.services;
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Credits;
 import trading.domain.ForeignExchangeRepository;
+import trading.domain.MarketRepository;
+import trading.domain.StockRepository;
 import trading.domain.account.Account;
+import trading.domain.account.AccountNumber;
+import trading.domain.account.AccountRepository;
 import trading.domain.datetime.DateTime;
 import trading.domain.datetime.InvalidDateException;
 import trading.domain.datetime.MissingDateException;
-import trading.domain.report.Portfolio;
 import trading.domain.report.Report;
 import trading.domain.report.ReportType;
 import trading.domain.transaction.*;
 import trading.external.response.market.MarketClosedException;
-import trading.persistence.MarketAPIRepository;
-import trading.persistence.StockAPIRepository;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -26,26 +27,24 @@ import java.util.TimeZone;
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
-    private final StockAPIRepository stockAPIRepository;
-    private final MarketAPIRepository marketAPIRepository;
-    private final AccountService accountService;
-    private final ReportService reportService;
+    private final StockRepository stockRepository;
+    private final MarketRepository marketRepository;
+    private final AccountRepository accountRepository;
     private final ForeignExchangeRepository forexRepo;
 
     public TransactionService(TransactionRepository transactionRepository,
-                              StockAPIRepository stockAPIRepository, MarketAPIRepository marketAPIRepository,
-                              AccountService accountService, ReportService reportService, ForeignExchangeRepository forexRepo) {
+                              StockRepository stockRepository, MarketRepository marketRepository,
+                              AccountRepository accountRepository, ForeignExchangeRepository forexRepo) {
         this.transactionRepository = transactionRepository;
-        this.stockAPIRepository = stockAPIRepository;
-        this.marketAPIRepository = marketAPIRepository;
-        this.accountService = accountService;
-        this.reportService = reportService;
+        this.stockRepository = stockRepository;
+        this.marketRepository = marketRepository;
+        this.accountRepository = accountRepository;
         this.forexRepo = forexRepo;
     }
 
     public Transaction executeTransactionBuy(String accountNumber, TransactionPostRequestDTO transactionPostRequestDTO) {
-        Account account = this.accountService.findByAccountNumber(accountNumber);
-        Credits stockPrice = this.stockAPIRepository.retrieveStockPrice(
+        Account account = this.accountRepository.findByAccountNumber(new AccountNumber(accountNumber));
+        Credits stockPrice = this.stockRepository.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
                 new DateTime(transactionPostRequestDTO.date),
                 false
@@ -57,7 +56,7 @@ public class TransactionService {
         );
         this.validateMarketIsOpen(transactionBuy);
         account.buyTransaction(transactionBuy);
-        this.accountService.update(account);
+        this.accountRepository.update(account);
         this.transactionRepository.save(transactionBuy);
 
         return transactionBuy;
@@ -67,8 +66,8 @@ public class TransactionService {
             String accountNumber,
             TransactionPostRequestDTO transactionPostRequestDTO
     ) {
-        Account account = this.accountService.findByAccountNumber(accountNumber);
-        Credits stockPrice = this.stockAPIRepository.retrieveStockPrice(
+        Account account = this.accountRepository.findByAccountNumber(new AccountNumber(accountNumber));
+        Credits stockPrice = this.stockRepository.retrieveStockPrice(
                 transactionPostRequestDTO.stock,
                 new DateTime(transactionPostRequestDTO.date),
                 false
@@ -80,7 +79,7 @@ public class TransactionService {
         TransactionBuy referredTransaction = this.transactionRepository
                 .findReferredTransaction(transactionSell.getReferredTransactionNumber());
         account.sellTransaction(transactionSell, referredTransaction);
-        this.accountService.update(account);
+        this.accountRepository.update(account);
         this.transactionRepository.save(transactionSell);
 
         return transactionSell;
@@ -89,7 +88,7 @@ public class TransactionService {
 
     private void validateMarketIsOpen(Transaction transaction) {
         String market = transaction.getMarket();
-        if (!this.marketAPIRepository.isMarketOpenAtHour(market, transaction.getDateTime())) {
+        if (!this.marketRepository.isMarketOpenAtHour(market, transaction.getDateTime())) {
             throw new MarketClosedException(transaction);
         }
     }
@@ -99,7 +98,7 @@ public class TransactionService {
     }
 
     public Report getReportFromDate(String accountNumber, String date, String reportType) {
-        Account account = this.accountService.findByAccountNumber(accountNumber);
+        Account account = this.accountRepository.findByAccountNumber(new AccountNumber(accountNumber));
         DateTime reportDate = new DateTime(this.stringToInstantParser(date));
         ReportType.fromString(reportType);
         List<TransactionBuy> transactionBuyHistory = this.transactionRepository
@@ -108,9 +107,7 @@ public class TransactionService {
                 .findTransactionSellBeforeDate(account.getAccountNumber(), reportDate);
         List<Transaction> transactionList = this.transactionRepository
                 .findAllTransactionAtDate(account.getAccountNumber(), reportDate);
-        Portfolio portfolio = this.reportService.getPortfolio(account.getInitialCredits(), reportDate, transactionBuyHistory, transactionSellHistory, this.forexRepo);
-        return new Report(reportDate, transactionList, portfolio.accountCredits,
-                portfolio.portfolioValue);
+        return new Report(reportDate, transactionList, account.getInitialCredits(), transactionBuyHistory, transactionSellHistory, this.forexRepo, this.stockRepository);
     }
 
     private Instant stringToInstantParser(String date) {
