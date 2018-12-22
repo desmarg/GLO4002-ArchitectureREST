@@ -9,9 +9,9 @@ public interface TransactionRepository {
 
     void save(Transaction transaction);
 
-    Transaction findByTransactionNumber(TransactionNumber transactionNumber);
+    Transaction findByTransactionNumber(TransactionID transactionID);
 
-    TransactionBuy findReferredTransaction(TransactionNumber transactionNumber);
+    TransactionBuy findReferredTransaction(TransactionID transactionID);
 
     List<Transaction> findAllTransactionAtDate(AccountNumber accountNumber, DateTime date);
 

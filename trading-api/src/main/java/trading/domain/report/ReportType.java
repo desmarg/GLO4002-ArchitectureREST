@@ -3,7 +3,7 @@ package trading.domain.report;
 public enum ReportType {
     DAILY;
 
-    public static void fromString(String typeToTest) {
+    public static void validateReportType(String typeToTest) {
         if (typeToTest == null || typeToTest.equals("")) {
             throw new MissingReportTypeException();
         }

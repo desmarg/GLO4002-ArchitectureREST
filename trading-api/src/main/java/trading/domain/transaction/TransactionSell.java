@@ -6,25 +6,25 @@ import trading.domain.account.AccountNumber;
 import trading.domain.datetime.DateTime;
 
 public class TransactionSell extends Transaction {
-    private final TransactionNumber referredTransactionNumber;
+    private final TransactionID referredTransactionID;
 
     public TransactionSell(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
-                           TransactionNumber referredTransactionNumber,
+                           TransactionID referredTransactionID,
                            AccountNumber accountNumber) {
         super(quantity, dateTime, stock, stockPrice, accountNumber);
         this.transactionType = TransactionType.SELL;
-        this.referredTransactionNumber = referredTransactionNumber;
+        this.referredTransactionID = referredTransactionID;
     }
 
     public TransactionSell(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
-                           TransactionNumber referredTransactionNumber,
-                           AccountNumber accountNumber, TransactionNumber transactionNumber) {
-        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionNumber);
+                           TransactionID referredTransactionID,
+                           AccountNumber accountNumber, TransactionID transactionID) {
+        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionID);
         this.transactionType = TransactionType.SELL;
-        this.referredTransactionNumber = referredTransactionNumber;
+        this.referredTransactionID = referredTransactionID;
     }
 
-    public TransactionNumber getReferredTransactionNumber() {
-        return this.referredTransactionNumber;
+    public TransactionID getReferredTransactionID() {
+        return this.referredTransactionID;
     }
 }

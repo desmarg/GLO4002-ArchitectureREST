@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class TransactionHydrator {
     public static TransactionHibernateDTO toHibernateDto(Transaction transaction) {
         TransactionHibernateDTO transactionHibernateDTO = new TransactionHibernateDTO();
-        transactionHibernateDTO.transactionNumber = transaction.getTransactionNumber().getId();
+        transactionHibernateDTO.transactionNumber = transaction.getTransactionID().getId();
         transactionHibernateDTO.accountNumber = transaction.getAccountNumber().getString();
         transactionHibernateDTO.transactionType = transaction.getTransactionType().toString();
         transactionHibernateDTO.quantity = transaction.getQuantity();
@@ -25,7 +25,7 @@ public class TransactionHydrator {
 
         if (transaction instanceof TransactionSell) {
             transactionHibernateDTO.referredTransactionNumber =
-                    ((TransactionSell) transaction).getReferredTransactionNumber().getStringUUID();
+                    ((TransactionSell) transaction).getReferredTransactionID().getStringUUID();
         }
 
         return transactionHibernateDTO;
@@ -33,8 +33,8 @@ public class TransactionHydrator {
 
     public static Transaction toTransaction(TransactionHibernateDTO transactionHibernateDTO) {
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
-        TransactionNumber transactionNumber =
-                new TransactionNumber(transactionHibernateDTO.transactionNumber);
+        TransactionID transactionID =
+                new TransactionID(transactionHibernateDTO.transactionNumber);
         TransactionType transactionType =
                 TransactionType.valueOf(transactionHibernateDTO.transactionType);
         Long quantity = transactionHibernateDTO.quantity;
@@ -43,13 +43,13 @@ public class TransactionHydrator {
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice, Currency.valueOf(transactionHibernateDTO.stockCurrency));
 
         if (transactionType.equals(TransactionType.SELL)) {
-            TransactionNumber referredTransactionNumber =
-                    new TransactionNumber(transactionHibernateDTO.referredTransactionNumber);
+            TransactionID referredTransactionID =
+                    new TransactionID(transactionHibernateDTO.referredTransactionNumber);
             return new TransactionSell(quantity, dateTime, stock, stockPrice,
-                    referredTransactionNumber, accountNumber, transactionNumber);
+                    referredTransactionID, accountNumber, transactionID);
         } else {
             return new TransactionBuy(quantity, dateTime, stock, stockPrice, accountNumber,
-                    transactionNumber);
+                    transactionID);
         }
     }
 
@@ -58,15 +58,15 @@ public class TransactionHydrator {
             throw new InvalidTransactionNumberException();
         }
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
-        TransactionNumber transactionNumber =
-                new TransactionNumber(transactionHibernateDTO.transactionNumber);
+        TransactionID transactionID =
+                new TransactionID(transactionHibernateDTO.transactionNumber);
         Long quantity = transactionHibernateDTO.quantity;
         DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice, Currency.valueOf(transactionHibernateDTO.stockCurrency));
 
         return new TransactionBuy(quantity, dateTime, stock, stockPrice, accountNumber,
-                transactionNumber);
+                transactionID);
     }
 
     public static TransactionSell toTransactionSell(
@@ -76,15 +76,15 @@ public class TransactionHydrator {
             throw new InvalidTransactionNumberException();
         }
         AccountNumber accountNumber = new AccountNumber(transactionHibernateDTO.accountNumber);
-        TransactionNumber transactionNumber =
-                new TransactionNumber(transactionHibernateDTO.transactionNumber);
+        TransactionID transactionID =
+                new TransactionID(transactionHibernateDTO.transactionNumber);
         Long quantity = transactionHibernateDTO.quantity;
         DateTime dateTime = new DateTime(transactionHibernateDTO.instant.toInstant());
         Stock stock = new Stock(transactionHibernateDTO.market, transactionHibernateDTO.symbol);
         Credits stockPrice = new Credits(transactionHibernateDTO.stockPrice, Currency.valueOf(transactionHibernateDTO.stockCurrency));
-        TransactionNumber referredTransactionNumber =
-                new TransactionNumber(transactionHibernateDTO.referredTransactionNumber);
+        TransactionID referredTransactionID =
+                new TransactionID(transactionHibernateDTO.referredTransactionNumber);
         return new TransactionSell(quantity, dateTime, stock, stockPrice,
-                referredTransactionNumber, accountNumber, transactionNumber);
+                referredTransactionID, accountNumber, transactionID);
     }
 }

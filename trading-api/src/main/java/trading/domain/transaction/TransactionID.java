@@ -4,18 +4,18 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.UUID;
 
-public class TransactionNumber {
+public class TransactionID {
     private final UUID id;
 
-    public TransactionNumber() {
+    public TransactionID() {
         this.id = UUID.randomUUID();
     }
 
-    public TransactionNumber(UUID id) {
+    public TransactionID(UUID id) {
         this.id = id;
     }
 
-    public TransactionNumber(String text) {
+    public TransactionID(String text) {
         this.id = UUID.fromString(text);
     }
 
@@ -35,8 +35,8 @@ public class TransactionNumber {
 
     @Override
     public boolean equals(Object otherTransactionNumber) {
-        if (otherTransactionNumber instanceof TransactionNumber) {
-            return this.id.equals(((TransactionNumber) otherTransactionNumber).getId());
+        if (otherTransactionNumber instanceof TransactionID) {
+            return this.id.equals(((TransactionID) otherTransactionNumber).getId());
         }
 
         return false;

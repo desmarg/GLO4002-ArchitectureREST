@@ -30,28 +30,28 @@ public class TransactionRepositoryHibernate implements TransactionRepository {
         session.getTransaction().commit();
     }
 
-    public Transaction findByTransactionNumber(TransactionNumber transactionNumber) {
+    public Transaction findByTransactionNumber(TransactionID transactionID) {
         TransactionHibernateDTO transactionHibernateDTO =
-                this.findTransactionDTO(transactionNumber);
+                this.findTransactionDTO(transactionID);
         if (transactionHibernateDTO == null) {
-            throw new TransactionNotFoundException(transactionNumber);
+            throw new TransactionNotFoundException(transactionID);
         }
         return TransactionHydrator.toTransaction(transactionHibernateDTO);
     }
 
-    public TransactionBuy findReferredTransaction(TransactionNumber transactionNumber) {
+    public TransactionBuy findReferredTransaction(TransactionID transactionID) {
         TransactionHibernateDTO transactionHibernateDTO =
-                this.findTransactionDTO(transactionNumber);
+                this.findTransactionDTO(transactionID);
         if (transactionHibernateDTO == null) {
             throw new InvalidTransactionNumberException();
         }
         return TransactionHydrator.toTransactionBuy(transactionHibernateDTO);
     }
 
-    private TransactionHibernateDTO findTransactionDTO(TransactionNumber transactionNumber) {
+    private TransactionHibernateDTO findTransactionDTO(TransactionID transactionID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.beginTransaction();
-        UUID transactionNumberUUID = transactionNumber.getId();
+        UUID transactionNumberUUID = transactionID.getId();
         TransactionHibernateDTO transactionHibernateDTO =
                 session.get(TransactionHibernateDTO.class, transactionNumberUUID);
         session.getTransaction().commit();

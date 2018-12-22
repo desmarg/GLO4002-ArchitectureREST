@@ -13,7 +13,7 @@ public class AccountNumberTest {
     private static final String AN_ACCOUNT_NUMBER = "AA-1";
     private static final String EQUAL_ACCOUNT_NUMBER = "AA-1";
     private static final String DIFFERENT_ACCOUNT_NUMBER = "AA-2";
-    private static final String A_NAME = "Jeffrey Tramblay";
+    private static final String A_NAME = "Jeffrey Tremblay";
     private static final String INITIALS = "JT";
 
     private AccountNumber accountNumber;

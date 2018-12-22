@@ -6,7 +6,7 @@ import trading.domain.InvestorProfile;
 import trading.domain.ProfileType;
 import trading.domain.account.Account;
 import trading.domain.account.AccountNumber;
-import trading.domain.transaction.TransactionNumber;
+import trading.domain.transaction.TransactionID;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class AccountHydrator {
         InvestorProfile investorProfile =
                 new InvestorProfile(ProfileType.valueOf(accountHibernateDTO.profileType),
                         accountHibernateDTO.focusAreas);
-        Map<TransactionNumber, Long> remainingStocksMap =
+        Map<TransactionID, Long> remainingStocksMap =
                 AccountHydrator.hydrateRemainingStocksMap(accountHibernateDTO.remainingStocksMap);
         Long investorId = accountHibernateDTO.investorId;
         String investorName = accountHibernateDTO.investorName;
@@ -66,11 +66,11 @@ public class AccountHydrator {
     }
 
     private static Map<UUID, Long> dehydrateRemainingStocksMap(
-            Map<TransactionNumber, Long> remainingStocksMap
+            Map<TransactionID, Long> remainingStocksMap
     ) {
         Map<UUID, Long> modifiedRemainingStocksMap = new HashMap<>();
 
-        for (Map.Entry<TransactionNumber, Long> entry : remainingStocksMap.entrySet()) {
+        for (Map.Entry<TransactionID, Long> entry : remainingStocksMap.entrySet()) {
             UUID transactionUUID = entry.getKey().getId();
             Long remainingStocks = entry.getValue();
             modifiedRemainingStocksMap.put(transactionUUID, remainingStocks);
@@ -79,16 +79,16 @@ public class AccountHydrator {
         return modifiedRemainingStocksMap;
     }
 
-    private static Map<TransactionNumber, Long> hydrateRemainingStocksMap(
+    private static Map<TransactionID, Long> hydrateRemainingStocksMap(
             Map<UUID, Long> remainingStocksMap
     ) {
-        Map<TransactionNumber, Long> modifiedRemainingStocksMap = new HashMap<>();
+        Map<TransactionID, Long> modifiedRemainingStocksMap = new HashMap<>();
 
         for (Map.Entry<UUID, Long> entry : remainingStocksMap.entrySet()) {
-            TransactionNumber transactionNumber = new TransactionNumber(entry.getKey());
+            TransactionID transactionID = new TransactionID(entry.getKey());
             Long remainingStocks = entry.getValue();
 
-            modifiedRemainingStocksMap.put(transactionNumber, remainingStocks);
+            modifiedRemainingStocksMap.put(transactionID, remainingStocks);
         }
 
         return modifiedRemainingStocksMap;

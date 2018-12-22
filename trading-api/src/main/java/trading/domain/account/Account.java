@@ -14,7 +14,7 @@ public class Account {
     private final Long investorId;
     private final InvestorProfile investorProfile;
     private final String investorName;
-    private final Map<TransactionNumber, Long> remainingStocksMap;
+    private final Map<TransactionID, Long> remainingStocksMap;
     private final HashMap<Currency, Credits> initialCredits;
     private HashMap<Currency, Credits> creditMap;
 
@@ -32,7 +32,7 @@ public class Account {
 
     public Account(Long investorId, String investorName, HashMap<Currency, Credits> creditMap, HashMap<Currency, Credits> initialCredits,
                    InvestorProfile investorProfile,
-                   Map<TransactionNumber, Long> remainingStocksMap, AccountNumber accountNumber) {
+                   Map<TransactionID, Long> remainingStocksMap, AccountNumber accountNumber) {
         this.investorId = investorId;
         this.investorName = investorName;
         this.creditMap = creditMap;
@@ -43,26 +43,21 @@ public class Account {
     }
 
     public void buyTransaction(TransactionBuy transactionBuy) {
-        this.payTransactionFees(transactionBuy.getValueWithFees());
-        this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
+        this.subtractCreditsIfHasEnough(transactionBuy.calculateValueWithFees());
+        this.remainingStocksMap.put(transactionBuy.getTransactionID(),
                 transactionBuy.getQuantity());
     }
 
     public void sellTransaction(TransactionSell transactionSell, TransactionBuy referredTransaction) {
         this.validateStockParameter(transactionSell, referredTransaction);
         this.sellStocksIfAccountHasEnough(referredTransaction, transactionSell.getQuantity());
-        this.payTransactionFees(transactionSell.getFees());
+        this.payFeesIfHasEnough(transactionSell.calculateFees());
         this.gainTransactionValue(transactionSell);
     }
 
     private void gainTransactionValue(TransactionSell transactionSell) {
-        Credits transactionValue = transactionSell.getValue();
+        Credits transactionValue = transactionSell.calculateValue();
         this.addCredits(transactionValue);
-    }
-
-    private void payTransactionFees(Credits fees) {
-        Credits transactionFees = fees;
-        this.subtractCreditsIfHasEnough(transactionFees);
     }
 
     private void validateStockParameter(TransactionSell transactionSell, TransactionBuy referredTransaction) {
@@ -72,13 +67,13 @@ public class Account {
     }
 
     private void sellStocksIfAccountHasEnough(TransactionBuy transactionBuy, Long quantity) {
-        Long remainingStocks = this.remainingStocksMap.get(transactionBuy.getTransactionNumber());
+        Long remainingStocks = this.remainingStocksMap.get(transactionBuy.getTransactionID());
         if (remainingStocks == null) {
             throw new InvalidTransactionNumberException();
         } else if (remainingStocks < quantity) {
             throw new NotEnoughStockException(transactionBuy.getStock());
         }
-        this.remainingStocksMap.put(transactionBuy.getTransactionNumber(),
+        this.remainingStocksMap.put(transactionBuy.getTransactionID(),
                 remainingStocks - quantity);
     }
 
@@ -102,7 +97,7 @@ public class Account {
         return this.investorName;
     }
 
-    public Map<TransactionNumber, Long> getRemainingStocksMap() {
+    public Map<TransactionID, Long> getRemainingStocksMap() {
         return this.remainingStocksMap;
     }
 
@@ -130,6 +125,17 @@ public class Account {
         if (!this.hasEnoughCreditsOfCurrency(creditsToSubtract)) {
             throw new NotEnoughCreditsException();
         }
+        subtractCredits(creditsToSubtract);
+    }
+
+    private void payFeesIfHasEnough(Credits creditsToSubtract) {
+        if (!this.hasEnoughCreditsOfCurrency(creditsToSubtract)) {
+            throw new NotEnoughCreditsForFeesException();
+        }
+        subtractCredits(creditsToSubtract);
+    }
+
+    private void subtractCredits(Credits creditsToSubtract) {
         Currency creditCurrency = creditsToSubtract.getCurrency();
         this.creditMap.merge(creditCurrency, creditsToSubtract, Credits::subtract);
     }

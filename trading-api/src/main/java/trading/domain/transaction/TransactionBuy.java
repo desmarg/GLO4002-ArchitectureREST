@@ -14,13 +14,13 @@ public class TransactionBuy extends Transaction {
     }
 
     public TransactionBuy(Long quantity, DateTime dateTime, Stock stock, Credits stockPrice,
-                          AccountNumber accountNumber, TransactionNumber transactionNumber) {
-        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionNumber);
+                          AccountNumber accountNumber, TransactionID transactionID) {
+        super(quantity, dateTime, stock, stockPrice, accountNumber, transactionID);
         this.transactionType = TransactionType.BUY;
     }
 
-    public Credits getValueWithFees() {
+    public Credits calculateValueWithFees() {
         Credits valueWithFees = Credits.getZeroCredits(this.currency);
-        return valueWithFees.add(this.value).add(this.fees);
+        return valueWithFees.add(this.calculateValue()).add(this.calculateFees());
     }
 }

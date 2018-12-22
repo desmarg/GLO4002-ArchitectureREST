@@ -1,4 +1,4 @@
-package trading.services;
+package trading.application.services;
 
 import trading.api.request.AccountPostRequestDTO;
 import trading.domain.account.Account;
@@ -6,12 +6,10 @@ import trading.domain.account.AccountAssembler;
 import trading.domain.account.AccountNumber;
 import trading.domain.account.AccountRepository;
 
-import java.math.BigInteger;
-
-public class AccountService {
+public class AccountApplicationService {
     private final AccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountApplicationService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 

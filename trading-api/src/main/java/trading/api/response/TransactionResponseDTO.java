@@ -19,8 +19,8 @@ public abstract class TransactionResponseDTO {
         this.type = transaction.getTransactionType().toString();
         this.date = transaction.getDateTime().toInstant().toString();
         this.stock = transaction.getStock();
-        this.transactionNumber = transaction.getTransactionNumber().getId();
+        this.transactionNumber = transaction.getTransactionID().getId();
         this.quantity = transaction.getQuantity();
-        this.fees = transaction.getFees().getAmount().setScale(2, RoundingMode.HALF_UP);
+        this.fees = transaction.calculateFees().getAmount().setScale(2, RoundingMode.HALF_UP);
     }
 }

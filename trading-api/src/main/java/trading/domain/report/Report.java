@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class Report {
 
-    public final DateTime date;
-    public final List<Transaction> transactions;
-    public HashMap<Currency, Credits> credits;
-    public Credits portfolioValue;
+    private final DateTime date;
+    private final List<Transaction> transactions;
+    private HashMap<Currency, Credits> credits;
+    private Credits portfolioValue;
 
     public Report(
             DateTime date,
@@ -29,6 +29,22 @@ public class Report {
         this.date = date;
         this.transactions = transactionList;
         this.buildPortfolio(initialCredits, transactionBuyHistory, transactionSellHistory, forexRepo, stockRepository);
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public HashMap<Currency, Credits> getCredits() {
+        return credits;
+    }
+
+    public Credits getPortfolioValue() {
+        return portfolioValue;
     }
 
     private void buildPortfolio(
@@ -60,15 +76,15 @@ public class Report {
 
     private void calculateCreditsInAccount(List<TransactionBuy> transactionBuyHistory, List<TransactionSell> transactionSellHistory, Map<Stock, Long> quantityByStock, HashMap<Currency, Credits> creditsInAccount) {
         for (TransactionBuy transaction : transactionBuyHistory) {
-            Credits transactionValueWithFees = transaction.getValueWithFees();
+            Credits transactionValueWithFees = transaction.calculateValueWithFees();
             Currency transactionCurrency = transactionValueWithFees.getCurrency();
             creditsInAccount.merge(transactionCurrency, transactionValueWithFees, Credits::subtract);
             Stock stock = transaction.getStock();
             quantityByStock.merge(stock, transaction.getQuantity(), (a, b) -> b + a);
         }
         for (TransactionSell transaction : transactionSellHistory) {
-            Credits transactionFees = transaction.getFees();
-            Credits transactionValue = transaction.getValue();
+            Credits transactionFees = transaction.calculateFees();
+            Credits transactionValue = transaction.calculateValue();
             Currency transactionCurrency = transactionValue.getCurrency();
             creditsInAccount.merge(transactionCurrency, transactionFees, Credits::subtract);
             creditsInAccount.merge(transactionCurrency, transactionValue, Credits::add);

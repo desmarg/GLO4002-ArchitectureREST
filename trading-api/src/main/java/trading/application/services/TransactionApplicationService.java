@@ -1,4 +1,4 @@
-package trading.services;
+package trading.application.services;
 
 import trading.api.request.TransactionPostRequestDTO;
 import trading.domain.Credits;
@@ -24,7 +24,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.TimeZone;
 
-public class TransactionService {
+public class TransactionApplicationService {
 
     private final TransactionRepository transactionRepository;
     private final StockRepository stockRepository;
@@ -32,9 +32,9 @@ public class TransactionService {
     private final AccountRepository accountRepository;
     private final ForeignExchangeRepository forexRepo;
 
-    public TransactionService(TransactionRepository transactionRepository,
-                              StockRepository stockRepository, MarketRepository marketRepository,
-                              AccountRepository accountRepository, ForeignExchangeRepository forexRepo) {
+    public TransactionApplicationService(TransactionRepository transactionRepository,
+                                         StockRepository stockRepository, MarketRepository marketRepository,
+                                         AccountRepository accountRepository, ForeignExchangeRepository forexRepo) {
         this.transactionRepository = transactionRepository;
         this.stockRepository = stockRepository;
         this.marketRepository = marketRepository;
@@ -77,7 +77,7 @@ public class TransactionService {
                         account.getAccountNumber(), stockPrice);
         this.validateMarketIsOpen(transactionSell);
         TransactionBuy referredTransaction = this.transactionRepository
-                .findReferredTransaction(transactionSell.getReferredTransactionNumber());
+                .findReferredTransaction(transactionSell.getReferredTransactionID());
         account.sellTransaction(transactionSell, referredTransaction);
         this.accountRepository.update(account);
         this.transactionRepository.save(transactionSell);
@@ -93,14 +93,14 @@ public class TransactionService {
         }
     }
 
-    public Transaction getTransaction(TransactionNumber transactionNumber) {
-        return this.transactionRepository.findByTransactionNumber(transactionNumber);
+    public Transaction getTransaction(TransactionID transactionID) {
+        return this.transactionRepository.findByTransactionNumber(transactionID);
     }
 
-    public Report getReportFromDate(String accountNumber, String date, String reportType) {
+    public Report getAccountReportFromDate(String accountNumber, String date, String reportType) {
         Account account = this.accountRepository.findByAccountNumber(new AccountNumber(accountNumber));
         DateTime reportDate = new DateTime(this.stringToInstantParser(date));
-        ReportType.fromString(reportType);
+        ReportType.validateReportType(reportType);
         List<TransactionBuy> transactionBuyHistory = this.transactionRepository
                 .findTransactionBuyBeforeDate(account.getAccountNumber(), reportDate);
         List<TransactionSell> transactionSellHistory = this.transactionRepository

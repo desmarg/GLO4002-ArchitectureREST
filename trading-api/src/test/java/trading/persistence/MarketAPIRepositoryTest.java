@@ -1,4 +1,4 @@
-package trading.services;
+package trading.persistence;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MarketServiceTest {
+public class MarketAPIRepositoryTest {
     private final String ZERO_TIMEZONE = "UTC+00:00";
     private final String VALID_TIMEZONE = "UTC+02:00";
     private final DateTime OPENED_DATETIME = new DateTime(Instant.parse("2018-11-19T10:00:00Z"));

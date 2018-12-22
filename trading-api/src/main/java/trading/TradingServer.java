@@ -10,7 +10,7 @@ import trading.api.configuration.CustomJsonProvider;
 import trading.api.resource.AccountResource;
 import trading.api.resource.ReportResource;
 import trading.api.resource.TransactionResource;
-import trading.services.Services;
+import trading.application.services.AppContext;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -28,10 +28,10 @@ public class TradingServer implements Runnable {
 
     private static HashSet<Object> getContextResources() {
         HashSet<Object> resources = new HashSet<>();
-        Services services = new Services();
-        AccountResource accountResource = new AccountResource(services);
-        TransactionResource transactionResource = new TransactionResource(services);
-        ReportResource reportResource = new ReportResource(services);
+        AppContext appContext = new AppContext();
+        AccountResource accountResource = new AccountResource(appContext);
+        TransactionResource transactionResource = new TransactionResource(appContext);
+        ReportResource reportResource = new ReportResource(appContext);
         resources.add(accountResource);
         resources.add(transactionResource);
         resources.add(reportResource);

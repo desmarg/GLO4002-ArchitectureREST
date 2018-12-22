@@ -12,16 +12,16 @@ import java.util.HashMap;
 public class ReportResponseAssembler {
     public static ReportResponseDTO toReportResponseDTO(Report report) {
         ReportResponseDTO reportResponseDTO = new ReportResponseDTO();
-        reportResponseDTO.date = report.date.toInstant().toString();
+        reportResponseDTO.date = report.getDate().toInstant().toString();
 
         reportResponseDTO.transactions = new ArrayList<>();
-        for (Transaction transaction : report.transactions) {
-            reportResponseDTO.transactions.add(TransactionResponseDTOFactory
+        for (Transaction transaction : report.getTransactions()) {
+            reportResponseDTO.transactions.add(TransactionResponseDTOAssembler
                     .createTransactionResponse(transaction)
             );
         }
-        reportResponseDTO.credits = createCreditListFromMap(report.credits);
-        reportResponseDTO.portfolioValue = report.portfolioValue.getAmount().setScale(2, RoundingMode.HALF_UP);
+        reportResponseDTO.credits = createCreditListFromMap(report.getCredits());
+        reportResponseDTO.portfolioValue = report.getPortfolioValue().getAmount().setScale(2, RoundingMode.HALF_UP);
 
         return reportResponseDTO;
     }

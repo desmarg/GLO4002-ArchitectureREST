@@ -30,16 +30,16 @@ public class StockAPIRepository implements StockRepository {
         this.marketCurrency.put("NYSE", Currency.USD);
     }
 
-    public Credits retrieveStockPrice(StockDTO stock, DateTime dateTime, boolean fromReport) {
-        String url = "/stocks/" + stock.market + "/" + stock.symbol;
-        StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
-        if (stockApiDTO == null) {
-            throw new StockNotFoundException(stock.symbol, stock.market);
-        }
-        return this.getPriceFromDateTime(stockApiDTO, dateTime, fromReport);
-    }
+    public Credits retrieveStockPrice(StockDTO stockDTO, DateTime dateTime, boolean fromReport) {
+        Stock stock = new Stock(stockDTO.market, stockDTO.symbol);
+        return fetchStockPrice(stock, dateTime, fromReport)
+;    }
 
     public Credits retrieveStockPrice(Stock stock, DateTime dateTime, boolean fromReport) {
+        return fetchStockPrice(stock, dateTime, fromReport);
+    }
+
+    private Credits fetchStockPrice(Stock stock, DateTime dateTime, boolean fromReport) {
         String url = "/stocks/" + stock.getMarket() + "/" + stock.getSymbol();
         StockApiDTO stockApiDTO = this.jerseyClient.getRequest(url, StockApiDTO.class);
         if (stockApiDTO == null) {

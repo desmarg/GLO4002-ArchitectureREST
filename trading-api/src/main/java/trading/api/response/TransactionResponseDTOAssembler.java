@@ -5,7 +5,7 @@ import trading.domain.transaction.TransactionBuy;
 import trading.domain.transaction.TransactionSell;
 import trading.domain.transaction.UnsupportedTransactionTypeException;
 
-public class TransactionResponseDTOFactory {
+public class TransactionResponseDTOAssembler {
     public static TransactionResponseDTO createTransactionResponse(Transaction transaction) {
         if (transaction instanceof TransactionBuy) {
             return new TransactionBuyResponseDTO(transaction);

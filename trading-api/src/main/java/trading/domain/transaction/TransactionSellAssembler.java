@@ -18,10 +18,10 @@ public class TransactionSellAssembler {
         if (quantity <= 0) {
             throw new InvalidQuantityException();
         }
-        TransactionNumber referredTransactionNumber =
-                new TransactionNumber(transactionPostRequestDTO.transactionNumber);
+        TransactionID referredTransactionID =
+                new TransactionID(transactionPostRequestDTO.transactionNumber);
 
         return new TransactionSell(quantity, dateTime, stock, stockPrice,
-                referredTransactionNumber, accountNumber);
+                referredTransactionID, accountNumber);
     }
 }
